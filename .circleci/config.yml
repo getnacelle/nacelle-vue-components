@@ -21,3 +21,9 @@ jobs:
 
       # run tests!
       - run: npm run test:unit
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test
