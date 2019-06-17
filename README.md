@@ -1,34 +1,24 @@
-# nacelle-components
+# Nacelle Vue Components
 
-## Project setup
-```
-npm install
-```
+> Vue Component Library for Nacelle Storefronts
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Get Started
 
-### Compiles and minifies for production
-```
-npm run build
+```bash
+# install dependencies
+$ npm install
 ```
 
-### Run your tests
-```
-npm run test
+## Develop Components in Storybook
+
+```bash
+# run Storybook Vue server
+$ npm run storybook:serve
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Build the Library
 
-### Run your unit tests
+```bash
+# build the dist package
+$ npm run build-library
 ```
-npm run test:unit
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
