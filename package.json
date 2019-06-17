@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
     "hot-build-library": "nodemon --watch src -e vue build/build-library.js",
     "build-library": "node build/build-library.js",
     "storybook:build": "vue-cli-service storybook:build -c config/storybook",
@@ -17,8 +15,10 @@
     "core-js": "^2.6.5",
     "storybook-addon-vue-info": "^1.2.1",
     "vue": "^2.6.10",
+    "vue-currency-filter": "^3.4.2",
     "vue-router": "^3.0.3",
     "vue-server-renderer": "^2.6.10",
+    "vue2-filters": "^0.6.0",
     "vuex": "^3.1.1"
   },
   "devDependencies": {
