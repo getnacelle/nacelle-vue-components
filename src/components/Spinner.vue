@@ -1,9 +1,17 @@
 <template>
-  <img class="loader" src="../assets/loader.svg">
+  <img class="loading-spinner" :src="loaderSvg">
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    loaderSvg: {
+      type: String,
+      default:
+        "https://nacelle-dev.s3-us-west-2.amazonaws.com/nacelle-loader.svg"
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -15,7 +23,7 @@ export default {};
     transform: rotateY(360deg);
   }
 }
-.loader {
+.loading-spinner {
   animation-name: spin;
   animation-duration: 1s;
   animation-iteration-count: infinite;

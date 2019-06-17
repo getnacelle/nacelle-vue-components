@@ -1,17 +1,13 @@
 <template>
   <div class="home">
-    <loader/>
+    <Spinner/>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import Loader from "@/components/Loader.vue";
+// @ is an ali
 
 export default {
-  name: "home",
-  components: {
-    Loader
-  }
+  name: "home"
 };
 </script>
