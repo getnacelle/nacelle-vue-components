@@ -16,6 +16,13 @@ $ npm install
 $ npm run storybook:serve
 ```
 
+## Run Tests
+
+```bash
+# run tests via Jest
+$ npm run test:unit
+```
+
 ## Build the Library
 
 ```bash
