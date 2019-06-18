@@ -12,7 +12,8 @@ storiesOf("Product Price", module)
     "Just the Price",
     () => ({
       components: { ProductPrice },
-      template: '<product-price :price="29.00"></product-price>'
+      template:
+        '<product-price :price="29.00" show-currency-code></product-price>'
     }),
     {
       info: {
