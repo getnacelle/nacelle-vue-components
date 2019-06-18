@@ -1,11 +1,9 @@
 <template>
-  <div>
-    {{priceWithCurrency}}
-    <span v-if="showCurrencyCode">{{currencyCode}}</span>
-  </div>
+  <div>{{productPrice}}</div>
 </template>
 
 <script>
+import Dinero from "dinero.js";
 export default {
   props: {
     price: Number,
@@ -19,12 +17,16 @@ export default {
     }
   },
   computed: {
-    priceWithCurrency() {
-      let currencySymbol = "";
-      if (this.currencyCode == "USD") {
-        currencySymbol = "$";
+    productPrice() {
+      let priceObject = Dinero({
+        amount: this.price,
+        currency: this.currencyCode
+      });
+      if (priceObject.hasCents()) {
+        return priceObject.toFormat("$0,0.00");
+      } else {
+        return priceObject.toFormat("$0,0");
       }
-      return `${currencySymbol}${this.price}`;
     }
   }
 };

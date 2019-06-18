@@ -13,7 +13,7 @@ storiesOf("Product Price", module)
     () => ({
       components: { ProductPrice },
       template:
-        '<product-price :price="29.00" show-currency-code></product-price>'
+        '<product-price :price="29.50" show-currency-code></product-price>'
     }),
     {
       info: {
