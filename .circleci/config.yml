@@ -44,7 +44,7 @@ jobs:
       # run tests!
       - run: npm run build-library
       - store_artifacts:
-          path: /dist
+          path: $CIRCLE_WORKING_DIRECTORY/dist
           destination: library-artifacts
 
 workflows:
