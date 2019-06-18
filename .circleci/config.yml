@@ -44,8 +44,8 @@ jobs:
       # run tests!
       - run: npm run build-library
       - store_artifacts:
-        path: /dist
-        destination: library-artifacts
+          path: /dist
+          destination: library-artifacts
 
 workflows:
   version: 2
