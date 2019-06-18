@@ -1,5 +1,8 @@
 <template>
-  <div>{{priceWithCurrency}}</div>
+  <div>
+    {{priceWithCurrency}}
+    <span v-if="showCurrencyCode">{{currencyCode}}</span>
+  </div>
 </template>
 
 <script>
@@ -9,6 +12,10 @@ export default {
     currencyCode: {
       type: String,
       default: "USD"
+    },
+    showCurrencyCode: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
