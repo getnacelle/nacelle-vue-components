@@ -1,23 +1,23 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { storiesOf } from "@storybook/vue";
-import { action } from "@storybook/addon-actions";
-import { linkTo } from "@storybook/addon-links";
-import { withInfo } from "storybook-addon-vue-info";
+import { storiesOf } from '@storybook/vue'
+import { action } from '@storybook/addon-actions'
+import { linkTo } from '@storybook/addon-links'
+import { withInfo } from 'storybook-addon-vue-info'
 
-import ProductPrice from "../components/ProductPrice";
+import ProductPrice from '../components/ProductPrice'
 
-storiesOf("Product Price", module)
+storiesOf('Product Price', module)
   .addDecorator(withInfo)
   .add(
-    "Just the Price",
+    'Just the Price',
     () => ({
       components: { ProductPrice },
       template:
-        '<product-price :price="29.50" show-currency-code></product-price>'
+        '<product-price :price="29.59" show-currency-code></product-price>'
     }),
     {
       info: {
         // summary: "Hello"
       }
     }
-  );
+  )
