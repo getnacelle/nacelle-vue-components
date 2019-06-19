@@ -8,10 +8,10 @@ export default {
     loaderSvg: {
       type: String,
       default:
-        "https://nacelle-dev.s3-us-west-2.amazonaws.com/nacelle-loader.svg"
+        'https://nacelle-dev.s3-us-west-2.amazonaws.com/nacelle-loader.svg'
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
