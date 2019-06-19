@@ -18,14 +18,20 @@ export default {
   },
   computed: {
     productPrice() {
+      let currencyCode;
+      if (this.showCurrencyCode) {
+        currencyCode = this.currencyCode;
+      } else {
+        currencyCode = "";
+      }
       let priceObject = Dinero({
         amount: this.price,
         currency: this.currencyCode
       });
       if (priceObject.hasCents()) {
-        return priceObject.toFormat("$0,0.00");
+        return `${priceObject.toFormat("$0,0.00")} ${currencyCode}`;
       } else {
-        return priceObject.toFormat("$0,0");
+        return `${priceObject.toFormat("$0,0")} ${currencyCode}`;
       }
     }
   }
