@@ -1,7 +1,10 @@
 {
-  "name": "nacelle-vue-components",
-  "version": "0.1.0",
-  "private": true,
+  "name": "@nacelle/nacelle-vue-components",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "files": [
+    "dist/*"
+  ],
   "scripts": {
     "hot-build-library": "nodemon --watch src -e vue build/build-library.js",
     "build-library": "node build/build-library.js",

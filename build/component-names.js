@@ -1,12 +1,12 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs')
+const path = require('path')
 
 // Get all the .vue files in the src directory
 const componentFileNames = fs
-  .readdirSync(path.resolve(__dirname, "../src/components"))
-  .filter(componentFileName => /\.vue$/.test(componentFileName));
+  .readdirSync(path.resolve(__dirname, '../src/components'))
+  .filter(componentFileName => /\.vue$/.test(componentFileName))
 
 // Get the names of the components from the file names
 module.exports = componentFileNames.map(componentFileName =>
-  componentFileName.replace(/\.\w+$/, "")
-);
+  componentFileName.replace(/\.\w+$/, '')
+)
