@@ -1,13 +1,12 @@
 {
   "name": "@nacelle/nacelle-vue-components",
   "version": "0.0.4",
-  "main": "dist/index.js",
+  "main": "dist/cjs/index.common.js",
   "files": [
     "dist/*"
   ],
   "scripts": {
     "hot-build-library": "nodemon --watch src -e vue build/build-library.js",
-    "build-module": "vue-cli-service build src/components/index.js --target lib --name index",
     "build-library": "node build/build-library.js",
     "storybook:build": "vue-cli-service storybook:build -c config/storybook",
     "storybook:serve": "vue-cli-service storybook:serve -p 6006 -c config/storybook",
