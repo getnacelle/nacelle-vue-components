@@ -6,7 +6,7 @@
 import Dinero from 'dinero.js'
 export default {
   props: {
-    price: Number,
+    price: String,
     currencyCode: {
       type: String,
       default: 'USD'
