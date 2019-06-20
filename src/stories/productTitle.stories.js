@@ -6,11 +6,14 @@ import { withInfo } from 'storybook-addon-vue-info'
 
 import ProductTitle from '../components/ProductTitle'
 
+import store from '../store/store'
+
 storiesOf('Product Title', module)
   .addDecorator(withInfo)
   .add(
     'Title',
     () => ({
+      store,
       components: { ProductTitle },
       template: '<product-title/>'
     }),

@@ -1,8 +1,9 @@
 <template>
-  <component :is="element">{{title}}</component>
+  <component :is="element">{{title}} {{testData}}</component>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   props: {
     element: {
@@ -13,6 +14,9 @@ export default {
       type: String,
       default: 'Product Title'
     }
+  },
+  computed: {
+    ...mapState('test', ['testData'])
   }
 }
 </script>
