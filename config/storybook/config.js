@@ -2,6 +2,7 @@
 import { configure } from '@storybook/vue'
 import Vue from 'vue'
 import Vuex from 'vuex'
+import '../../src/base-styles.css'
 Vue.use(Vuex)
 
 const req = require.context('../../src/stories', true, /.stories.js$/)

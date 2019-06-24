@@ -6,10 +6,10 @@ import { withInfo } from 'storybook-addon-vue-info'
 
 import ProductPrice from '../components/ProductPrice'
 
-storiesOf('Product Price', module)
+storiesOf('Components | Product', module)
   .addDecorator(withInfo)
   .add(
-    'Just the Price',
+    'Product Price',
     () => ({
       components: { ProductPrice },
       data() {

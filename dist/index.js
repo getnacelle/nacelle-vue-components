@@ -5,16 +5,20 @@
 // YOU SHOULD NEVER UPDATE THIS FILE DIRECTLY
 
 import AddToCartButton from './components/AddToCartButton.vue'
+import ProductCategory from './components/ProductCategory.vue'
+import ProductDescription from './components/ProductDescription.vue'
 import ProductPrice from './components/ProductPrice.vue'
 import ProductTitle from './components/ProductTitle.vue'
 import Spinner from './components/Spinner.vue'
 
 // Export components individually
-export { AddToCartButton, ProductPrice, ProductTitle, Spinner }
+export { AddToCartButton, ProductCategory, ProductDescription, ProductPrice, ProductTitle, Spinner }
 
 // What should happen if the user installs the library as a plugin
 function install(Vue) {
   Vue.component('AddToCartButton', AddToCartButton)
+  Vue.component('ProductCategory', ProductCategory)
+  Vue.component('ProductDescription', ProductDescription)
   Vue.component('ProductPrice', ProductPrice)
   Vue.component('ProductTitle', ProductTitle)
   Vue.component('Spinner', Spinner)

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   namespaced: true,
   state: {
     hi: 'testings'

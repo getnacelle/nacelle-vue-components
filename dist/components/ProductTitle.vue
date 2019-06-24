@@ -1,5 +1,5 @@
 <template>
-  <component :is="element">{{title}} {{testData}}</component>
+  <component :is="element">{{title}}</component>
 </template>
 
 <script>
@@ -16,7 +16,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('test', ['testData'])
+    ...mapState('test', ['hi'])
   }
 }
 </script>
