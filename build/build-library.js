@@ -11,7 +11,7 @@ fs.copy('src/base-styles.css', 'dist/base-styles.css')
 
 console.info('🏗 Building main library')
 execSync(
-  `vue-cli-service build src/components/index.js --target lib --name index --dest dist/cjs`
+  `vue-cli-service build dist/index.js --target lib --name index --dest dist/cjs`
 )
 
 console.info('🚀  Nacelle component library built!')
