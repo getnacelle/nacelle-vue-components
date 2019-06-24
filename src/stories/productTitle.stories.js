@@ -8,10 +8,10 @@ import ProductTitle from '../components/ProductTitle'
 
 import store from '../store/store'
 
-storiesOf('Product Title', module)
+storiesOf('Components | Product', module)
   .addDecorator(withInfo)
   .add(
-    'Title',
+    'Product Title',
     () => ({
       store,
       components: { ProductTitle },

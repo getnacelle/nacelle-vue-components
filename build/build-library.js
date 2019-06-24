@@ -7,6 +7,7 @@ require('./update-index-file')
 require('./copy-components')
 
 fs.copy('src/store', 'dist/store')
+fs.copy('src/base-styles.css', 'dist/base-styles.css')
 
 console.info('🏗 Building main library')
 execSync(
