@@ -1,4 +1,4 @@
-export default {
+const test = {
   namespaced: true,
   state: {
     hi: 'testings'
@@ -9,3 +9,5 @@ export default {
     }
   }
 }
+
+export default test
