@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   props: {
     element: {
@@ -13,6 +14,9 @@ export default {
       type: String,
       default: 'Product Title'
     }
+  },
+  computed: {
+    ...mapState('test', ['hi'])
   }
 }
 </script>
