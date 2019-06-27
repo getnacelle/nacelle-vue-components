@@ -1,9 +1,8 @@
 <template>
-  <component :is="element">{{title}}</component>
+  <component class="title" :is="element">{{title}}</component>
 </template>
 
 <script>
-import { mapState } from 'vuex'
 export default {
   props: {
     element: {
@@ -14,12 +13,14 @@ export default {
       type: String,
       default: 'Product Title'
     }
-  },
-  computed: {
-    ...mapState('test', ['hi'])
   }
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.title {
+  font-size: 22pt;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
 </style>

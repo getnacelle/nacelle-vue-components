@@ -1,6 +1,6 @@
 {
   "name": "@nacelle/nacelle-vue-components",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "main": "dist/cjs/index.common.js",
   "files": [
     "dist/*"
@@ -16,6 +16,7 @@
     "dinero.js": "^1.6.0",
     "recursive-readdir": "^2.2.2",
     "vue": "^2.6.10",
+    "vue-observe-visibility": "^0.4.4",
     "vuex": "^3.1.1"
   },
   "devDependencies": {

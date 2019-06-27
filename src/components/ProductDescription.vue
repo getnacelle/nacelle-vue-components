@@ -1,5 +1,5 @@
 <template>
-  <div v-html="description"></div>
+  <div class="description" v-html="description"></div>
 </template>
 
 <script>
@@ -13,5 +13,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang='scss' scoped>
+.description {
+  margin-bottom: 1rem;
+}
 </style>
