@@ -41,5 +41,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+div {
+  margin-bottom: 1rem;
+}
 </style>

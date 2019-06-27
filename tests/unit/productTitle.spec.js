@@ -13,7 +13,7 @@ describe('ProductTitle.vue', () => {
       localVue,
       propsData: { title: 'Great Product' }
     })
-    expect(wrapper.html()).toBe('<h3>Great Product</h3>')
+    expect(wrapper.html()).toBe('<h3 class="title">Great Product</h3>')
   })
 
   it('renders a specific html element when passed', async () => {
@@ -22,6 +22,6 @@ describe('ProductTitle.vue', () => {
       localVue,
       propsData: { title: 'Great Product', element: 'h2' }
     })
-    expect(wrapper.html()).toBe('<h2>Great Product</h2>')
+    expect(wrapper.html()).toBe('<h2 class="title">Great Product</h2>')
   })
 })

@@ -4,21 +4,15 @@ import { action } from '@storybook/addon-actions'
 import { linkTo } from '@storybook/addon-links'
 import { withInfo } from 'storybook-addon-vue-info'
 
-import ProductPrice from '../components/ProductPrice'
+import ProductDescription from '../components/ProductDescription'
 
 storiesOf('Components | Product', module)
   .addDecorator(withInfo)
   .add(
-    'Price',
+    'Description',
     () => ({
-      components: { ProductPrice },
-      data() {
-        return {
-          price: '29.59'
-        }
-      },
-      template:
-        '<product-price :price="price" show-currency-code></product-price>'
+      components: { ProductDescription },
+      template: '<product-description/>'
     }),
     {
       info: {

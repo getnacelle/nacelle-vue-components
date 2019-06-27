@@ -11,7 +11,7 @@ import store from '../store/store'
 storiesOf('Components | Product', module)
   .addDecorator(withInfo)
   .add(
-    'Product Title',
+    'Title',
     () => ({
       store,
       components: { ProductTitle },

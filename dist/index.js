@@ -4,23 +4,29 @@
 //
 // YOU SHOULD NEVER UPDATE THIS FILE DIRECTLY
 
-import AddToCartButton from './components/AddToCartButton.vue'
+import ProductAddToCartButton from './components/ProductAddToCartButton.vue'
 import ProductCategory from './components/ProductCategory.vue'
 import ProductDescription from './components/ProductDescription.vue'
+import ProductImage from './components/ProductImage.vue'
+import ProductMediaSelectView from './components/ProductMediaSelectView.vue'
 import ProductPrice from './components/ProductPrice.vue'
 import ProductTitle from './components/ProductTitle.vue'
+import ProductVideo from './components/ProductVideo.vue'
 import Spinner from './components/Spinner.vue'
 
 // Export components individually
-export { AddToCartButton, ProductCategory, ProductDescription, ProductPrice, ProductTitle, Spinner }
+export { ProductAddToCartButton, ProductCategory, ProductDescription, ProductImage, ProductMediaSelectView, ProductPrice, ProductTitle, ProductVideo, Spinner }
 
 // What should happen if the user installs the library as a plugin
 function install(Vue) {
-  Vue.component('AddToCartButton', AddToCartButton)
+  Vue.component('ProductAddToCartButton', ProductAddToCartButton)
   Vue.component('ProductCategory', ProductCategory)
   Vue.component('ProductDescription', ProductDescription)
+  Vue.component('ProductImage', ProductImage)
+  Vue.component('ProductMediaSelectView', ProductMediaSelectView)
   Vue.component('ProductPrice', ProductPrice)
   Vue.component('ProductTitle', ProductTitle)
+  Vue.component('ProductVideo', ProductVideo)
   Vue.component('Spinner', Spinner)
 }
 
