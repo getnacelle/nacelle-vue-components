@@ -4,6 +4,9 @@
 //
 // YOU SHOULD NEVER UPDATE THIS FILE DIRECTLY
 
+import ContentHeroBanner from './components/ContentHeroBanner.vue'
+import ContentSideBySide from './components/ContentSideBySide.vue'
+import CtaButton from './components/CtaButton.vue'
 import ProductAddToCartButton from './components/ProductAddToCartButton.vue'
 import ProductCategory from './components/ProductCategory.vue'
 import ProductDescription from './components/ProductDescription.vue'
@@ -15,10 +18,13 @@ import ProductVideo from './components/ProductVideo.vue'
 import Spinner from './components/Spinner.vue'
 
 // Export components individually
-export { ProductAddToCartButton, ProductCategory, ProductDescription, ProductImage, ProductMediaSelectView, ProductPrice, ProductTitle, ProductVideo, Spinner }
+export { ContentHeroBanner, ContentSideBySide, CtaButton, ProductAddToCartButton, ProductCategory, ProductDescription, ProductImage, ProductMediaSelectView, ProductPrice, ProductTitle, ProductVideo, Spinner }
 
 // What should happen if the user installs the library as a plugin
 function install(Vue) {
+  Vue.component('ContentHeroBanner', ContentHeroBanner)
+  Vue.component('ContentSideBySide', ContentSideBySide)
+  Vue.component('CtaButton', CtaButton)
   Vue.component('ProductAddToCartButton', ProductAddToCartButton)
   Vue.component('ProductCategory', ProductCategory)
   Vue.component('ProductDescription', ProductDescription)
