@@ -13,10 +13,10 @@ const defaults = {
   ctaText: 'CTA BUTTON'
 }
 
-storiesOf('Components | Content', module)
+storiesOf('Components | Content / Hero Banner', module)
   .addDecorator(withInfo)
   .add(
-    'Hero Banner - default',
+    'Default',
     () => ({
       components: { ContentHeroBanner},
       data() {
@@ -39,8 +39,11 @@ storiesOf('Components | Content', module)
       }
     }
   )
+
+storiesOf('Components | Content / Hero Banner', module)
+  .addDecorator(withInfo)
   .add(
-    'Hero Banner - full height',
+    'Full height',
     () => ({
       components: { ContentHeroBanner},
       data() {
@@ -65,8 +68,11 @@ storiesOf('Components | Content', module)
       }
     }
   )
+
+storiesOf('Components | Content / Hero Banner', module)
+  .addDecorator(withInfo)
   .add(
-    'Hero Banner - text color',
+    'Text Color',
     () => ({
       components: { ContentHeroBanner},
       data() {
@@ -91,8 +97,11 @@ storiesOf('Components | Content', module)
       }
     }
   )
+
+storiesOf('Components | Content / Hero Banner', module)
+  .addDecorator(withInfo)
   .add(
-    'Hero Banner - custom CTA event',
+    'Custom CTA event',
     () => ({
       components: { ContentHeroBanner},
       data() {
@@ -117,8 +126,11 @@ storiesOf('Components | Content', module)
       }
     }
   )
+
+storiesOf('Components | Content / Hero Banner', module)
+  .addDecorator(withInfo)
   .add(
-    'Hero Banner - mobile image',
+    'Mobile image',
     () => ({
       components: { ContentHeroBanner},
       data() {
