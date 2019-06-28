@@ -14,7 +14,8 @@ module.exports = {
     '/node_modules/'
   ],
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1'
+    '^@/(.*)$': '<rootDir>/src/$1',
+    '^.+\\.(css|scss)$': '<rootDir>/config/CSSStub.js'
   },
   snapshotSerializers: [
     'jest-serializer-vue'
