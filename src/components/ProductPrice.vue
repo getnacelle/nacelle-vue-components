@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <p>{{productPrice}}</p>
-  </div>
+  <span>{{productPrice}}</span>
 </template>
 
 <script>
