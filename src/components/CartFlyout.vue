@@ -6,7 +6,9 @@
         <messaging-free-shipping-counter />
       </cart-flyout-messaging>
       <div class="cart-items">
-        <cart-flyout-item v-for="item in lineItems" :key="item.productId" :item="item" />
+        <div v-for="item in lineItems" :key="item.productId" :item="item">
+          <slot v-bind="item"></slot>
+        </div>
       </div>
       <cart-flyout-subtotal />
       <cart-flyout-checkout-button />
@@ -67,11 +69,12 @@ export default {
   box-shadow: 20px 0px 20px 20px #e6e6e6c4;
   .cart-items {
     flex-grow: 5;
+    overflow: scroll;
   }
 }
 .slide-enter-active,
 .slide-leave-active {
-  transition: transform 0.2s ease;
+  transition: transform 0.32s ease;
 }
 .slide-enter, .slide-leave-to /* .fade-leave-active below version 2.1.8 */ {
   transform: translateX(28rem);

@@ -152,4 +152,62 @@ describe('Cart Store', () => {
       }
     ])
   })
+
+  it('calculates the cart value', async () => {
+    store.commit('cart/setLineItems', [
+      {
+        image: {
+          source: 'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
+        },
+        title: 'Gray T-Shirt',
+        productId: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM1OTkyMDE4NjE3Mzc=',
+        handle: 'gray-t-shirt',
+        price: '40.00',
+        quantity: 2,
+        variant: {
+          id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
+        }
+      }
+    ])
+    expect(store.getters['cart/cartSubtotal']).toEqual(80)
+  })
+
+  it('returns true if the free shipping threshold has been reached', async () => {
+    store.commit('cart/setFreeShippingThreshold', 100)
+    store.commit('cart/setLineItems', [
+      {
+        image: {
+          source: 'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
+        },
+        title: 'Gray T-Shirt',
+        productId: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM1OTkyMDE4NjE3Mzc=',
+        handle: 'gray-t-shirt',
+        price: '40.00',
+        quantity: 3,
+        variant: {
+          id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
+        }
+      }
+    ])
+    expect(store.getters['cart/freeShippingThresholdPassed']).toEqual(true)
+  })
+  it('returns the amount needed to hit the shipping threshold', async () => {
+    store.commit('cart/setFreeShippingThreshold', 100)
+    store.commit('cart/setLineItems', [
+      {
+        image: {
+          source: 'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
+        },
+        title: 'Gray T-Shirt',
+        productId: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM1OTkyMDE4NjE3Mzc=',
+        handle: 'gray-t-shirt',
+        price: '40.00',
+        quantity: 2,
+        variant: {
+          id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
+        }
+      }
+    ])
+    expect(store.getters['cart/amountUntilFreeShipping']).toEqual(true)
+  })
 })

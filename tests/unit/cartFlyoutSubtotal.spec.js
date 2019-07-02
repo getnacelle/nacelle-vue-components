@@ -20,8 +20,6 @@ describe('CartFlyoutSubtotal.vue', () => {
         id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
       }
     })
-    expect(wrapper.html()).toBe(
-      '<div class="subtotal"><h4><span>Subtotal:</span> <span>$29.99 </span></h4></div>'
-    )
+    expect(wrapper.vm.cartSubtotal).toBe(29.99)
   })
 })
