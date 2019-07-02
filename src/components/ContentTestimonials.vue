@@ -64,7 +64,9 @@ export default {
     },
     slides: {
       type: Array,
-      default: []
+      default: () => {
+        return []
+      }
     },
     slidesPerView: {
       type: Number,
