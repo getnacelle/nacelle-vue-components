@@ -4,7 +4,7 @@
       <h3 v-if="title.length > 0" class="title has-text-centered">
         {{ title }}
       </h3>
-      <div class="glide-wrapper">
+      <div class="glide-wrapper" v-if="slides.length > 0">
         <vue-glide
           :type="'carousel'"
           :perView="slidesPerView"
