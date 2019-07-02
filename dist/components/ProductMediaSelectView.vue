@@ -5,8 +5,8 @@
         <component
           :is="mediaComponent"
           v-if="selectedMedia"
-          :source="selectedMedia.source"
-          :key="selectedMedia.source"
+          :source="selectedMedia.src"
+          :key="selectedMedia.src"
           :width="featuredImageSize"
         />
       </transition>
@@ -19,7 +19,7 @@
           :key="item.id"
           @click.native="setSelected(item)"
           :width="thumbnailImageSize"
-          :source="item.source"
+          :source="item.thumbnailSrc"
         />
       </div>
     </div>

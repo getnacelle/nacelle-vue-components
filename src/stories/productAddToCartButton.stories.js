@@ -23,7 +23,9 @@ storiesOf('Components | Product', module)
           title: 'Gray T-Shirt',
           productId: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM1OTkyMDE4NjE3Mzc=',
           handle: 'gray-t-shirt',
-          variant: {}
+          variant: {
+            id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
+          }
         }
       },
       template:

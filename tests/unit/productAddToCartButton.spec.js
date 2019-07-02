@@ -1,9 +1,11 @@
 import { shallowMount } from '@vue/test-utils'
 import ProductAddToCartButton from '@/components/ProductAddToCartButton'
+import store from '../../src/store/store'
 
 describe('Product Add to Cart Button', () => {
   it('renders the button', async () => {
     const wrapper = shallowMount(ProductAddToCartButton, {
+      store,
       propsData: {
         image: {
           source: 'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
@@ -15,7 +17,7 @@ describe('Product Add to Cart Button', () => {
       }
     })
     expect(wrapper.html()).toBe(
-      '<div><button class="button">Add to Cart</button></div>'
+      '<div><button class="button is-primary"><span>Add to Cart</span></button></div>'
     )
   })
 })

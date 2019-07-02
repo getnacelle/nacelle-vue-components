@@ -12,6 +12,7 @@ import ProductTitle from '../components/ProductTitle'
 import ProductDescription from '../components/ProductDescription'
 import ProductCategory from '../components/ProductCategory'
 import ProductAddToCartButton from '../components/ProductAddToCartButton'
+import ProductQuantityUpdate from '../components/ProductQuantityUpdate'
 
 storiesOf('Components | Product/Composition', module)
   .addDecorator(withInfo)
@@ -24,7 +25,8 @@ storiesOf('Components | Product/Composition', module)
         ProductDescription,
         ProductCategory,
         ProductImage,
-        ProductAddToCartButton
+        ProductAddToCartButton,
+        ProductQuantityUpdate
       },
       store,
       data() {
@@ -40,7 +42,9 @@ storiesOf('Components | Product/Composition', module)
             "<p>This is the t-shirt description. It's a really nice item, isn't it? You can buy it in different colors and sizes.</p>",
           productId: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM1OTkyMDE4NjE3Mzc=',
           handle: 'gray-t-shirt',
-          variant: {}
+          variant: {
+            id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
+          }
         }
       },
       template: `
@@ -55,7 +59,10 @@ storiesOf('Components | Product/Composition', module)
         <product-category :category="category"/>
         <product-description :description="description"/>
         <product-price :price="price"></product-price>
+        <div class="columns is-marginless is-paddingless">
+        <product-quantity-update :variantId="variant.id"/>
         <product-add-to-cart-button :image="image" :title="title" :productId="productId" :handle="handle" :variant="variant"/>
+        </div>
         </div>
       </div>
       </div>

@@ -13,22 +13,22 @@ storiesOf('Components | Product', module)
     () => ({
       components: { ProductMediaSelectView },
       template:
-        '<product-media-select-view :media="media" :featured-media="featuredMedia"/>',
+        '<div class="section"><product-media-select-view :media="media" :featured-media="featuredMedia"/></div>',
       data() {
         return {
           media: [
             {
-              source:
-                'https://nacelle-assets.s3-us-west-2.amazonaws.com/Pexels+Videos+1333384.mp4',
-              type: 'video'
+              src: 'https://picsum.photos/id/52/500/500',
+              type: 'image',
+              thumbnailSrc: 'https://picsum.photos/id/52/500/500'
             },
-            { source: 'https://picsum.photos/id/980/500/500', type: 'image' },
-            { source: 'https://picsum.photos/id/585/500/500', type: 'image' },
-            { source: 'https://picsum.photos/id/576/500/500', type: 'image' },
-            { source: 'https://picsum.photos/id/52/500/500', type: 'image' }
+            { src: 'https://picsum.photos/id/980/500/500', type: 'image' },
+            { src: 'https://picsum.photos/id/585/500/500', type: 'image' },
+            { src: 'https://picsum.photos/id/576/500/500', type: 'image' },
+            { src: 'https://picsum.photos/id/52/500/500', type: 'image' }
           ],
           featuredMedia: {
-            source: 'https://picsum.photos/id/960/500/500',
+            src: 'https://picsum.photos/id/960/500/500',
             type: 'image'
           }
         }
