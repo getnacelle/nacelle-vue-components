@@ -15,6 +15,7 @@ storiesOf('Components | Cart', module)
       store,
       components: { CartFlyout },
       mounted() {
+        store.commit('cart/showCart')
         store.commit('cart/setLineItems', [])
         store.dispatch('cart/addLineItem', {
           image: {
@@ -27,7 +28,8 @@ storiesOf('Components | Cart', module)
           price: '29.99',
           quantity: 1,
           variant: {
-            id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
+            id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ==',
+            title: 'Cool Version'
           }
         })
 

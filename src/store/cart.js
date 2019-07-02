@@ -2,17 +2,29 @@ import localforage from 'localforage'
 const cart = {
   namespaced: true,
   state: {
-    lineItems: []
+    lineItems: [],
+    cartVisible: true,
+    freeShippingThreshold: null
   },
   getters: {
     cartSubtotal(state) {
       if (state.lineItems.length > 0) {
-        let prices = state.lineItems.map(item => {
-          return parseFloat(item.price)
-        })
-        return prices.reduce((acc, price) => {
-          return acc + price
-        }, 0)
+        return state.lineItems
+          .reduce((acc, item) => {
+            return acc + item.price * item.quantity
+          }, 0)
+          .toString()
+      }
+    },
+    freeShippingThresholdPasssed(state, getters) {
+      if (
+        getters.cartSubtotal &&
+        state.freeShippingThreshold &&
+        parseFloat(getters.cartSubtotal) > state.freeShippingThreshold
+      ) {
+        return true
+      } else {
+        return false
       }
     }
   },
@@ -55,6 +67,15 @@ const cart = {
     setLineItems(state, payload) {
       state.lineItems.splice(0)
       state.lineItems = payload
+    },
+    showCart(state) {
+      state.cartVisible = true
+    },
+    hideCart(state) {
+      state.cartVisible = false
+    },
+    setFreeShippingThreshold(state, payload) {
+      state.freeShippingThreshold = payload
     }
   },
   actions: {
@@ -82,6 +103,9 @@ const cart = {
       if (lineItems != null) {
         context.commit('setLineItems', lineItems)
       }
+    },
+    async processCheckout(context) {
+      console.log('process checkout')
     }
   }
 }
