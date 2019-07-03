@@ -1,12 +1,23 @@
 <template>
-  <span>{{productPrice}}</span>
+  <span>
+    {{price | currency({
+    symbol: '$',
+    thousandsSeparator: '.',
+    fractionCount: 2,
+    fractionSeparator: '.',
+    symbolPosition: 'front',
+    symbolSpacing: false
+    })}}
+  </span>
 </template>
 
 <script>
-import Dinero from 'dinero.js'
+import Vue from 'vue'
+import VueCurrencyFilter from 'vue-currency-filter'
+Vue.use(VueCurrencyFilter)
 export default {
   props: {
-    price: String,
+    price: [String, Number],
     currencyCode: {
       type: String,
       default: 'USD'
@@ -14,26 +25,6 @@ export default {
     showCurrencyCode: {
       type: Boolean,
       default: false
-    }
-  },
-  computed: {
-    productPrice() {
-      let price = Math.round(this.price * 100)
-      let currencyCode
-      if (this.showCurrencyCode) {
-        currencyCode = this.currencyCode
-      } else {
-        currencyCode = ''
-      }
-      let priceObject = Dinero({
-        amount: price,
-        currency: this.currencyCode
-      })
-      if (priceObject.hasCents()) {
-        return `${priceObject.toFormat('$0,0.00')} ${currencyCode}`
-      } else {
-        return `${priceObject.toFormat('$0,0')} ${currencyCode}`
-      }
     }
   }
 }
