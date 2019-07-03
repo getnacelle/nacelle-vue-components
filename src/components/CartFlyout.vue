@@ -23,7 +23,7 @@ import MessagingFreeShippingCounter from './MessagingFreeShippingCounter'
 import CartFlyoutItem from './CartFlyoutItem'
 import CartFlyoutSubtotal from './CartFlyoutSubtotal'
 import CartFlyoutCheckoutButton from './CartFlyoutCheckoutButton'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
   components: {
     CartFlyoutHeader,
@@ -42,12 +42,10 @@ export default {
       'hideCart',
       'setFreeShippingThreshold'
     ]),
+    ...mapActions('cart', ['updateLocalCart']),
     handleClose() {
       this.hideCart()
     }
-  },
-  mounted() {
-    this.setFreeShippingThreshold(100)
   }
 }
 </script>
@@ -70,6 +68,7 @@ export default {
   .cart-items {
     flex-grow: 5;
     overflow: scroll;
+    -webkit-overflow-scrolling: touch;
   }
 }
 .slide-enter-active,

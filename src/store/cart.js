@@ -1,17 +1,22 @@
 import localforage from 'localforage'
 import httpClient from 'axios'
 
+const endpoint = 'https://hailfrequency.com/graphql/v1/space/12345'
+const token = 'defAValidToken'
+
 const cart = {
   namespaced: true,
   state: {
     lineItems: [],
     checkoutId: null,
+    checkoutComplete: false,
     cartVisible: true,
-    freeShippingThreshold: null
+    freeShippingThreshold: null,
+    error: false
   },
   getters: {
     cartSubtotal(state) {
-      if (state.lineItems.length > 0) {
+      if (state.lineItems.length >= 1) {
         return state.lineItems.reduce((acc, item) => {
           return acc + item.price * item.quantity
         }, 0)
@@ -31,7 +36,7 @@ const cart = {
       }
     },
     amountUntilFreeShipping(state, getters) {
-      if (getters.cartSubtotal && state.freeShippingThreshold) {
+      if (getters.cartSubtotal != null && state.freeShippingThreshold) {
         return state.freeShippingThreshold - getters.cartSubtotal
       }
     },
@@ -91,6 +96,9 @@ const cart = {
     setCheckoutId(state, payload) {
       state.checkoutId = payload
     },
+    setCheckoutCompleteStatus(state, payload) {
+      state.checkoutComplete = payload
+    },
     showCart(state) {
       state.cartVisible = true
     },
@@ -99,6 +107,9 @@ const cart = {
     },
     setFreeShippingThreshold(state, payload) {
       state.freeShippingThreshold = payload
+    },
+    setCartError(state) {
+      state.error = true
     }
   },
   actions: {
@@ -133,25 +144,76 @@ const cart = {
       }
     },
     async saveCheckoutId(context, payload) {
-      localforage.setItems('checkout-id', payload)
+      localforage.setItem('checkout-id', payload)
     },
     async getCheckoutId(context) {
-      let checkoutId = localforage.getItem('checkout-id')
+      let checkoutId = await localforage.getItem('checkout-id')
       if (checkoutId != null) {
         context.commit('setCheckoutId', checkoutId)
+        return checkoutId
       }
     },
-    async processCheckout({ getters }) {
+    async verifyCheckoutStatus(context) {
+      await context.dispatch('getCheckoutId')
+      if (context.state.checkoutId != null) {
+        let checkoutStatus = await httpClient({
+          method: 'post',
+          url: endpoint,
+          headers: {
+            'Content-Type': 'application/json',
+            'x-nacelle-token': token
+          },
+          data: {
+            query: `query {
+              getCheckout(id: "${context.state.checkoutId}") {
+                id
+                url
+                completed
+              }
+            }`
+          }
+        }).then(res => res.data.data.getCheckout.completed)
+        context.commit('setCheckoutCompleteStatus', checkoutStatus)
+      }
+    },
+    async removeLineItemsIfCheckoutComplete(context) {
+      if (context.state.checkoutComplete == true) {
+        await localforage.removeItem('line-items')
+        await localforage.removeItem('checkout-id')
+      }
+    },
+
+    async updateLocalCart(context) {
+      await context.dispatch('verifyCheckoutStatus')
+      await context.dispatch('removeLineItemsIfCheckoutComplete')
+      await context.dispatch('getLineItems')
+    },
+
+    async processCheckout({ state, getters, dispatch, commit }) {
+      let lineItems = []
+      let checkoutId
+      if (state.checkoutId == null) {
+        checkoutId = ''
+      } else {
+        checkoutId = state.checkoutId
+      }
+      getters.checkoutLineItems.forEach(item => {
+        lineItems.push(`{
+          variantId: "${item.variantId}",
+          quantity: ${item.quantity}
+        }`)
+      })
+
       let processCheckoutObject = await httpClient({
         method: 'post',
-        url: 'https://hailfrequency.com/graphql/v1/space/12345',
+        url: endpoint,
         headers: {
           'Content-Type': 'application/json',
-          'x-nacelle-token': 'defAValidToken'
+          'x-nacelle-token': token
         },
         data: {
           query: `mutation {
-          processCheckout(input: {cartItems: [{variantId: "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDIyMDAwOQ==", quantity: 1}]}) {
+          processCheckout(input: {cartItems: ${lineItems}, checkoutId: "${checkoutId}" }) {
             id
             url
             completed
@@ -162,8 +224,12 @@ const cart = {
         .then(res => {
           return res.data.data.processCheckout
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          console.log(err)
+          commit('setCartError')
+        })
       if (processCheckoutObject && process.browser) {
+        await dispatch('saveCheckoutId', processCheckoutObject.id)
         window.location = processCheckoutObject.url
       }
     }
