@@ -1,5 +1,8 @@
 <template>
-  <div v-observe-visibility="visibilityChanged">
+  <div v-observe-visibility="{
+    callback: visibilityChanged,
+    once: true,
+  }">
     <img v-if="visible" :src="source" :alt="alt" :width="width">
   </div>
 </template>
