@@ -2,7 +2,9 @@
   <div class="product-card">
     <product-image :source="product.featuredMedia.src || undefined"/>
     <div class="product-card-details">
-      <product-title :title="product.title"/>
+      <router-link :to="`${pathFragment}${product.handle}`">
+        <product-title :title="product.title"/>
+      </router-link>
       <product-price :price="product.price.max" />
     </div>
     <div class="product-card-actions">
@@ -34,6 +36,10 @@ export default {
     ProductAddToCartButton
   },
   props: {
+    pathFragment: {
+      type: String,
+      default: '/products/'
+    },
     product: {
       type: Object,
       default: () => {
@@ -47,7 +53,7 @@ export default {
             src: undefined
           },
           productId: null,
-          handle: null,
+          handle: '',
           variant: {
             id: null
           }
@@ -66,7 +72,7 @@ export default {
   justify-content: space-between;
 }
 
-.product-card-details /deep/ .title {
+.product-card-details /deep/ a {
   flex-basis: 60%;
 }
 </style>

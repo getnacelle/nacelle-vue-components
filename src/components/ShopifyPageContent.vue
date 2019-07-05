@@ -38,16 +38,20 @@ export default {
     ContentHeroBanner,
     ContentSideBySide,
     ContentTestimonials,
-    ComponentsProductGid
+    ContentProductGrid
   },
   props: {
     content: {
       type: Array,
-      default: () => []
+      default: () => {
+        return []
+      }
     },
     products: {
       type: Array,
-      default: () => []
+      default: () => {
+        return []
+      }
     }
   },
   computed: {
@@ -125,7 +129,7 @@ export default {
         }
       }
 
-      if (section.contentType === ContentProductGrid) {
+      if (section.contentType === 'ContentProductGrid') {
         return {
           title: section.title,
           products: this.products

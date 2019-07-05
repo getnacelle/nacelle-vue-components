@@ -2,17 +2,20 @@
 import { storiesOf } from '@storybook/vue'
 import { withKnobs, object } from '@storybook/addon-knobs';
 import { withInfo } from 'storybook-addon-vue-info'
+import StoryRouter from 'storybook-vue-router'
 
 import ShopifyPageContent from '../components/ShopifyPageContent'
 
 import store from '../store/store'
 
 const defaultProduct = {
-  price: '29.99',
+  price: {
+    max:'29.99'
+  },
   title: 'Awesome T-Shirt',
   category: "Men's Shirts",
-  image: {
-    source:
+  featuredMedia: {
+    src:
       'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
   },
   description:
@@ -125,6 +128,7 @@ const defaultObj = {
 storiesOf('Components | Content', module)
   .addDecorator(withInfo)
   .addDecorator(withKnobs)
+  .addDecorator(StoryRouter())
   .add(
     'Shopify Page Content',
     () => ({
