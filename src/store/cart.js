@@ -18,7 +18,7 @@ const cart = {
     cartSubtotal(state) {
       if (state.lineItems.length >= 1) {
         return state.lineItems.reduce((acc, item) => {
-          return acc + item.price * item.quantity
+          return acc + item.variant.price * item.quantity
         }, 0)
       } else {
         return 0
@@ -191,12 +191,12 @@ const cart = {
     },
 
     async createCheckoutArray({ getters }) {
-      let lineItems = []
+      let lineItems = ''
       getters.checkoutLineItems.forEach(item => {
-        lineItems.push(`{
+        lineItems += `{
           variantId: "${item.variantId}",
           quantity: ${item.quantity}
-        }`)
+        }`
       })
       return lineItems
     },
@@ -231,7 +231,7 @@ const cart = {
         },
         data: {
           query: `mutation {
-          processCheckout(input: {cartItems: ${lineItems}, checkoutId: "${checkoutId}" }) {
+          processCheckout(input: {cartItems: [${lineItems}], checkoutId: "${checkoutId}" }) {
             id
             url
             completed

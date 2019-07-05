@@ -1,6 +1,6 @@
 <template>
-  <div class="media-select-view columns is-multiline" :style="{width: `${featuredImageSize}px`}">
-    <div class="media-viewer column is-12" :style="{height: `${featuredImageSize}px`}">
+  <div class="media-select-view columns is-multiline">
+    <div class="media-viewer column is-12">
       <transition name="fade" mode="out-in">
         <component
           :is="mediaComponent"
@@ -18,7 +18,6 @@
           v-for="item in media"
           :key="item.id"
           @click.native="setSelected(item)"
-          :width="thumbnailImageSize"
           :source="item.thumbnailSrc"
         />
       </div>
@@ -42,14 +41,6 @@ export default {
     featuredMedia: {
       type: Object,
       required: true
-    },
-    featuredImageSize: {
-      type: Number,
-      default: 500
-    },
-    thumbnailImageSize: {
-      type: Number,
-      default: 200
     }
   },
   data() {
