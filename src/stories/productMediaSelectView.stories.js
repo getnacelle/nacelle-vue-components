@@ -12,8 +12,13 @@ storiesOf('Components | Product', module)
     'Media Select View',
     () => ({
       components: { ProductMediaSelectView },
-      template:
-        '<div class="section"><product-media-select-view :media="media" :featured-media="featuredMedia"/></div>',
+      template: `<div class="section">
+        <div class="columns">
+        <div class="column is-6">
+          <product-media-select-view :media="media" :featured-media="featuredMedia"/>
+          </div>
+          </div>
+        </div>`,
       data() {
         return {
           media: [

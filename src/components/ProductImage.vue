@@ -1,6 +1,6 @@
 <template>
   <div v-observe-visibility="visibilityChanged">
-    <img v-if="visible" :src="source" :alt="alt" :width="width">
+    <img v-if="visible" :src="source" :alt="alt" />
   </div>
 </template>
 

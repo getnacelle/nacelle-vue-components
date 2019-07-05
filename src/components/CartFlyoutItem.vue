@@ -1,14 +1,14 @@
 <template>
   <div class="columns is-marginless is-mobile flyout-cart-item">
     <router-link class="column is-3" :to="`products/${item.handle}`" @click.native="hideCart">
-      <product-image :source="item.image.source" :alt="item.title" />
+      <product-image :source="item.image.thumbnailSrc" :alt="item.title" />
     </router-link>
 
     <div class="column is-9">
       <product-title class="flyout-item-title" element="h4" :title="item.title" />
       <product-variant-title class="flyout-item-variant-title" :title="item.variant.title" />
       <div class="flyout-item-details columns is-marginless is-paddingless">
-        <product-price class="flyout-item-price" :price="item.price" />
+        <product-price class="flyout-item-price" :price="item.variant.price" />
         <product-quantity-update :variantId="item.variant.id" />
         <cart-flyout-item-remove-button :variantId="item.variant.id" />
       </div>

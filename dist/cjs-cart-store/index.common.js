@@ -2942,7 +2942,7 @@ var cart = {
     cartSubtotal: function cartSubtotal(state) {
       if (state.lineItems.length >= 1) {
         return state.lineItems.reduce(function (acc, item) {
-          return acc + item.price * item.quantity;
+          return acc + item.variant.price * item.quantity;
         }, 0);
       } else {
         return 0;
@@ -3383,9 +3383,9 @@ var cart = {
             switch (_context12.prev = _context12.next) {
               case 0:
                 getters = _ref.getters;
-                lineItems = [];
+                lineItems = '';
                 getters.checkoutLineItems.forEach(function (item) {
-                  lineItems.push("{\n          variantId: \"".concat(item.variantId, "\",\n          quantity: ").concat(item.quantity, "\n        }"));
+                  lineItems += "{\n          variantId: \"".concat(item.variantId, "\",\n          quantity: ").concat(item.quantity, "\n        }");
                 });
                 return _context12.abrupt("return", lineItems);
 
@@ -3501,7 +3501,7 @@ var cart = {
                     'x-nacelle-token': token
                   },
                   data: {
-                    query: "mutation {\n          processCheckout(input: {cartItems: ".concat(lineItems, ", checkoutId: \"").concat(checkoutId, "\" }) {\n            id\n            url\n            completed\n          }\n        }")
+                    query: "mutation {\n          processCheckout(input: {cartItems: [".concat(lineItems, "], checkoutId: \"").concat(checkoutId, "\" }) {\n            id\n            url\n            completed\n          }\n        }")
                   }
                 }).then(function (res) {
                   return res.data.data.processCheckout;

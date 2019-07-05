@@ -12,11 +12,11 @@ describe('CartFlyoutSubtotal.vue', () => {
         source: 'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
       },
       title: 'Gray T-Shirt',
-      price: '29.99',
       productId: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM1OTkyMDE4NjE3Mzc=',
       handle: 'gray-t-shirt',
       quantity: 1,
       variant: {
+        price: '29.99',
         id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
       }
     })
