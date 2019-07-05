@@ -31,7 +31,7 @@ h4 {
   text-align: center;
   font-weight: 700;
   color: #616161;
-  :first-of-type[span] {
+  span:first-child {
     margin-right: 0.5rem;
   }
 }
