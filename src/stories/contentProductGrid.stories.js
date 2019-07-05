@@ -1,24 +1,58 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { storiesOf } from '@storybook/vue'
-import { action } from '@storybook/addon-actions'
-import { linkTo } from '@storybook/addon-links'
-import { withKnobs, object } from '@storybook/addon-knobs'
+import { withKnobs, object } from '@storybook/addon-knobs';
 import { withInfo } from 'storybook-addon-vue-info'
 
 import ContentProductGrid from '../components/ContentProductGrid'
 
-storiesOf('Components | Content / Product Grid', module)
+import store from '../store/store'
+
+const defaultProduct = {
+  price: '29.99',
+  title: 'Awesome T-Shirt',
+  category: "Men's Shirts",
+  image: {
+    source:
+      'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
+  },
+  description:
+    "<p>This is the t-shirt description. It's a really nice item, isn't it? You can buy it in different colors and sizes.</p>",
+  productId: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM1OTkyMDE4NjE3Mzc=',
+  handle: 'gray-t-shirt',
+  variant: {
+    id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
+  }
+}
+
+const productArray = [
+  defaultProduct,
+  defaultProduct,
+  defaultProduct,
+  defaultProduct,
+  defaultProduct,
+  defaultProduct
+]
+
+storiesOf('Components | Content', module)
   .addDecorator(withInfo)
+  .addDecorator(() => {
+    return {
+      template: `
+        <div style="padding: 3rem;"><story/></div>
+      `,
+    }
+  })
   .add(
-    'Default',
+    'Product Grid',
     () => ({
       components: { ContentProductGrid },
+      store,
       data() {
         return {
-          title: 'Product Grid'
+          title: 'Product Grid',
+          products: productArray
         }
       },
-      template: '<content-product-grid :title="title" />'
+      template: '<content-product-grid :title="title" :products="products" />'
     }),
     {
       info: {

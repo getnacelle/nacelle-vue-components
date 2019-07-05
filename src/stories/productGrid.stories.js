@@ -7,11 +7,13 @@ import ProductGrid from '../components/ProductGrid'
 import store from '../store/store'
 
 const defaultProduct = {
-  price: '29.99',
+  price: {
+    max:'29.99'
+  },
   title: 'Awesome T-Shirt',
   category: "Men's Shirts",
-  image: {
-    source:
+  featuredMedia: {
+    src:
       'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
   },
   description:

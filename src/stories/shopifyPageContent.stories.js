@@ -5,6 +5,34 @@ import { withInfo } from 'storybook-addon-vue-info'
 
 import ShopifyPageContent from '../components/ShopifyPageContent'
 
+import store from '../store/store'
+
+const defaultProduct = {
+  price: '29.99',
+  title: 'Awesome T-Shirt',
+  category: "Men's Shirts",
+  image: {
+    source:
+      'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
+  },
+  description:
+    "<p>This is the t-shirt description. It's a really nice item, isn't it? You can buy it in different colors and sizes.</p>",
+  productId: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM1OTkyMDE4NjE3Mzc=',
+  handle: 'gray-t-shirt',
+  variant: {
+    id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
+  }
+}
+
+const productArray = [
+  defaultProduct,
+  defaultProduct,
+  defaultProduct,
+  defaultProduct,
+  defaultProduct,
+  defaultProduct
+]
+
 const defaultObj = {
   content: [
     {
@@ -76,6 +104,20 @@ const defaultObj = {
       "fields": {
         "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed interdum metus a vulputate viverra. Sed vel varius libero, id luctus sem."
       }
+    },
+    {
+      "id": "Z2lkOi8vc2hvcGlmeS9BcnRpY2xlLzI5OTAyNDcxMjcz",
+      "handle": "product-grid",
+      "source": "shopify",
+      "title": "Product Grid",
+      "description": null,
+      "tags": [
+        "field::contentType::ContentProductGrid"
+      ],
+      "featuredMedia": null,
+      "fields": {
+        "content": ""
+      }
     }
   ]
 }
@@ -87,12 +129,18 @@ storiesOf('Components | Content', module)
     'Shopify Page Content',
     () => ({
       components: { ShopifyPageContent },
+      store,
       props: {
         shopifyData: {
           default: object('Shopify Data', defaultObj)
         }
       },
-      template: `<shopify-page-content :content="shopifyData.content" />`
+      data() {
+        return {
+          products: productArray
+        }
+      },
+      template: `<shopify-page-content :content="shopifyData.content" :products="products" />`
     }),
     {
       info: {

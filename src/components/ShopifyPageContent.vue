@@ -13,6 +13,7 @@
 import ContentHeroBanner from './ContentHeroBanner'
 import ContentSideBySide from './ContentSideBySide'
 import ContentTestimonials from './ContentTestimonials'
+import ContentProductGrid from './ContentProductGrid'
 
 const formatSection = (section) => {
   const { tags, ...rest } = section
@@ -36,14 +37,17 @@ export default {
   components: {
     ContentHeroBanner,
     ContentSideBySide,
-    ContentTestimonials
+    ContentTestimonials,
+    ComponentsProductGid
   },
   props: {
     content: {
       type: Array,
-      default: () => {
-        return []
-      }
+      default: () => []
+    },
+    products: {
+      type: Array,
+      default: () => []
     }
   },
   computed: {
@@ -118,6 +122,13 @@ export default {
         return {
           title: section.title,
           slides
+        }
+      }
+
+      if (section.contentType === ContentProductGrid) {
+        return {
+          title: section.title,
+          products: this.products
         }
       }
     }

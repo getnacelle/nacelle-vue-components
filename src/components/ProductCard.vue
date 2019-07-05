@@ -1,14 +1,14 @@
 <template>
   <div class="product-card">
-    <product-image :source="product.image.source || undefined"/>
+    <product-image :source="product.featuredMedia.src || undefined"/>
     <div class="product-card-details">
       <product-title :title="product.title"/>
-      <product-price :price="product.price" />
+      <product-price :price="product.price.max" />
     </div>
     <div class="product-card-actions">
       <product-quantity-update :variantId="product.variant.id"/>
       <product-add-to-cart-button 
-        :image="product.image"
+        :image="product.featuredMedia"
         :title="product.title"
         :productId="product.productId"
         :handle="product.handle"
@@ -38,10 +38,13 @@ export default {
       type: Object,
       default: () => {
         return {
-          price: '00.00',
+          price: {
+            min: '0.0',
+            max: '0.00'
+          },
           title: null,
-          image: {
-            source: undefined
+          featuredMedia: {
+            src: undefined
           },
           productId: null,
           handle: null,
