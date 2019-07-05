@@ -1,8 +1,9 @@
 <template>
   <div class="columns is-marginless is-mobile flyout-cart-item">
-    <div class="column is-3">
+    <router-link class="column is-3" :to="`products/${item.handle}`" @click.native="hideCart">
       <product-image :source="item.image.source" :alt="item.title" />
-    </div>
+    </router-link>
+
     <div class="column is-9">
       <product-title class="flyout-item-title" element="h4" :title="item.title" />
       <product-variant-title class="flyout-item-variant-title" :title="item.variant.title" />
@@ -22,6 +23,7 @@ import ProductPrice from './ProductPrice'
 import CartFlyoutItemRemoveButton from './CartFlyoutItemRemoveButton'
 import ProductQuantityUpdate from './ProductQuantityUpdate'
 import ProductVariantTitle from './ProductVariantTitle'
+import { mapMutations } from 'vuex'
 export default {
   props: {
     item: {
@@ -40,6 +42,9 @@ export default {
     CartFlyoutItemRemoveButton,
     ProductQuantityUpdate,
     ProductVariantTitle
+  },
+  methods: {
+    ...mapMutations('cart', ['hideCart'])
   }
 }
 </script>

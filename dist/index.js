@@ -4,6 +4,12 @@
 //
 // YOU SHOULD NEVER UPDATE THIS FILE DIRECTLY
 
+import BlogAuthor from './components/BlogAuthor.vue'
+import BlogCategoryLabel from './components/BlogCategoryLabel.vue'
+import BlogContent from './components/BlogContent.vue'
+import BlogHeader from './components/BlogHeader.vue'
+import BlogHeroImage from './components/BlogHeroImage.vue'
+import BlogPublishDate from './components/BlogPublishDate.vue'
 import CartFlyout from './components/CartFlyout.vue'
 import CartFlyoutCheckoutButton from './components/CartFlyoutCheckoutButton.vue'
 import CartFlyoutHeader from './components/CartFlyoutHeader.vue'
@@ -31,10 +37,16 @@ import ProductVideo from './components/ProductVideo.vue'
 import Spinner from './components/Spinner.vue'
 
 // Export components individually
-export { CartFlyout, CartFlyoutCheckoutButton, CartFlyoutHeader, CartFlyoutItem, CartFlyoutItemRemoveButton, CartFlyoutMessaging, CartFlyoutSubtotal, ContentHeroBanner, ContentSideBySide, ContentTestimonial, ContentTestimonials, CtaButton, InterfaceCloseButton, MessagingFreeShippingCounter, ProductAddToCartButton, ProductCategory, ProductDescription, ProductImage, ProductMediaSelectView, ProductPrice, ProductQuantityUpdate, ProductTitle, ProductVariantTitle, ProductVideo, Spinner }
+export { BlogAuthor, BlogCategoryLabel, BlogContent, BlogHeader, BlogHeroImage, BlogPublishDate, CartFlyout, CartFlyoutCheckoutButton, CartFlyoutHeader, CartFlyoutItem, CartFlyoutItemRemoveButton, CartFlyoutMessaging, CartFlyoutSubtotal, ContentHeroBanner, ContentSideBySide, ContentTestimonial, ContentTestimonials, CtaButton, InterfaceCloseButton, MessagingFreeShippingCounter, ProductAddToCartButton, ProductCategory, ProductDescription, ProductImage, ProductMediaSelectView, ProductPrice, ProductQuantityUpdate, ProductTitle, ProductVariantTitle, ProductVideo, Spinner }
 
 // What should happen if the user installs the library as a plugin
 function install(Vue) {
+  Vue.component('BlogAuthor', BlogAuthor)
+  Vue.component('BlogCategoryLabel', BlogCategoryLabel)
+  Vue.component('BlogContent', BlogContent)
+  Vue.component('BlogHeader', BlogHeader)
+  Vue.component('BlogHeroImage', BlogHeroImage)
+  Vue.component('BlogPublishDate', BlogPublishDate)
   Vue.component('CartFlyout', CartFlyout)
   Vue.component('CartFlyoutCheckoutButton', CartFlyoutCheckoutButton)
   Vue.component('CartFlyoutHeader', CartFlyoutHeader)
