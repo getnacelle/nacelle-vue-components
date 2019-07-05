@@ -218,14 +218,6 @@ const cart = {
       }
     },
 
-    async getUsers() {
-      let users = await axios({
-        method: 'get',
-        url: 'https://jsonplaceholder.typicode.com/users'
-      }).then(res => res.data)
-      return users
-    },
-
     async processCheckout({ state, dispatch, commit }) {
       let lineItems = await dispatch('createCheckoutArray')
       let checkoutId = await dispatch('getCheckoutIdForBackend')
