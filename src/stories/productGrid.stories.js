@@ -1,6 +1,7 @@
 import { storiesOf } from '@storybook/vue'
 import { withKnobs, object } from '@storybook/addon-knobs';
 import { withInfo } from 'storybook-addon-vue-info'
+import StoryRouter from 'storybook-vue-router'
 
 import ProductGrid from '../components/ProductGrid'
 
@@ -36,6 +37,7 @@ const productArray = [
 
 storiesOf('Components | Product / Composition', module)
   .addDecorator(withInfo)
+  .addDecorator(StoryRouter())
   .addDecorator(() => {
     return {
       template: `
