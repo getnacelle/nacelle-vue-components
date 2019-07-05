@@ -163,9 +163,9 @@ describe('Cart Store', () => {
         title: 'Gray T-Shirt',
         productId: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM1OTkyMDE4NjE3Mzc=',
         handle: 'gray-t-shirt',
-        price: '40.00',
         quantity: 2,
         variant: {
+          price: '40.00',
           id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
         }
       }
@@ -183,9 +183,10 @@ describe('Cart Store', () => {
         title: 'Gray T-Shirt',
         productId: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM1OTkyMDE4NjE3Mzc=',
         handle: 'gray-t-shirt',
-        price: '40.00',
+
         quantity: 3,
         variant: {
+          price: '40.00',
           id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
         }
       }
@@ -202,9 +203,10 @@ describe('Cart Store', () => {
         title: 'Gray T-Shirt',
         productId: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM1OTkyMDE4NjE3Mzc=',
         handle: 'gray-t-shirt',
-        price: '40.00',
+
         quantity: 2,
         variant: {
+          price: '40.00',
           id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
         }
       }
