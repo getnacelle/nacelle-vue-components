@@ -1,5 +1,5 @@
 import localforage from 'localforage'
-import httpClient from 'axios'
+import axios from 'axios'
 
 const endpoint = 'https://hailfrequency.com/graphql/v1/space/12345'
 const token = 'defAValidToken'
@@ -156,7 +156,7 @@ const cart = {
     async verifyCheckoutStatus(context) {
       await context.dispatch('getCheckoutId')
       if (context.state.checkoutId != null) {
-        let checkoutStatus = await httpClient({
+        let checkoutStatus = await axios({
           method: 'post',
           url: endpoint,
           headers: {
@@ -173,6 +173,7 @@ const cart = {
             }`
           }
         }).then(res => res.data.data.getCheckout.completed)
+
         context.commit('setCheckoutCompleteStatus', checkoutStatus)
       }
     },
@@ -189,22 +190,47 @@ const cart = {
       await context.dispatch('getLineItems')
     },
 
-    async processCheckout({ state, getters, dispatch, commit }) {
+    async createCheckoutArray({ getters }) {
       let lineItems = []
-      let checkoutId
-      if (state.checkoutId == null) {
-        checkoutId = ''
-      } else {
-        checkoutId = state.checkoutId
-      }
       getters.checkoutLineItems.forEach(item => {
         lineItems.push(`{
           variantId: "${item.variantId}",
           quantity: ${item.quantity}
         }`)
       })
+      return lineItems
+    },
 
-      let processCheckoutObject = await httpClient({
+    async getCheckoutIdForBackend({ state }) {
+      let checkoutId
+      if (state.checkoutId == null) {
+        checkoutId = ''
+      } else {
+        checkoutId = state.checkoutId
+      }
+      return checkoutId
+    },
+
+    async saveAndRedirect({ dispatch }, payload) {
+      if (payload && process.browser) {
+        await dispatch('saveCheckoutId', payload.id)
+        window.location = payload.url
+      }
+    },
+
+    async getUsers() {
+      let users = await axios({
+        method: 'get',
+        url: 'https://jsonplaceholder.typicode.com/users'
+      }).then(res => res.data)
+      return users
+    },
+
+    async processCheckout({ state, dispatch, commit }) {
+      let lineItems = await dispatch('createCheckoutArray')
+      let checkoutId = await dispatch('getCheckoutIdForBackend')
+
+      let processCheckoutObject = await axios({
         method: 'post',
         url: endpoint,
         headers: {
@@ -228,10 +254,7 @@ const cart = {
           console.log(err)
           commit('setCartError')
         })
-      if (processCheckoutObject && process.browser) {
-        await dispatch('saveCheckoutId', processCheckoutObject.id)
-        window.location = processCheckoutObject.url
-      }
+      await dispatch('saveAndRedirect', processCheckoutObject)
     }
   }
 }
