@@ -5,7 +5,7 @@
       <router-link :to="`${pathFragment}${product.handle}`">
         <product-title :title="product.title"/>
       </router-link>
-      <product-price :price="product.price.max" />
+      <product-price :price="product.priceRange.max" />
     </div>
     <div class="product-card-actions">
       <product-quantity-update :variantId="product.variant.id"/>
@@ -44,7 +44,7 @@ export default {
       type: Object,
       default: () => {
         return {
-          price: {
+          priceRange: {
             min: '0.0',
             max: '0.00'
           },

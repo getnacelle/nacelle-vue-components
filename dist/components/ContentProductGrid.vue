@@ -22,7 +22,7 @@ export default {
       default: ''
     },
     products: {
-      type: Object,
+      type: Array,
       default: () => []
     }
   }
