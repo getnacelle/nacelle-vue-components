@@ -8,7 +8,7 @@ import ProductGrid from '../components/ProductGrid'
 import store from '../store/store'
 
 const defaultProduct = {
-  price: {
+  priceRange: {
     max:'29.99'
   },
   title: 'Awesome T-Shirt',

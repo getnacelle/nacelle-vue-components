@@ -11,7 +11,7 @@ import store from '../store/store'
 import ProductCard from '../components/ProductCard'
 
 const defaultProduct = {
-  price: {
+  priceRange: {
     max:'29.99'
   },
   title: 'Awesome T-Shirt',
