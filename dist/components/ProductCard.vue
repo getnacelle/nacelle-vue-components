@@ -1,6 +1,6 @@
 <template>
   <div class="product-card">
-    <product-image :source="product.featuredMedia.src || undefined"/>
+    <product-image :source="mediaSrc"/>
     <div class="product-card-details">
       <router-link :to="`${pathFragment}${product.handle}`">
         <product-title :title="product.title"/>
@@ -8,13 +8,13 @@
       <product-price :price="product.priceRange.max" />
     </div>
     <div class="product-card-actions">
-      <product-quantity-update :variantId="product.variant.id"/>
+      <product-quantity-update :variantId="currentVariantId" />
       <product-add-to-cart-button 
         :image="product.featuredMedia"
         :title="product.title"
         :productId="product.productId"
         :handle="product.handle"
-        :variant="product.variant"
+        :variant="currentVariant"
       />
     </div>
   </div>
@@ -54,11 +54,45 @@ export default {
           },
           productId: null,
           handle: '',
-          variant: {
-            id: null
-          }
+          variants: []
         }
       }
+    }
+  },
+  data() {
+    return {
+      selectedVariant: null
+    }
+  },
+  computed: {
+    currentVariant() {
+      if (this.selectedVariant === null) {
+        if (this.product.variants.length > 0) {
+          return this.product.variants[0]
+        }
+
+        return undefined
+      }
+
+      return this.selectedVariant
+    },
+    currentVariantId() {
+      if (this.currentVariant && this.currentVariant.id) {
+        return this.currentVariant.id
+      }
+
+      return undefined
+    },
+    mediaSrc() {
+      if (
+        this.product &&
+        this.product.featuredMedia &&
+        this.product.featuredMedia.src
+      ) {
+        return this.product.featuredMedia.src
+      }
+
+      return undefined
     }
   }
 }

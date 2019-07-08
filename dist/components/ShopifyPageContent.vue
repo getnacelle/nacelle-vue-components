@@ -89,7 +89,12 @@ export default {
           ctaText: section.ctaText,
           ctaUrl: section.ctaUrl,
           ctaHandler: clickHandler,
-          backgroundImgUrl: section.featuredMedia.src
+          backgroundImgUrl: section.featuredMedia.src,
+          size: section.size,
+          alignment: section.alignment,
+          mobileFullHeight: (section.mobileFullHeight === 'true'),
+          textColor: section.textColor,
+          mobileBackgroundImgUrl: section.mobileBackgroundImgUrl
         }
       }
 
@@ -106,7 +111,9 @@ export default {
           ctaUrl: section.ctaUrl,
           ctaHandler: clickHandler,
           backgroundColor: section.backgroundColor,
-          imageUrl: section.featuredMedia.src
+          imageUrl: section.featuredMedia.src,
+          reverseDesktop: (section.reverseDesktop === 'true'),
+          reverseMobile: (section.reverseMobile === 'true')
         }
       }
 
@@ -125,7 +132,9 @@ export default {
 
         return {
           title: section.title,
-          slides
+          slides,
+          slidesPerView: section.slidesPerView || 1,
+          alignment: section.alignment
         }
       }
 
