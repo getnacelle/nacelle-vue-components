@@ -7,7 +7,10 @@
       </router-link>
       <product-price :price="product.priceRange.max" />
     </div>
-    <div class="product-card-actions">
+    <div
+      v-if="product && product.id"
+      class="product-card-actions"
+    >
       <product-quantity-update :variantId="currentVariantId" />
       <product-add-to-cart-button 
         :image="product.featuredMedia"
@@ -15,12 +18,14 @@
         :productId="product.id"
         :handle="product.handle"
         :variant="currentVariant"
+        @click.native="showCart"
       />
     </div>
   </div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import ProductImage from './ProductImage'
 import ProductTitle from './ProductTitle'
 import ProductPrice from './ProductPrice'
@@ -94,6 +99,9 @@ export default {
 
       return undefined
     }
+  },
+  methods: {
+    ...mapMutations('cart', ['showCart'])
   }
 }
 </script>
