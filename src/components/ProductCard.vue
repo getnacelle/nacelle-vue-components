@@ -8,13 +8,13 @@
       <product-price :price="product.priceRange.max" />
     </div>
     <div class="product-card-actions">
-      <product-quantity-update :variantId="product.variant.id"/>
+      <product-quantity-update :variantId="currentVariant ? currentVariant.id : undefined"/>
       <product-add-to-cart-button 
         :image="product.featuredMedia"
         :title="product.title"
         :productId="product.productId"
         :handle="product.handle"
-        :variant="product.variant"
+        :variant="currentVariant"
       />
     </div>
   </div>
@@ -54,11 +54,27 @@ export default {
           },
           productId: null,
           handle: '',
-          variant: {
-            id: null
-          }
+          variants: []
         }
       }
+    }
+  },
+  data() {
+    return {
+      selectedVariant: null
+    }
+  },
+  computed: {
+    currentVariant() {
+      if (this.selectedVariant === null) {
+        if (this.product.variants.length > 0) {
+          return this.product.variants[0]
+        }
+
+        return undefined
+      }
+
+      return this.selectedVariant
     }
   }
 }
