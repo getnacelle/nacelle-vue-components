@@ -12,7 +12,7 @@
       <product-add-to-cart-button 
         :image="product.featuredMedia"
         :title="product.title"
-        :productId="product.productId"
+        :productId="product.id"
         :handle="product.handle"
         :variant="currentVariant"
       />
@@ -52,7 +52,7 @@ export default {
           featuredMedia: {
             src: undefined
           },
-          productId: null,
+          id: null,
           handle: '',
           variants: []
         }
