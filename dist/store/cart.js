@@ -15,14 +15,23 @@ const cart = {
     error: false
   },
   getters: {
+    quantityTotal(state) {
+      if (state.lineItems.length >= 1) {
+        return state.lineItems.reduce((acc, item) => {
+          return acc + item.quantity
+        }, 0)
+      }
+      
+      return 0
+    },
     cartSubtotal(state) {
       if (state.lineItems.length >= 1) {
         return state.lineItems.reduce((acc, item) => {
           return acc + item.variant.price * item.quantity
         }, 0)
-      } else {
-        return 0
       }
+
+      return 0
     },
     freeShippingThresholdPassed(state, getters) {
       if (
@@ -104,6 +113,9 @@ const cart = {
     },
     hideCart(state) {
       state.cartVisible = false
+    },
+    toggleCart(state) {
+      state.cartVisible = !state.cartVisible
     },
     setFreeShippingThreshold(state, payload) {
       state.freeShippingThreshold = payload
