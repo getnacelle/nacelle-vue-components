@@ -63,8 +63,10 @@ export default {
   @media screen and (max-width: 786px) {
     width: unset;
   }
+  background-color: #ffffff;
   border-left: 1px solid #dedede7a;
   box-shadow: 20px 0px 20px 20px #e6e6e6c4;
+  z-index: 999;
   .cart-items {
     flex-grow: 5;
     overflow: scroll;

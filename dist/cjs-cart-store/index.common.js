@@ -2939,14 +2939,23 @@ var cart = {
     error: false
   },
   getters: {
+    quantityTotal: function quantityTotal(state) {
+      if (state.lineItems.length >= 1) {
+        return state.lineItems.reduce(function (acc, item) {
+          return acc + item.quantity;
+        }, 0);
+      }
+
+      return 0;
+    },
     cartSubtotal: function cartSubtotal(state) {
       if (state.lineItems.length >= 1) {
         return state.lineItems.reduce(function (acc, item) {
           return acc + item.variant.price * item.quantity;
         }, 0);
-      } else {
-        return 0;
       }
+
+      return 0;
     },
     freeShippingThresholdPassed: function freeShippingThresholdPassed(state, getters) {
       if (getters.cartSubtotal && state.freeShippingThreshold && getters.cartSubtotal > state.freeShippingThreshold) {
@@ -3028,6 +3037,9 @@ var cart = {
     },
     hideCart: function hideCart(state) {
       state.cartVisible = false;
+    },
+    toggleCart: function toggleCart(state) {
+      state.cartVisible = !state.cartVisible;
     },
     setFreeShippingThreshold: function setFreeShippingThreshold(state, payload) {
       state.freeShippingThreshold = payload;
