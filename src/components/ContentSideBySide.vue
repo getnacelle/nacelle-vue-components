@@ -84,7 +84,12 @@ export default {
 
 <style lang="scss" scoped>
 .sbs .columns {
+  margin-top: 0;
   min-height: 400px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .columns.is-column-reverse {
@@ -106,6 +111,7 @@ export default {
     padding: 0;
 
     img {
+      display: block;
       width: 100%;
     }
   }
