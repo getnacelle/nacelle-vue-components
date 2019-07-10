@@ -4,6 +4,7 @@
       v-for="section in mappedContent"
       :key="section.id"
       :is="section.contentType"
+      :id="section.handle"
       v-bind="mapProps(section)"
     />
   </div>
