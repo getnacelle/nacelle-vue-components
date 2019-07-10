@@ -4,9 +4,9 @@
       <main-nav-burger />
     </div>
     
-    <div class="navbar-brand">
+    <div class="main-nav-brand">
       <slot name="brand">
-        <router-link class="navbar-item" to="/">
+        <router-link to="/">
           <img :src="logoSrc" :width="logoWidth">
         </router-link>
       </slot>
@@ -84,6 +84,12 @@ export default {
 
 .main-nav-item {
   padding: 1rem;
+}
+
+.main-nav-brand {
+  img {
+    display: block;
+  }
 }
 </style>
 
