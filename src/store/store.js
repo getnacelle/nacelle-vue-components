@@ -9,7 +9,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   modules: {
     test: test,
-    cart: cart,
+    cart: cart(),
     menu: menu
   }
 })
