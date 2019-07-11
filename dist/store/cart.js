@@ -1,9 +1,6 @@
 import localforage from 'localforage'
 import axios from 'axios'
 
-const endpoint = 'https://hailfrequency.com/graphql/v1/space/12345'
-const token = 'defAValidToken'
-
 const cart = {
   namespaced: true,
   state: {
@@ -170,10 +167,10 @@ const cart = {
       if (context.state.checkoutId != null) {
         let checkoutStatus = await axios({
           method: 'post',
-          url: endpoint,
+          url: this.$nacelle.endpoint,
           headers: {
             'Content-Type': 'application/json',
-            'x-nacelle-token': token
+            'x-nacelle-token': this.$nacelle.token
           },
           data: {
             query: `query {
@@ -236,10 +233,10 @@ const cart = {
 
       let processCheckoutObject = await axios({
         method: 'post',
-        url: endpoint,
+        url: this.$nacelle.endpoint,
         headers: {
           'Content-Type': 'application/json',
-          'x-nacelle-token': token
+          'x-nacelle-token': this.$nacelle.token
         },
         data: {
           query: `mutation {

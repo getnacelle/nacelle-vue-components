@@ -2935,8 +2935,6 @@ exports.f = __webpack_require__("9e1e") ? Object.defineProperty : function defin
 
 
 
-var endpoint = 'https://hailfrequency.com/graphql/v1/space/12345';
-var token = 'defAValidToken';
 var cart = {
   namespaced: true,
   state: {
@@ -3297,10 +3295,10 @@ var cart = {
                 _context9.next = 5;
                 return axios__WEBPACK_IMPORTED_MODULE_8___default()({
                   method: 'post',
-                  url: endpoint,
+                  url: this.$nacelle.endpoint,
                   headers: {
                     'Content-Type': 'application/json',
-                    'x-nacelle-token': token
+                    'x-nacelle-token': this.$nacelle.token
                   },
                   data: {
                     query: "query {\n              getCheckout(id: \"".concat(context.state.checkoutId, "\") {\n                id\n                url\n                completed\n              }\n            }")
@@ -3318,7 +3316,7 @@ var cart = {
                 return _context9.stop();
             }
           }
-        }, _callee9);
+        }, _callee9, this);
       }));
 
       function verifyCheckoutStatus(_x14) {
@@ -3516,10 +3514,10 @@ var cart = {
                 _context15.next = 9;
                 return axios__WEBPACK_IMPORTED_MODULE_8___default()({
                   method: 'post',
-                  url: endpoint,
+                  url: this.$nacelle.endpoint,
                   headers: {
                     'Content-Type': 'application/json',
-                    'x-nacelle-token': token
+                    'x-nacelle-token': this.$nacelle.token
                   },
                   data: {
                     query: "mutation {\n          processCheckout(input: {cartItems: [".concat(lineItems, "], checkoutId: \"").concat(checkoutId, "\" }) {\n            id\n            url\n            completed\n          }\n        }")
@@ -3541,7 +3539,7 @@ var cart = {
                 return _context15.stop();
             }
           }
-        }, _callee15);
+        }, _callee15, this);
       }));
 
       function processCheckout(_x21) {
