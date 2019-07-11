@@ -1,7 +1,7 @@
 import localforage from 'localforage'
 import axios from 'axios'
 
-const cart = (options) => {
+const cart = (options = {}) => {
   const { endpoint = '', token = '' } = options
 
   return {
