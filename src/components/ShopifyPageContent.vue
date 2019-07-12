@@ -1,12 +1,14 @@
 <template>
   <div class="page-content">
-    <component
-      v-for="section in mappedContent"
-      :key="section.id"
-      :is="section.contentType"
-      :id="section.handle"
-      v-bind="mapProps(section)"
-    />
+    <slot v-bind:content="mappedContent">
+      <component
+        v-for="section in mappedContent"
+        :key="section.id"
+        :is="section.contentType"
+        :id="section.handle"
+        v-bind="mapProps(section)"
+      />
+    </slot>
   </div>
 </template>
 
@@ -142,7 +144,8 @@ export default {
       if (section.contentType === 'ContentProductGrid') {
         return {
           title: section.title,
-          products: this.products
+          products: this.products,
+          columns: section.columns || 4
         }
       }
     }
