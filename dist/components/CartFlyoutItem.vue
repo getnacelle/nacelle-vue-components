@@ -5,11 +5,19 @@
     </router-link>
 
     <div class="column is-9">
-      <product-title class="flyout-item-title" element="h4" :title="item.title" />
+      <router-link :to="`${pathFragment}${item.handle}`" @click.native="hideCart">
+        <product-title class="flyout-item-title" element="h4" :title="item.title" />
+      </router-link>
       <product-variant-title class="flyout-item-variant-title" :title="item.variant.title" />
       <div class="flyout-item-details columns is-marginless is-paddingless">
         <product-price class="flyout-item-price" :price="item.variant.price" />
-        <product-quantity-update :variantId="item.variant.id" />
+        <product-quantity-update
+          :image="item.image"
+          :title="item.title"
+          :productId="item.productId"
+          :handle="item.handle"
+          :variant="item.variant"
+        />
         <cart-flyout-item-remove-button :variantId="item.variant.id" />
       </div>
     </div>

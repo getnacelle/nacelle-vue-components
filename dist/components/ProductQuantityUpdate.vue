@@ -1,11 +1,11 @@
 <template>
   <div class="quantity-updater no-select">
-    <div class="quantity-value">{{quantity}}</div>
+    <div class="quantity-value">{{quantityInCart}}</div>
     <div class="switches">
-      <div class="increment switch" @click="incrementLineItem(variantId)">
+      <div class="increment switch" @click="increment">
         <span>+</span>
       </div>
-      <div class="decrement switch" @click="decrementLineItem(variantId)">
+      <div class="decrement switch" @click="decrement">
         <span>-</span>
       </div>
     </div>
@@ -14,36 +14,73 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+
 export default {
   props: {
-    variantId: {
-      type: String,
-      required: true
-    }
+    image: { type: Object, required: true },
+    title: { type: String, required: true },
+    variant: { type: Object, required: true },
+    productId: { type: String, required: true },
+    handle: { type: String, required: true }
   },
   computed: {
     ...mapState('cart', ['lineItems']),
     quantityInCart() {
-      let vm = this
-      let index = vm.lineItems.findIndex(item => {
-        return item.variant.id == vm.variantId
+      const item = this.lineItems.find(item => {
+        return item.variant.id === this.variantId
       })
-      if (index != -1) {
-        return vm.lineItems[index].quantity
-      } else {
-        return 0
+
+      if (item) {
+        return item.quantity
       }
+
+      return 0
     },
-    quantity() {
-      if (this.quantityInCart == 0) {
-        return 1
-      } else {
-        return this.quantityInCart
+    variantId() {
+      if (
+        this.cartProduct &&
+        this.cartProduct.variant &&
+        this.cartProduct.variant.id
+      ) {
+        return this.cartProduct.variant.id
+      }
+
+      return null
+    },
+    cartProduct() {
+      return {
+        image: this.image,
+        title: this.title,
+        variant: this.variant,
+        productId: this.productId,
+        handle: this.handle
       }
     }
   },
   methods: {
-    ...mapActions('cart', ['incrementLineItem', 'decrementLineItem'])
+    ...mapActions('cart', [
+      'addLineItem',
+      'removeLineItem',
+      'incrementLineItem',
+      'decrementLineItem'
+    ]),
+    increment() {
+      if (this.quantityInCart === 0) {
+        this.addLineItem({
+          ...this.cartProduct,
+          quantity: 1
+        })
+      } else {
+        this.incrementLineItem(this.variantId)
+      }
+    },
+    decrement() {
+      if (this.quantityInCart === 1) {
+        this.removeLineItem(this.variantId)
+      } else {
+        this.decrementLineItem(this.variantId)
+      }
+    }
   }
 }
 </script>
