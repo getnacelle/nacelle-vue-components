@@ -1,5 +1,5 @@
 <template>
-  <section class="sbs">
+  <section class="sbs sbs-target">
     <div class="columns" :class="columnClasses">
       <div class="column is-half sbs-image">
         <img :src="imageUrl" alt="" />
@@ -82,7 +82,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .sbs .columns {
   margin-top: 0;
 
