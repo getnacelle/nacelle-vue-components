@@ -11,6 +11,11 @@ import SiteHeader from '../components/SiteHeader'
 storiesOf('Components | Site Header', module)
   .addDecorator(withInfo)
   .addDecorator(StoryRouter())
+  .addDecorator(() => {
+    return {
+      template: '<div style="height: 1600px;"><story/></div>',
+    }
+  })
   .add(
     'Default',
     () => ({

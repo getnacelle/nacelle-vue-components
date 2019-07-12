@@ -1,5 +1,5 @@
 <template>
-  <div class="site-header">
+  <div class="site-header" :class="{ 'is-sticky': isSticky }">
     <main-nav
       :logoSrc="logoSrc"
       :logoWidth="logoWidth"
@@ -40,6 +40,10 @@ export default {
     CartFlyoutItem
   },
   props: {
+    isSticky: {
+      type: Boolean,
+      default: true
+    },
     logoSrc: {
       type: String,
       default: 'https://nacelle-assets.s3-us-west-2.amazonaws.com/nacelle-logo-dark.png'
@@ -55,6 +59,14 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss">
+.site-header.is-sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background-color: #ffffff;
+}
 </style>
+

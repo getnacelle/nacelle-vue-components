@@ -60,24 +60,28 @@ export default {
   bottom: 0;
   right: 0;
   width: 28rem;
-  @media screen and (max-width: 786px) {
-    width: unset;
-  }
   background-color: #ffffff;
   border-left: 1px solid #dedede7a;
   box-shadow: 20px 0px 20px 20px #e6e6e6c4;
   z-index: 999;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+
   .cart-items {
     flex-grow: 5;
     overflow: scroll;
     -webkit-overflow-scrolling: touch;
   }
 }
+
 .slide-enter-active,
 .slide-leave-active {
   transition: transform 0.32s ease;
 }
+
 .slide-enter, .slide-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  transform: translateX(28rem);
+  transform: translateX(100%);
 }
 </style>
