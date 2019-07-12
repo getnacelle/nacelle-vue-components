@@ -82,38 +82,38 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .sbs .columns {
   margin-top: 0;
-  min-height: 400px;
+
+  @media screen and (min-width: 769px) {
+    min-height: 400px;
+  }
 
   &:last-child {
     margin-bottom: 0;
   }
 }
 
-.columns.is-column-reverse {
+.sbs .columns.is-column-reverse {
   @media screen and (min-width: 769px) {
     flex-direction: row-reverse;
   }
 }
 
-.columns.is-mobile-column-reverse {
+.sbs .columns.is-mobile-column-reverse {
   @media screen and (max-width: 768px) {
     display: flex;
     flex-direction: column-reverse;
   }
 }
 
-.sbs-image {
-  @media screen and (min-width: 769px) {
-    position: relative;
-    padding: 0;
+.column.sbs-image {
+  padding: 0;
 
-    img {
-      display: block;
-      width: 100%;
-    }
+  img {
+    display: block;
+    width: 100%;
   }
 }
 

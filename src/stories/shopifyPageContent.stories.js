@@ -7,25 +7,7 @@ import StoryRouter from 'storybook-vue-router'
 import ShopifyPageContent from '../components/ShopifyPageContent'
 
 import store from '../store/store'
-
-const defaultProduct = {
-  priceRange: {
-    max:'29.99'
-  },
-  title: 'Awesome T-Shirt',
-  category: "Men's Shirts",
-  featuredMedia: {
-    src:
-      'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
-  },
-  description:
-    "<p>This is the t-shirt description. It's a really nice item, isn't it? You can buy it in different colors and sizes.</p>",
-  id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM1OTkyMDE4NjE3Mzc=',
-  handle: 'gray-t-shirt',
-  variants: [{
-    id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
-  }]
-}
+import { defaultProduct } from '../../config/defaultObjects.js'
 
 const productArray = [
   defaultProduct,
@@ -37,7 +19,7 @@ const productArray = [
 ]
 
 const defaultObj = {
-  content: [
+  "content": [
     {
       "id": "Z2lkOi8vc2hvcGlmeS9BcnRpY2xlLzI5ODgzMDcyNjE3",
       "handle": "hero-banner",
@@ -52,7 +34,7 @@ const defaultObj = {
       "featuredMedia": {
         "id": "Z2lkOi8vc2hvcGlmeS9BcnRpY2xlSW1hZ2UvODcwODY4NTkyOQ==",
         "type": "image",
-        "src": "https://cdn.shopify.com/s/files/1/0248/6308/0553/articles/default-banner-img.png?v=1562087275&width=750"
+        "src": "https://source.unsplash.com/1400x600"
       },
       "fields": {
         "content": "This is the subtitle"
@@ -125,12 +107,11 @@ const defaultObj = {
   ]
 }
 
-storiesOf('Components | Content', module)
-  .addDecorator(withInfo)
+storiesOf('Components | Content / Shopify Page Content', module)
   .addDecorator(withKnobs)
   .addDecorator(StoryRouter())
   .add(
-    'Shopify Page Content',
+    'Example',
     () => ({
       components: { ShopifyPageContent },
       store,
@@ -145,12 +126,35 @@ storiesOf('Components | Content', module)
         }
       },
       template: `<shopify-page-content :content="shopifyData.content" :products="products" />`
-    }),
-    {
-      info: {
-        summary: `
-          Takes Shopify content data and turns it into section blocks.
-        `
-      }
-    }
+    })
+  )
+
+storiesOf('Components | Content / Shopify Page Content', module)
+  .addDecorator(withKnobs)
+  .addDecorator(StoryRouter())
+  .add(
+    'Custom',
+    () => ({
+      components: { ShopifyPageContent },
+      store,
+      props: {
+        shopifyData: {
+          default: object('Shopify Data', defaultObj)
+        }
+      },
+      data() {
+        return {
+          products: productArray
+        }
+      },
+      template: `
+        <shopify-page-content :content="shopifyData.content" :products="products">
+          <template v-slot:default="slotProps">
+            <div v-for="section in slotProps.content">
+              {{ section.title }}
+            </div>
+          </template>
+        </shopify-page-content>
+      `
+    })
   )

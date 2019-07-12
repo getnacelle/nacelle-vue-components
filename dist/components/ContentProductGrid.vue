@@ -4,7 +4,7 @@
       <h3 class="title has-text-centered">
         {{ title }}
       </h3>
-      <product-grid :products="products" />
+      <product-grid :products="products" :columns="columns" />
     </div>
   </div>
 </template>
@@ -24,6 +24,10 @@ export default {
     products: {
       type: Array,
       default: () => []
+    },
+    columns: {
+      type: Number,
+      default: 4
     }
   }
 }

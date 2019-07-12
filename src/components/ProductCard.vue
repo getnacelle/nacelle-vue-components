@@ -133,7 +133,7 @@ export default {
 }
 
 .product-card-details /deep/ a {
-  flex-basis: 60%;
+  flex-basis: 80%;
 }
 </style>
 
