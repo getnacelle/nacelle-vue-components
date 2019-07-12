@@ -1,6 +1,8 @@
 <template>
   <div class="product-card">
-    <product-image :source="mediaSrc"/>
+    <router-link :to="`${pathFragment}${product.handle}`">
+      <product-image :source="mediaSrc"/>
+    </router-link>
     <div class="product-card-details">
       <router-link :to="`${pathFragment}${product.handle}`">
         <product-title :title="product.title"/>
@@ -11,7 +13,13 @@
       v-if="product && product.id"
       class="product-card-actions"
     >
-      <product-quantity-update :variantId="currentVariantId" />
+      <product-quantity-update
+        :image="product.featuredMedia"
+        :title="product.title"
+        :productId="product.id"
+        :handle="product.handle"
+        :variant="currentVariant"
+      />
       <product-add-to-cart-button 
         :image="product.featuredMedia"
         :title="product.title"
@@ -98,6 +106,16 @@ export default {
       }
 
       return undefined
+    },
+    cartProduct() {
+      return {
+        image: this.product.featuredMedia,
+        title: this.product.title,
+        productId: this.product.id,
+        price: this.currentPrice,
+        handle: this.product.handle,
+        variant: this.currentVariant
+      }
     }
   },
   methods: {
