@@ -3,7 +3,7 @@
     callback: visibilityChanged,
     once: true,
   }">
-    <img v-if="visible" :src="source" :alt="alt" :width="width">
+    <img v-if="visibility" :src="source" :alt="alt" :width="width">
   </div>
 </template>
 
@@ -25,11 +25,24 @@ export default {
     },
     width: {
       type: Number
+    },
+    observeVisibility: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
     return {
       visible: false
+    }
+  },
+  computed: {
+    visibility() {
+      if (this.observeVisibility) {
+        return this.visible
+      }
+
+      return true
     }
   },
   methods: {
