@@ -28,7 +28,7 @@
           >
             {{ subtitle}}
           </h3>
-          <p>
+          <p v-if="ctaText.length > 0">
             <slot name="cta">
               <cta-button :to="ctaUrl" @clicked="ctaHandler">
                 {{ ctaText }}
