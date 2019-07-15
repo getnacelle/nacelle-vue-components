@@ -42,7 +42,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run: npm run build-library
-      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      - run: npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
       - run: npm publish
 
 workflows:
