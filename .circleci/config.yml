@@ -49,7 +49,10 @@ workflows:
   version: 2
   test_and_build:
     jobs:
-      - test
+      - test:
+          filters:
+            tags:
+              only: /.*/
       - deploy:
           requires:
             - test
