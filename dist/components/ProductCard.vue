@@ -1,32 +1,31 @@
 <template>
   <div class="product-card">
     <router-link :to="`${pathFragment}${product.handle}`">
-      <product-image :source="mediaSrc"/>
+      <product-image :source="mediaSrc" />
     </router-link>
     <div class="product-card-details">
       <router-link :to="`${pathFragment}${product.handle}`">
-        <product-title :title="product.title"/>
+        <product-title :title="product.title" />
       </router-link>
       <product-price :price="product.priceRange.max" />
     </div>
-    <div
-      v-if="product && product.id"
-      class="product-card-actions"
-    >
+    <div v-if="product && product.id" class="product-card-actions">
       <product-quantity-update
         :image="product.featuredMedia"
         :title="product.title"
         :productId="product.id"
         :handle="product.handle"
         :variant="currentVariant"
+        v-if="showQuantityUpdate == true"
       />
-      <product-add-to-cart-button 
+      <product-add-to-cart-button
         :image="product.featuredMedia"
         :title="product.title"
         :productId="product.id"
         :handle="product.handle"
         :variant="currentVariant"
         @click.native="showCart"
+        v-if="showAddToCart == true"
       />
     </div>
   </div>
@@ -70,6 +69,14 @@ export default {
           variants: []
         }
       }
+    },
+    showQuantityUpdate: {
+      type: Boolean,
+      default: true
+    },
+    showAddToCart: {
+      type: Boolean,
+      default: true
     }
   },
   data() {

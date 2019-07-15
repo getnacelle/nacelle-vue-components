@@ -22,5 +22,6 @@ export default {
 <style lang='scss' scoped>
 img {
   width: 1rem;
+  cursor: pointer;
 }
 </style>
