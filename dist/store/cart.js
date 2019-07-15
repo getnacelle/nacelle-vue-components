@@ -10,7 +10,7 @@ const cart = (options = {}) => {
       lineItems: [],
       checkoutId: null,
       checkoutComplete: false,
-      cartVisible: true,
+      cartVisible: false,
       freeShippingThreshold: null,
       error: false
     },
@@ -21,7 +21,7 @@ const cart = (options = {}) => {
             return acc + item.quantity
           }, 0)
         }
-        
+
         return 0
       },
       cartSubtotal(state) {

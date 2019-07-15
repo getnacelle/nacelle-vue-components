@@ -10,6 +10,7 @@ import BlogContent from './components/BlogContent.vue'
 import BlogHeader from './components/BlogHeader.vue'
 import BlogHeroImage from './components/BlogHeroImage.vue'
 import BlogPublishDate from './components/BlogPublishDate.vue'
+import BrandHeader from './components/BrandHeader.vue'
 import CartFlyout from './components/CartFlyout.vue'
 import CartFlyoutCheckoutButton from './components/CartFlyoutCheckoutButton.vue'
 import CartFlyoutHeader from './components/CartFlyoutHeader.vue'
@@ -24,6 +25,8 @@ import ContentTestimonial from './components/ContentTestimonial.vue'
 import ContentTestimonials from './components/ContentTestimonials.vue'
 import CtaButton from './components/CtaButton.vue'
 import InterfaceCloseButton from './components/InterfaceCloseButton.vue'
+import InterfaceIcon from './components/InterfaceIcon.vue'
+import InterfaceLogo from './components/InterfaceLogo.vue'
 import MainNav from './components/MainNav.vue'
 import MainNavBurger from './components/MainNavBurger.vue'
 import MainNavCart from './components/MainNavCart.vue'
@@ -46,7 +49,7 @@ import SiteHeader from './components/SiteHeader.vue'
 import Spinner from './components/Spinner.vue'
 
 // Export components individually
-export { BlogAuthor, BlogCategoryLabel, BlogContent, BlogHeader, BlogHeroImage, BlogPublishDate, CartFlyout, CartFlyoutCheckoutButton, CartFlyoutHeader, CartFlyoutItem, CartFlyoutItemRemoveButton, CartFlyoutMessaging, CartFlyoutSubtotal, ContentHeroBanner, ContentProductGrid, ContentSideBySide, ContentTestimonial, ContentTestimonials, CtaButton, InterfaceCloseButton, MainNav, MainNavBurger, MainNavCart, MainNavFlyout, MessagingFreeShippingCounter, ProductAddToCartButton, ProductCard, ProductCategory, ProductDescription, ProductGrid, ProductImage, ProductMediaSelectView, ProductPrice, ProductQuantityUpdate, ProductTitle, ProductVariantTitle, ProductVideo, ShopifyPageContent, SiteHeader, Spinner }
+export { BlogAuthor, BlogCategoryLabel, BlogContent, BlogHeader, BlogHeroImage, BlogPublishDate, BrandHeader, CartFlyout, CartFlyoutCheckoutButton, CartFlyoutHeader, CartFlyoutItem, CartFlyoutItemRemoveButton, CartFlyoutMessaging, CartFlyoutSubtotal, ContentHeroBanner, ContentProductGrid, ContentSideBySide, ContentTestimonial, ContentTestimonials, CtaButton, InterfaceCloseButton, InterfaceIcon, InterfaceLogo, MainNav, MainNavBurger, MainNavCart, MainNavFlyout, MessagingFreeShippingCounter, ProductAddToCartButton, ProductCard, ProductCategory, ProductDescription, ProductGrid, ProductImage, ProductMediaSelectView, ProductPrice, ProductQuantityUpdate, ProductTitle, ProductVariantTitle, ProductVideo, ShopifyPageContent, SiteHeader, Spinner }
 
 // What should happen if the user installs the library as a plugin
 function install(Vue) {
@@ -56,6 +59,7 @@ function install(Vue) {
   Vue.component('BlogHeader', BlogHeader)
   Vue.component('BlogHeroImage', BlogHeroImage)
   Vue.component('BlogPublishDate', BlogPublishDate)
+  Vue.component('BrandHeader', BrandHeader)
   Vue.component('CartFlyout', CartFlyout)
   Vue.component('CartFlyoutCheckoutButton', CartFlyoutCheckoutButton)
   Vue.component('CartFlyoutHeader', CartFlyoutHeader)
@@ -70,6 +74,8 @@ function install(Vue) {
   Vue.component('ContentTestimonials', ContentTestimonials)
   Vue.component('CtaButton', CtaButton)
   Vue.component('InterfaceCloseButton', InterfaceCloseButton)
+  Vue.component('InterfaceIcon', InterfaceIcon)
+  Vue.component('InterfaceLogo', InterfaceLogo)
   Vue.component('MainNav', MainNav)
   Vue.component('MainNavBurger', MainNavBurger)
   Vue.component('MainNavCart', MainNavCart)

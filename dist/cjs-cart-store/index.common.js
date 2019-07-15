@@ -2906,7 +2906,7 @@ exports.f = __webpack_require__("9e1e") ? Object.defineProperty : function defin
 /* harmony import */ var core_js_modules_es6_array_for_each__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es6_array_for_each__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("96cf");
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Users_andrewlaskey_Documents_Work_Shopelf_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("3b8d");
+/* harmony import */ var _Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("3b8d");
 /* harmony import */ var core_js_modules_es6_array_find_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("20d6");
 /* harmony import */ var core_js_modules_es6_array_find_index__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es6_array_find_index__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var core_js_modules_es6_array_map__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("6d67");
@@ -2939,7 +2939,7 @@ var cart = function cart() {
       lineItems: [],
       checkoutId: null,
       checkoutComplete: false,
-      cartVisible: true,
+      cartVisible: false,
       freeShippingThreshold: null,
       error: false
     },
@@ -3055,7 +3055,7 @@ var cart = function cart() {
     },
     actions: {
       addLineItem: function () {
-        var _addLineItem = Object(_Users_andrewlaskey_Documents_Work_Shopelf_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        var _addLineItem = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
         /*#__PURE__*/
         regeneratorRuntime.mark(function _callee(context, payload) {
           return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -3080,7 +3080,7 @@ var cart = function cart() {
         return addLineItem;
       }(),
       removeLineItem: function () {
-        var _removeLineItem = Object(_Users_andrewlaskey_Documents_Work_Shopelf_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        var _removeLineItem = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
         /*#__PURE__*/
         regeneratorRuntime.mark(function _callee2(context, payload) {
           return regeneratorRuntime.wrap(function _callee2$(_context2) {
@@ -3105,7 +3105,7 @@ var cart = function cart() {
         return removeLineItem;
       }(),
       incrementLineItem: function () {
-        var _incrementLineItem = Object(_Users_andrewlaskey_Documents_Work_Shopelf_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        var _incrementLineItem = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
         /*#__PURE__*/
         regeneratorRuntime.mark(function _callee3(context, payload) {
           return regeneratorRuntime.wrap(function _callee3$(_context3) {
@@ -3130,7 +3130,7 @@ var cart = function cart() {
         return incrementLineItem;
       }(),
       decrementLineItem: function () {
-        var _decrementLineItem = Object(_Users_andrewlaskey_Documents_Work_Shopelf_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        var _decrementLineItem = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
         /*#__PURE__*/
         regeneratorRuntime.mark(function _callee4(context, payload) {
           return regeneratorRuntime.wrap(function _callee4$(_context4) {
@@ -3155,7 +3155,7 @@ var cart = function cart() {
         return decrementLineItem;
       }(),
       saveLineItems: function () {
-        var _saveLineItems = Object(_Users_andrewlaskey_Documents_Work_Shopelf_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        var _saveLineItems = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
         /*#__PURE__*/
         regeneratorRuntime.mark(function _callee5(context) {
           return regeneratorRuntime.wrap(function _callee5$(_context5) {
@@ -3179,7 +3179,7 @@ var cart = function cart() {
         return saveLineItems;
       }(),
       getLineItems: function () {
-        var _getLineItems = Object(_Users_andrewlaskey_Documents_Work_Shopelf_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        var _getLineItems = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
         /*#__PURE__*/
         regeneratorRuntime.mark(function _callee6(context) {
           var lineItems;
@@ -3212,7 +3212,7 @@ var cart = function cart() {
         return getLineItems;
       }(),
       saveCheckoutId: function () {
-        var _saveCheckoutId = Object(_Users_andrewlaskey_Documents_Work_Shopelf_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        var _saveCheckoutId = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
         /*#__PURE__*/
         regeneratorRuntime.mark(function _callee7(context, payload) {
           return regeneratorRuntime.wrap(function _callee7$(_context7) {
@@ -3236,7 +3236,7 @@ var cart = function cart() {
         return saveCheckoutId;
       }(),
       getCheckoutId: function () {
-        var _getCheckoutId = Object(_Users_andrewlaskey_Documents_Work_Shopelf_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        var _getCheckoutId = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
         /*#__PURE__*/
         regeneratorRuntime.mark(function _callee8(context) {
           var checkoutId;
@@ -3273,7 +3273,7 @@ var cart = function cart() {
         return getCheckoutId;
       }(),
       verifyCheckoutStatus: function () {
-        var _verifyCheckoutStatus = Object(_Users_andrewlaskey_Documents_Work_Shopelf_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        var _verifyCheckoutStatus = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
         /*#__PURE__*/
         regeneratorRuntime.mark(function _callee9(context) {
           var checkoutStatus;
@@ -3324,7 +3324,7 @@ var cart = function cart() {
         return verifyCheckoutStatus;
       }(),
       removeLineItemsIfCheckoutComplete: function () {
-        var _removeLineItemsIfCheckoutComplete = Object(_Users_andrewlaskey_Documents_Work_Shopelf_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        var _removeLineItemsIfCheckoutComplete = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
         /*#__PURE__*/
         regeneratorRuntime.mark(function _callee10(context) {
           return regeneratorRuntime.wrap(function _callee10$(_context10) {
@@ -3358,7 +3358,7 @@ var cart = function cart() {
         return removeLineItemsIfCheckoutComplete;
       }(),
       updateLocalCart: function () {
-        var _updateLocalCart = Object(_Users_andrewlaskey_Documents_Work_Shopelf_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        var _updateLocalCart = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
         /*#__PURE__*/
         regeneratorRuntime.mark(function _callee11(context) {
           return regeneratorRuntime.wrap(function _callee11$(_context11) {
@@ -3391,7 +3391,7 @@ var cart = function cart() {
         return updateLocalCart;
       }(),
       createCheckoutArray: function () {
-        var _createCheckoutArray = Object(_Users_andrewlaskey_Documents_Work_Shopelf_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        var _createCheckoutArray = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
         /*#__PURE__*/
         regeneratorRuntime.mark(function _callee12(_ref) {
           var getters, lineItems;
@@ -3421,7 +3421,7 @@ var cart = function cart() {
         return createCheckoutArray;
       }(),
       getCheckoutIdForBackend: function () {
-        var _getCheckoutIdForBackend = Object(_Users_andrewlaskey_Documents_Work_Shopelf_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        var _getCheckoutIdForBackend = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
         /*#__PURE__*/
         regeneratorRuntime.mark(function _callee13(_ref2) {
           var state, checkoutId;
@@ -3454,7 +3454,7 @@ var cart = function cart() {
         return getCheckoutIdForBackend;
       }(),
       saveAndRedirect: function () {
-        var _saveAndRedirect = Object(_Users_andrewlaskey_Documents_Work_Shopelf_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        var _saveAndRedirect = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
         /*#__PURE__*/
         regeneratorRuntime.mark(function _callee14(_ref3, payload) {
           var dispatch;
@@ -3490,7 +3490,7 @@ var cart = function cart() {
         return saveAndRedirect;
       }(),
       processCheckout: function () {
-        var _processCheckout = Object(_Users_andrewlaskey_Documents_Work_Shopelf_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        var _processCheckout = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
         /*#__PURE__*/
         regeneratorRuntime.mark(function _callee15(_ref4) {
           var state, dispatch, commit, lineItems, checkoutId, processCheckoutObject;
