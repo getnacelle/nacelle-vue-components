@@ -2915,7 +2915,7 @@ exports.f = __webpack_require__("9e1e") ? Object.defineProperty : function defin
 /* harmony import */ var core_js_modules_es6_array_for_each__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es6_array_for_each__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("96cf");
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("3b8d");
+/* harmony import */ var _Users_andrewlaskey_Documents_Work_ShopElf_nacelle_projects_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("3b8d");
 /* harmony import */ var core_js_modules_es6_array_find_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("20d6");
 /* harmony import */ var core_js_modules_es6_array_find_index__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es6_array_find_index__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var core_js_modules_es6_array_map__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("6d67");
@@ -2935,611 +2935,630 @@ exports.f = __webpack_require__("9e1e") ? Object.defineProperty : function defin
 
 
 
-var endpoint = 'https://hailfrequency.com/graphql/v1/space/12345';
-var token = 'defAValidToken';
-var cart = {
-  namespaced: true,
-  state: {
-    lineItems: [],
-    checkoutId: null,
-    checkoutComplete: false,
-    cartVisible: true,
-    freeShippingThreshold: null,
-    error: false
-  },
-  getters: {
-    cartSubtotal: function cartSubtotal(state) {
-      if (state.lineItems.length >= 1) {
-        return state.lineItems.reduce(function (acc, item) {
-          return acc + item.variant.price * item.quantity;
-        }, 0);
-      } else {
+
+var cart = function cart() {
+  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var _options$endpoint = options.endpoint,
+      endpoint = _options$endpoint === void 0 ? '' : _options$endpoint,
+      _options$token = options.token,
+      token = _options$token === void 0 ? '' : _options$token;
+  return {
+    namespaced: true,
+    state: {
+      lineItems: [],
+      checkoutId: null,
+      checkoutComplete: false,
+      cartVisible: true,
+      freeShippingThreshold: null,
+      error: false
+    },
+    getters: {
+      quantityTotal: function quantityTotal(state) {
+        if (state.lineItems.length >= 1) {
+          return state.lineItems.reduce(function (acc, item) {
+            return acc + item.quantity;
+          }, 0);
+        }
+
         return 0;
-      }
-    },
-    freeShippingThresholdPassed: function freeShippingThresholdPassed(state, getters) {
-      if (getters.cartSubtotal && state.freeShippingThreshold && getters.cartSubtotal > state.freeShippingThreshold) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-    amountUntilFreeShipping: function amountUntilFreeShipping(state, getters) {
-      if (getters.cartSubtotal != null && state.freeShippingThreshold) {
-        return state.freeShippingThreshold - getters.cartSubtotal;
-      }
-    },
-    checkoutLineItems: function checkoutLineItems(state) {
-      if (state.lineItems.length > 0) {
-        return state.lineItems.map(function (lineItem) {
-          return {
-            variantId: lineItem.variant.id,
-            quantity: lineItem.quantity
-          };
-        });
-      } else {
-        return [];
-      }
-    }
-  },
-  mutations: {
-    addLineItemMutation: function addLineItemMutation(state, payload) {
-      var index = state.lineItems.findIndex(function (lineItem) {
-        return lineItem.variant.id == payload.variant.id;
-      });
+      },
+      cartSubtotal: function cartSubtotal(state) {
+        if (state.lineItems.length >= 1) {
+          return state.lineItems.reduce(function (acc, item) {
+            return acc + item.variant.price * item.quantity;
+          }, 0);
+        }
 
-      if (index == -1) {
-        state.lineItems.push(payload);
-      } else {
-        state.lineItems[index].quantity++;
-      }
-    },
-    removeLineItemMutation: function removeLineItemMutation(state, payload) {
-      var index = state.lineItems.findIndex(function (lineItem) {
-        return lineItem.variant.id == payload;
-      });
-      state.lineItems.splice(index, 1);
-    },
-    incrementLineItemMutation: function incrementLineItemMutation(state, payload) {
-      var index = state.lineItems.findIndex(function (lineItem) {
-        return lineItem.variant.id == payload;
-      });
-
-      if (index != -1) {
-        state.lineItems[index].quantity++;
-      }
-    },
-    decrementLineItemMutation: function decrementLineItemMutation(state, payload) {
-      var index = state.lineItems.findIndex(function (lineItem) {
-        return lineItem.variant.id == payload;
-      });
-
-      if (index != -1 && state.lineItems[index].quantity >= 1) {
-        state.lineItems[index].quantity--;
-
-        if (state.lineItems[index].quantity == 0) {
-          state.lineItems.splice(index, 1);
+        return 0;
+      },
+      freeShippingThresholdPassed: function freeShippingThresholdPassed(state, getters) {
+        if (getters.cartSubtotal && state.freeShippingThreshold && getters.cartSubtotal > state.freeShippingThreshold) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      amountUntilFreeShipping: function amountUntilFreeShipping(state, getters) {
+        if (getters.cartSubtotal != null && state.freeShippingThreshold) {
+          return state.freeShippingThreshold - getters.cartSubtotal;
+        }
+      },
+      checkoutLineItems: function checkoutLineItems(state) {
+        if (state.lineItems.length > 0) {
+          return state.lineItems.map(function (lineItem) {
+            return {
+              variantId: lineItem.variant.id,
+              quantity: lineItem.quantity
+            };
+          });
+        } else {
+          return [];
         }
       }
     },
-    setLineItems: function setLineItems(state, payload) {
-      state.lineItems.splice(0);
-      state.lineItems = payload;
+    mutations: {
+      addLineItemMutation: function addLineItemMutation(state, payload) {
+        var index = state.lineItems.findIndex(function (lineItem) {
+          return lineItem.variant.id == payload.variant.id;
+        });
+
+        if (index == -1) {
+          state.lineItems.push(payload);
+        } else {
+          state.lineItems[index].quantity++;
+        }
+      },
+      removeLineItemMutation: function removeLineItemMutation(state, payload) {
+        var index = state.lineItems.findIndex(function (lineItem) {
+          return lineItem.variant.id == payload;
+        });
+        state.lineItems.splice(index, 1);
+      },
+      incrementLineItemMutation: function incrementLineItemMutation(state, payload) {
+        var index = state.lineItems.findIndex(function (lineItem) {
+          return lineItem.variant.id == payload;
+        });
+
+        if (index != -1) {
+          state.lineItems[index].quantity++;
+        }
+      },
+      decrementLineItemMutation: function decrementLineItemMutation(state, payload) {
+        var index = state.lineItems.findIndex(function (lineItem) {
+          return lineItem.variant.id == payload;
+        });
+
+        if (index != -1 && state.lineItems[index].quantity >= 1) {
+          state.lineItems[index].quantity--;
+
+          if (state.lineItems[index].quantity == 0) {
+            state.lineItems.splice(index, 1);
+          }
+        }
+      },
+      setLineItems: function setLineItems(state, payload) {
+        state.lineItems.splice(0);
+        state.lineItems = payload;
+      },
+      setCheckoutId: function setCheckoutId(state, payload) {
+        state.checkoutId = payload;
+      },
+      setCheckoutCompleteStatus: function setCheckoutCompleteStatus(state, payload) {
+        state.checkoutComplete = payload;
+      },
+      showCart: function showCart(state) {
+        state.cartVisible = true;
+      },
+      hideCart: function hideCart(state) {
+        state.cartVisible = false;
+      },
+      toggleCart: function toggleCart(state) {
+        state.cartVisible = !state.cartVisible;
+      },
+      setFreeShippingThreshold: function setFreeShippingThreshold(state, payload) {
+        state.freeShippingThreshold = payload;
+      },
+      setCartError: function setCartError(state) {
+        state.error = true;
+      }
     },
-    setCheckoutId: function setCheckoutId(state, payload) {
-      state.checkoutId = payload;
-    },
-    setCheckoutCompleteStatus: function setCheckoutCompleteStatus(state, payload) {
-      state.checkoutComplete = payload;
-    },
-    showCart: function showCart(state) {
-      state.cartVisible = true;
-    },
-    hideCart: function hideCart(state) {
-      state.cartVisible = false;
-    },
-    setFreeShippingThreshold: function setFreeShippingThreshold(state, payload) {
-      state.freeShippingThreshold = payload;
-    },
-    setCartError: function setCartError(state) {
-      state.error = true;
-    }
-  },
-  actions: {
-    addLineItem: function () {
-      var _addLineItem = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee(context, payload) {
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                context.commit('addLineItemMutation', payload);
-                context.dispatch('saveLineItems', context.state.lineItems);
+    actions: {
+      addLineItem: function () {
+        var _addLineItem = Object(_Users_andrewlaskey_Documents_Work_ShopElf_nacelle_projects_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        /*#__PURE__*/
+        regeneratorRuntime.mark(function _callee(context, payload) {
+          return regeneratorRuntime.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  context.commit('addLineItemMutation', payload);
+                  context.dispatch('saveLineItems', context.state.lineItems);
 
-              case 2:
-              case "end":
-                return _context.stop();
+                case 2:
+                case "end":
+                  return _context.stop();
+              }
             }
-          }
-        }, _callee);
-      }));
+          }, _callee);
+        }));
 
-      function addLineItem(_x, _x2) {
-        return _addLineItem.apply(this, arguments);
-      }
+        function addLineItem(_x, _x2) {
+          return _addLineItem.apply(this, arguments);
+        }
 
-      return addLineItem;
-    }(),
-    removeLineItem: function () {
-      var _removeLineItem = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee2(context, payload) {
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                context.commit('removeLineItemMutation', payload);
-                context.dispatch('saveLineItems', context.state.lineItems);
+        return addLineItem;
+      }(),
+      removeLineItem: function () {
+        var _removeLineItem = Object(_Users_andrewlaskey_Documents_Work_ShopElf_nacelle_projects_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        /*#__PURE__*/
+        regeneratorRuntime.mark(function _callee2(context, payload) {
+          return regeneratorRuntime.wrap(function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
+                  context.commit('removeLineItemMutation', payload);
+                  context.dispatch('saveLineItems', context.state.lineItems);
 
-              case 2:
-              case "end":
-                return _context2.stop();
+                case 2:
+                case "end":
+                  return _context2.stop();
+              }
             }
-          }
-        }, _callee2);
-      }));
+          }, _callee2);
+        }));
 
-      function removeLineItem(_x3, _x4) {
-        return _removeLineItem.apply(this, arguments);
-      }
+        function removeLineItem(_x3, _x4) {
+          return _removeLineItem.apply(this, arguments);
+        }
 
-      return removeLineItem;
-    }(),
-    incrementLineItem: function () {
-      var _incrementLineItem = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee3(context, payload) {
-        return regeneratorRuntime.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                context.commit('incrementLineItemMutation', payload);
-                context.dispatch('saveLineItems', context.state.lineItems);
+        return removeLineItem;
+      }(),
+      incrementLineItem: function () {
+        var _incrementLineItem = Object(_Users_andrewlaskey_Documents_Work_ShopElf_nacelle_projects_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        /*#__PURE__*/
+        regeneratorRuntime.mark(function _callee3(context, payload) {
+          return regeneratorRuntime.wrap(function _callee3$(_context3) {
+            while (1) {
+              switch (_context3.prev = _context3.next) {
+                case 0:
+                  context.commit('incrementLineItemMutation', payload);
+                  context.dispatch('saveLineItems', context.state.lineItems);
 
-              case 2:
-              case "end":
-                return _context3.stop();
+                case 2:
+                case "end":
+                  return _context3.stop();
+              }
             }
-          }
-        }, _callee3);
-      }));
+          }, _callee3);
+        }));
 
-      function incrementLineItem(_x5, _x6) {
-        return _incrementLineItem.apply(this, arguments);
-      }
+        function incrementLineItem(_x5, _x6) {
+          return _incrementLineItem.apply(this, arguments);
+        }
 
-      return incrementLineItem;
-    }(),
-    decrementLineItem: function () {
-      var _decrementLineItem = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee4(context, payload) {
-        return regeneratorRuntime.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                context.commit('decrementLineItemMutation', payload);
-                context.dispatch('saveLineItems', context.state.lineItems);
+        return incrementLineItem;
+      }(),
+      decrementLineItem: function () {
+        var _decrementLineItem = Object(_Users_andrewlaskey_Documents_Work_ShopElf_nacelle_projects_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        /*#__PURE__*/
+        regeneratorRuntime.mark(function _callee4(context, payload) {
+          return regeneratorRuntime.wrap(function _callee4$(_context4) {
+            while (1) {
+              switch (_context4.prev = _context4.next) {
+                case 0:
+                  context.commit('decrementLineItemMutation', payload);
+                  context.dispatch('saveLineItems', context.state.lineItems);
 
-              case 2:
-              case "end":
-                return _context4.stop();
+                case 2:
+                case "end":
+                  return _context4.stop();
+              }
             }
-          }
-        }, _callee4);
-      }));
+          }, _callee4);
+        }));
 
-      function decrementLineItem(_x7, _x8) {
-        return _decrementLineItem.apply(this, arguments);
-      }
+        function decrementLineItem(_x7, _x8) {
+          return _decrementLineItem.apply(this, arguments);
+        }
 
-      return decrementLineItem;
-    }(),
-    saveLineItems: function () {
-      var _saveLineItems = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee5(context) {
-        return regeneratorRuntime.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                localforage__WEBPACK_IMPORTED_MODULE_7___default.a.setItem('line-items', context.state.lineItems);
+        return decrementLineItem;
+      }(),
+      saveLineItems: function () {
+        var _saveLineItems = Object(_Users_andrewlaskey_Documents_Work_ShopElf_nacelle_projects_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        /*#__PURE__*/
+        regeneratorRuntime.mark(function _callee5(context) {
+          return regeneratorRuntime.wrap(function _callee5$(_context5) {
+            while (1) {
+              switch (_context5.prev = _context5.next) {
+                case 0:
+                  localforage__WEBPACK_IMPORTED_MODULE_7___default.a.setItem('line-items', context.state.lineItems);
 
-              case 1:
-              case "end":
-                return _context5.stop();
+                case 1:
+                case "end":
+                  return _context5.stop();
+              }
             }
-          }
-        }, _callee5);
-      }));
+          }, _callee5);
+        }));
 
-      function saveLineItems(_x9) {
-        return _saveLineItems.apply(this, arguments);
-      }
+        function saveLineItems(_x9) {
+          return _saveLineItems.apply(this, arguments);
+        }
 
-      return saveLineItems;
-    }(),
-    getLineItems: function () {
-      var _getLineItems = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee6(context) {
-        var lineItems;
-        return regeneratorRuntime.wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                _context6.next = 2;
-                return localforage__WEBPACK_IMPORTED_MODULE_7___default.a.getItem('line-items');
+        return saveLineItems;
+      }(),
+      getLineItems: function () {
+        var _getLineItems = Object(_Users_andrewlaskey_Documents_Work_ShopElf_nacelle_projects_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        /*#__PURE__*/
+        regeneratorRuntime.mark(function _callee6(context) {
+          var lineItems;
+          return regeneratorRuntime.wrap(function _callee6$(_context6) {
+            while (1) {
+              switch (_context6.prev = _context6.next) {
+                case 0:
+                  _context6.next = 2;
+                  return localforage__WEBPACK_IMPORTED_MODULE_7___default.a.getItem('line-items');
 
-              case 2:
-                lineItems = _context6.sent;
+                case 2:
+                  lineItems = _context6.sent;
 
-                if (lineItems != null) {
-                  context.commit('setLineItems', lineItems);
-                }
-
-              case 4:
-              case "end":
-                return _context6.stop();
-            }
-          }
-        }, _callee6);
-      }));
-
-      function getLineItems(_x10) {
-        return _getLineItems.apply(this, arguments);
-      }
-
-      return getLineItems;
-    }(),
-    saveCheckoutId: function () {
-      var _saveCheckoutId = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee7(context, payload) {
-        return regeneratorRuntime.wrap(function _callee7$(_context7) {
-          while (1) {
-            switch (_context7.prev = _context7.next) {
-              case 0:
-                localforage__WEBPACK_IMPORTED_MODULE_7___default.a.setItem('checkout-id', payload);
-
-              case 1:
-              case "end":
-                return _context7.stop();
-            }
-          }
-        }, _callee7);
-      }));
-
-      function saveCheckoutId(_x11, _x12) {
-        return _saveCheckoutId.apply(this, arguments);
-      }
-
-      return saveCheckoutId;
-    }(),
-    getCheckoutId: function () {
-      var _getCheckoutId = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee8(context) {
-        var checkoutId;
-        return regeneratorRuntime.wrap(function _callee8$(_context8) {
-          while (1) {
-            switch (_context8.prev = _context8.next) {
-              case 0:
-                _context8.next = 2;
-                return localforage__WEBPACK_IMPORTED_MODULE_7___default.a.getItem('checkout-id');
-
-              case 2:
-                checkoutId = _context8.sent;
-
-                if (!(checkoutId != null)) {
-                  _context8.next = 6;
-                  break;
-                }
-
-                context.commit('setCheckoutId', checkoutId);
-                return _context8.abrupt("return", checkoutId);
-
-              case 6:
-              case "end":
-                return _context8.stop();
-            }
-          }
-        }, _callee8);
-      }));
-
-      function getCheckoutId(_x13) {
-        return _getCheckoutId.apply(this, arguments);
-      }
-
-      return getCheckoutId;
-    }(),
-    verifyCheckoutStatus: function () {
-      var _verifyCheckoutStatus = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee9(context) {
-        var checkoutStatus;
-        return regeneratorRuntime.wrap(function _callee9$(_context9) {
-          while (1) {
-            switch (_context9.prev = _context9.next) {
-              case 0:
-                _context9.next = 2;
-                return context.dispatch('getCheckoutId');
-
-              case 2:
-                if (!(context.state.checkoutId != null)) {
-                  _context9.next = 7;
-                  break;
-                }
-
-                _context9.next = 5;
-                return axios__WEBPACK_IMPORTED_MODULE_8___default()({
-                  method: 'post',
-                  url: endpoint,
-                  headers: {
-                    'Content-Type': 'application/json',
-                    'x-nacelle-token': token
-                  },
-                  data: {
-                    query: "query {\n              getCheckout(id: \"".concat(context.state.checkoutId, "\") {\n                id\n                url\n                completed\n              }\n            }")
+                  if (lineItems != null) {
+                    context.commit('setLineItems', lineItems);
                   }
-                }).then(function (res) {
-                  return res.data.data.getCheckout.completed;
-                });
 
-              case 5:
-                checkoutStatus = _context9.sent;
-                context.commit('setCheckoutCompleteStatus', checkoutStatus);
-
-              case 7:
-              case "end":
-                return _context9.stop();
+                case 4:
+                case "end":
+                  return _context6.stop();
+              }
             }
-          }
-        }, _callee9);
-      }));
+          }, _callee6);
+        }));
 
-      function verifyCheckoutStatus(_x14) {
-        return _verifyCheckoutStatus.apply(this, arguments);
-      }
+        function getLineItems(_x10) {
+          return _getLineItems.apply(this, arguments);
+        }
 
-      return verifyCheckoutStatus;
-    }(),
-    removeLineItemsIfCheckoutComplete: function () {
-      var _removeLineItemsIfCheckoutComplete = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee10(context) {
-        return regeneratorRuntime.wrap(function _callee10$(_context10) {
-          while (1) {
-            switch (_context10.prev = _context10.next) {
-              case 0:
-                if (!(context.state.checkoutComplete == true)) {
+        return getLineItems;
+      }(),
+      saveCheckoutId: function () {
+        var _saveCheckoutId = Object(_Users_andrewlaskey_Documents_Work_ShopElf_nacelle_projects_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        /*#__PURE__*/
+        regeneratorRuntime.mark(function _callee7(context, payload) {
+          return regeneratorRuntime.wrap(function _callee7$(_context7) {
+            while (1) {
+              switch (_context7.prev = _context7.next) {
+                case 0:
+                  localforage__WEBPACK_IMPORTED_MODULE_7___default.a.setItem('checkout-id', payload);
+
+                case 1:
+                case "end":
+                  return _context7.stop();
+              }
+            }
+          }, _callee7);
+        }));
+
+        function saveCheckoutId(_x11, _x12) {
+          return _saveCheckoutId.apply(this, arguments);
+        }
+
+        return saveCheckoutId;
+      }(),
+      getCheckoutId: function () {
+        var _getCheckoutId = Object(_Users_andrewlaskey_Documents_Work_ShopElf_nacelle_projects_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        /*#__PURE__*/
+        regeneratorRuntime.mark(function _callee8(context) {
+          var checkoutId;
+          return regeneratorRuntime.wrap(function _callee8$(_context8) {
+            while (1) {
+              switch (_context8.prev = _context8.next) {
+                case 0:
+                  _context8.next = 2;
+                  return localforage__WEBPACK_IMPORTED_MODULE_7___default.a.getItem('checkout-id');
+
+                case 2:
+                  checkoutId = _context8.sent;
+
+                  if (!(checkoutId != null)) {
+                    _context8.next = 6;
+                    break;
+                  }
+
+                  context.commit('setCheckoutId', checkoutId);
+                  return _context8.abrupt("return", checkoutId);
+
+                case 6:
+                case "end":
+                  return _context8.stop();
+              }
+            }
+          }, _callee8);
+        }));
+
+        function getCheckoutId(_x13) {
+          return _getCheckoutId.apply(this, arguments);
+        }
+
+        return getCheckoutId;
+      }(),
+      verifyCheckoutStatus: function () {
+        var _verifyCheckoutStatus = Object(_Users_andrewlaskey_Documents_Work_ShopElf_nacelle_projects_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        /*#__PURE__*/
+        regeneratorRuntime.mark(function _callee9(context) {
+          var checkoutStatus;
+          return regeneratorRuntime.wrap(function _callee9$(_context9) {
+            while (1) {
+              switch (_context9.prev = _context9.next) {
+                case 0:
+                  _context9.next = 2;
+                  return context.dispatch('getCheckoutId');
+
+                case 2:
+                  if (!(context.state.checkoutId != null)) {
+                    _context9.next = 7;
+                    break;
+                  }
+
+                  _context9.next = 5;
+                  return axios__WEBPACK_IMPORTED_MODULE_8___default()({
+                    method: 'post',
+                    url: endpoint,
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'x-nacelle-token': token
+                    },
+                    data: {
+                      query: "query {\n                getCheckout(id: \"".concat(context.state.checkoutId, "\") {\n                  id\n                  url\n                  completed\n                }\n              }")
+                    }
+                  }).then(function (res) {
+                    return res.data.data.getCheckout.completed;
+                  });
+
+                case 5:
+                  checkoutStatus = _context9.sent;
+                  context.commit('setCheckoutCompleteStatus', checkoutStatus);
+
+                case 7:
+                case "end":
+                  return _context9.stop();
+              }
+            }
+          }, _callee9);
+        }));
+
+        function verifyCheckoutStatus(_x14) {
+          return _verifyCheckoutStatus.apply(this, arguments);
+        }
+
+        return verifyCheckoutStatus;
+      }(),
+      removeLineItemsIfCheckoutComplete: function () {
+        var _removeLineItemsIfCheckoutComplete = Object(_Users_andrewlaskey_Documents_Work_ShopElf_nacelle_projects_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        /*#__PURE__*/
+        regeneratorRuntime.mark(function _callee10(context) {
+          return regeneratorRuntime.wrap(function _callee10$(_context10) {
+            while (1) {
+              switch (_context10.prev = _context10.next) {
+                case 0:
+                  if (!(context.state.checkoutComplete == true)) {
+                    _context10.next = 5;
+                    break;
+                  }
+
+                  _context10.next = 3;
+                  return localforage__WEBPACK_IMPORTED_MODULE_7___default.a.removeItem('line-items');
+
+                case 3:
                   _context10.next = 5;
-                  break;
-                }
+                  return localforage__WEBPACK_IMPORTED_MODULE_7___default.a.removeItem('checkout-id');
 
-                _context10.next = 3;
-                return localforage__WEBPACK_IMPORTED_MODULE_7___default.a.removeItem('line-items');
-
-              case 3:
-                _context10.next = 5;
-                return localforage__WEBPACK_IMPORTED_MODULE_7___default.a.removeItem('checkout-id');
-
-              case 5:
-              case "end":
-                return _context10.stop();
+                case 5:
+                case "end":
+                  return _context10.stop();
+              }
             }
-          }
-        }, _callee10);
-      }));
+          }, _callee10);
+        }));
 
-      function removeLineItemsIfCheckoutComplete(_x15) {
-        return _removeLineItemsIfCheckoutComplete.apply(this, arguments);
-      }
+        function removeLineItemsIfCheckoutComplete(_x15) {
+          return _removeLineItemsIfCheckoutComplete.apply(this, arguments);
+        }
 
-      return removeLineItemsIfCheckoutComplete;
-    }(),
-    updateLocalCart: function () {
-      var _updateLocalCart = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee11(context) {
-        return regeneratorRuntime.wrap(function _callee11$(_context11) {
-          while (1) {
-            switch (_context11.prev = _context11.next) {
-              case 0:
-                _context11.next = 2;
-                return context.dispatch('verifyCheckoutStatus');
+        return removeLineItemsIfCheckoutComplete;
+      }(),
+      updateLocalCart: function () {
+        var _updateLocalCart = Object(_Users_andrewlaskey_Documents_Work_ShopElf_nacelle_projects_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        /*#__PURE__*/
+        regeneratorRuntime.mark(function _callee11(context) {
+          return regeneratorRuntime.wrap(function _callee11$(_context11) {
+            while (1) {
+              switch (_context11.prev = _context11.next) {
+                case 0:
+                  _context11.next = 2;
+                  return context.dispatch('verifyCheckoutStatus');
 
-              case 2:
-                _context11.next = 4;
-                return context.dispatch('removeLineItemsIfCheckoutComplete');
+                case 2:
+                  _context11.next = 4;
+                  return context.dispatch('removeLineItemsIfCheckoutComplete');
 
-              case 4:
-                _context11.next = 6;
-                return context.dispatch('getLineItems');
+                case 4:
+                  _context11.next = 6;
+                  return context.dispatch('getLineItems');
 
-              case 6:
-              case "end":
-                return _context11.stop();
+                case 6:
+                case "end":
+                  return _context11.stop();
+              }
             }
-          }
-        }, _callee11);
-      }));
+          }, _callee11);
+        }));
 
-      function updateLocalCart(_x16) {
-        return _updateLocalCart.apply(this, arguments);
-      }
+        function updateLocalCart(_x16) {
+          return _updateLocalCart.apply(this, arguments);
+        }
 
-      return updateLocalCart;
-    }(),
-    createCheckoutArray: function () {
-      var _createCheckoutArray = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee12(_ref) {
-        var getters, lineItems;
-        return regeneratorRuntime.wrap(function _callee12$(_context12) {
-          while (1) {
-            switch (_context12.prev = _context12.next) {
-              case 0:
-                getters = _ref.getters;
-                lineItems = '';
-                getters.checkoutLineItems.forEach(function (item) {
-                  lineItems += "{\n          variantId: \"".concat(item.variantId, "\",\n          quantity: ").concat(item.quantity, "\n        }");
-                });
-                return _context12.abrupt("return", lineItems);
+        return updateLocalCart;
+      }(),
+      createCheckoutArray: function () {
+        var _createCheckoutArray = Object(_Users_andrewlaskey_Documents_Work_ShopElf_nacelle_projects_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        /*#__PURE__*/
+        regeneratorRuntime.mark(function _callee12(_ref) {
+          var getters, lineItems;
+          return regeneratorRuntime.wrap(function _callee12$(_context12) {
+            while (1) {
+              switch (_context12.prev = _context12.next) {
+                case 0:
+                  getters = _ref.getters;
+                  lineItems = '';
+                  getters.checkoutLineItems.forEach(function (item) {
+                    lineItems += "{\n            variantId: \"".concat(item.variantId, "\",\n            quantity: ").concat(item.quantity, "\n          }");
+                  });
+                  return _context12.abrupt("return", lineItems);
 
-              case 4:
-              case "end":
-                return _context12.stop();
+                case 4:
+                case "end":
+                  return _context12.stop();
+              }
             }
-          }
-        }, _callee12);
-      }));
+          }, _callee12);
+        }));
 
-      function createCheckoutArray(_x17) {
-        return _createCheckoutArray.apply(this, arguments);
-      }
+        function createCheckoutArray(_x17) {
+          return _createCheckoutArray.apply(this, arguments);
+        }
 
-      return createCheckoutArray;
-    }(),
-    getCheckoutIdForBackend: function () {
-      var _getCheckoutIdForBackend = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee13(_ref2) {
-        var state, checkoutId;
-        return regeneratorRuntime.wrap(function _callee13$(_context13) {
-          while (1) {
-            switch (_context13.prev = _context13.next) {
-              case 0:
-                state = _ref2.state;
+        return createCheckoutArray;
+      }(),
+      getCheckoutIdForBackend: function () {
+        var _getCheckoutIdForBackend = Object(_Users_andrewlaskey_Documents_Work_ShopElf_nacelle_projects_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        /*#__PURE__*/
+        regeneratorRuntime.mark(function _callee13(_ref2) {
+          var state, checkoutId;
+          return regeneratorRuntime.wrap(function _callee13$(_context13) {
+            while (1) {
+              switch (_context13.prev = _context13.next) {
+                case 0:
+                  state = _ref2.state;
 
-                if (state.checkoutId == null) {
-                  checkoutId = '';
-                } else {
-                  checkoutId = state.checkoutId;
-                }
-
-                return _context13.abrupt("return", checkoutId);
-
-              case 3:
-              case "end":
-                return _context13.stop();
-            }
-          }
-        }, _callee13);
-      }));
-
-      function getCheckoutIdForBackend(_x18) {
-        return _getCheckoutIdForBackend.apply(this, arguments);
-      }
-
-      return getCheckoutIdForBackend;
-    }(),
-    saveAndRedirect: function () {
-      var _saveAndRedirect = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee14(_ref3, payload) {
-        var dispatch;
-        return regeneratorRuntime.wrap(function _callee14$(_context14) {
-          while (1) {
-            switch (_context14.prev = _context14.next) {
-              case 0:
-                dispatch = _ref3.dispatch;
-
-                if (!(payload && process.browser)) {
-                  _context14.next = 5;
-                  break;
-                }
-
-                _context14.next = 4;
-                return dispatch('saveCheckoutId', payload.id);
-
-              case 4:
-                window.location = payload.url;
-
-              case 5:
-              case "end":
-                return _context14.stop();
-            }
-          }
-        }, _callee14);
-      }));
-
-      function saveAndRedirect(_x19, _x20) {
-        return _saveAndRedirect.apply(this, arguments);
-      }
-
-      return saveAndRedirect;
-    }(),
-    processCheckout: function () {
-      var _processCheckout = Object(_Users_leviwhalen_Documents_nacelle_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee15(_ref4) {
-        var state, dispatch, commit, lineItems, checkoutId, processCheckoutObject;
-        return regeneratorRuntime.wrap(function _callee15$(_context15) {
-          while (1) {
-            switch (_context15.prev = _context15.next) {
-              case 0:
-                state = _ref4.state, dispatch = _ref4.dispatch, commit = _ref4.commit;
-                _context15.next = 3;
-                return dispatch('createCheckoutArray');
-
-              case 3:
-                lineItems = _context15.sent;
-                _context15.next = 6;
-                return dispatch('getCheckoutIdForBackend');
-
-              case 6:
-                checkoutId = _context15.sent;
-                _context15.next = 9;
-                return axios__WEBPACK_IMPORTED_MODULE_8___default()({
-                  method: 'post',
-                  url: endpoint,
-                  headers: {
-                    'Content-Type': 'application/json',
-                    'x-nacelle-token': token
-                  },
-                  data: {
-                    query: "mutation {\n          processCheckout(input: {cartItems: [".concat(lineItems, "], checkoutId: \"").concat(checkoutId, "\" }) {\n            id\n            url\n            completed\n          }\n        }")
+                  if (state.checkoutId == null) {
+                    checkoutId = '';
+                  } else {
+                    checkoutId = state.checkoutId;
                   }
-                }).then(function (res) {
-                  return res.data.data.processCheckout;
-                }).catch(function (err) {
-                  console.log(err);
-                  commit('setCartError');
-                });
 
-              case 9:
-                processCheckoutObject = _context15.sent;
-                _context15.next = 12;
-                return dispatch('saveAndRedirect', processCheckoutObject);
+                  return _context13.abrupt("return", checkoutId);
 
-              case 12:
-              case "end":
-                return _context15.stop();
+                case 3:
+                case "end":
+                  return _context13.stop();
+              }
             }
-          }
-        }, _callee15);
-      }));
+          }, _callee13);
+        }));
 
-      function processCheckout(_x21) {
-        return _processCheckout.apply(this, arguments);
-      }
+        function getCheckoutIdForBackend(_x18) {
+          return _getCheckoutIdForBackend.apply(this, arguments);
+        }
 
-      return processCheckout;
-    }()
-  }
+        return getCheckoutIdForBackend;
+      }(),
+      saveAndRedirect: function () {
+        var _saveAndRedirect = Object(_Users_andrewlaskey_Documents_Work_ShopElf_nacelle_projects_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        /*#__PURE__*/
+        regeneratorRuntime.mark(function _callee14(_ref3, payload) {
+          var dispatch;
+          return regeneratorRuntime.wrap(function _callee14$(_context14) {
+            while (1) {
+              switch (_context14.prev = _context14.next) {
+                case 0:
+                  dispatch = _ref3.dispatch;
+
+                  if (!(payload && process.browser)) {
+                    _context14.next = 5;
+                    break;
+                  }
+
+                  _context14.next = 4;
+                  return dispatch('saveCheckoutId', payload.id);
+
+                case 4:
+                  window.location = payload.url;
+
+                case 5:
+                case "end":
+                  return _context14.stop();
+              }
+            }
+          }, _callee14);
+        }));
+
+        function saveAndRedirect(_x19, _x20) {
+          return _saveAndRedirect.apply(this, arguments);
+        }
+
+        return saveAndRedirect;
+      }(),
+      processCheckout: function () {
+        var _processCheckout = Object(_Users_andrewlaskey_Documents_Work_ShopElf_nacelle_projects_nacelle_vue_components_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
+        /*#__PURE__*/
+        regeneratorRuntime.mark(function _callee15(_ref4) {
+          var state, dispatch, commit, lineItems, checkoutId, processCheckoutObject;
+          return regeneratorRuntime.wrap(function _callee15$(_context15) {
+            while (1) {
+              switch (_context15.prev = _context15.next) {
+                case 0:
+                  state = _ref4.state, dispatch = _ref4.dispatch, commit = _ref4.commit;
+                  _context15.next = 3;
+                  return dispatch('createCheckoutArray');
+
+                case 3:
+                  lineItems = _context15.sent;
+                  _context15.next = 6;
+                  return dispatch('getCheckoutIdForBackend');
+
+                case 6:
+                  checkoutId = _context15.sent;
+                  _context15.next = 9;
+                  return axios__WEBPACK_IMPORTED_MODULE_8___default()({
+                    method: 'post',
+                    url: endpoint,
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'x-nacelle-token': token
+                    },
+                    data: {
+                      query: "mutation {\n            processCheckout(input: {cartItems: [".concat(lineItems, "], checkoutId: \"").concat(checkoutId, "\" }) {\n              id\n              url\n              completed\n            }\n          }")
+                    }
+                  }).then(function (res) {
+                    return res.data.data.processCheckout;
+                  }).catch(function (err) {
+                    console.log(err);
+                    commit('setCartError');
+                  });
+
+                case 9:
+                  processCheckoutObject = _context15.sent;
+                  _context15.next = 12;
+                  return dispatch('saveAndRedirect', processCheckoutObject);
+
+                case 12:
+                case "end":
+                  return _context15.stop();
+              }
+            }
+          }, _callee15);
+        }));
+
+        function processCheckout(_x21) {
+          return _processCheckout.apply(this, arguments);
+        }
+
+        return processCheckout;
+      }()
+    }
+  };
 };
+
 /* harmony default export */ __webpack_exports__["a"] = (cart);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__("f28c")))
 

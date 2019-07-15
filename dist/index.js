@@ -18,15 +18,22 @@ import CartFlyoutItemRemoveButton from './components/CartFlyoutItemRemoveButton.
 import CartFlyoutMessaging from './components/CartFlyoutMessaging.vue'
 import CartFlyoutSubtotal from './components/CartFlyoutSubtotal.vue'
 import ContentHeroBanner from './components/ContentHeroBanner.vue'
+import ContentProductGrid from './components/ContentProductGrid.vue'
 import ContentSideBySide from './components/ContentSideBySide.vue'
 import ContentTestimonial from './components/ContentTestimonial.vue'
 import ContentTestimonials from './components/ContentTestimonials.vue'
 import CtaButton from './components/CtaButton.vue'
 import InterfaceCloseButton from './components/InterfaceCloseButton.vue'
+import MainNav from './components/MainNav.vue'
+import MainNavBurger from './components/MainNavBurger.vue'
+import MainNavCart from './components/MainNavCart.vue'
+import MainNavFlyout from './components/MainNavFlyout.vue'
 import MessagingFreeShippingCounter from './components/MessagingFreeShippingCounter.vue'
 import ProductAddToCartButton from './components/ProductAddToCartButton.vue'
+import ProductCard from './components/ProductCard.vue'
 import ProductCategory from './components/ProductCategory.vue'
 import ProductDescription from './components/ProductDescription.vue'
+import ProductGrid from './components/ProductGrid.vue'
 import ProductImage from './components/ProductImage.vue'
 import ProductMediaSelectView from './components/ProductMediaSelectView.vue'
 import ProductPrice from './components/ProductPrice.vue'
@@ -34,10 +41,12 @@ import ProductQuantityUpdate from './components/ProductQuantityUpdate.vue'
 import ProductTitle from './components/ProductTitle.vue'
 import ProductVariantTitle from './components/ProductVariantTitle.vue'
 import ProductVideo from './components/ProductVideo.vue'
+import ShopifyPageContent from './components/ShopifyPageContent.vue'
+import SiteHeader from './components/SiteHeader.vue'
 import Spinner from './components/Spinner.vue'
 
 // Export components individually
-export { BlogAuthor, BlogCategoryLabel, BlogContent, BlogHeader, BlogHeroImage, BlogPublishDate, CartFlyout, CartFlyoutCheckoutButton, CartFlyoutHeader, CartFlyoutItem, CartFlyoutItemRemoveButton, CartFlyoutMessaging, CartFlyoutSubtotal, ContentHeroBanner, ContentSideBySide, ContentTestimonial, ContentTestimonials, CtaButton, InterfaceCloseButton, MessagingFreeShippingCounter, ProductAddToCartButton, ProductCategory, ProductDescription, ProductImage, ProductMediaSelectView, ProductPrice, ProductQuantityUpdate, ProductTitle, ProductVariantTitle, ProductVideo, Spinner }
+export { BlogAuthor, BlogCategoryLabel, BlogContent, BlogHeader, BlogHeroImage, BlogPublishDate, CartFlyout, CartFlyoutCheckoutButton, CartFlyoutHeader, CartFlyoutItem, CartFlyoutItemRemoveButton, CartFlyoutMessaging, CartFlyoutSubtotal, ContentHeroBanner, ContentProductGrid, ContentSideBySide, ContentTestimonial, ContentTestimonials, CtaButton, InterfaceCloseButton, MainNav, MainNavBurger, MainNavCart, MainNavFlyout, MessagingFreeShippingCounter, ProductAddToCartButton, ProductCard, ProductCategory, ProductDescription, ProductGrid, ProductImage, ProductMediaSelectView, ProductPrice, ProductQuantityUpdate, ProductTitle, ProductVariantTitle, ProductVideo, ShopifyPageContent, SiteHeader, Spinner }
 
 // What should happen if the user installs the library as a plugin
 function install(Vue) {
@@ -55,15 +64,22 @@ function install(Vue) {
   Vue.component('CartFlyoutMessaging', CartFlyoutMessaging)
   Vue.component('CartFlyoutSubtotal', CartFlyoutSubtotal)
   Vue.component('ContentHeroBanner', ContentHeroBanner)
+  Vue.component('ContentProductGrid', ContentProductGrid)
   Vue.component('ContentSideBySide', ContentSideBySide)
   Vue.component('ContentTestimonial', ContentTestimonial)
   Vue.component('ContentTestimonials', ContentTestimonials)
   Vue.component('CtaButton', CtaButton)
   Vue.component('InterfaceCloseButton', InterfaceCloseButton)
+  Vue.component('MainNav', MainNav)
+  Vue.component('MainNavBurger', MainNavBurger)
+  Vue.component('MainNavCart', MainNavCart)
+  Vue.component('MainNavFlyout', MainNavFlyout)
   Vue.component('MessagingFreeShippingCounter', MessagingFreeShippingCounter)
   Vue.component('ProductAddToCartButton', ProductAddToCartButton)
+  Vue.component('ProductCard', ProductCard)
   Vue.component('ProductCategory', ProductCategory)
   Vue.component('ProductDescription', ProductDescription)
+  Vue.component('ProductGrid', ProductGrid)
   Vue.component('ProductImage', ProductImage)
   Vue.component('ProductMediaSelectView', ProductMediaSelectView)
   Vue.component('ProductPrice', ProductPrice)
@@ -71,6 +87,8 @@ function install(Vue) {
   Vue.component('ProductTitle', ProductTitle)
   Vue.component('ProductVariantTitle', ProductVariantTitle)
   Vue.component('ProductVideo', ProductVideo)
+  Vue.component('ShopifyPageContent', ShopifyPageContent)
+  Vue.component('SiteHeader', SiteHeader)
   Vue.component('Spinner', Spinner)
 }
 

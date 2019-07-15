@@ -1,27 +1,25 @@
 <template>
-  <section class="section sbs">
-    <div class="container">
-      <div class="columns" :class="columnClasses">
-        <div class="column is-half sbs-image">
-          <img :src="imageUrl" alt="" />
-        </div>
-        <div
-          class="column is-half sbs-copy"
-          :style="backgroundColor ? `background-color: ${backgroundColor}` : null "
-        >
-          <div class="has-text-centered">
-            <h3 class="title">
-              {{ title }}
-            </h3>
-            <div class="content" v-html="copy" />
-            <p v-if="ctaText.length > 0">
-              <slot name="cta">
-                <cta-button :to="ctaUrl" @clicked="ctaHandler">
-                  {{ ctaText }}
-                </cta-button>
-              </slot>
-            </p>
-          </div>
+  <section class="sbs sbs-target">
+    <div class="columns" :class="columnClasses">
+      <div class="column is-half sbs-image">
+        <img :src="imageUrl" alt="" />
+      </div>
+      <div
+        class="column is-half sbs-copy"
+        :style="backgroundColor ? `background-color: ${backgroundColor}` : null "
+      >
+        <div class="has-text-centered">
+          <h3 class="title">
+            {{ title }}
+          </h3>
+          <div class="content" v-html="copy" />
+          <p v-if="ctaText.length > 0">
+            <slot name="cta">
+              <cta-button :to="ctaUrl" @clicked="ctaHandler">
+                {{ ctaText }}
+              </cta-button>
+            </slot>
+          </p>
         </div>
       </div>
     </div>
@@ -85,45 +83,37 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.section.sbs {
-  @media screen and (max-width: 768px) {
-    padding-left: 0;
-    padding-right: 0;
+.sbs .columns {
+  margin-top: 0;
+
+  @media screen and (min-width: 769px) {
+    min-height: 400px;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
   }
 }
 
-.sbs .container .columns {
-  min-height: 400px;
-}
-
-.columns.is-column-reverse {
+.sbs .columns.is-column-reverse {
   @media screen and (min-width: 769px) {
     flex-direction: row-reverse;
   }
 }
 
-.columns.is-mobile-column-reverse {
+.sbs .columns.is-mobile-column-reverse {
   @media screen and (max-width: 768px) {
     display: flex;
     flex-direction: column-reverse;
   }
 }
 
-.sbs-image {
-  @media screen and (min-width: 769px) {
-    position: relative;
-    padding: 0;
+.column.sbs-image {
+  padding: 0;
 
-    img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+  img {
+    display: block;
+    width: 100%;
   }
 }
 

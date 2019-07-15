@@ -1,13 +1,14 @@
 <template>
   <div class="media-select-view columns is-multiline">
     <div class="media-viewer column is-12">
-      <transition name="fade" mode="out-in">
+      <transition name="fade" mode="out-in" @after-enter="afterEnter">
         <component
           :is="mediaComponent"
           v-if="selectedMedia"
           :source="selectedMedia.src"
           :key="selectedMedia.src"
-          :width="featuredImageSize"
+          :width="featuredMediaWidth"
+          :observeVisibility="false"
         />
       </transition>
     </div>
@@ -19,6 +20,7 @@
           :key="item.id"
           @click.native="setSelected(item)"
           :source="item.thumbnailSrc"
+          :observeVisibility="false"
         />
       </div>
     </div>
@@ -57,12 +59,28 @@ export default {
           return 'ProductVideo'
         }
       }
+    },
+    featuredMediaWidth() {
+      if (
+        this.selectedMedia &&
+        this.selectedMedia.width
+      ) {
+        return this.selectedMedia.width
+      }
+
+      return null
     }
   },
   methods: {
     setSelected(item) {
+      const mediaViewer = this.$el.querySelector('.media-viewer')
+      mediaViewer.style.height = `${mediaViewer.offsetHeight}px`
+
       this.selectedMedia = item
-      console.log('selected')
+    },
+    afterEnter() {
+      const mediaViewer = this.$el.querySelector('.media-viewer')
+      mediaViewer.style.height = null
     }
   }
 }
@@ -72,10 +90,16 @@ export default {
 .media-viewer {
   margin-bottom: 2rem;
 }
+
+.media-item {
+  cursor: pointer
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
 }
+
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }

@@ -18,5 +18,9 @@ execSync(
   `vue-cli-service build src/store/cart.js --target lib --name index --dest dist/cjs-cart-store`
 )
 
+execSync(
+  `vue-cli-service build src/store/menu.js --target lib --name index --dest dist/cjs-menu-store`
+)
+
 console.info('🚀  Nacelle component library built!')
 ;('')
