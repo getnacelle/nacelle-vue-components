@@ -42,8 +42,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run: npm run build-library
-      - run: npm set registry https://registry.npmjs.org/
-      - run: echo "registry.npmjs.org/:_authToken=3cfb2a3d-9dd5-484d-b2e7-d2634d85cd8a"
+      - run: npm set registry https://registry.npmjs.org/:_authToken=3cfb2a3d-9dd5-484d-b2e7-d2634d85cd8a
       - run: npm publish
 
 workflows:
@@ -54,8 +53,8 @@ workflows:
       - deploy:
           requires:
             - test
-          # filters:
-          #   tags:
-          #     only: /^v.*/
-          #   branches:
-          #     ignore: /.*/
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
