@@ -57,7 +57,7 @@ storiesOf('Components | Product / Composition', module)
           products: productArray
         }
       },
-      template: '<product-grid :products="products" />'
+      template: '<product-grid :products="products"  />'
     }),
     {
       info: {
