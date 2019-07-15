@@ -1,11 +1,11 @@
 <template>
   <div class="columns is-multiline is-paddingless">
-    <div
-      v-for="product in products"
-      :key="product.id"
-      :class="columnClasses"
-    >
-      <product-card :product="product" />
+    <div v-for="product in products" :key="product.id" :class="columnClasses">
+      <product-card
+        :product="product"
+        :showQuantityUpdate="showQuantityUpdate"
+        :showAddToCart="showAddToCart"
+      />
     </div>
   </div>
 </template>
@@ -25,6 +25,14 @@ export default {
     columns: {
       type: Number,
       default: 4
+    },
+    showQuantityUpdate: {
+      type: Boolean,
+      default: true
+    },
+    showAddToCart: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
