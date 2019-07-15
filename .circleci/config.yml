@@ -22,7 +22,7 @@ jobs:
       # run tests!
       - run: npm run test:unit
 
-  build-lib:
+  deploy:
     docker:
       - image: circleci/node:10.12.0
     steps:
@@ -41,17 +41,21 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # run tests!
       - run: npm run build-library
-      - store_artifacts:
-          path: dist
-          destination: library-artifacts
+      - run: npm set registry https://registry.npmjs.org/
+      - run: echo "registry.npmjs.org/:_authToken=3cfb2a3d-9dd5-484d-b2e7-d2634d85cd8a"
+      - run: npm publish
 
 workflows:
   version: 2
   test_and_build:
     jobs:
       - test
-      - build-lib:
+      - deploy:
           requires:
             - test
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
