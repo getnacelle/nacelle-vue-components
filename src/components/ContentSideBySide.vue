@@ -86,6 +86,11 @@ export default {
 .sbs .columns {
   margin-top: 0;
 
+  @media screen and (max-width: 768px) {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   @media screen and (min-width: 769px) {
     min-height: 400px;
   }
@@ -109,11 +114,23 @@ export default {
 }
 
 .column.sbs-image {
+  position: relative;
   padding: 0;
 
   img {
     display: block;
     width: 100%;
+
+    @media screen and (min-width: 769px) {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 }
 
