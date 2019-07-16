@@ -71,9 +71,3 @@ workflows:
               only: /^v.*/
             branches:
               ignore: /.*/
-      - deploy_module:
-          requires:
-            - deploy
-          filters:
-            tags:
-              only: /.*/
