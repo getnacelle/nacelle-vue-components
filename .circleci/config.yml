@@ -44,6 +44,16 @@ jobs:
       - run: npm run build-library
       - run: npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
       - run: npm publish
+  deploy_module:
+    docker:
+      - image: circleci/node:10.12.0
+    steps:
+      - run: git clone https://github.com/ShopElf/nacelle-nuxt-module.git
+      - run: cd nacelle-nuxt-module
+      - run: npm install
+      - run: npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+      - run: npm version patch
+      - run: npm publish
 
 workflows:
   version: 2
@@ -61,3 +71,9 @@ workflows:
               only: /^v.*/
             branches:
               ignore: /.*/
+      - deploy_module:
+          requires:
+            - deploy
+          filters:
+            tags:
+              only: /.*/
