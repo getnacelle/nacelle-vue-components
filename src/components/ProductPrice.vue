@@ -2,7 +2,7 @@
   <span>
     {{price | currency({
     symbol: '$',
-    thousandsSeparator: '.',
+    thousandsSeparator: ',',
     fractionCount: 2,
     fractionSeparator: '.',
     symbolPosition: 'front',
