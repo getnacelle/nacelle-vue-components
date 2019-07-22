@@ -1,0 +1,1 @@
+{"version":3,"file":"main.4fd7ce5a1d03af3643cd.bundle.js","sources":["webpack:///./src/store/test.js"],"sourcesContent":["const test = {\n  namespaced: true,\n  state: {\n    hi: 'testings'\n  },\n  actions: {\n    async FETCH() {\n      console.log('calling FETCH action')\n    }\n  }\n}\n\nexport default test\n"],"mappings":"AAYA","sourceRoot":""}
