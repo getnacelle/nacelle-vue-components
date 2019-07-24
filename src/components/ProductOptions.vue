@@ -4,7 +4,7 @@
       <h3>{{option.name}}</h3>
       <product-option-swatches v-on:optionSet="setSelectedOptions" :option="option" />
     </div>
-    {{selectedOptions}}
+    <!-- {{selectedOptions}} -->
   </div>
 </template>
 
@@ -22,6 +22,11 @@ export default {
   data() {
     return {
       selectedOptions: []
+    }
+  },
+  watch: {
+    selectedOptions(newVal) {
+      this.$emit('selectedOptions', newVal)
     }
   },
   methods: {
