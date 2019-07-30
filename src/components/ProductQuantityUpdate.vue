@@ -28,15 +28,26 @@ export default {
   computed: {
     ...mapState('cart', ['lineItems']),
     quantityInCart() {
-      const items = this.lineItems.filter(item => {
-        return item.productId === this.product.id
-      })
-      if (items) {
-        return items.reduce((acc, item) => {
-          return acc + item.quantity
-        }, 0)
+      if (this.$parent.$options._componentTag != 'cart-flyout-item') {
+        const items = this.lineItems.filter(item => {
+          return item.productId === this.product.id
+        })
+        if (items) {
+          return items.reduce((acc, item) => {
+            return acc + item.quantity
+          }, 0)
+        } else {
+          return 0
+        }
       } else {
-        return 0
+        const item = this.lineItems.find(item => {
+          return item.variant.id === this.variant.id
+        })
+        if (item) {
+          return item.quantity
+        } else {
+          return 0
+        }
       }
     },
     cartProduct() {
@@ -71,7 +82,10 @@ export default {
       'decrementLineItem'
     ]),
     increment() {
-      if (this.allSelected) {
+      if (
+        this.allSelected ||
+        this.$parent.$options._componentTag == 'cart-flyout-item'
+      ) {
         if (this.quantityInCart === 0) {
           this.addLineItem({
             ...this.cartProduct,

@@ -20,7 +20,7 @@ storiesOf('Components | Cart', module)
         return {
           item: {
             image: {
-              source:
+              thumbnailSrc:
                 'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
             },
             title: 'Gray T-Shirt',
