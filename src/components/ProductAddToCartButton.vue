@@ -38,13 +38,17 @@ export default {
     ...mapState('cart', ['lineItems']),
     variantInLineItems() {
       let vm = this
-      let lineItem = vm.lineItems.findIndex(lineItem => {
-        if (vm.variant.id) {
-          return lineItem.variant.id == vm.variant.id
+      if (vm.variant != null) {
+        let lineItem = vm.lineItems.findIndex(lineItem => {
+          if (vm.variant.id) {
+            return lineItem.variant.id == vm.variant.id
+          }
+        })
+        if (lineItem != -1) {
+          return true
+        } else {
+          return false
         }
-      })
-      if (lineItem != -1) {
-        return true
       } else {
         return false
       }
@@ -83,7 +87,7 @@ export default {
     addToCart() {
       if (this.allSelected) {
         let lineItem = {
-          image: this.product.image,
+          image: this.product.featuredMedia,
           title: this.product.title,
           variant: this.variant,
           quantity: this.quantity,

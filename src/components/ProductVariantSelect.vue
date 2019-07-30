@@ -4,17 +4,24 @@
       v-show="product.options[0].values.length > 1"
       :options="product.options"
       v-on:allOptionsSelected="allOptionsSelected = true"
+      v-on:confirmedSelection="emitSelectedOptions"
     />
-    <product-quantity-update
-      :product="product"
-      :variant="variant"
-      :allOptionsSelected="allOptionsSelected"
-    />
-    <product-add-to-cart-button
-      :product="product"
-      :variant="variant"
-      :allOptionsSelected="allOptionsSelected"
-    />
+    <div class="columns">
+      <div class="column is-half">
+        <product-quantity-update
+          :product="product"
+          :variant="variant"
+          :allOptionsSelected="allOptionsSelected"
+        />
+      </div>
+      <div class="column is-half">
+        <product-add-to-cart-button
+          :product="product"
+          :variant="variant"
+          :allOptionsSelected="allOptionsSelected"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -40,6 +47,11 @@ export default {
     ProductOptions,
     ProductQuantityUpdate,
     ProductAddToCartButton
+  },
+  methods: {
+    emitSelectedOptions(options) {
+      this.$emit('selectedOptions', options)
+    }
   }
 }
 </script>

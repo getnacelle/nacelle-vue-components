@@ -39,20 +39,9 @@ export default {
         return 0
       }
     },
-    variantId() {
-      if (
-        this.cartProduct &&
-        this.cartProduct.variant &&
-        this.cartProduct.variant.id
-      ) {
-        return this.cartProduct.variant.id
-      }
-
-      return null
-    },
     cartProduct() {
       return {
-        image: this.product.image,
+        image: this.product.featuredMedia,
         title: this.product.title,
         variant: this.variant,
         productId: this.product.id,
@@ -89,7 +78,7 @@ export default {
             quantity: 1
           })
         } else {
-          this.incrementLineItem(this.variantId)
+          this.incrementLineItem(this.variant.id)
         }
       } else {
         this.$emit('needsOptionsSelected')
@@ -98,9 +87,9 @@ export default {
     decrement() {
       // this.showCart()
       if (this.quantityInCart === 1) {
-        this.removeLineItem(this.variantId)
+        this.removeLineItem(this.variant.id)
       } else {
-        this.decrementLineItem(this.variantId)
+        this.decrementLineItem(this.variant.id)
       }
     }
   }

@@ -23,15 +23,15 @@ export const defaultProduct = {
     {
       name: 'Size',
       values: ['xs', 's']
+    },
+    {
+      name: 'Shape',
+      values: ['Oval', 'Triangle', 'Square']
+    },
+    {
+      name: 'Color',
+      values: ['white', 'red', 'blue']
     }
-    // {
-    //   name: 'Shape',
-    //   values: ['Oval', 'Triangle', 'Square']
-    // }
-    // {
-    //   name: 'Color',
-    //   values: ['white', 'red', 'blue']
-    // }
   ]
 }
 

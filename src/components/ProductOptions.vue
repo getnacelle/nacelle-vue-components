@@ -40,14 +40,12 @@ export default {
     }
   },
   watch: {
-    selectedOptions(value) {
-      if (value.length > 0) {
-        this.$emit('selectedOptions', value)
-      }
-    },
     allOptionsSelected(value) {
       if (value == true) {
         this.$emit('allOptionsSelected')
+      }
+      if (this.$parent.$options._componentTag != 'interface-modal') {
+        this.$emit('confirmedSelection', this.selectedOptions)
       }
     }
   },
