@@ -17,6 +17,9 @@ export default {
   props: {
     option: {
       type: Object
+    },
+    clearOptionValue: {
+      type: Boolean
     }
   },
   components: {
@@ -39,7 +42,15 @@ export default {
   },
   watch: {
     selectedOptionValue(newVal) {
-      this.$emit('optionSet', { name: this.option.name, value: newVal })
+      if (newVal != null) {
+        this.$emit('optionSet', { name: this.option.name, value: newVal })
+      }
+    },
+    clearOptionValue(newVal) {
+      if (newVal == true) {
+        this.selectedOptionValue = null
+        this.$emit('clearedOptionValue')
+      }
     }
   },
   methods: {

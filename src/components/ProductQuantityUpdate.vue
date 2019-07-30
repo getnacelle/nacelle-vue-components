@@ -13,28 +13,31 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
   props: {
-    image: { type: Object, required: true },
-    title: { type: String, required: true },
-    variant: { type: Object, required: true },
-    productId: { type: String, required: true },
-    handle: { type: String, required: true }
+    product: {
+      type: Object
+    },
+    variant: {
+      type: Object
+    },
+    allOptionsSelected: { type: Boolean, default: false }
   },
   computed: {
     ...mapState('cart', ['lineItems']),
     quantityInCart() {
-      const item = this.lineItems.find(item => {
-        return item.variant.id === this.variantId
+      const items = this.lineItems.filter(item => {
+        return item.productId === this.product.id
       })
-
-      if (item) {
-        return item.quantity
+      if (items) {
+        return items.reduce((acc, item) => {
+          return acc + item.quantity
+        }, 0)
+      } else {
+        return 0
       }
-
-      return 0
     },
     variantId() {
       if (
@@ -49,15 +52,29 @@ export default {
     },
     cartProduct() {
       return {
-        image: this.image,
-        title: this.title,
+        image: this.product.image,
+        title: this.product.title,
         variant: this.variant,
-        productId: this.productId,
-        handle: this.handle
+        productId: this.product.id,
+        handle: this.product.handle
+      }
+    },
+    allSelected() {
+      if (
+        this.product.options &&
+        this.product.options.length == 1 &&
+        this.product.options[0].values.length == 1
+      ) {
+        return true
+      } else if (this.allOptionsSelected) {
+        return true
+      } else {
+        return false
       }
     }
   },
   methods: {
+    ...mapMutations('cart', ['showCart']),
     ...mapActions('cart', [
       'addLineItem',
       'removeLineItem',
@@ -65,16 +82,21 @@ export default {
       'decrementLineItem'
     ]),
     increment() {
-      if (this.quantityInCart === 0) {
-        this.addLineItem({
-          ...this.cartProduct,
-          quantity: 1
-        })
+      if (this.allSelected) {
+        if (this.quantityInCart === 0) {
+          this.addLineItem({
+            ...this.cartProduct,
+            quantity: 1
+          })
+        } else {
+          this.incrementLineItem(this.variantId)
+        }
       } else {
-        this.incrementLineItem(this.variantId)
+        this.$emit('needsOptionsSelected')
       }
     },
     decrement() {
+      // this.showCart()
       if (this.quantityInCart === 1) {
         this.removeLineItem(this.variantId)
       } else {

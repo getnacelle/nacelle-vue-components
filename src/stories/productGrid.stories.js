@@ -4,28 +4,10 @@ import { withInfo } from 'storybook-addon-vue-info'
 import StoryRouter from 'storybook-vue-router'
 
 import ProductGrid from '../components/ProductGrid'
-
+import InterfaceModal from '../components/InterfaceModal'
 import store from '../store/store'
 
-const defaultProduct = {
-  priceRange: {
-    max: '29.99'
-  },
-  title: 'Awesome T-Shirt',
-  category: "Men's Shirts",
-  featuredMedia: {
-    src: 'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
-  },
-  description:
-    "<p>This is the t-shirt description. It's a really nice item, isn't it? You can buy it in different colors and sizes.</p>",
-  id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM1OTkyMDE4NjE3Mzc=',
-  handle: 'gray-t-shirt',
-  variants: [
-    {
-      id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
-    }
-  ]
-}
+import { defaultProduct } from '../../config/defaultObjects.js'
 
 const productArray = [
   defaultProduct,
@@ -49,7 +31,7 @@ storiesOf('Components | Product / Composition', module)
   .add(
     'Product Grid',
     () => ({
-      components: { ProductGrid },
+      components: { ProductGrid, InterfaceModal },
       store,
       data() {
         return {
@@ -57,7 +39,10 @@ storiesOf('Components | Product / Composition', module)
           products: productArray
         }
       },
-      template: '<product-grid :products="products" />'
+      template: `<div>
+      <interface-modal/>
+      <product-grid :products="products" :showAddToCart="true" :showQuantityUpdate="true"/>
+      </div>`
     }),
     {
       info: {

@@ -1,27 +1,39 @@
 <template>
   <div>
-    <button class="button is-primary" @click="addToCart">
+    <button
+      class="button is-primary"
+      :disabled="!allSelected"
+      @click="addToCart"
+      v-if="this.$parent.$options._componentTag == 'product-variant-select'"
+    >
+      <span v-if="!variantInLineItems && !allSelected">Select Options</span>
+      <span v-if="!variantInLineItems && allSelected">Add to Cart</span>
+      <span v-if="variantInLineItems">Added!</span>
+    </button>
+    <button class="button is-primary" @click="addToCart" v-else>
       <span v-if="!variantInLineItems">Add to Cart</span>
       <span v-else>Added!</span>
     </button>
-    <!-- <button @click="incrementLineItem(variant.id)">increment</button>
-    <button @click="decrementLineItem(variant.id)">decrement</button>
-    <button @click="removeLineItem(variant.id)">remove</button>-->
   </div>
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
+
 import find from 'lodash.find'
 export default {
   props: {
-    image: { type: Object, required: true },
-    title: { type: String, required: true },
-    variant: { type: Object, required: true },
+    product: {
+      type: Object
+    },
+    variant: {
+      type: Object
+    },
     quantity: { type: Number, default: 1 },
-    productId: { type: String, required: true },
-    handle: { type: String, required: true }
+    allOptionsSelected: { type: Boolean, default: false },
+    confirmedSelection: { type: Boolean, default: false }
   },
+
   computed: {
     ...mapState('cart', ['lineItems']),
     variantInLineItems() {
@@ -36,24 +48,52 @@ export default {
       } else {
         return false
       }
+    },
+    allSelected() {
+      if (
+        this.product.options &&
+        this.product.options.length == 1 &&
+        this.product.options[0].values.length == 1
+      ) {
+        return true
+      } else if (this.allOptionsSelected) {
+        return true
+      } else {
+        return false
+      }
     }
   },
-  methods: {
-    ...mapActions('cart', ['addLineItem']),
-    ...mapActions('cart', ['removeLineItem']),
-    ...mapActions('cart', ['incrementLineItem']),
-    ...mapActions('cart', ['decrementLineItem']),
-    ...mapActions('cart', ['getLineItems']),
-    addToCart() {
-      let lineItem = {
-        image: this.image,
-        title: this.title,
-        variant: this.variant,
-        quantity: this.quantity,
-        productId: this.productId,
-        handle: this.handle
+
+  watch: {
+    confirmedSelection(value) {
+      if (value == true) {
+        this.addToCart()
       }
-      this.addLineItem(lineItem)
+    }
+  },
+
+  methods: {
+    ...mapActions('cart', [
+      'addLineItem',
+      'removeLineItem',
+      'incrementLineItem',
+      'decrementLineItem',
+      'getLineItems'
+    ]),
+    addToCart() {
+      if (this.allSelected) {
+        let lineItem = {
+          image: this.product.image,
+          title: this.product.title,
+          variant: this.variant,
+          quantity: this.quantity,
+          productId: this.product.id,
+          handle: this.product.handle
+        }
+        this.addLineItem(lineItem)
+      } else {
+        this.$emit('needsOptionsSelected')
+      }
     }
   }
 }

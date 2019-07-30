@@ -50,13 +50,12 @@ storiesOf('Components | Product / Product Card', module)
     () => ({
       components: { ProductCard },
       store,
-      props: {
-        product: {
-          default: object('Product Object', defaultProduct)
+      data() {
+        return {
+          product: defaultProduct
         }
       },
-      template:
-        '<product-card :product="product" showQuantityUpdate="false" showAddToCart="false"/>'
+      template: '<product-card :product="product"/>'
     }),
     {
       info: {

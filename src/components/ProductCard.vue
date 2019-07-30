@@ -11,41 +11,53 @@
     </div>
     <div v-if="product && product.id" class="product-card-actions">
       <product-quantity-update
-        :image="product.featuredMedia"
-        :title="product.title"
-        :productId="product.id"
-        :handle="product.handle"
+        :product="product"
         :variant="currentVariant"
         v-if="showQuantityUpdate == true"
+        :allOptionsSelected="allOptionsSelected"
+        v-on:needsOptionsSelected="modalOpen = true"
       />
       <product-add-to-cart-button
-        :image="product.featuredMedia"
-        :title="product.title"
-        :productId="product.id"
-        :handle="product.handle"
-        :variant="currentVariant"
-        @click.native="showCart"
+        :product="product"
+        :variant="product.variants[0]"
         v-if="showAddToCart == true"
-      />
+        :allOptionsSelected="allOptionsSelected"
+        :confirmedSelection="confirmedSelection"
+        v-on:needsOptionsSelected="modalOpen = true"
+      ></product-add-to-cart-button>
+      <interface-modal
+        :modalOpen="modalOpen"
+        v-on:closeModal="modalOpen = false"
+        v-on:confirmedSelection="setOptionsSelection"
+      >
+        <h3 class="modal-title">Choose Your Options</h3>
+        <product-options
+          :options="product.options"
+          v-on:clearedOptions="allOptionsSelected = false, confirmedSelection = false"
+        />
+      </interface-modal>
     </div>
   </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations, mapGetters } from 'vuex'
 import ProductImage from './ProductImage'
 import ProductTitle from './ProductTitle'
 import ProductPrice from './ProductPrice'
 import ProductQuantityUpdate from './ProductQuantityUpdate'
 import ProductAddToCartButton from './ProductAddToCartButton'
-
+import InterfaceModal from './InterfaceModal'
+import ProductOptions from './ProductOptions'
 export default {
   components: {
     ProductImage,
     ProductTitle,
     ProductPrice,
     ProductQuantityUpdate,
-    ProductAddToCartButton
+    ProductAddToCartButton,
+    InterfaceModal,
+    ProductOptions
   },
   props: {
     pathFragment: {
@@ -81,13 +93,18 @@ export default {
   },
   data() {
     return {
-      selectedVariant: null
+      selectedVariant: null,
+      needsOptionsSelected: false,
+      modalOpen: false,
+      allOptionsSelected: false,
+      confirmedSelection: false,
+      optionsSelection: null
     }
   },
   computed: {
     currentVariant() {
       if (this.selectedVariant === null) {
-        if (this.product.variants.length > 0) {
+        if (this.product.variants.length == 1) {
           return this.product.variants[0]
         }
 
@@ -126,7 +143,12 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('cart', ['showCart'])
+    ...mapMutations('cart', ['showCart']),
+    setOptionsSelection(options) {
+      this.optionsSelection = options
+      this.allOptionsSelected = true
+      this.confirmedSelection = true
+    }
   }
 }
 </script>
@@ -141,6 +163,13 @@ export default {
 
 .product-card-details /deep/ a {
   flex-basis: 80%;
+}
+.handler {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 </style>
 

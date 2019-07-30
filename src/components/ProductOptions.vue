@@ -2,14 +2,28 @@
   <div v-if="options" class="options">
     <div class="option" v-for="option in options" :key="option.title">
       <h3>{{option.name}}</h3>
-      <product-option-swatches v-on:optionSet="setSelectedOptions" :option="option" />
+      <product-option-swatches
+        v-on:optionSet="setSelectedOptions"
+        :option="option"
+        :clearOptionValue="clearOptionValue"
+        v-on:clearedOptionValue="resetClearValues"
+      />
     </div>
-    <!-- {{selectedOptions}} -->
+    <button
+      class="button is-primary"
+      :disabled="!allOptionsSelected"
+      v-if="isChildOfModal"
+      @click="triggerModalClose"
+    >
+      <span v-if="allOptionsSelected">Confirm Selection</span>
+      <span v-else>Select your options</span>
+    </button>
   </div>
 </template>
 
 <script>
 import ProductOptionSwatches from './ProductOptionSwatches'
+import { mapMutations } from 'vuex'
 export default {
   props: {
     options: {
@@ -21,27 +35,70 @@ export default {
   },
   data() {
     return {
-      selectedOptions: []
+      selectedOptions: [],
+      clearOptionValue: false
     }
   },
   watch: {
-    selectedOptions(newVal) {
-      this.$emit('selectedOptions', newVal)
+    selectedOptions(value) {
+      if (value.length > 0) {
+        this.$emit('selectedOptions', value)
+      }
+    },
+    allOptionsSelected(value) {
+      if (value == true) {
+        this.$emit('allOptionsSelected')
+      }
+    }
+  },
+  computed: {
+    allOptionsSelected() {
+      if (this.options && this.selectedOptions.length == this.options.length) {
+        return true
+      } else {
+        return false
+      }
+    },
+    isChildOfModal() {
+      if (this.$parent.$options._componentTag == 'interface-modal') {
+        return true
+      } else {
+        return false
+      }
     }
   },
   methods: {
     setSelectedOptions(selectedOption) {
-      let searchOptions = this.selectedOptions.filter(option => {
+      let vm = this
+      let searchOptions = vm.selectedOptions.filter(option => {
         return option.name == selectedOption.name
       })
       if (searchOptions.length == 0) {
-        this.selectedOptions.push(selectedOption)
+        vm.selectedOptions.push(selectedOption)
       } else {
-        let index = this.selectedOptions.findIndex(option => {
+        let index = vm.selectedOptions.findIndex(option => {
           return option.name == selectedOption.name
         })
-        this.selectedOptions.splice(index, 1, selectedOption)
+        vm.selectedOptions.splice(index, 1, selectedOption)
       }
+    },
+    resetSelectedOptions() {
+      this.selectedOptions = []
+    },
+    clearValues() {
+      this.clearOptionValue = true
+    },
+    resetClearValues() {
+      this.clearOptionValue = false
+    },
+    triggerModalClose() {
+      this.$parent.$emit('closeModal')
+      this.$parent.$emit('confirmedSelection', this.selectedOptions)
+      this.resetSelectedOptions()
+      setTimeout(() => {
+        this.$emit('clearedOptions')
+        this.clearValues()
+      }, 200)
     }
   }
 }
@@ -51,6 +108,7 @@ export default {
 .option {
   margin-bottom: 1rem;
 }
+
 .swatches {
   display: flex;
 }
