@@ -6,7 +6,7 @@
         v-on:optionSet="setSelectedOptions"
         :option="option"
         :clearOptionValue="clearOptionValue"
-        v-on:clearedOptionValue="resetClearValues"
+        v-on:clearedOptionValue="countOptionClear"
       />
     </div>
     <button
@@ -36,7 +36,8 @@ export default {
   data() {
     return {
       selectedOptions: [],
-      clearOptionValue: false
+      clearOptionValue: false,
+      optionsCleared: 0
     }
   },
   watch: {
@@ -47,8 +48,15 @@ export default {
       if (this.$parent.$options._componentTag != 'interface-modal') {
         this.$emit('confirmedSelection', this.selectedOptions)
       }
+    },
+    optionsCleared() {
+      if (this.optionsCleared == this.options.length) {
+        this.resetClearValues()
+        this.optionsCleared = 0
+      }
     }
   },
+
   computed: {
     allOptionsSelected() {
       if (this.options && this.selectedOptions.length == this.options.length) {
@@ -83,6 +91,9 @@ export default {
     resetSelectedOptions() {
       this.selectedOptions = []
     },
+    countOptionClear() {
+      this.optionsCleared++
+    },
     clearValues() {
       this.clearOptionValue = true
     },
@@ -90,8 +101,8 @@ export default {
       this.clearOptionValue = false
     },
     triggerModalClose() {
-      this.$parent.$emit('closeModal')
       this.$parent.$emit('confirmedSelection', this.selectedOptions)
+      this.$parent.$emit('closeModal')
       this.resetSelectedOptions()
       setTimeout(() => {
         this.$emit('clearedOptions')

@@ -7,7 +7,7 @@
       v-on:confirmedSelection="emitSelectedOptions"
     />
     <div class="columns">
-      <div class="column is-half">
+      <div class="column is-half" v-if="allOptionsSelected">
         <product-quantity-update
           :product="product"
           :variant="variant"

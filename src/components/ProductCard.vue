@@ -16,10 +16,11 @@
         v-if="showQuantityUpdate == true"
         :allOptionsSelected="allOptionsSelected"
         v-on:needsOptionsSelected="modalOpen = true"
+        v-on:showVariantsFromCart="cartItemsModalOpen = true"
       />
       <product-add-to-cart-button
         :product="product"
-        :variant="product.variants[0]"
+        :variant="currentVariant"
         v-if="showAddToCart == true"
         :allOptionsSelected="allOptionsSelected"
         :confirmedSelection="confirmedSelection"
@@ -36,12 +37,16 @@
           v-on:clearedOptions="allOptionsSelected = false, confirmedSelection = false"
         />
       </interface-modal>
+      <interface-modal :modalOpen="cartItemsModalOpen" v-on:closeModal="cartItemsModalOpen = false">
+        <h3 class="modal-title">Remove a Variant</h3>
+        <cart-flyout-item v-for="item in productLineItems" :item="item" :key="item.variant.id" />
+      </interface-modal>
     </div>
   </div>
 </template>
 
 <script>
-import { mapMutations, mapGetters } from 'vuex'
+import { mapState, mapMutations, mapGetters } from 'vuex'
 import ProductImage from './ProductImage'
 import ProductTitle from './ProductTitle'
 import ProductPrice from './ProductPrice'
@@ -49,6 +54,7 @@ import ProductQuantityUpdate from './ProductQuantityUpdate'
 import ProductAddToCartButton from './ProductAddToCartButton'
 import InterfaceModal from './InterfaceModal'
 import ProductOptions from './ProductOptions'
+import CartFlyoutItem from './CartFlyoutItem'
 export default {
   components: {
     ProductImage,
@@ -57,7 +63,8 @@ export default {
     ProductQuantityUpdate,
     ProductAddToCartButton,
     InterfaceModal,
-    ProductOptions
+    ProductOptions,
+    CartFlyoutItem
   },
   props: {
     pathFragment: {
@@ -96,15 +103,17 @@ export default {
       selectedVariant: null,
       needsOptionsSelected: false,
       modalOpen: false,
+      cartItemsModalOpen: false,
       allOptionsSelected: false,
       confirmedSelection: false,
       optionsSelection: null
     }
   },
   computed: {
+    ...mapState('cart', ['lineItems']),
     currentVariant() {
       if (this.selectedVariant === null) {
-        if (this.product.variants.length == 1) {
+        if (this.product.variants && this.product.variants.length == 1) {
           return this.product.variants[0]
         }
 
@@ -140,6 +149,22 @@ export default {
         handle: this.product.handle,
         variant: this.currentVariant
       }
+    },
+    productLineItems() {
+      let vm = this
+      return this.lineItems.filter(item => {
+        return item.productId == vm.product.id
+      })
+    }
+  },
+  watch: {
+    optionsSelection() {
+      this.setSelectedVariant()
+    },
+    productLineItems(val) {
+      if (val.length == 0) {
+        this.cartItemsModalOpen = false
+      }
     }
   },
   methods: {
@@ -148,6 +173,14 @@ export default {
       this.optionsSelection = options
       this.allOptionsSelected = true
       this.confirmedSelection = true
+    },
+    setSelectedVariant() {
+      let variant = {
+        id: `${Math.random()}`,
+        price: '29.99',
+        title: `Variant ${Math.random()}`
+      }
+      this.selectedVariant = variant
     }
   }
 }

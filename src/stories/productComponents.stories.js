@@ -37,7 +37,36 @@ storiesOf('Components | Product/Composition', module)
       store,
       data() {
         return {
-          product: defaultProduct
+          product: defaultProduct,
+          optionsSelection: null,
+          variant: null
+        }
+      },
+      computed: {
+        currentVariant() {
+          if (this.variant != null) {
+            return this.variant
+          } else {
+            return this.product.variants[0]
+          }
+        }
+      },
+      watch: {
+        optionsSelection() {
+          this.setSelectedVariant()
+        }
+      },
+      methods: {
+        setSelectedVariant() {
+          let variant = {
+            id: `${Math.random()}`,
+            price: '29.99',
+            title: `Variant ${Math.random()}`
+          }
+          this.variant = variant
+        },
+        captureOptions(val) {
+          this.optionsSelection = val
         }
       },
       template: `
@@ -51,9 +80,9 @@ storiesOf('Components | Product/Composition', module)
         <product-title :title="product.title"/>
         <product-category :category="product.category"/>
         <product-description :description="product.description"/>
-        <product-price :price="product.variants[0].price"></product-price>
+        <product-price :price="currentVariant.price"></product-price>
         <div class="columns is-marginless is-paddingless">
-      <product-variant-select :product="product" :variant="product.variants[0]"/>
+      <product-variant-select :product="product" :variant="currentVariant" v-on:selectedOptions="captureOptions"/>
         </div>
         </div>
       </div>

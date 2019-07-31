@@ -22,11 +22,7 @@ export const defaultProduct = {
   options: [
     {
       name: 'Size',
-      values: ['xs', 's']
-    },
-    {
-      name: 'Shape',
-      values: ['Oval', 'Triangle', 'Square']
+      values: ['Small', 'Medium']
     },
     {
       name: 'Color',

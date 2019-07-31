@@ -85,7 +85,7 @@ export default {
       'getLineItems'
     ]),
     addToCart() {
-      if (this.allSelected) {
+      if (this.allSelected && this.variant) {
         let lineItem = {
           image: this.product.featuredMedia,
           title: this.product.title,

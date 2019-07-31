@@ -28,7 +28,7 @@ export default {
   computed: {
     ...mapState('cart', ['lineItems']),
     quantityInCart() {
-      if (this.$parent.$options._componentTag != 'cart-flyout-item') {
+      if (this.$parent.$options._componentTag == 'product-card') {
         const items = this.lineItems.filter(item => {
           return item.productId === this.product.id
         })
@@ -48,6 +48,16 @@ export default {
         } else {
           return 0
         }
+      }
+    },
+    multipleVariantsInCart() {
+      const items = this.lineItems.filter(item => {
+        return item.productId === this.product.id
+      })
+      if (items.length > 1) {
+        return true
+      } else {
+        return false
       }
     },
     cartProduct() {
@@ -99,11 +109,17 @@ export default {
       }
     },
     decrement() {
-      // this.showCart()
-      if (this.quantityInCart === 1) {
-        this.removeLineItem(this.variant.id)
+      if (
+        this.multipleVariantsInCart &&
+        this.$parent.$options._componentTag == 'product-card'
+      ) {
+        this.$emit('showVariantsFromCart')
       } else {
-        this.decrementLineItem(this.variant.id)
+        if (this.quantityInCart === 1) {
+          this.removeLineItem(this.variant.id)
+        } else {
+          this.decrementLineItem(this.variant.id)
+        }
       }
     }
   }
