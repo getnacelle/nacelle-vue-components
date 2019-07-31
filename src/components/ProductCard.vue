@@ -89,6 +89,9 @@ export default {
         }
       }
     },
+    variant: {
+      type: Object
+    },
     showQuantityUpdate: {
       type: Boolean,
       default: true
@@ -100,7 +103,7 @@ export default {
   },
   data() {
     return {
-      selectedVariant: null,
+      variant: null,
       needsOptionsSelected: false,
       modalOpen: false,
       cartItemsModalOpen: false,
@@ -112,7 +115,7 @@ export default {
   computed: {
     ...mapState('cart', ['lineItems']),
     currentVariant() {
-      if (this.selectedVariant === null) {
+      if (this.variant === null) {
         if (this.product.variants && this.product.variants.length == 1) {
           return this.product.variants[0]
         }
@@ -120,7 +123,7 @@ export default {
         return undefined
       }
 
-      return this.selectedVariant
+      return this.variant
     },
     currentVariantId() {
       if (this.currentVariant && this.currentVariant.id) {
@@ -159,7 +162,7 @@ export default {
   },
   watch: {
     optionsSelection() {
-      this.setSelectedVariant()
+      this.$emit('selectedOptions', this.optionsSelection)
     },
     productLineItems(val) {
       if (val.length == 0) {
@@ -173,14 +176,6 @@ export default {
       this.optionsSelection = options
       this.allOptionsSelected = true
       this.confirmedSelection = true
-    },
-    setSelectedVariant() {
-      let variant = {
-        id: `${Math.random()}`,
-        price: '29.99',
-        title: `Variant ${Math.random()}`
-      }
-      this.selectedVariant = variant
     }
   }
 }

@@ -52,10 +52,31 @@ storiesOf('Components | Product / Product Card', module)
       store,
       data() {
         return {
-          product: defaultProduct
+          product: defaultProduct,
+          variant: null,
+          optionsSelection: null
         }
       },
-      template: '<product-card :product="product"/>'
+      watch: {
+        optionsSelection() {
+          this.setSelectedVariant()
+        }
+      },
+      methods: {
+        captureOptions(val) {
+          this.optionsSelection = val
+        },
+        setSelectedVariant() {
+          let variant = {
+            id: `${Math.random()}`,
+            price: '29.99',
+            title: `Variant ${Math.random()}`
+          }
+          this.variant = variant
+        }
+      },
+      template:
+        '<product-card :product="product" :variant="variant" v-on:selectedOptions="captureOptions"/>'
     }),
     {
       info: {
