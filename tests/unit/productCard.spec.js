@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import store from './src/store/store'
+import store from '../../src/store/store'
 import ProductCard from '@/components/ProductCard'
 
 describe('ProductCard.vue', () => {

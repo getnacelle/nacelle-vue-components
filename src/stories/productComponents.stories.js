@@ -56,7 +56,7 @@ storiesOf('Components | Product/Composition', module)
           this.setSelectedVariant()
         }
       },
-      mixins: [getProduct],
+      
       methods: {
         setSelectedVariant() {
           let variant = {
