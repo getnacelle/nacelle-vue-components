@@ -6,7 +6,7 @@
         <messaging-free-shipping-counter />
       </cart-flyout-messaging>
       <div class="cart-items">
-        <div v-for="item in lineItems" :key="item.productId" :item="item">
+        <div v-for="item in lineItems" :key="item.variant.id" :item="item">
           <slot v-bind="item"></slot>
         </div>
       </div>
