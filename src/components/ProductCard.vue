@@ -157,6 +157,7 @@ export default {
       })
     }
   },
+  mixins: [getProduct],
   watch: {
     optionsSelection() {
       this.setSelectedVariant()
