@@ -13,7 +13,7 @@
       class="button is-primary"
       :disabled="!allOptionsSelected"
       v-if="isChildOfModal"
-      @click="triggerModalClose"
+      @click="confirmSelection"
     >
       <span v-if="allOptionsSelected">Confirm Selection</span>
       <span v-else>Select your options</span>
@@ -23,7 +23,7 @@
 
 <script>
 import ProductOptionSwatches from './ProductOptionSwatches'
-import { mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 export default {
   props: {
     options: {
@@ -54,10 +54,19 @@ export default {
         this.resetClearValues()
         this.optionsCleared = 0
       }
+    },
+    lineItems() {
+      this.$parent.$emit('closeModal')
+      if (this.$parent.$options._componentTag == 'interface-modal') {
+        this.resetSelectedOptions()
+        this.$emit('clearedOptions')
+        this.clearValues()
+      }
     }
   },
 
   computed: {
+    ...mapState('cart', ['lineItems']),
     allOptionsSelected() {
       if (this.options && this.selectedOptions.length == this.options.length) {
         return true
@@ -100,14 +109,8 @@ export default {
     resetClearValues() {
       this.clearOptionValue = false
     },
-    triggerModalClose() {
+    confirmSelection() {
       this.$parent.$emit('confirmedSelection', this.selectedOptions)
-      this.$parent.$emit('closeModal')
-      this.resetSelectedOptions()
-      setTimeout(() => {
-        this.$emit('clearedOptions')
-        this.clearValues()
-      }, 200)
     }
   }
 }
