@@ -43,10 +43,10 @@ export default {
   watch: {
     allOptionsSelected(value) {
       if (value == true) {
-        this.$emit('allOptionsSelected')
+        this.$emit('allOptionsSelected', this.selectedOptions)
       }
       if (this.$parent.$options._componentTag != 'interface-modal') {
-        this.$emit('confirmedSelection', this.selectedOptions)
+        this.$emit('confirmedSelection')
       }
     },
     optionsCleared() {

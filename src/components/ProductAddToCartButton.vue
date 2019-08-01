@@ -69,7 +69,7 @@ export default {
   },
 
   watch: {
-    variant() {
+    confirmedSelection() {
       if (this.confirmedSelection == true) {
         this.addToCart()
       }

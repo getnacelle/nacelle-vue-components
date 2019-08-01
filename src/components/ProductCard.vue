@@ -29,11 +29,12 @@
       <interface-modal
         :modalOpen="modalOpen"
         v-on:closeModal="modalOpen = false"
-        v-on:confirmedSelection="setOptionsSelection"
+        v-on:confirmedSelection="confirmedSelection = true"
       >
         <h3 class="modal-title">Choose Your Options</h3>
         <product-options
           :options="product.options"
+          v-on:allOptionsSelected="setOptionsSelection"
           v-on:clearedOptions="allOptionsSelected = false, confirmedSelection = false"
         />
       </interface-modal>
@@ -174,7 +175,6 @@ export default {
     setOptionsSelection(options) {
       this.optionsSelection = options
       this.allOptionsSelected = true
-      this.confirmedSelection = true
     }
   }
 }

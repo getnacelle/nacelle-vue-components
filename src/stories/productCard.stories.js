@@ -72,7 +72,9 @@ storiesOf('Components | Product / Product Card', module)
             price: '29.99',
             title: `Variant ${Math.random()}`
           }
-          this.variant = variant
+          setTimeout(() => {
+            this.variant = variant
+          }, 400)
         }
       },
       template:
