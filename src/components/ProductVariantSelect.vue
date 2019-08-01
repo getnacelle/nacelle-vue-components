@@ -3,8 +3,7 @@
     <product-options
       v-show="product.options[0].values.length > 1"
       :options="product.options"
-      v-on:allOptionsSelected="allOptionsSelected = true"
-      v-on:confirmedSelection="emitSelectedOptions"
+      v-on:allOptionsSelected="emitSelectedOptions"
     />
     <div class="columns">
       <div class="column is-half" v-if="allOptionsSelected">
@@ -50,6 +49,7 @@ export default {
   },
   methods: {
     emitSelectedOptions(options) {
+      this.allOptionsSelected = true
       this.$emit('selectedOptions', options)
     }
   }
