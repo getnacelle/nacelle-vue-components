@@ -103,7 +103,6 @@ export default {
   },
   data() {
     return {
-      variant: null,
       needsOptionsSelected: false,
       modalOpen: false,
       cartItemsModalOpen: false,
