@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex'
+import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
 
 export default {
   props: {
@@ -22,11 +22,12 @@ export default {
     },
     variant: {
       type: Object
-    },
-    allOptionsSelected: { type: Boolean, default: false }
+    }
   },
   computed: {
     ...mapState('cart', ['lineItems']),
+    ...mapState('product', ['selectedVariant']),
+    ...mapGetters('product', ['allOptionsSelected']),
     quantityInCart() {
       if (this.$parent.$options._componentTag == 'product-card') {
         const items = this.lineItems.filter(item => {
@@ -39,7 +40,7 @@ export default {
         } else {
           return 0
         }
-      } else {
+      } else if (this.variant != null) {
         const item = this.lineItems.find(item => {
           return item.variant.id === this.variant.id
         })
@@ -48,6 +49,8 @@ export default {
         } else {
           return 0
         }
+      } else {
+        return 0
       }
     },
     multipleVariantsInCart() {
@@ -85,6 +88,9 @@ export default {
   },
   methods: {
     ...mapMutations('cart', ['showCart']),
+    ...mapMutations('product', ['setProduct']),
+    ...mapMutations('product', ['showOptionsModal']),
+    ...mapMutations('product', ['showRemoveItemsModal']),
     ...mapActions('cart', [
       'addLineItem',
       'removeLineItem',
@@ -105,7 +111,8 @@ export default {
           this.incrementLineItem(this.variant.id)
         }
       } else {
-        this.$emit('needsOptionsSelected')
+        this.setProduct(this.product)
+        this.showOptionsModal()
       }
     },
     decrement() {
@@ -113,7 +120,7 @@ export default {
         this.multipleVariantsInCart &&
         this.$parent.$options._componentTag == 'product-card'
       ) {
-        this.$emit('showVariantsFromCart')
+        this.showRemoveItemsModal()
       } else {
         if (this.quantityInCart === 1) {
           this.removeLineItem(this.variant.id)

@@ -1,24 +1,12 @@
 <template>
   <div>
-    <product-options
-      v-show="product.options[0].values.length > 1"
-      :options="product.options"
-      v-on:allOptionsSelected="emitSelectedOptions"
-    />
+    <product-options v-show="product.options[0].values.length > 1" :options="product.options" />
     <div class="columns">
       <div class="column is-half" v-if="allOptionsSelected">
-        <product-quantity-update
-          :product="product"
-          :variant="variant"
-          :allOptionsSelected="allOptionsSelected"
-        />
+        <product-quantity-update :product="product" :variant="variant" />
       </div>
       <div class="column is-half">
-        <product-add-to-cart-button
-          :product="product"
-          :variant="variant"
-          :allOptionsSelected="allOptionsSelected"
-        />
+        <product-add-to-cart-button :product="product" :variant="variant" />
       </div>
     </div>
   </div>
@@ -28,6 +16,7 @@
 import ProductOptions from './ProductOptions'
 import ProductQuantityUpdate from './ProductQuantityUpdate'
 import ProductAddToCartButton from './ProductAddToCartButton'
+import { mapGetters } from 'vuex'
 export default {
   props: {
     product: {
@@ -37,21 +26,13 @@ export default {
       type: Object
     }
   },
-  data() {
-    return {
-      allOptionsSelected: false
-    }
+  computed: {
+    ...mapGetters('product', ['allOptionsSelected'])
   },
   components: {
     ProductOptions,
     ProductQuantityUpdate,
     ProductAddToCartButton
-  },
-  methods: {
-    emitSelectedOptions(options) {
-      this.allOptionsSelected = true
-      this.$emit('selectedOptions', options)
-    }
   }
 }
 </script>

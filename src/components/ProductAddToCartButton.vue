@@ -2,12 +2,12 @@
   <div>
     <button
       class="button is-primary"
-      :disabled="!allSelected"
+      :disabled="!allOptionsSelected"
       @click="addToCart"
       v-if="this.$parent.$options._componentTag == 'product-variant-select'"
     >
-      <span v-if="!variantInLineItems && !allSelected">Select Options</span>
-      <span v-if="!variantInLineItems && allSelected">Add to Cart</span>
+      <span v-if="!variantInLineItems && !allOptionsSelected">Select Options</span>
+      <span v-if="!variantInLineItems && allOptionsSelected">Add to Cart</span>
       <span v-if="variantInLineItems">Added!</span>
     </button>
     <button class="button is-primary" @click="addToCart" v-else>
@@ -26,16 +26,21 @@ export default {
     product: {
       type: Object
     },
-    variant: {
-      type: Object
-    },
-    quantity: { type: Number, default: 1 },
-    allOptionsSelected: { type: Boolean, default: false },
-    confirmedSelection: { type: Boolean, default: false }
+    quantity: { type: Number, default: 1 }
   },
 
   computed: {
     ...mapState('cart', ['lineItems']),
+    ...mapGetters('product', ['allOptionsSelected']),
+    ...mapGetters('product', ['onlyOneOption']),
+    ...mapState('product', ['selectedVariant']),
+    variant() {
+      if (this.onlyOneOption) {
+        return this.product.variants[0]
+      } else {
+        return this.selectedVariant
+      }
+    },
     variantInLineItems() {
       let vm = this
       if (vm.variant != null) {
@@ -52,27 +57,6 @@ export default {
       } else {
         return false
       }
-    },
-    allSelected() {
-      if (
-        this.product.options &&
-        this.product.options.length == 1 &&
-        this.product.options[0].values.length == 1
-      ) {
-        return true
-      } else if (this.allOptionsSelected) {
-        return true
-      } else {
-        return false
-      }
-    }
-  },
-
-  watch: {
-    confirmedSelection() {
-      if (this.confirmedSelection == true) {
-        this.addToCart()
-      }
     }
   },
 
@@ -84,19 +68,21 @@ export default {
       'decrementLineItem',
       'getLineItems'
     ]),
+    ...mapMutations('product', ['setProduct', 'showOptionsModal']),
     addToCart() {
-      if (this.allSelected && this.variant) {
+      this.setProduct(this.product)
+      if (this.allOptionsSelected) {
         let lineItem = {
           image: this.product.featuredMedia,
           title: this.product.title,
-          variant: this.variant,
+          variant: this.selectedVariant,
           quantity: this.quantity,
           productId: this.product.id,
           handle: this.product.handle
         }
         this.addLineItem(lineItem)
       } else {
-        this.$emit('needsOptionsSelected')
+        this.showOptionsModal()
       }
     }
   }

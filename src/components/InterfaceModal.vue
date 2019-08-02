@@ -6,7 +6,7 @@
           <div class="columns">
             <div class="modal-inner column is-6">
               <interface-close-button class="close" v-on:close="closeModal" />
-              <div class="modal-content">
+              <div class="modal-content" v-if="modalOpen">
                 <slot v-on:close="closeModal"></slot>
               </div>
             </div>

@@ -5,6 +5,7 @@ import { linkTo } from '@storybook/addon-links'
 import { withInfo } from 'storybook-addon-vue-info'
 
 import store from '../store/store'
+import { mapState, mapMutations } from 'vuex'
 
 import ProductImage from '../components/ProductImage'
 import ProductPrice from '../components/ProductPrice'
@@ -38,37 +39,56 @@ storiesOf('Components | Product/Composition', module)
       data() {
         return {
           product: defaultProduct,
-          optionsSelection: null,
-          variant: null
+          variant: defaultProduct.variants[0]
         }
       },
       computed: {
-        currentVariant() {
-          if (this.variant != null) {
-            return this.variant
-          } else {
-            return this.product.variants[0]
-          }
-        }
+        ...mapState('product', ['selectedOptions'])
       },
       watch: {
-        optionsSelection() {
-          this.setSelectedVariant()
+        selectedOptions(val) {
+          if (val.length > 0) {
+            this.setSelectedVariant()
+          }
+        },
+        variant(val) {
+          if (val != null) {
+            this.setVariant(this.variant)
+          }
         }
       },
-      
       methods: {
+        ...mapMutations('product', ['setVariant']),
+        ...mapMutations('product', ['setProduct']),
         setSelectedVariant() {
-          let variant = {
-            id: `${Math.random()}`,
-            price: '29.99',
-            title: `Variant ${Math.random()}`
+          let variant
+          if (
+            this.selectedOptions.filter(option => {
+              return option.value == 'Small'
+            }).length == 1
+          ) {
+            variant = {
+              id:
+                'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ==',
+              price: '29.99',
+              title: 'Small'
+            }
+          } else {
+            variant = {
+              id:
+                'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQaMQ==',
+              price: '29.99',
+              title: 'Medium'
+            }
           }
-          this.variant = variant
-        },
-        captureOptions(val) {
-          this.optionsSelection = val
+
+          setTimeout(() => {
+            this.variant = variant
+          }, 400)
         }
+      },
+      mounted() {
+        this.setProduct(this.product)
       },
       template: `
       <section class="section">
@@ -81,9 +101,9 @@ storiesOf('Components | Product/Composition', module)
         <product-title :title="product.title"/>
         <product-category :category="product.category"/>
         <product-description :description="product.description"/>
-        <product-price :price="currentVariant.price"></product-price>
+        <product-price :price="variant.price"></product-price>
         <div class="columns is-marginless is-paddingless">
-      <product-variant-select :product="product" :variant="currentVariant" v-on:selectedOptions="captureOptions"/>
+      <product-variant-select :product="product" :variant="variant"/>
         </div>
         </div>
       </div>

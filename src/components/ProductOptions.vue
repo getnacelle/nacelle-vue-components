@@ -2,12 +2,7 @@
   <div v-if="options" class="options">
     <div class="option" v-for="option in options" :key="option.title">
       <h3>{{option.name}}</h3>
-      <product-option-swatches
-        v-on:optionSet="setSelectedOptions"
-        :option="option"
-        :clearOptionValue="clearOptionValue"
-        v-on:clearedOptionValue="countOptionClear"
-      />
+      <product-option-swatches v-on:optionSet="setSelectedOptions" :option="option" />
     </div>
     <button
       class="button is-primary"
@@ -23,7 +18,7 @@
 
 <script>
 import ProductOptionSwatches from './ProductOptionSwatches'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
 export default {
   props: {
     options: {
@@ -33,85 +28,20 @@ export default {
   components: {
     ProductOptionSwatches
   },
-  data() {
-    return {
-      selectedOptions: [],
-      clearOptionValue: false,
-      optionsCleared: 0
-    }
-  },
-  watch: {
-    allOptionsSelected(value) {
-      if (value == true) {
-        this.$emit('allOptionsSelected', this.selectedOptions)
-      }
-      if (this.$parent.$options._componentTag != 'interface-modal') {
-        this.$emit('confirmedSelection')
-      }
-    },
-    optionsCleared() {
-      if (this.optionsCleared == this.options.length) {
-        this.resetClearValues()
-        this.optionsCleared = 0
-      }
-    },
-    lineItems() {
-      this.$parent.$emit('closeModal')
-      if (this.$parent.$options._componentTag == 'interface-modal') {
-        this.resetSelectedOptions()
-        this.$emit('clearedOptions')
-        this.clearValues()
-      }
-    }
-  },
 
   computed: {
-    ...mapState('cart', ['lineItems']),
-    allOptionsSelected() {
-      if (this.options && this.selectedOptions.length == this.options.length) {
-        return true
-      } else {
-        return false
-      }
-    },
     isChildOfModal() {
       if (this.$parent.$options._componentTag == 'interface-modal') {
         return true
       } else {
         return false
       }
-    }
+    },
+    ...mapGetters('product', ['allOptionsSelected'])
   },
   methods: {
-    setSelectedOptions(selectedOption) {
-      let vm = this
-      let searchOptions = vm.selectedOptions.filter(option => {
-        return option.name == selectedOption.name
-      })
-      if (searchOptions.length == 0) {
-        vm.selectedOptions.push(selectedOption)
-      } else {
-        let index = vm.selectedOptions.findIndex(option => {
-          return option.name == selectedOption.name
-        })
-        vm.selectedOptions.splice(index, 1, selectedOption)
-      }
-    },
-    resetSelectedOptions() {
-      this.selectedOptions = []
-    },
-    countOptionClear() {
-      this.optionsCleared++
-    },
-    clearValues() {
-      this.clearOptionValue = true
-    },
-    resetClearValues() {
-      this.clearOptionValue = false
-    },
-    confirmSelection() {
-      this.$parent.$emit('confirmedSelection', this.selectedOptions)
-    }
+    ...mapMutations('product', ['setSelectedOptions']),
+    ...mapActions('product', ['confirmSelection'])
   }
 }
 </script>

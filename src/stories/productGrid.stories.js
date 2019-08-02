@@ -7,15 +7,15 @@ import ProductGrid from '../components/ProductGrid'
 import InterfaceModal from '../components/InterfaceModal'
 import store from '../store/store'
 
-import { defaultProduct } from '../../config/defaultObjects.js'
+import { defaultProduct, defaultProduct2 } from '../../config/defaultObjects.js'
 
 const productArray = [
   defaultProduct,
-  defaultProduct,
-  defaultProduct,
-  defaultProduct,
-  defaultProduct,
-  defaultProduct
+  defaultProduct2
+  // defaultProduct,
+  // defaultProduct,
+  // defaultProduct,
+  // defaultProduct
 ]
 
 storiesOf('Components | Product / Composition', module)

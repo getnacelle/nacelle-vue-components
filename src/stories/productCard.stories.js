@@ -9,6 +9,7 @@ import StoryRouter from 'storybook-vue-router'
 import store from '../store/store'
 import ProductCard from '../components/ProductCard'
 import { defaultProduct } from '../../config/defaultObjects.js'
+import { mapState, mapMutations } from 'vuex'
 
 storiesOf('Components | Product / Product Card', module)
   .addDecorator(withInfo)
@@ -53,32 +54,55 @@ storiesOf('Components | Product / Product Card', module)
       data() {
         return {
           product: defaultProduct,
-          variant: null,
-          optionsSelection: null
+          variant: null
         }
       },
+      computed: {
+        ...mapState('product', ['selectedOptions'])
+      },
       watch: {
-        optionsSelection() {
-          this.setSelectedVariant()
+        selectedOptions(val) {
+          if (val.length > 0) {
+            console.log('hi')
+            this.setSelectedVariant()
+          }
+        },
+        variant(val) {
+          if (val != null) {
+            this.setVariant(this.variant)
+          }
         }
       },
       methods: {
-        captureOptions(val) {
-          this.optionsSelection = val
-        },
+        ...mapMutations('product', ['setVariant']),
         setSelectedVariant() {
-          let variant = {
-            id: `${Math.random()}`,
-            price: '29.99',
-            title: `Variant ${Math.random()}`
+          let variant
+          if (
+            this.selectedOptions.filter(option => {
+              return option.value == 'Small'
+            }).length == 1
+          ) {
+            variant = {
+              id:
+                'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ==',
+              price: '29.99',
+              title: 'Small'
+            }
+          } else {
+            variant = {
+              id:
+                'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQaMQ==',
+              price: '29.99',
+              title: 'Medium'
+            }
           }
+
           setTimeout(() => {
             this.variant = variant
           }, 400)
         }
       },
-      template:
-        '<product-card :product="product" :variant="variant" v-on:selectedOptions="captureOptions"/>'
+      template: '<product-card :product="product" :variant="variant"/>'
     }),
     {
       info: {
