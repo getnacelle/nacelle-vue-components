@@ -27,7 +27,10 @@
         <h3 class="modal-title">Choose Your Options</h3>
         <product-options :options="productOptions" />
       </interface-modal>
-      <interface-modal :modalOpen="removeItemsModalVisible" v-on:closeModal="hideRemoveItemsModal">
+      <interface-modal
+        :modalOpen="optionsModalVisible && product.id ==  selectedProduct.id"
+        v-on:closeModal="hideRemoveItemsModal"
+      >
         <h3 class="modal-title">Remove a Variant</h3>
         <cart-flyout-item v-for="item in productLineItems" :item="item" :key="item.variant.id" />
       </interface-modal>

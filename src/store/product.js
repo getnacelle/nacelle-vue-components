@@ -33,6 +33,9 @@ const product = {
     clearProduct(state) {
       state.product = null
     },
+    clearSelectedVariant(state) {
+      state.selectedVariant = null
+    },
     showOptionsModal(state) {
       state.optionsModalVisible = true
     },
@@ -87,6 +90,7 @@ const product = {
     clearAll(context) {
       context.commit('clearSelectedOptions')
       context.commit('clearProduct')
+      context.commit('clearSelectedVariant')
       context.commit('hideOptionsModal')
     },
     confirmSelection(context) {
