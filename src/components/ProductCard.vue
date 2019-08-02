@@ -155,17 +155,15 @@ export default {
   },
   watch: {
     productLineItems(newValue, oldValue) {
-      if (newValue.length != oldValue.length) {
-        this.hideRemoveItemsModal()
+      if (this.product.id == this.selectedProduct.id) {
+        if (this.productLineItems.length == 0) {
+          this.hideRemoveItemsModal()
+        }
       }
     }
   },
   methods: {
     ...mapMutations('cart', ['showCart']),
-    hideThisItemsModal() {},
-    test() {
-      console.log('test')
-    },
     ...mapMutations('product', ['hideRemoveItemsModal']),
     ...mapActions('product', ['clearAll'])
   }
