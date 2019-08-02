@@ -28,7 +28,7 @@
         <product-options :options="productOptions" />
       </interface-modal>
       <interface-modal
-        :modalOpen="optionsModalVisible && product.id ==  selectedProduct.id"
+        :modalOpen="removeItemsModalVisible && product.id ==  selectedProduct.id"
         v-on:closeModal="hideRemoveItemsModal"
       >
         <h3 class="modal-title">Remove a Variant</h3>
