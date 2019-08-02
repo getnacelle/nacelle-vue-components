@@ -116,6 +116,7 @@ export default {
       }
     },
     decrement() {
+      this.setProduct(this.product)
       if (
         this.multipleVariantsInCart &&
         this.$parent.$options._componentTag == 'product-card'
