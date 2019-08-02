@@ -154,8 +154,8 @@ export default {
     }
   },
   watch: {
-    productLineItems(value) {
-      if (value.length == 0) {
+    productLineItems(newValue, oldValue) {
+      if (newValue.length != oldValue.length) {
         this.hideRemoveItemsModal()
       }
     }
