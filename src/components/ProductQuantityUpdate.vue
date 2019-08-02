@@ -116,18 +116,14 @@ export default {
       }
     },
     decrement() {
-      this.setProduct(this.product)
       if (
         this.multipleVariantsInCart &&
         this.$parent.$options._componentTag == 'product-card'
       ) {
+        this.setProduct(this.product)
         this.showRemoveItemsModal()
       } else {
-        if (this.quantityInCart === 1) {
-          this.removeLineItem(this.variant.id)
-        } else {
-          this.decrementLineItem(this.variant.id)
-        }
+        this.decrementLineItem(this.variant.id)
       }
     }
   }

@@ -29,7 +29,7 @@
       </interface-modal>
       <interface-modal
         :modalOpen="removeItemsModalVisible && product.id ==  selectedProduct.id"
-        v-on:closeModal="hideRemoveItemsModal"
+        v-on:closeModal="clearAll"
       >
         <h3 class="modal-title">Remove a Variant</h3>
         <cart-flyout-item v-for="item in productLineItems" :item="item" :key="item.variant.id" />
@@ -154,7 +154,7 @@ export default {
     }
   },
   watch: {
-    lineItems(value) {
+    productLineItems(value) {
       if (value.length == 0) {
         this.hideRemoveItemsModal()
       }
@@ -162,6 +162,10 @@ export default {
   },
   methods: {
     ...mapMutations('cart', ['showCart']),
+    hideThisItemsModal() {},
+    test() {
+      console.log('test')
+    },
     ...mapMutations('product', ['hideRemoveItemsModal']),
     ...mapActions('product', ['clearAll'])
   }

@@ -92,6 +92,7 @@ const product = {
       context.commit('clearProduct')
       context.commit('clearSelectedVariant')
       context.commit('hideOptionsModal')
+      context.commit('hideRemoveItemsModal')
     },
     confirmSelection(context) {
       if (context.state.product && context.state.selectedVariant) {
