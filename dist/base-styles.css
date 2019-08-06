@@ -25,3 +25,7 @@ span {
 .ui-border-bottom {
   border-bottom: 1px solid #dedede;
 }
+.modal-title {
+  text-align: center;
+  font-size: 18pt;
+}

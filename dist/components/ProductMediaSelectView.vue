@@ -1,7 +1,7 @@
 <template>
   <div class="media-select-view columns is-multiline">
     <div class="media-viewer column is-12">
-      <transition name="fade" mode="out-in" @after-enter="afterEnter">
+      <transition name="fade" mode="out-in">
         <component
           :is="mediaComponent"
           v-if="selectedMedia"
@@ -9,19 +9,21 @@
           :key="selectedMedia.src"
           :width="featuredMediaWidth"
           :observeVisibility="false"
+          ref="selected-media"
         />
       </transition>
     </div>
     <div class="media-select column is-12">
       <div class="columns is-mobile">
-        <product-image
-          class="column is-one-fifth media-item"
-          v-for="item in media"
-          :key="item.id"
-          @click.native="setSelected(item)"
-          :source="item.thumbnailSrc"
-          :observeVisibility="false"
-        />
+        <div v-for="item in media" :key="item.id" class="column is-one-fifth">
+          <product-image
+            class="media-item"
+            @click.native="setSelected(item)"
+            :source="item.thumbnailSrc"
+            :observeVisibility="false"
+          />
+          <img v-show="null != null" :src="item.src" />
+        </div>
       </div>
     </div>
   </div>
@@ -47,7 +49,8 @@ export default {
   },
   data() {
     return {
-      selectedMedia: this.featuredMedia
+      selectedMedia: this.featuredMedia,
+      loaded: true
     }
   },
   computed: {
@@ -61,10 +64,7 @@ export default {
       }
     },
     featuredMediaWidth() {
-      if (
-        this.selectedMedia &&
-        this.selectedMedia.width
-      ) {
+      if (this.selectedMedia && this.selectedMedia.width) {
         return this.selectedMedia.width
       }
 
@@ -75,7 +75,7 @@ export default {
     setSelected(item) {
       const mediaViewer = this.$el.querySelector('.media-viewer')
       mediaViewer.style.height = `${mediaViewer.offsetHeight}px`
-
+      this.loaded = false
       this.selectedMedia = item
     },
     afterEnter() {
@@ -92,7 +92,7 @@ export default {
 }
 
 .media-item {
-  cursor: pointer
+  cursor: pointer;
 }
 
 .fade-enter-active,

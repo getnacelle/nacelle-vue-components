@@ -11,33 +11,47 @@
     </div>
     <div v-if="product && product.id" class="product-card-actions">
       <product-quantity-update
-        :image="product.featuredMedia"
-        :title="product.title"
-        :productId="product.id"
-        :handle="product.handle"
+        :product="product"
         :variant="currentVariant"
-        v-if="showQuantityUpdate == true"
+        v-if="showQuantityUpdate == true && onlyOneOption"
+        :allOptionsSelected="allOptionsSelected"
       />
       <product-add-to-cart-button
-        :image="product.featuredMedia"
-        :title="product.title"
-        :productId="product.id"
-        :handle="product.handle"
-        :variant="currentVariant"
-        @click.native="showCart"
         v-if="showAddToCart == true"
-      />
+        :product="product"
+        :variant="currentVariant"
+        :allOptionsSelected="allOptionsSelected"
+        :confirmedSelection="confirmedSelection"
+        @click.native="handleAddToCartClick"
+        :onlyOneOption="onlyOneOption"
+      ></product-add-to-cart-button>
+      <interface-modal
+        :modalOpen="optionsModalVisible"
+        v-on:closeModal="optionsModalVisible = false"
+      >
+        <h3 class="modal-title">Choose Your Options</h3>
+        <product-options
+          :options="product.options"
+          v-on:selectedOptionsSet="setSelected"
+          v-on:confirmedSelection="confirmedSelection = true, optionsModalVisible = false"
+          :onlyOneOption="onlyOneOption"
+        />
+      </interface-modal>
     </div>
   </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import ProductImage from './ProductImage'
 import ProductTitle from './ProductTitle'
 import ProductPrice from './ProductPrice'
 import ProductQuantityUpdate from './ProductQuantityUpdate'
 import ProductAddToCartButton from './ProductAddToCartButton'
+import InterfaceModal from './InterfaceModal'
+import ProductOptions from './ProductOptions'
+import CartFlyoutItem from './CartFlyoutItem'
+// import allOptionsSelected from '../mixins/allOptionsSelected'
 
 export default {
   components: {
@@ -45,8 +59,12 @@ export default {
     ProductTitle,
     ProductPrice,
     ProductQuantityUpdate,
-    ProductAddToCartButton
+    ProductAddToCartButton,
+    InterfaceModal,
+    ProductOptions,
+    CartFlyoutItem
   },
+  // mixins: [allOptionsSelected],
   props: {
     pathFragment: {
       type: String,
@@ -70,6 +88,9 @@ export default {
         }
       }
     },
+    variant: {
+      type: Object
+    },
     showQuantityUpdate: {
       type: Boolean,
       default: true
@@ -81,20 +102,19 @@ export default {
   },
   data() {
     return {
-      selectedVariant: null
+      optionsModalVisible: false,
+      confirmedSelection: false
     }
   },
   computed: {
+    ...mapState('cart', ['lineItems']),
+
     currentVariant() {
-      if (this.selectedVariant === null) {
-        if (this.product.variants.length > 0) {
-          return this.product.variants[0]
-        }
-
-        return undefined
+      if (this.product.variants && this.product.variants.length == 1) {
+        return this.product.variants[0]
+      } else {
+        return this.product.variants[0]
       }
-
-      return this.selectedVariant
     },
     currentVariantId() {
       if (this.currentVariant && this.currentVariant.id) {
@@ -123,10 +143,34 @@ export default {
         handle: this.product.handle,
         variant: this.currentVariant
       }
+    },
+    productLineItems() {
+      let vm = this
+      return this.lineItems.filter(item => {
+        return item.productId == vm.product.id
+      })
+    },
+    onlyOneOption() {
+      if (
+        this.product.options &&
+        this.product.options.length == 1 &&
+        this.product.options[0].values.length == 1
+      ) {
+        return true
+      } else {
+        return false
+      }
     }
   },
+
   methods: {
-    ...mapMutations('cart', ['showCart'])
+    ...mapMutations('cart', ['showCart']),
+
+    handleAddToCartClick() {
+      if (!this.allOptionsSelected) {
+        this.optionsModalVisible = true
+      }
+    }
   }
 }
 </script>
@@ -141,6 +185,13 @@ export default {
 
 .product-card-details /deep/ a {
   flex-basis: 80%;
+}
+.handler {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 </style>
 

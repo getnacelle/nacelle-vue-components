@@ -9,18 +9,18 @@ require('./copy-components')
 fs.copy('src/store', 'dist/store')
 fs.copy('src/base-styles.css', 'dist/base-styles.css')
 
-console.info('🏗 Building main library')
-execSync(
-  `vue-cli-service build dist/index.js --target lib --name index --dest dist/cjs`
-)
+// console.info('🏗 Building main library')
+// execSync(
+//   `vue-cli-service build dist/index.js --target lib --name index --dest dist/cjs`
+// )
 
-execSync(
-  `vue-cli-service build src/store/cart.js --target lib --name index --dest dist/cjs-cart-store`
-)
+// execSync(
+//   `vue-cli-service build src/store/cart.js --target lib --name index --dest dist/cjs-cart-store`
+// )
 
-execSync(
-  `vue-cli-service build src/store/menu.js --target lib --name index --dest dist/cjs-menu-store`
-)
+// execSync(
+//   `vue-cli-service build src/store/menu.js --target lib --name index --dest dist/cjs-menu-store`
+// )
 
-console.info('🚀  Nacelle component library built!')
-;('')
+// console.info('🚀  Nacelle component library built!')
+// ;('')

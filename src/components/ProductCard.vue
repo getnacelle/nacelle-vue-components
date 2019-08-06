@@ -51,7 +51,7 @@ import ProductAddToCartButton from './ProductAddToCartButton'
 import InterfaceModal from './InterfaceModal'
 import ProductOptions from './ProductOptions'
 import CartFlyoutItem from './CartFlyoutItem'
-import allOptionsSelected from '../mixins/allOptionsSelected'
+// import allOptionsSelected from '../mixins/allOptionsSelected'
 
 export default {
   components: {
@@ -64,7 +64,7 @@ export default {
     ProductOptions,
     CartFlyoutItem
   },
-  mixins: [allOptionsSelected],
+  // mixins: [allOptionsSelected],
   props: {
     pathFragment: {
       type: String,
