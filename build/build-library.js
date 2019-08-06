@@ -8,6 +8,7 @@ require('./copy-components')
 
 fs.copy('src/store', 'dist/store')
 fs.copy('src/base-styles.css', 'dist/base-styles.css')
+fs.copy('src/mixins', 'dist/mixins')
 
 // console.info('🏗 Building main library')
 // execSync(
