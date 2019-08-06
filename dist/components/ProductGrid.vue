@@ -28,11 +28,11 @@ export default {
     },
     showQuantityUpdate: {
       type: Boolean,
-      default: true
+      default: false
     },
     showAddToCart: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   computed: {
