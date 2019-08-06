@@ -13,33 +13,36 @@
       <product-quantity-update
         :product="product"
         :variant="currentVariant"
-        v-if="showQuantityUpdate == true"
+        v-if="showQuantityUpdate == true && onlyOneOption"
+        :allOptionsSelected="allOptionsSelected"
       />
       <product-add-to-cart-button
+        v-if="showAddToCart == true"
         :product="product"
         :variant="currentVariant"
-        v-if="showAddToCart == true"
+        :allOptionsSelected="allOptionsSelected"
+        :confirmedSelection="confirmedSelection"
+        @click.native="handleAddToCartClick"
+        :onlyOneOption="onlyOneOption"
       ></product-add-to-cart-button>
       <interface-modal
-        :modalOpen="optionsModalVisible && product.id ==  selectedProduct.id"
-        v-on:closeModal="clearAll"
+        :modalOpen="optionsModalVisible"
+        v-on:closeModal="optionsModalVisible = false"
       >
         <h3 class="modal-title">Choose Your Options</h3>
-        <product-options :options="productOptions" />
-      </interface-modal>
-      <interface-modal
-        :modalOpen="removeItemsModalVisible && product.id ==  selectedProduct.id"
-        v-on:closeModal="clearAll"
-      >
-        <h3 class="modal-title">Remove a Variant</h3>
-        <cart-flyout-item v-for="item in productLineItems" :item="item" :key="item.variant.id" />
+        <product-options
+          :options="product.options"
+          v-on:selectedOptionsSet="setSelected"
+          v-on:confirmedSelection="confirmedSelection = true, optionsModalVisible = false"
+          :onlyOneOption="onlyOneOption"
+        />
       </interface-modal>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import ProductImage from './ProductImage'
 import ProductTitle from './ProductTitle'
 import ProductPrice from './ProductPrice'
@@ -48,6 +51,8 @@ import ProductAddToCartButton from './ProductAddToCartButton'
 import InterfaceModal from './InterfaceModal'
 import ProductOptions from './ProductOptions'
 import CartFlyoutItem from './CartFlyoutItem'
+import allOptionsSelected from '../mixins/allOptionsSelected'
+
 export default {
   components: {
     ProductImage,
@@ -59,6 +64,7 @@ export default {
     ProductOptions,
     CartFlyoutItem
   },
+  mixins: [allOptionsSelected],
   props: {
     pathFragment: {
       type: String,
@@ -96,27 +102,19 @@ export default {
   },
   data() {
     return {
-      cartItemsModalOpen: false,
-      allOptionsSelected: false
+      optionsModalVisible: false,
+      confirmedSelection: false
     }
   },
   computed: {
     ...mapState('cart', ['lineItems']),
-    ...mapState('product', { selectedProduct: 'product' }),
-    ...mapState('product', ['optionsModalVisible']),
-    ...mapState('product', ['removeItemsModalVisible']),
-    ...mapGetters('product', ['productOptions']),
 
     currentVariant() {
-      if (this.variant === null) {
-        if (this.product.variants && this.product.variants.length == 1) {
-          return this.product.variants[0]
-        }
-
-        return undefined
+      if (this.product.variants && this.product.variants.length == 1) {
+        return this.product.variants[0]
+      } else {
+        return this.product.variants[0]
       }
-
-      return this.variant
     },
     currentVariantId() {
       if (this.currentVariant && this.currentVariant.id) {
@@ -151,21 +149,28 @@ export default {
       return this.lineItems.filter(item => {
         return item.productId == vm.product.id
       })
-    }
-  },
-  watch: {
-    productLineItems(newValue, oldValue) {
-      if (this.product.id == this.selectedProduct.id) {
-        if (this.productLineItems.length == 0) {
-          this.hideRemoveItemsModal()
-        }
+    },
+    onlyOneOption() {
+      if (
+        this.product.options &&
+        this.product.options.length == 1 &&
+        this.product.options[0].values.length == 1
+      ) {
+        return true
+      } else {
+        return false
       }
     }
   },
+
   methods: {
     ...mapMutations('cart', ['showCart']),
-    ...mapMutations('product', ['hideRemoveItemsModal']),
-    ...mapActions('product', ['clearAll'])
+
+    handleAddToCartClick() {
+      if (!this.allOptionsSelected) {
+        this.optionsModalVisible = true
+      }
+    }
   }
 }
 </script>

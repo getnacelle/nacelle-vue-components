@@ -13,7 +13,8 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
+import allOptionsSelected from '../mixins/allOptionsSelected'
 
 export default {
   props: {
@@ -22,25 +23,13 @@ export default {
     },
     variant: {
       type: Object
-    }
+    },
+    allOptionsSelected: { type: Boolean, default: false }
   },
   computed: {
     ...mapState('cart', ['lineItems']),
-    ...mapState('product', ['selectedVariant']),
-    ...mapGetters('product', ['allOptionsSelected']),
     quantityInCart() {
-      if (this.$parent.$options._componentTag == 'product-card') {
-        const items = this.lineItems.filter(item => {
-          return item.productId === this.product.id
-        })
-        if (items) {
-          return items.reduce((acc, item) => {
-            return acc + item.quantity
-          }, 0)
-        } else {
-          return 0
-        }
-      } else if (this.variant != null) {
+      if (this.variant != null) {
         const item = this.lineItems.find(item => {
           return item.variant.id === this.variant.id
         })
@@ -53,16 +42,6 @@ export default {
         return 0
       }
     },
-    multipleVariantsInCart() {
-      const items = this.lineItems.filter(item => {
-        return item.productId === this.product.id
-      })
-      if (items.length > 1) {
-        return true
-      } else {
-        return false
-      }
-    },
     cartProduct() {
       return {
         image: this.product.featuredMedia,
@@ -71,26 +50,10 @@ export default {
         productId: this.product.id,
         handle: this.product.handle
       }
-    },
-    allSelected() {
-      if (
-        this.product.options &&
-        this.product.options.length == 1 &&
-        this.product.options[0].values.length == 1
-      ) {
-        return true
-      } else if (this.allOptionsSelected) {
-        return true
-      } else {
-        return false
-      }
     }
   },
   methods: {
     ...mapMutations('cart', ['showCart']),
-    ...mapMutations('product', ['setProduct']),
-    ...mapMutations('product', ['showOptionsModal']),
-    ...mapMutations('product', ['showRemoveItemsModal']),
     ...mapActions('cart', [
       'addLineItem',
       'removeLineItem',
@@ -98,33 +61,17 @@ export default {
       'decrementLineItem'
     ]),
     increment() {
-      if (
-        this.allSelected ||
-        this.$parent.$options._componentTag == 'cart-flyout-item'
-      ) {
-        if (this.quantityInCart === 0) {
-          this.addLineItem({
-            ...this.cartProduct,
-            quantity: 1
-          })
-        } else {
-          this.incrementLineItem(this.variant.id)
-        }
+      if (this.quantityInCart === 0 && this.allOptionsSelected) {
+        this.addLineItem({
+          ...this.cartProduct,
+          quantity: 1
+        })
       } else {
-        this.setProduct(this.product)
-        this.showOptionsModal()
+        this.incrementLineItem(this.variant.id)
       }
     },
     decrement() {
-      if (
-        this.multipleVariantsInCart &&
-        this.$parent.$options._componentTag == 'product-card'
-      ) {
-        this.setProduct(this.product)
-        this.showRemoveItemsModal()
-      } else {
-        this.decrementLineItem(this.variant.id)
-      }
+      this.decrementLineItem(this.variant.id)
     }
   }
 }

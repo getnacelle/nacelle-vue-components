@@ -5,7 +5,6 @@ import { linkTo } from '@storybook/addon-links'
 import { withInfo } from 'storybook-addon-vue-info'
 
 import store from '../store/store'
-import { mapState, mapMutations } from 'vuex'
 
 import ProductImage from '../components/ProductImage'
 import ProductPrice from '../components/ProductPrice'
@@ -18,6 +17,7 @@ import ProductOptions from '../components/ProductOptions'
 import ProductVariantSelect from '../components/ProductVariantSelect'
 
 import { defaultProduct } from '../../config/defaultObjects.js'
+import allOptionsSelected from '../mixins/allOptionsSelected'
 
 storiesOf('Components | Product/Composition', module)
   .addDecorator(withInfo)
@@ -42,54 +42,7 @@ storiesOf('Components | Product/Composition', module)
           variant: defaultProduct.variants[0]
         }
       },
-      computed: {
-        ...mapState('product', ['selectedOptions'])
-      },
-      watch: {
-        selectedOptions(val) {
-          if (val.length > 0) {
-            this.setSelectedVariant()
-          }
-        },
-        variant(val) {
-          if (val != null) {
-            this.setVariant(this.variant)
-          }
-        }
-      },
-      methods: {
-        ...mapMutations('product', ['setVariant']),
-        ...mapMutations('product', ['setProduct']),
-        setSelectedVariant() {
-          let variant
-          if (
-            this.selectedOptions.filter(option => {
-              return option.value == 'Small'
-            }).length == 1
-          ) {
-            variant = {
-              id:
-                'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ==',
-              price: '29.99',
-              title: 'Small'
-            }
-          } else {
-            variant = {
-              id:
-                'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQaMQ==',
-              price: '29.99',
-              title: 'Medium'
-            }
-          }
 
-          setTimeout(() => {
-            this.variant = variant
-          }, 400)
-        }
-      },
-      mounted() {
-        this.setProduct(this.product)
-      },
       template: `
       <section class="section">
       <div class="container is-marginless is-paddingless">

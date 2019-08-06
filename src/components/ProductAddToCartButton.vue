@@ -11,8 +11,9 @@
       <span v-if="variantInLineItems">Added!</span>
     </button>
     <button class="button is-primary" @click="addToCart" v-else>
-      <span v-if="!variantInLineItems">Add to Cart</span>
-      <span v-else>Added!</span>
+      <span v-if="!variantInLineItems && !onlyOneOption">Select Options</span>
+      <span v-if="!variantInLineItems && onlyOneOption">Add to Cart</span>
+      <span v-if="variantInLineItems">Added!</span>
     </button>
   </div>
 </template>
@@ -26,28 +27,22 @@ export default {
     product: {
       type: Object
     },
-    quantity: { type: Number, default: 1 }
+    variant: {
+      type: Object
+    },
+    quantity: { type: Number, default: 1 },
+    allOptionsSelected: { type: Boolean, default: false },
+    confirmedSelection: { type: Boolean, default: false },
+    onlyOneOption: { type: Boolean, default: false }
   },
 
   computed: {
     ...mapState('cart', ['lineItems']),
-    ...mapGetters('product', ['allOptionsSelected']),
-    ...mapGetters('product', ['onlyOneOption']),
-    ...mapState('product', ['selectedVariant']),
-    variant() {
-      if (this.onlyOneOption) {
-        return this.product.variants[0]
-      } else {
-        return this.selectedVariant
-      }
-    },
     variantInLineItems() {
       let vm = this
       if (vm.variant != null) {
         let lineItem = vm.lineItems.findIndex(lineItem => {
-          if (vm.variant.id) {
-            return lineItem.variant.id == vm.variant.id
-          }
+          return lineItem.variant.id == vm.variant.id
         })
         if (lineItem != -1) {
           return true
@@ -60,6 +55,12 @@ export default {
     }
   },
 
+  watch: {
+    confirmedSelection() {
+      this.addToCart()
+    }
+  },
+
   methods: {
     ...mapActions('cart', [
       'addLineItem',
@@ -68,21 +69,17 @@ export default {
       'decrementLineItem',
       'getLineItems'
     ]),
-    ...mapMutations('product', ['setProduct', 'showOptionsModal']),
     addToCart() {
-      this.setProduct(this.product)
       if (this.allOptionsSelected) {
         let lineItem = {
           image: this.product.featuredMedia,
           title: this.product.title,
-          variant: this.selectedVariant,
+          variant: this.variant,
           quantity: this.quantity,
           productId: this.product.id,
           handle: this.product.handle
         }
         this.addLineItem(lineItem)
-      } else {
-        this.showOptionsModal()
       }
     }
   }

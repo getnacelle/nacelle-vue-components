@@ -1,12 +1,12 @@
 <template>
   <div class="modal-wrapper" v-on:close="closeModal">
     <transition name="fade">
-      <div v-show="modalOpen" class="modal-outer">
+      <div v-if="modalOpen" class="modal-outer">
         <div class="container">
           <div class="columns">
             <div class="modal-inner column is-6">
               <interface-close-button class="close" v-on:close="closeModal" />
-              <div class="modal-content" v-if="modalOpen">
+              <div class="modal-content">
                 <slot v-on:close="closeModal"></slot>
               </div>
             </div>

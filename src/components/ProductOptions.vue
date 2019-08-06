@@ -18,11 +18,15 @@
 
 <script>
 import ProductOptionSwatches from './ProductOptionSwatches'
-import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
 export default {
   props: {
     options: {
       type: Array
+    }
+  },
+  data() {
+    return {
+      selectedOptions: []
     }
   },
   components: {
@@ -37,11 +41,40 @@ export default {
         return false
       }
     },
-    ...mapGetters('product', ['allOptionsSelected'])
+    allOptionsSelected() {
+      if (this.selectedOptions.length == this.options.length) {
+        return true
+      } else if (
+        this.options.length == 1 &&
+        this.options[0].values.length == 1
+      ) {
+        return true
+      } else {
+        return false
+      }
+    }
   },
   methods: {
-    ...mapMutations('product', ['setSelectedOptions']),
-    ...mapActions('product', ['confirmSelection'])
+    setSelectedOptions(selectedOption) {
+      let vm = this
+      let searchOptions = this.selectedOptions.filter(option => {
+        return option.name == selectedOption.name
+      })
+      if (searchOptions.length == 0) {
+        vm.selectedOptions.push(selectedOption)
+      } else {
+        let index = vm.selectedOptions.findIndex(option => {
+          return option.name == selectedOption.name
+        })
+        vm.selectedOptions.splice(index, 1, selectedOption)
+      }
+      if (vm.allOptionsSelected) {
+        vm.$emit('selectedOptionsSet', vm.selectedOptions)
+      }
+    },
+    confirmSelection() {
+      this.$emit('confirmedSelection')
+    }
   }
 }
 </script>
