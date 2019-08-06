@@ -97,7 +97,8 @@ export default {
           alignment: section.alignment,
           mobileFullHeight: (section.mobileFullHeight === 'true'),
           textColor: section.textColor,
-          mobileBackgroundImgUrl: section.mobileBackgroundImgUrl
+          mobileBackgroundImgUrl: section.mobileBackgroundImgUrl,
+          backgroundAltTag: section.backgroundAltTag
         }
       }
 
