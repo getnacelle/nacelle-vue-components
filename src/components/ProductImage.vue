@@ -3,7 +3,7 @@
     callback: visibilityChanged,
     once: true,
   }">
-    <img v-if="visibility" :src="source" :alt="alt" :width="width">
+    <img v-if="visibility" :src="source" :alt="alt" :width="width" ref="product-image" />
   </div>
 </template>
 
@@ -50,6 +50,13 @@ export default {
       this.visible = isVisible
     }
   }
+  // mounted() {
+  //   let vm = this
+  //   this.$refs['product-image'].addEventListener('load', e => {
+  //     console.log(e)
+  //     vm.$emit('image-loaded')
+  //   })
+  // }
 }
 </script>
 

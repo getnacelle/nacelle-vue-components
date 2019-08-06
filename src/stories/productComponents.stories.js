@@ -13,6 +13,11 @@ import ProductDescription from '../components/ProductDescription'
 import ProductCategory from '../components/ProductCategory'
 import ProductAddToCartButton from '../components/ProductAddToCartButton'
 import ProductQuantityUpdate from '../components/ProductQuantityUpdate'
+import ProductOptions from '../components/ProductOptions'
+import ProductVariantSelect from '../components/ProductVariantSelect'
+
+import { defaultProduct } from '../../config/defaultObjects.js'
+import allOptionsSelected from '../mixins/allOptionsSelected'
 
 storiesOf('Components | Product/Composition', module)
   .addDecorator(withInfo)
@@ -26,42 +31,32 @@ storiesOf('Components | Product/Composition', module)
         ProductCategory,
         ProductImage,
         ProductAddToCartButton,
-        ProductQuantityUpdate
+        ProductQuantityUpdate,
+        ProductOptions,
+        ProductVariantSelect
       },
       store,
       data() {
         return {
-          price: '29.99',
-          title: 'Awesome T-Shirt',
-          category: "Men's Shirts",
-          image: {
-            source:
-              'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
-          },
-          description:
-            "<p>This is the t-shirt description. It's a really nice item, isn't it? You can buy it in different colors and sizes.</p>",
-          productId: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM1OTkyMDE4NjE3Mzc=',
-          handle: 'gray-t-shirt',
-          variant: {
-            id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
-          }
+          product: defaultProduct,
+          variant: defaultProduct.variants[0]
         }
       },
+
       template: `
       <section class="section">
       <div class="container is-marginless is-paddingless">
       <div class="columns">
       <div class="column is-6">
-        <product-image :source="image.source"/>
+        <product-image :source="product.featuredMedia.src"/>
       </div>
             <div class="column is-6">
-        <product-title :title="title"/>
-        <product-category :category="category"/>
-        <product-description :description="description"/>
-        <product-price :price="price"></product-price>
+        <product-title :title="product.title"/>
+        <product-category :category="product.category"/>
+        <product-description :description="product.description"/>
+        <product-price :price="variant.price"></product-price>
         <div class="columns is-marginless is-paddingless">
-        <product-quantity-update :variantId="variant.id"/>
-        <product-add-to-cart-button :image="image" :title="title" :productId="productId" :handle="handle" :variant="variant"/>
+      <product-variant-select :product="product" :variant="variant"/>
         </div>
         </div>
       </div>

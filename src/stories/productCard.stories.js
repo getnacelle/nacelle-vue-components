@@ -9,6 +9,7 @@ import StoryRouter from 'storybook-vue-router'
 import store from '../store/store'
 import ProductCard from '../components/ProductCard'
 import { defaultProduct } from '../../config/defaultObjects.js'
+import { mapState, mapMutations } from 'vuex'
 
 storiesOf('Components | Product / Product Card', module)
   .addDecorator(withInfo)
@@ -48,15 +49,15 @@ storiesOf('Components | Product / Product Card', module)
   .add(
     'With Sample Data',
     () => ({
-      components: { ProductCard },
       store,
-      props: {
-        product: {
-          default: object('Product Object', defaultProduct)
+      components: { ProductCard },
+      data() {
+        return {
+          product: defaultProduct,
+          variant: defaultProduct.variants[0]
         }
       },
-      template:
-        '<product-card :product="product" showQuantityUpdate="false" showAddToCart="false"/>'
+      template: '<product-card :product="product" :variant="variant"/>'
     }),
     {
       info: {

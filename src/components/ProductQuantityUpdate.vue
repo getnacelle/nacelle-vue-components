@@ -13,51 +13,47 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
+import allOptionsSelected from '../mixins/allOptionsSelected'
 
 export default {
   props: {
-    image: { type: Object, required: true },
-    title: { type: String, required: true },
-    variant: { type: Object, required: true },
-    productId: { type: String, required: true },
-    handle: { type: String, required: true }
+    product: {
+      type: Object
+    },
+    variant: {
+      type: Object
+    },
+    allOptionsSelected: { type: Boolean, default: false }
   },
   computed: {
     ...mapState('cart', ['lineItems']),
     quantityInCart() {
-      const item = this.lineItems.find(item => {
-        return item.variant.id === this.variantId
-      })
-
-      if (item) {
-        return item.quantity
+      if (this.variant != null) {
+        const item = this.lineItems.find(item => {
+          return item.variant.id === this.variant.id
+        })
+        if (item) {
+          return item.quantity
+        } else {
+          return 0
+        }
+      } else {
+        return 0
       }
-
-      return 0
-    },
-    variantId() {
-      if (
-        this.cartProduct &&
-        this.cartProduct.variant &&
-        this.cartProduct.variant.id
-      ) {
-        return this.cartProduct.variant.id
-      }
-
-      return null
     },
     cartProduct() {
       return {
-        image: this.image,
-        title: this.title,
+        image: this.product.featuredMedia,
+        title: this.product.title,
         variant: this.variant,
-        productId: this.productId,
-        handle: this.handle
+        productId: this.product.id,
+        handle: this.product.handle
       }
     }
   },
   methods: {
+    ...mapMutations('cart', ['showCart']),
     ...mapActions('cart', [
       'addLineItem',
       'removeLineItem',
@@ -65,21 +61,17 @@ export default {
       'decrementLineItem'
     ]),
     increment() {
-      if (this.quantityInCart === 0) {
+      if (this.quantityInCart === 0 && this.allOptionsSelected) {
         this.addLineItem({
           ...this.cartProduct,
           quantity: 1
         })
       } else {
-        this.incrementLineItem(this.variantId)
+        this.incrementLineItem(this.variant.id)
       }
     },
     decrement() {
-      if (this.quantityInCart === 1) {
-        this.removeLineItem(this.variantId)
-      } else {
-        this.decrementLineItem(this.variantId)
-      }
+      this.decrementLineItem(this.variant.id)
     }
   }
 }
