@@ -4,6 +4,7 @@ const { execSync } = require('child_process')
 fs.emptyDirSync('dist')
 fs.emptyDirSync('dist/components')
 require('./update-index-file')
+
 require('./copy-components')
 
 fs.copy('src/store', 'dist/store')
