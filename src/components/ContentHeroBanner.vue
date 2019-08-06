@@ -11,7 +11,7 @@
         media="(max-width: 786px)"
         :srcset="mobileBackgroundImgUrl"
       >
-      <img :src="backgroundImgUrl">
+      <img :src="backgroundImgUrl" :alt="backgroundAltTag">
     </picture>
     <div class="hero-body">
       <div class="container">
@@ -66,6 +66,10 @@ export default {
       default: ''
     },
     mobileBackgroundImgUrl: {
+      type: String,
+      default: ''
+    },
+    backgroundAltTag: {
       type: String,
       default: ''
     },
