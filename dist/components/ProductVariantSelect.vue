@@ -29,7 +29,7 @@ import ProductOptions from './ProductOptions'
 import ProductQuantityUpdate from './ProductQuantityUpdate'
 import ProductAddToCartButton from './ProductAddToCartButton'
 import { mapGetters } from 'vuex'
-// import allOptionsSelected from '../mixins/allOptionsSelected'
+import allOptionsSelected from '../mixins/allOptionsSelected'
 export default {
   props: {
     product: {
@@ -39,7 +39,7 @@ export default {
       type: Object
     }
   },
-  // mixins: [allOptionsSelected],
+  mixins: [allOptionsSelected],
   components: {
     ProductOptions,
     ProductQuantityUpdate,
