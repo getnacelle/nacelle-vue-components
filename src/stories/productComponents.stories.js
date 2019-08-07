@@ -15,6 +15,8 @@ import ProductAddToCartButton from '../components/ProductAddToCartButton'
 import ProductQuantityUpdate from '../components/ProductQuantityUpdate'
 import ProductOptions from '../components/ProductOptions'
 import ProductVariantSelect from '../components/ProductVariantSelect'
+import CartFlyout from '../components/CartFlyout'
+import CartFlyoutItem from '../components/CartFlyoutItem'
 
 import { defaultProduct } from '../../config/defaultObjects.js'
 import allOptionsSelected from '../mixins/allOptionsSelected'
@@ -33,7 +35,9 @@ storiesOf('Components | Product/Composition', module)
         ProductAddToCartButton,
         ProductQuantityUpdate,
         ProductOptions,
-        ProductVariantSelect
+        ProductVariantSelect,
+        CartFlyout,
+        CartFlyoutItem
       },
       store,
       data() {
@@ -45,6 +49,10 @@ storiesOf('Components | Product/Composition', module)
 
       template: `
       <section class="section">
+      <cart-flyout>
+      <template v-slot="item">
+      <cart-flyout-item :item="item"/>
+      </template></cart-flyout>
       <div class="container is-marginless is-paddingless">
       <div class="columns">
       <div class="column is-6">

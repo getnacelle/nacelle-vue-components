@@ -128,6 +128,7 @@ const cart = (options = {}) => {
       async addLineItem(context, payload) {
         context.commit('addLineItemMutation', payload)
         context.dispatch('saveLineItems', context.state.lineItems)
+        context.commit('showCart')
       },
 
       async removeLineItem(context, payload) {
@@ -138,6 +139,7 @@ const cart = (options = {}) => {
       async incrementLineItem(context, payload) {
         context.commit('incrementLineItemMutation', payload)
         context.dispatch('saveLineItems', context.state.lineItems)
+        context.commit('showCart')
       },
 
       async decrementLineItem(context, payload) {
