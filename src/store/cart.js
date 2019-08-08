@@ -128,7 +128,6 @@ const cart = (options = {}) => {
       async addLineItem(context, payload) {
         context.commit('addLineItemMutation', payload)
         context.dispatch('saveLineItems', context.state.lineItems)
-        context.commit('showCart')
       },
 
       async removeLineItem(context, payload) {

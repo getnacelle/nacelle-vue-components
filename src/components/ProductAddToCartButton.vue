@@ -69,6 +69,7 @@ export default {
       'decrementLineItem',
       'getLineItems'
     ]),
+    ...mapMutations('cart', ['showCart']),
     addToCart() {
       if (this.allOptionsSelected) {
         let lineItem = {
@@ -80,6 +81,7 @@ export default {
           handle: this.product.handle
         }
         this.addLineItem(lineItem)
+        this.showCart()
       }
     }
   }
