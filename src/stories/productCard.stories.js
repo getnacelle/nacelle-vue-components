@@ -57,11 +57,6 @@ storiesOf('Components | Product / Product Card', module)
           variant: defaultProduct.variants[0]
         }
       },
-      mounted() {
-        this.$store.subscribe((mutation, state) => {
-          console.log(mutation.type)
-        })
-      },
       template: '<product-card :product="product" :variant="variant"/>'
     }),
     {

@@ -43,6 +43,12 @@ const events = {
         page
       })
     },
+    productView({ commit }, product) {
+      commit('addEvent', {
+        event: 'PRODUCT_VIEW',
+        product
+      })
+    },
     addToCart({ commit }, product) {
       commit('addEvent', {
         event: 'ADD_TO_CART',
