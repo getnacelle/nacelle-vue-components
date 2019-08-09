@@ -128,11 +128,20 @@ const cart = (options = {}) => {
       async addLineItem(context, payload) {
         context.commit('addLineItemMutation', payload)
         context.dispatch('saveLineItems', context.state.lineItems)
+        
+        if (context.rootState.events) {
+          context.dispatch('events/addToCart', payload, { root: true })
+        }
       },
 
-      async removeLineItem(context, payload) {
-        context.commit('removeLineItemMutation', payload)
-        context.dispatch('saveLineItems', context.state.lineItems)
+      async removeLineItem({ state, rootState, dispatch, commit }, payload) {
+        if (rootState.events) {
+          const lineItem = state.lineItems.find(item => item.variant.id === payload)
+          dispatch('events/removeFromCart', lineItem, { root: true })
+        }
+
+        commit('removeLineItemMutation', payload)
+        dispatch('saveLineItems', state.lineItems)
       },
 
       async incrementLineItem(context, payload) {
@@ -226,13 +235,18 @@ const cart = (options = {}) => {
       async saveAndRedirect({ dispatch }, payload) {
         if (payload && process.browser) {
           await dispatch('saveCheckoutId', payload.id)
+          
           window.location = payload.url
         }
       },
 
-      async processCheckout({ state, dispatch, commit }) {
+      async processCheckout({ state, dispatch, commit, rootState }) {
         let lineItems = await dispatch('createCheckoutArray')
         let checkoutId = await dispatch('getCheckoutIdForBackend')
+
+        if (rootState.events) {
+          dispatch('events/checkout', state.lineItems, { root: true })
+        }
 
         let processCheckoutObject = await axios({
           method: 'post',
