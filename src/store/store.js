@@ -5,6 +5,7 @@ import cart from './cart'
 import menu from './menu'
 import modal from './modal'
 import events from './events'
+import product from './product'
 
 Vue.use(Vuex)
 
@@ -14,7 +15,8 @@ const store = new Vuex.Store({
     cart: cart(),
     menu: menu,
     modal: modal,
-    events: events
+    events: events,
+    product: product
   }
 })
 
