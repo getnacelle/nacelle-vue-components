@@ -1,6 +1,6 @@
 {
   "name": "@nacelle/nacelle-vue-components",
-  "version": "0.0.91",
+  "version": "0.0.92",
   "main": "dist/cjs/index.common.js",
   "files": [
     "dist/*"
