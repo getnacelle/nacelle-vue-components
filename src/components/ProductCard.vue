@@ -31,10 +31,11 @@
       >
         <h3 class="modal-title">Choose Your Options</h3>
         <product-options
-          :options="product.options"
+          :options="allOptions"
           v-on:selectedOptionsSet="setSelected"
           v-on:confirmedSelection="confirmedSelection = true, optionsModalVisible = false"
           :onlyOneOption="onlyOneOption"
+          :variant="currentVariant"
         />
       </interface-modal>
     </div>
@@ -52,6 +53,7 @@ import InterfaceModal from './InterfaceModal'
 import ProductOptions from './ProductOptions'
 import CartFlyoutItem from './CartFlyoutItem'
 import allOptionsSelected from '../mixins/allOptionsSelected'
+import availableOptions from '../mixins/availableOptions'
 
 export default {
   components: {
@@ -64,7 +66,7 @@ export default {
     ProductOptions,
     CartFlyoutItem
   },
-  mixins: [allOptionsSelected],
+  mixins: [allOptionsSelected, availableOptions],
   props: {
     pathFragment: {
       type: String,
@@ -113,7 +115,7 @@ export default {
       if (this.product.variants && this.product.variants.length == 1) {
         return this.product.variants[0]
       } else {
-        return this.product.variants[0]
+        return this.selectedVariant
       }
     },
     currentVariantId() {

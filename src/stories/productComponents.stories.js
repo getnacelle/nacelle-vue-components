@@ -49,10 +49,7 @@ storiesOf('Components | Product/Composition', module)
 
       template: `
       <section class="section">
-      <cart-flyout>
-      <template v-slot="item">
-      <cart-flyout-item :item="item"/>
-      </template></cart-flyout>
+
       <div class="container is-marginless is-paddingless">
       <div class="columns">
       <div class="column is-6">
@@ -64,7 +61,7 @@ storiesOf('Components | Product/Composition', module)
         <product-description :description="product.description"/>
         <product-price :price="variant.price"></product-price>
         <div class="columns is-marginless is-paddingless">
-      <product-variant-select :product="product" :variant="variant"/>
+      <product-variant-select :product="product" :variant="variant" />
         </div>
         </div>
       </div>

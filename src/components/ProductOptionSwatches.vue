@@ -3,10 +3,14 @@
     <product-option-swatch
       v-on:swatchValue="setOptionValue"
       v-for="value in option.values"
-      :value="value"
-      :key="value"
+      :value="value.value"
+      :swatchSrc="value.swatchSrc"
+      :key="value.value"
+      :optionName="option.name"
       :swatchStyle="swatchStyle"
-      :class="{selected: value == selectedOptionValue}"
+      :class="{selected: value.value == selectedOptionValue}"
+      :variants="variants"
+      :selectedOptions="selectedOptions"
     />
   </div>
 </template>
@@ -17,6 +21,12 @@ export default {
   props: {
     option: {
       type: Object
+    },
+    variants: {
+      type: Array
+    },
+    selectedOptions: {
+      type: Array
     },
     clearOptionValue: {
       type: Boolean

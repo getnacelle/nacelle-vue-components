@@ -1,18 +1,30 @@
 <template>
   <div v-if="options" class="options">
-    <div class="option" v-for="option in options" :key="option.title">
+    <div class="option" v-for="option in options" :key="option.name">
       <h3>{{option.name}}</h3>
-      <product-option-swatches v-on:optionSet="setSelectedOptions" :option="option" />
+      <product-option-swatches
+        v-on:optionSet="setSelectedOptions"
+        :option="option"
+        :variants="variants"
+        :selectedOptions="selectedOptions"
+        :clearOptionValue="clearOptionValue"
+      />
     </div>
     <button
       class="button is-primary"
-      :disabled="!allOptionsSelected"
+      :disabled="!allOptionsSelected || allOptionsSelected && variant == undefined"
       v-if="isChildOfModal"
       @click="confirmSelection"
     >
-      <span v-if="allOptionsSelected">Confirm Selection</span>
-      <span v-else>Select your options</span>
+      <span v-if="allOptionsSelected && variant != undefined">Confirm Selection</span>
+      <span v-if="allOptionsSelected && variant == undefined">Select other options</span>
+      <span v-if="!allOptionsSelected">Select your options</span>
     </button>
+    <button
+      class="button is-small reset-options"
+      v-if="selectedOptions.length > 0"
+      @click="resetSelectedOptions"
+    >Reset Options</button>
   </div>
 </template>
 
@@ -22,17 +34,33 @@ export default {
   props: {
     options: {
       type: Array
+    },
+    variants: {
+      type: Array
+    },
+    variant: {
+      type: Object
     }
   },
   data() {
     return {
-      selectedOptions: []
+      selectedOptions: [],
+      clearOptionValue: false
     }
   },
   components: {
     ProductOptionSwatches
   },
-
+  watch: {
+    clearOptionValue(val) {
+      if (val == true) {
+        setTimeout(() => {
+          this.clearOptionValue = false
+          this.$emit('clear')
+        }, 100)
+      }
+    }
+  },
   computed: {
     isChildOfModal() {
       if (this.$parent.$options._componentTag == 'interface-modal') {
@@ -55,6 +83,10 @@ export default {
     }
   },
   methods: {
+    resetSelectedOptions() {
+      this.selectedOptions = []
+      this.clearOptionValue = true
+    },
     setSelectedOptions(selectedOption) {
       let vm = this
       let searchOptions = this.selectedOptions.filter(option => {
@@ -86,6 +118,9 @@ export default {
 
 .swatches {
   display: flex;
+}
+.reset-options {
+  margin-bottom: 2rem;
 }
 h3 {
   font-weight: 600;

@@ -13,22 +13,93 @@ export const defaultProduct = {
     "<p>This is the t-shirt description. It's a really nice item, isn't it? You can buy it in different colors and sizes.</p>",
   id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM1OTkyMDE4NjE3Mzc=',
   handle: 'gray-t-shirt',
-  variants: [
-    {
-      id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ==',
-      price: '29.99'
-    }
-  ],
-  options: [
-    {
-      name: 'Size',
-      values: ['Small', 'Medium']
-    }
-    // {
-    //   name: 'Color',
-    //   values: ['white', 'red', 'blue']
-    // }
-  ]
+  variants: [{
+          "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODg3MjA2MTcxNDUzNw==",
+          "price": "43.0",
+          "swatchSrc": "https://nacell-demo-assets.s3.amazonaws.com/swatches/Red.png",
+          "availableForSale": false,
+          "selectedOptions": [
+            {
+              "name": "Size",
+              "value": "Small"
+            },
+            {
+              "name": "Color",
+              "value": "Red"
+            }
+          ]
+        },
+{
+          "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODgzNTQ4OTkwNjc5Mw==",
+          "price": "43.0",
+          "swatchSrc": "https://nacell-demo-assets.s3.amazonaws.com/swatches/Red.png",
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Size",
+              "value": "Medium"
+            },
+            {
+              "name": "Color",
+              "value": "Red"
+            }
+          ]
+        }
+    ,
+      {
+
+          "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODg3MjA2MjQwMjY2NQ==",
+          "price": "43.0",
+          "swatchSrc": "https://nacell-demo-assets.s3.amazonaws.com/swatches/Blue.png",
+          "availableForSale": true,
+          "selectedOptions": [
+            {
+              "name": "Size",
+              "value": "Large"
+            },
+            {
+              "name": "Color",
+              "value": "Blue"
+            }
+          ]
+        
+      },
+      {
+  
+          "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODg3MjA2MjkyNjk1Mw==",
+          "price": "43.0",
+          "swatchSrc": "https://nacell-demo-assets.s3.amazonaws.com/swatches/Red.png",
+          "availableForSale": false,
+          "selectedOptions": [
+            {
+              "name": "Size",
+              "value": "Large"
+            },
+            {
+              "name": "Color",
+              "value": "Red"
+            }
+          ]
+        }
+    ,
+      // {
+     
+      //     "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODg3MjA2MzYxNTA4MQ==",
+      //     "price": "43.0",
+      //     "swatchSrc": "https://nacell-demo-assets.s3.amazonaws.com/swatches/Blue.png",
+      //     "availableForSale": false,
+      //     "selectedOptions": [
+      //       {
+      //         "name": "Size",
+      //         "value": "Medium"
+      //       },
+      //       {
+      //         "name": "Color",
+      //         "value": "Blue"
+      //       }
+      //     ]
+      //   } 
+    ]
 }
 
 export const defaultProduct2 = {
@@ -55,7 +126,7 @@ export const defaultProduct2 = {
   options: [
     {
       name: 'Size',
-      values: ['Small', 'Medium']
+      values: ['Small', 'Medium', 'Large']
     }
     // {
     //   name: 'Color',
