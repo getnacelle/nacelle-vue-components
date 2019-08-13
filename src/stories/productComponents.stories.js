@@ -18,7 +18,7 @@ import ProductVariantSelect from '../components/ProductVariantSelect'
 import CartFlyout from '../components/CartFlyout'
 import CartFlyoutItem from '../components/CartFlyoutItem'
 
-import { defaultProduct } from '../../config/defaultObjects.js'
+import { defaultMultivariate } from '../../config/defaultObjects.js'
 import allOptionsSelected from '../mixins/allOptionsSelected'
 
 storiesOf('Components | Product/Composition', module)
@@ -42,8 +42,8 @@ storiesOf('Components | Product/Composition', module)
       store,
       data() {
         return {
-          product: defaultProduct,
-          variant: defaultProduct.variants[0]
+          product: defaultMultivariate,
+          variant: defaultMultivariate.variants[0]
         }
       },
 

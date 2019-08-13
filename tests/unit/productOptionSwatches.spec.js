@@ -1,12 +1,15 @@
-import { shallowMount } from '@vue/test-utils'
-import ProductOptionSwatch from '@/components/ProductOptionSwatch'
+import { mount } from '@vue/test-utils'
+import store from '../../src/store/store'
+import ProductOptionSwatches from '@/components/ProductOptionSwatches'
 
 describe('ProductOptionSwatch.vue', () => {
-  const wrapper = shallowMount(ProductOptionSwatch, {
+  const wrapper = mount(ProductOptionSwatches, {
+    store,
     propsData: {
-      value: 'Small',
-      optionName: 'Size',
-      swatchStyle: 'tab',
+      option: {
+        name: 'Size',
+        values: [{ value: 'Small' }, { value: 'Medium' }, { value: 'Large' }]
+      },
       selectedOptions: [],
       variants: [
         {
@@ -29,12 +32,7 @@ describe('ProductOptionSwatch.vue', () => {
       ]
     }
   })
-  it('renders a swatch', async () => {
-    expect(wrapper.findAll('div').exists()).toBe(true)
-    expect(wrapper.text()).toBe('Small')
-  })
-  it('emits an event when clicked', () => {
-    wrapper.trigger('click')
-    expect(wrapper.emitted().swatchValue).toBeTruthy()
+  it('renders swatches', async () => {
+    expect(wrapper.findAll('.swatches').exists()).toBe(true)
   })
 })
