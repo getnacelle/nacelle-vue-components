@@ -3,8 +3,9 @@
     <slot v-bind:content="mappedContent">
       <component
         v-for="section in mappedContent"
+        v-if="section.fields.contentType"
         :key="section.id"
-        :is="section.contentType"
+        :is="section.fields.contentType"
         :id="section.handle"
         v-bind="mapProps(section)"
       />
@@ -81,73 +82,74 @@ export default {
   },
   methods: {
     mapProps(section) {
-      if (section.contentType === 'ContentHeroBanner') {
-        const { content } = section.fields
+      const { title, featuredMedia, fields } = section
+      const content = this.contentToHtmlFn(fields.content)
+
+      if (fields && fields.contentType === 'ContentHeroBanner') {   
         const clickHandler = () => {
-          this.$router.push(section.ctaUrl)
+          this.$router.push(fields.ctaUrl)
         }
 
         return {
-          title: section.title,
-          subtitle: content ? content : '',
-          ctaText: section.ctaText,
-          ctaUrl: section.ctaUrl,
+          title,
+          subtitle: fields.subtitle,
+          ctaText: fields.ctaText,
+          ctaUrl: fields.ctaUrl,
           ctaHandler: clickHandler,
-          backgroundImgUrl: section.featuredMedia.src,
-          size: section.size,
-          alignment: section.alignment,
-          mobileFullHeight: (section.mobileFullHeight === 'true'),
-          textColor: section.textColor,
-          mobileBackgroundImgUrl: section.mobileBackgroundImgUrl,
-          backgroundAltTag: section.backgroundAltTag
+          backgroundImgUrl: featuredMedia.src ? featuredMedia.src : '',
+          size: fields.size,
+          alignment: fields.alignment,
+          mobileFullHeight: (String(fields.mobileFullHeight) === 'true'),
+          textColor: fields.textColor,
+          mobileBackgroundImgUrl: '',
+          backgroundAltTag: fields.backgroundAltTag
         }
       }
 
-      if (section.contentType === 'ContentSideBySide') {
-        const { content } = section.fields
+      if (fields && fields.contentType === 'ContentSideBySide') {
         const clickHandler = () => {
-          this.$router.push(section.ctaUrl)
+          this.$router.push(fields.ctaUrl)
         }
 
         return {
-          title: section.title,
+          title,
           copy: content,
-          ctaText: section.ctaText,
-          ctaUrl: section.ctaUrl,
+          ctaText: fields.ctaText,
+          ctaUrl: fields.ctaUrl,
           ctaHandler: clickHandler,
-          backgroundColor: section.backgroundColor,
-          imageUrl: section.featuredMedia.src,
-          reverseDesktop: (section.reverseDesktop === 'true'),
-          reverseMobile: (section.reverseMobile === 'true')
+          backgroundColor: fields.backgroundColor,
+          imageUrl: featuredMedia.src ? featuredMedia.src : '',
+          reverseDesktop: (String(fields.reverseDesktop) === 'true'),
+          reverseMobile: (String(fields.reverseMobile) === 'true')
         }
       }
 
-      if (section.contentType === 'ContentTestimonials') {
+      if (fields && fields.contentType === 'ContentTestimonials') {
         let slides = []
 
-        if (section.children) {
-          slides = section.children.map(child => {
-            return {
-              name: child.title,
-              quote: child.fields.content,
-              imageUrl: child.featuredMedia ? child.featuredMedia.src : undefined
-            }
-          })
-        }
+        // if (section.children) {
+        //   slides = section.children.map(child => {
+        //     return {
+        //       name: child.title,
+        //       quote: child.fields.content,
+        //       imageUrl: child.featuredMedia ? child.featuredMedia.src : undefined
+        //     }
+        //   })
+        // }
 
         return {
-          title: section.title,
+          title,
           slides,
-          slidesPerView: section.slidesPerView || 1,
-          alignment: section.alignment
+          slidesPerView: fields.slidesPerView || 1,
+          alignment: fields.alignment
         }
       }
 
-      if (section.contentType === 'ContentProductGrid') {
+      if (fields && fields.contentType === 'ContentProductGrid') {
         return {
-          title: section.title,
+          title,
           products: this.products,
-          columns: section.columns || 4
+          columns: parseInt(fields.columns, 10) || 4
         }
       }
     }
