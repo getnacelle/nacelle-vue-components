@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import gql from 'graphql-tag'
 import { mapActions, mapGetters, mapState } from 'vuex'
 export default {
   props: {
