@@ -1,5 +1,6 @@
 import localforage from 'localforage'
 import axios from 'axios'
+import gql from 'graphql-tag'
 
 const cart = (options = {}) => {
   const { endpoint = '', token = '' } = options
@@ -128,7 +129,7 @@ const cart = (options = {}) => {
       async addLineItem(context, payload) {
         context.commit('addLineItemMutation', payload)
         context.dispatch('saveLineItems', context.state.lineItems)
-        
+
         if (context.rootState.events) {
           context.dispatch('events/addToCart', payload, { root: true })
         }
@@ -136,7 +137,9 @@ const cart = (options = {}) => {
 
       async removeLineItem({ state, rootState, dispatch, commit }, payload) {
         if (rootState.events) {
-          const lineItem = state.lineItems.find(item => item.variant.id === payload)
+          const lineItem = state.lineItems.find(
+            item => item.variant.id === payload
+          )
           dispatch('events/removeFromCart', lineItem, { root: true })
         }
 
@@ -235,7 +238,7 @@ const cart = (options = {}) => {
       async saveAndRedirect({ dispatch }, payload) {
         if (payload && process.browser) {
           await dispatch('saveCheckoutId', payload.id)
-          
+
           window.location = payload.url
         }
       },
@@ -248,25 +251,26 @@ const cart = (options = {}) => {
           dispatch('events/checkout', state.lineItems, { root: true })
         }
 
-        let processCheckoutObject = await axios({
-          method: 'post',
-          url: endpoint,
-          headers: {
-            'Content-Type': 'application/json',
-            'x-nacelle-token': token
-          },
-          data: {
-            query: `mutation {
-            processCheckout(input: {cartItems: [${lineItems}], checkoutId: "${checkoutId}" }) {
-              id
-              url
-              completed
+        let processCheckoutObject = await this.$apollo
+          .mutate({
+            mutation: gql`
+              mutation($input: CheckoutInput) {
+                processCheckout(input: $input) {
+                  id
+                  url
+                  completed
+                }
+              }
+            `,
+            variables: {
+              input: {
+                cartItems: lineItems,
+                checkoutId: checkoutId
+              }
             }
-          }`
-          }
-        })
-          .then(res => {
-            return res.data.data.processCheckout
+          })
+          .then(data => {
+            return data.data.processCheckout
           })
           .catch(err => {
             console.log(err)
