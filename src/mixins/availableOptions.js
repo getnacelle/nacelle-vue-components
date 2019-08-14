@@ -61,6 +61,9 @@ export default {
           vm.selectedOptions.map(option => {
             return vm.product.variants.map(variant => {
               return variant.selectedOptions.map(selectedOption => {
+                if (selectedOption.__typename) {
+                  delete selectedOption.__typename
+                }
                 if (JSON.stringify(option) == JSON.stringify(selectedOption)) {
                   return variant.selectedOptions
                 }
@@ -101,6 +104,9 @@ export default {
           let results = []
           vm.selectedOptions.forEach(option => {
             variant.selectedOptions.forEach(variantOption => {
+              if (variantOption.__typename) {
+                delete variantOption.__typename
+              }
               if (JSON.stringify(option) == JSON.stringify(variantOption)) {
                 results.push(true)
               }

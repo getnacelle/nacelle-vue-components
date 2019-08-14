@@ -36,6 +36,7 @@
           v-on:confirmedSelection="confirmedSelection = true, optionsModalVisible = false"
           :onlyOneOption="onlyOneOption"
           :variant="currentVariant"
+          :variants="product.variants"
         />
       </interface-modal>
     </div>
