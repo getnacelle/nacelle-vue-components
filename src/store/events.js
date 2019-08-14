@@ -1,5 +1,5 @@
 import uuid from 'uuidv4'
-import Cookies from 'js-cookie'
+import * as Cookies from 'es-cookie'
 
 const events = {
   namespaced: true,
