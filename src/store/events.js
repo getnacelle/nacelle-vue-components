@@ -1,5 +1,4 @@
 import uuid from 'uuidv4'
-import * as Cookies from 'es-cookie'
 
 const events = {
   namespaced: true,
@@ -24,19 +23,6 @@ const events = {
     }
   },
   actions: {
-    getUserId({ commit }) {
-      const key = 'nacelle-user-id'
-      const cookieId = Cookies.get(key)
-
-      if (cookieId) {
-        commit('setAnonymousId', cookieId)
-      } else {
-        const newAnonId = uuid()
-
-        Cookies.set(key, newAnonId)
-        commit('setAnonymousId', newAnonId)
-      }
-    },
     pageView({ commit }, page) {
       commit('addEvent', {
         event: 'PAGE_VIEW',
