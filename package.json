@@ -1,6 +1,6 @@
 {
   "name": "@nacelle/nacelle-vue-components",
-  "version": "0.0.100",
+  "version": "0.0.101",
   "main": "dist/cjs/index.common.js",
   "files": [
     "dist/*"
@@ -24,6 +24,7 @@
     "storybook-vue-router": "^1.0.3",
     "uuidv4": "^4.0.0",
     "vue": "^2.6.10",
+    "vue-cookies": "^1.5.13",
     "vue-currency-filter": "^3.4.2",
     "vue-glide-js": "^1.3.12",
     "vue-observe-visibility": "^0.4.4",
