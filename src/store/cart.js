@@ -61,6 +61,15 @@ const cart = (options = {}) => {
         } else {
           return []
         }
+      },
+      checkoutIdForBackend(state) {
+        let checkoutId
+        if (state.checkoutId == null) {
+          checkoutId = ''
+        } else {
+          checkoutId = state.checkoutId
+        }
+        return checkoutId
       }
     },
     mutations: {

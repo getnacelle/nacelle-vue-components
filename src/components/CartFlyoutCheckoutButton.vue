@@ -8,7 +8,7 @@
 
 <script>
 import gql from 'graphql-tag'
-import { mapActions, mapGetters, mapState } from 'vuex'
+import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
 export default {
   props: {
     checkoutText: {
@@ -22,10 +22,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('cart', ['checkoutLineItems'])
+    ...mapGetters('cart', ['checkoutLineItems', 'checkoutIdForBackend'])
   },
   methods: {
-    ...mapActions('cart', ['processCheckout', 'getCheckoutIdForBackend']),
+    ...mapMutations('cart', ['setCartError']),
+    ...mapActions('cart', ['processCheckout']),
     async checkout() {
       let vm = this
       this.loading = true
@@ -43,7 +44,7 @@ export default {
           variables: {
             input: {
               cartItems: vm.checkoutLineItems,
-              checkoutId: vm.getCheckoutIdForBackend()
+              checkoutId: vm.checkoutIdForBackend
             }
           }
         })
@@ -52,7 +53,7 @@ export default {
         })
         .catch(err => {
           console.log(err)
-          commit('setCartError')
+          vm.setCartError()
         })
       this.processCheckout(processCheckoutObject)
     }
