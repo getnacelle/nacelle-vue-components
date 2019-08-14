@@ -1,7 +1,7 @@
 import store from '../../src/store/store'
-import Cookies from 'js-cookie'
+import * as Cookies from 'es-cookie'
 
-jest.mock('js-cookie', () => {
+jest.mock('es-cookie', () => {
   return {
     get: () => 'abcd',
     set: () => {}
