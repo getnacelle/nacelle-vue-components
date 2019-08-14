@@ -243,40 +243,18 @@ const cart = (options = {}) => {
         }
       },
 
-      async processCheckout({ state, dispatch, commit, rootState }) {
-        let lineItems = await dispatch('createCheckoutArray')
-        let checkoutId = await dispatch('getCheckoutIdForBackend')
+      async processCheckout(
+        { state, dispatch, commit, rootState, context },
+        payload
+      ) {
+        // let lineItems = await dispatch('createCheckoutArray')
+        // let checkoutId = await dispatch('getCheckoutIdForBackend')
 
         if (rootState.events) {
           dispatch('events/checkout', state.lineItems, { root: true })
         }
 
-        let processCheckoutObject = await this.$apollo
-          .mutate({
-            mutation: gql`
-              mutation($input: CheckoutInput) {
-                processCheckout(input: $input) {
-                  id
-                  url
-                  completed
-                }
-              }
-            `,
-            variables: {
-              input: {
-                cartItems: lineItems,
-                checkoutId: checkoutId
-              }
-            }
-          })
-          .then(data => {
-            return data.data.processCheckout
-          })
-          .catch(err => {
-            console.log(err)
-            commit('setCartError')
-          })
-        await dispatch('saveAndRedirect', processCheckoutObject)
+        await dispatch('saveAndRedirect', payload)
       }
     }
   }

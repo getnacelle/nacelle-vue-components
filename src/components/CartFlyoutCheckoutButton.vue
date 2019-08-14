@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 export default {
   props: {
     checkoutText: {
@@ -20,11 +20,40 @@ export default {
       loading: false
     }
   },
+  computed: {
+    ...mapGetters('cart', ['checkoutLineItems'])
+  },
   methods: {
-    ...mapActions('cart', ['processCheckout']),
-    checkout() {
+    ...mapActions('cart', ['processCheckout', 'getCheckoutIdForBackend']),
+    async checkout() {
+      let vm = this
       this.loading = true
-      this.processCheckout()
+      let processCheckoutObject = await this.$apollo
+        .mutate({
+          mutation: gql`
+            mutation($input: CheckoutInput) {
+              processCheckout(input: $input) {
+                id
+                url
+                completed
+              }
+            }
+          `,
+          variables: {
+            input: {
+              cartItems: vm.checkoutLineItems,
+              checkoutId: vm.getCheckoutIdForBackend()
+            }
+          }
+        })
+        .then(data => {
+          return data.data.processCheckout
+        })
+        .catch(err => {
+          console.log(err)
+          commit('setCartError')
+        })
+      this.processCheckout(processCheckoutObject)
     }
   }
 }
