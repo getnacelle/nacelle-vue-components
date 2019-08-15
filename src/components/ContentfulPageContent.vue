@@ -1,8 +1,8 @@
 <template>
   <div class="page-content">
-    <slot v-bind:content="mappedContent">
+    <slot v-bind:content="content">
       <component
-        v-for="section in mappedContent"
+        v-for="section in content"
         v-if="section.fields.contentType"
         :key="section.id"
         :is="section.fields.contentType"
@@ -58,28 +58,6 @@ export default {
       default: contentToHtmlString
     }
   },
-  computed: {
-    mappedContent() {
-      // return this.content.reduce((sections, section, index) => {
-      //   const formatted = formatSection(section)
-
-      //   if (index > 0 && formatted.tags.includes('childSection')) {
-      //     const parent = sections[sections.length - 1]
-
-      //     if (parent.children) {
-      //       parent.children.push(formatted)
-      //     } else {
-      //       parent.children = [formatted]
-      //     }
-      //   } else {
-      //     sections.push(formatted)
-      //   }
-
-      //   return sections
-      // }, [])
-      return this.content
-    }
-  },
   methods: {
     mapProps(section) {
       const { title, featuredMedia, fields } = section
@@ -101,7 +79,8 @@ export default {
           alignment: fields.alignment,
           mobileFullHeight: (String(fields.mobileFullHeight) === 'true'),
           textColor: fields.textColor,
-          mobileBackgroundImgUrl: '',
+          mobileBackgroundImgUrl: 
+            fields.mobileBackgroundImage ? fields.mobileBackgroundImage.fields.file.url : '',
           backgroundAltTag: fields.backgroundAltTag
         }
       }
@@ -127,15 +106,16 @@ export default {
       if (fields && fields.contentType === 'ContentTestimonials') {
         let slides = []
 
-        // if (section.children) {
-        //   slides = section.children.map(child => {
-        //     return {
-        //       name: child.title,
-        //       quote: child.fields.content,
-        //       imageUrl: child.featuredMedia ? child.featuredMedia.src : undefined
-        //     }
-        //   })
-        // }
+        if (fields.slides) {
+          slides = fields.slides.map(child => {
+            return {
+              name: child.fields.name,
+              quote: child.fields.quotation,
+              imageUrl:
+                child.fields.featuredMedia ? child.fields.featuredMedia.fields.file.url : undefined
+            }
+          })
+        }
 
         return {
           title,
