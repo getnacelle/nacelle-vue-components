@@ -40,6 +40,7 @@ describe('ProductCard.vue', () => {
 
   it('renders a product card', async () => {
     const wrapper = mount(ProductCard, {
+      stubs: ['router-link'],
       store,
       propsData: {
         product: defaultProduct
