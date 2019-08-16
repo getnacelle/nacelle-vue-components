@@ -10,7 +10,11 @@ const product = {
         return state.selectedVariant
       }
 
-      if (state.product && state.product.variants && state.product.variants.length > 0) {
+      if (
+        state.product &&
+        state.product.variants &&
+        state.product.variants.length > 0
+      ) {
         return state.product.variants[0]
       }
 
@@ -22,23 +26,18 @@ const product = {
       state.product = payload
     },
     setSelectedVariant(state, payload) {
-      if (
-        state.product &&
-        state.product.variants &&
-        payload &&
-        payload.id
-      ) {
-        const variant = state.product.variants.find(variant => variant.id === payload.id)
+      if (state.product && state.product.variants && payload && payload.id) {
+        const variant = state.product.variants.find(
+          variant => variant.id === payload.id
+        )
         state.selectedVariant = variant
       }
     },
     setSelectedVariantById(state, payload) {
-      if (
-        state.product &&
-        state.product.variants &&
-        payload
-      ) {
-        const variant = state.product.variants.find(variant => variant.id === payload)
+      if (state.product && state.product.variants && payload) {
+        const variant = state.product.variants.find(
+          variant => variant.id === payload
+        )
         state.selectedVariant = variant
       }
     }

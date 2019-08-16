@@ -26,24 +26,3 @@ storiesOf('Components | Content / Blog / Publish Date', module)
       }
     }
   )
-
-storiesOf('Components | Content / Blog / Publish Date', module)
-  .addDecorator(withInfo)
-
-  .add(
-    'Relative Time',
-    () => ({
-      components: { BlogPublishDate },
-      data() {
-        return {
-          date: '2019-07-03'
-        }
-      },
-      template: `<blog-publish-date :date="date" :relativeTime="true"/>`
-    }),
-    {
-      info: {
-        // summary: "Hello"
-      }
-    }
-  )

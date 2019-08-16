@@ -18,14 +18,4 @@ describe('CartFlyoutHeader.vue', () => {
 
     expect(wrapper.text()).toBe('Posted on July 3, 2019')
   })
-  it('prints the publish date with a custom verb and using relative time', async () => {
-    let twoHoursAgo = DateTime.local()
-      .minus({ hours: 2 })
-      .toISO()
-    const wrapper = mount(BlogPublishDate, {
-      propsData: { verb: 'Posted', relativeTime: true, date: twoHoursAgo }
-    })
-
-    expect(wrapper.text()).toBe('Posted 2 hours ago')
-  })
 })
