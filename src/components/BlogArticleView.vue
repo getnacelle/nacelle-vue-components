@@ -124,17 +124,17 @@ export default {
       return ''
     }
   },
-  updated() {
-    this.$nextTick(() => {
-      if (
-        this.waitingToUpdate &&
-        this.products &&
-        typeof this.$refs.content !== 'undefined' &&
-        this.$refs.content.innerHTML.length > 0
-      ) {
+  watch: {
+    content(newVal, oldVal) {
+      this.$nextTick(() => {
         this.updateImages()
-      }
-    })
+      })
+    }
+  },
+  mounted() {
+    if (this.content.includes('<img')) {
+      this.updateImages()
+    }
   },
   methods: {
     updateImages() {
