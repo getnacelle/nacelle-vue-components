@@ -129,11 +129,18 @@ export default {
       this.$nextTick(() => {
         this.updateImages()
       })
+    },
+    products(newVal, oldVal) {
+      this.$nextTick(() => {
+        this.updateImages()
+      })
     }
   },
   mounted() {
     if (this.content.includes('<img')) {
-      this.updateImages()
+      this.$nextTick(() => {
+        this.updateImages()
+      })
     }
   },
   methods: {
