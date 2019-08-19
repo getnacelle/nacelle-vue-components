@@ -1,6 +1,5 @@
 import localforage from 'localforage'
 import axios from 'axios'
-import gql from 'graphql-tag'
 
 const cart = (options = {}) => {
   const { endpoint = '', token = '' } = options
@@ -138,7 +137,7 @@ const cart = (options = {}) => {
       async addLineItem(context, payload) {
         context.commit('addLineItemMutation', payload)
         context.dispatch('saveLineItems', context.state.lineItems)
-
+        context.commit('showCart')
         if (context.rootState.events) {
           context.dispatch('events/addToCart', payload, { root: true })
         }
