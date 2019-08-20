@@ -1,4 +1,4 @@
-const product = {
+const user = {
   namespaced: true,
   state: {
     userData: null
@@ -10,4 +10,4 @@ const product = {
   }
 }
 
-export default product
+export default user

@@ -243,11 +243,17 @@ const cart = (options = {}) => {
         return checkoutId
       },
 
-      async saveAndRedirect({ dispatch }, payload) {
+      async saveAndRedirect({ dispatch, rootState }, payload) {
         if (payload && process.browser) {
           await dispatch('saveCheckoutId', payload.id)
+          let url
+          if (payload.url.includes('?')) {
+            url = `${payload.url}&c=${JSON.stringify(rootState.user.userData)}`
+          } else {
+            url = `${payload.url}?c=${JSON.stringify(rootState.user.userData)}`
+          }
 
-          window.location = payload.url
+          window.location = url
         }
       },
 
