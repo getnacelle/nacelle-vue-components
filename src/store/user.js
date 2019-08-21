@@ -4,8 +4,8 @@ const user = {
     userData: null
   },
   mutations: {
-    setUserData(state, userData) {
-      state.userData = userData
+    setUserData(state, payload) {
+      state.userData = payload
     }
   }
 }
