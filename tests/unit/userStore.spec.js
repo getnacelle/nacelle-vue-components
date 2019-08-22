@@ -3,7 +3,7 @@ import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 
 import * as Cookies from 'es-cookie'
-
+process.browser = true
 describe('User Store', () => {
   it('sets user data ', async () => {
     const localVue = createLocalVue()
@@ -19,15 +19,14 @@ describe('User Store', () => {
     expect(store.state.user.customerEmail).toEqual('test@test.com')
   })
 
-  it('creates a session cookie and sets the anonymous and session ids', async () => {
+  it('creates a session cookie and sets the session id', async () => {
     const localVue = createLocalVue()
     localVue.use(Vuex)
     const storeConfig = createStoreConfig()
     const store = new Vuex.Store(storeConfig)
     store.dispatch('user/createSession')
-    let cookie = Cookies.get('session')
+    let cookie = Cookies.get('session-id')
     expect(store.state.user.sessionID).not.toBeNull()
-    expect(store.state.user.anonymousID).not.toBeNull()
     expect(cookie).toBeDefined()
   })
 
@@ -36,8 +35,8 @@ describe('User Store', () => {
     localVue.use(Vuex)
     const storeConfig = createStoreConfig()
     const store = new Vuex.Store(storeConfig)
+    store.dispatch('user/readSession')
     console.log(store.state.user.sessionID)
     expect(store.state.user.sessionID).not.toBeNull()
-    expect(store.state.user.anonymousID).not.toBeNull()
   })
 })
