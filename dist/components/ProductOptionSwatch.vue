@@ -1,26 +1,166 @@
 <template>
-  <div class="no-select" :class="swatchStyle" @click="emitValue">
-    <div class="inside-color" v-if="swatchStyle == 'bubble'" :style="{backgroundColor: value}"></div>
+  <div class="no-select" :class="[swatchStyle, availableClass]" @click="emitValue">
+    <div class="inside-color" v-if="swatchStyle == 'bubble'" :class="swatchClass" :style="swatchBg"></div>
     <span v-if="swatchStyle != 'bubble'">{{value}}</span>
   </div>
 </template>
 
 <script>
+import flattenDeep from 'lodash.flattendeep'
 export default {
   props: {
     value: {
       type: String
     },
+    optionName: {
+      type: String
+    },
     swatchStyle: {
+      type: String
+    },
+    swatchSrc: {
       type: String
     },
     selected: {
       type: Boolean
+    },
+    variants: {
+      type: Array
+    },
+    selectedOptions: {
+      type: Array
     }
   },
   methods: {
     emitValue() {
-      this.$emit('swatchValue', this.value)
+      if (this.optionAvailable) {
+        this.$emit('swatchValue', this.value)
+      }
+    }
+  },
+  computed: {
+    swatchClass() {
+      if (this.optionName == 'Color') {
+        return `swatch-color-${this.value.toLowerCase()}`
+      }
+    },
+    swatchBg() {
+      if (this.swatchSrc) {
+        return {
+          background: `url(${this.swatchSrc})`
+        }
+      }
+    },
+    variantsWithOptionValue() {
+      let vm = this
+      return this.variants.filter(variant => {
+        if (
+          variant.selectedOptions.filter(option => {
+            return option.value == vm.value
+          }).length > 0 &&
+          variant.availableForSale
+        ) {
+          return true
+        } else {
+          return false
+        }
+      })
+    },
+
+    optionAvailable() {
+      let vm = this
+      if (
+        vm.variantsWithOptionValue.length == 1 &&
+        vm.selectedOptions.length > 0
+      ) {
+        let matches = flattenDeep(
+          vm.variantsWithOptionValue[0].selectedOptions.map(option => {
+            if (option.name != vm.optionName) {
+              return vm.selectedOptions.map(selectedOption => {
+                if (selectedOption.name == option.name) {
+                  if (selectedOption.value == option.value) {
+                    return true
+                  } else {
+                    return false
+                  }
+                }
+              })
+            }
+          })
+        )
+        if (matches.includes(false)) {
+          return false
+        } else {
+          return this.variantsWithOptionValue[0].availableForSale
+        }
+        // this is the last piece. for the variant that remains, determine whether or not its options are selected
+        //
+      } else if (
+        vm.variantsWithOptionValue.length == 1 &&
+        vm.selectedOptions.length == 0
+      ) {
+        return true
+      } else if (this.variantsWithOptionValue.length > 1) {
+        // return this.variantsWithOptionValue.filter(variant =>{
+        //   if(vm.selectedOptions.filter(option=>{
+        //     if(option.name )
+        //   }))
+        // })
+        return true
+      } else {
+        return false
+
+        // IF MULTIPLE DIMENSIONS ////////////////////////////////
+        // let variantsWithThisOptionValue = this.variants.filter(variant => {
+        //   if (
+        //     variant.selectedOptions.filter(option => {
+        //       return option.value == vm.value
+        //     }).length > 0
+        //   ) {
+        //     return true
+        //   } else {
+        //     return false
+        //   }
+        // })
+        // if (variantsWithThisOptionValue.length == 1) {
+        //   return variantsWithThisOptionValue[0].availableForSale
+        // } else if (variantsWithThisOptionValue.length > 1) {
+        //   return true
+        // } else {
+        //   return false
+        // }
+
+        // if (variants.length == 1) {
+        //   return variants[0].availableForSale
+        // } else {
+        //   let availableVariants = variants.filter(variant => {
+        //     return variant.availableForSale == true
+        //   })
+
+        //   if (availableVariants.length > 0 && vm.selectedOptions.length > 0) {
+        //     let variantsWithThisOption = vm.selectedOptions.filter(option => {
+        //       return option.value == vm.value
+        //     })
+        //     console.log(variantsWithThisOption)
+        //     if (variantsWithThisOption.length > 0) {
+        //       return true
+        //     } else {
+        //       return variantsWithThisOption[0].availableForSale
+        //     }
+        //   } else if (availableVariants.length > 0) {
+        //     return true
+        //   } else {
+        //     return false
+        //   }
+        // }
+      }
+    },
+    availableClass() {
+      if (this.optionAvailable) {
+        return 'available'
+      } else {
+        return 'not-available'
+      }
     }
   }
 }
@@ -51,6 +191,12 @@ export default {
     border-radius: 1.5rem;
   }
 }
+.not-available {
+  .inside-color {
+    opacity: 0.5;
+  }
+}
+
 .bubble.selected {
   transition: border 0.1s ease;
   border: 2px solid #a9a8a8;
@@ -71,5 +217,17 @@ export default {
   background: #a9a8a8;
   color: white;
   font-weight: bold;
+}
+.swatch-color-red {
+  background-color: rgb(148, 20, 20);
+}
+.swatch-color-blue {
+  background-color: rgb(0, 68, 68);
+}
+.not-available {
+  text-decoration: line-through;
+  border: 1px dashed rgb(219, 219, 219);
+  color: rgb(219, 219, 219);
+  cursor: not-allowed;
 }
 </style>

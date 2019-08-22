@@ -4,9 +4,7 @@ import { storiesOf } from '@storybook/vue'
 import { withKnobs, object } from '@storybook/addon-knobs';
 import { withInfo } from 'storybook-addon-vue-info'
 import StoryRouter from 'storybook-vue-router'
-
 import PageContent from '../components/PageContent'
-
 import store from '../store/store'
 import { defaultProduct } from '../../config/defaultObjects.js'
 

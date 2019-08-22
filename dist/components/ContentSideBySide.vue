@@ -8,19 +8,30 @@
         class="column is-half sbs-copy"
         :style="backgroundColor ? `background-color: ${backgroundColor}` : null "
       >
-        <div class="has-text-centered">
-          <h3 class="title">
-            {{ title }}
-          </h3>
-          <div class="content" v-html="copy" />
-          <p v-if="ctaText.length > 0">
-            <slot name="cta">
-              <cta-button :to="ctaUrl" @clicked="ctaHandler">
-                {{ ctaText }}
-              </cta-button>
-            </slot>
+        <slot
+          name="body"
+          :title="title"
+          :copy="copy"
+        >
+          <div class="has-text-centered">
+            <component :is="titleTag" class="title">
+              {{ title }}
+            </component>
+            <div class="content" v-html="copy" />
+          </div>
+        </slot>
+        <slot
+          name="cta"
+          :ctaUrl="ctaUrl"
+          :ctaText="ctaText"
+          :ctaHandler="ctaHandler"
+        >
+          <p v-if="ctaText.length > 0" class="has-text-centered">
+            <cta-button :to="ctaUrl" @clicked="ctaHandler">
+              {{ ctaText }}
+            </cta-button>
           </p>
-        </div>
+        </slot>
       </div>
     </div>
   </section>
@@ -69,6 +80,10 @@ export default {
     reverseMobile: {
       type: Boolean,
       default: false
+    },
+    titleTag: {
+      type: String,
+      default: 'h3'
     }
   },
   computed: {
@@ -136,6 +151,7 @@ export default {
 
 .sbs-copy {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 2rem 3rem;

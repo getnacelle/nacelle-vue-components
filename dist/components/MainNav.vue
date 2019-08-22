@@ -7,7 +7,7 @@
     <div class="main-nav-brand">
       <slot name="brand">
         <router-link to="/">
-          <img :src="logoSrc" :width="logoWidth">
+          <img :src="logoSrc" :width="logoWidth" :alt="logoAlt">
         </router-link>
       </slot>
     </div>
@@ -40,6 +40,10 @@ export default {
     logoWidth: {
       type: Number,
       default: 112
+    },
+    logoAlt: {
+      type: String,
+      default: ''
     },
     menu: {
       type: Array

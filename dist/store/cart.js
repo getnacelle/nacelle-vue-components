@@ -60,6 +60,15 @@ const cart = (options = {}) => {
         } else {
           return []
         }
+      },
+      checkoutIdForBackend(state) {
+        let checkoutId
+        if (state.checkoutId == null) {
+          checkoutId = ''
+        } else {
+          checkoutId = state.checkoutId
+        }
+        return checkoutId
       }
     },
     mutations: {
@@ -128,11 +137,22 @@ const cart = (options = {}) => {
       async addLineItem(context, payload) {
         context.commit('addLineItemMutation', payload)
         context.dispatch('saveLineItems', context.state.lineItems)
+        // context.commit('showCart')
+        if (context.rootState.events) {
+          context.dispatch('events/addToCart', payload, { root: true })
+        }
       },
 
-      async removeLineItem(context, payload) {
-        context.commit('removeLineItemMutation', payload)
-        context.dispatch('saveLineItems', context.state.lineItems)
+      async removeLineItem({ state, rootState, dispatch, commit }, payload) {
+        if (rootState.events) {
+          const lineItem = state.lineItems.find(
+            item => item.variant.id === payload
+          )
+          dispatch('events/removeFromCart', lineItem, { root: true })
+        }
+
+        commit('removeLineItemMutation', payload)
+        dispatch('saveLineItems', state.lineItems)
       },
 
       async incrementLineItem(context, payload) {
@@ -223,42 +243,32 @@ const cart = (options = {}) => {
         return checkoutId
       },
 
-      async saveAndRedirect({ dispatch }, payload) {
+      async saveAndRedirect({ dispatch, rootState }, payload) {
         if (payload && process.browser) {
           await dispatch('saveCheckoutId', payload.id)
-          window.location = payload.url
+          let url
+          if (payload.url.includes('?')) {
+            url = `${payload.url}&c=${JSON.stringify(rootState.user.userData)}`
+          } else {
+            url = `${payload.url}?c=${JSON.stringify(rootState.user.userData)}`
+          }
+
+          window.location = url
         }
       },
 
-      async processCheckout({ state, dispatch, commit }) {
-        let lineItems = await dispatch('createCheckoutArray')
-        let checkoutId = await dispatch('getCheckoutIdForBackend')
+      async processCheckout(
+        { state, dispatch, commit, rootState, context },
+        payload
+      ) {
+        // let lineItems = await dispatch('createCheckoutArray')
+        // let checkoutId = await dispatch('getCheckoutIdForBackend')
 
-        let processCheckoutObject = await axios({
-          method: 'post',
-          url: endpoint,
-          headers: {
-            'Content-Type': 'application/json',
-            'x-nacelle-token': token
-          },
-          data: {
-            query: `mutation {
-            processCheckout(input: {cartItems: [${lineItems}], checkoutId: "${checkoutId}" }) {
-              id
-              url
-              completed
-            }
-          }`
-          }
-        })
-          .then(res => {
-            return res.data.data.processCheckout
-          })
-          .catch(err => {
-            console.log(err)
-            commit('setCartError')
-          })
-        await dispatch('saveAndRedirect', processCheckoutObject)
+        if (rootState.events) {
+          dispatch('events/checkout', state.lineItems, { root: true })
+        }
+
+        await dispatch('saveAndRedirect', payload)
       }
     }
   }

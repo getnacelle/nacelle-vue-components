@@ -1,40 +1,59 @@
 <template>
   <section :class="bannerClasses">
-    <picture class="hero-background">
-      <source
-        v-if="mobileBackgroundImgUrl.length > 0"
-        media="(min-width: 787px)"
-        :srcset="backgroundImgUrl"
-      >
-      <source
-        v-if="mobileBackgroundImgUrl.length > 0"
-        media="(max-width: 786px)"
-        :srcset="mobileBackgroundImgUrl"
-      >
-      <img :src="backgroundImgUrl">
-    </picture>
+    <slot
+      name="background"
+      :mobileBackgroundImgUrl="mobileBackgroundImgUrl"
+      :backgroundImgUrl="backgroundImgUrl"
+      :backgroundAltTag="backgroundAltTag"
+    >
+      <picture class="hero-background">
+        <source
+          v-if="mobileBackgroundImgUrl.length > 0"
+          media="(min-width: 787px)"
+          :srcset="backgroundImgUrl"
+        >
+        <source
+          v-if="mobileBackgroundImgUrl.length > 0"
+          media="(max-width: 786px)"
+          :srcset="mobileBackgroundImgUrl"
+        >
+        <img :src="backgroundImgUrl" :alt="backgroundAltTag">
+      </picture>
+    </slot>
     <div class="hero-body">
       <div class="container">
         <div class="hero-body-inner">
-          <h1
-            class="title"
-            :style="textColor && textColor.length > 0 ? `color: ${textColor}` : ''"
+          <slot
+            name="body"
+            :textColor="textColor"
+            :title="title"
+            :subtitle="subtitle"
           >
-            {{ title }}
-          </h1>
-          <h3
-            class="subtitle"
-            :style="textColor && textColor.length > 0 ? `color: ${textColor}` : ''"
+            <h1
+              class="title"
+              :style="textColor && textColor.length > 0 ? `color: ${textColor}` : ''"
+            >
+              {{ title }}
+            </h1>
+            <h3
+              class="subtitle"
+              :style="textColor && textColor.length > 0 ? `color: ${textColor}` : ''"
+            >
+              {{ subtitle}}
+            </h3>
+          </slot>
+          <slot
+            name="cta"
+            :ctaUrl="ctaUrl"
+            :ctaText="ctaText"
+            :ctaHandler="ctaHandler"
           >
-            {{ subtitle}}
-          </h3>
-          <p v-if="ctaText.length > 0">
-            <slot name="cta">
+            <p v-if="ctaText.length > 0">
               <cta-button :to="ctaUrl" @clicked="ctaHandler">
                 {{ ctaText }}
               </cta-button>
-            </slot>
-          </p>
+            </p>
+          </slot>
         </div>
       </div>
     </div>
@@ -66,6 +85,10 @@ export default {
       default: ''
     },
     mobileBackgroundImgUrl: {
+      type: String,
+      default: ''
+    },
+    backgroundAltTag: {
       type: String,
       default: ''
     },

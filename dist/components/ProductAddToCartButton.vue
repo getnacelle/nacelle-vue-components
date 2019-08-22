@@ -2,12 +2,17 @@
   <div>
     <button
       class="button is-primary"
-      :disabled="!allOptionsSelected"
+      :disabled="!allOptionsSelected || allOptionsSelected && variant == undefined || !variantInLineItems && allOptionsSelected && variant.availableForSale != true"
       @click="addToCart"
       v-if="this.$parent.$options._componentTag == 'product-variant-select'"
     >
       <span v-if="!variantInLineItems && !allOptionsSelected">Select Options</span>
-      <span v-if="!variantInLineItems && allOptionsSelected">Add to Cart</span>
+      <span
+        v-if="!variantInLineItems && allOptionsSelected && variant == undefined || !variantInLineItems && allOptionsSelected && variant.availableForSale != true"
+      >Select Different Options</span>
+      <span
+        v-if="!variantInLineItems && allOptionsSelected && variant && variant.availableForSale == true"
+      >Add to Cart</span>
       <span v-if="variantInLineItems">Added!</span>
     </button>
     <button class="button is-primary" @click="addToCart" v-else>
@@ -69,6 +74,7 @@ export default {
       'decrementLineItem',
       'getLineItems'
     ]),
+    ...mapMutations('cart', ['showCart']),
     addToCart() {
       if (this.allOptionsSelected) {
         let lineItem = {
@@ -80,6 +86,7 @@ export default {
           handle: this.product.handle
         }
         this.addLineItem(lineItem)
+        this.showCart()
       }
     }
   }
