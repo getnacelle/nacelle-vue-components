@@ -22,7 +22,7 @@ export default {
   watch: {
     log(log) {
       let vm = this
-      switch (vm.logEntry.event) {
+      switch (vm.logEntry.eventType) {
         case 'PAGE_VIEW':
           vm.facebookPageView()
           vm.googleAnalyticsPageView()

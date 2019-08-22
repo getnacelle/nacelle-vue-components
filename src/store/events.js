@@ -1,56 +1,68 @@
-import uuid from 'uuidv4'
+const eventProperties = rootState => {
+  let handle
+  if (this.$route.params.handle) {
+    handle = this.$route.params.handle
+  }
+  let urlParams
+  if (process.browser) {
+    urlParams = window.location.search
+  }
 
+  return {
+    timestamp: Date.now(),
+    spaceID: rootState.space.id,
+    sessionID: rootState.user.sessionID,
+    customerID: rootState.user.customerID,
+    anonymousID: rootState.user.anonymousID,
+    cart: JSON.stringify(rootState.cart.lineItems),
+    handle,
+    urlParams
+  }
+}
 const events = {
   namespaced: true,
   state: {
-    anonymousId: '',
-    customerId: '',
-    customerEmail: '',
     log: []
   },
   mutations: {
     addEvent(state, event) {
       state.log.push(event)
-    },
-    setAnonymousId(state, id) {
-      state.anonymousId = id
-    },
-    setCustomerId(state, id) {
-      state.customerId = id
-    },
-    customerEmail(state, email) {
-      state.customerEmail = email
     }
   },
   actions: {
-    pageView({ commit }, page) {
+    pageView({ commit, rootState }, page) {
       commit('addEvent', {
-        event: 'PAGE_VIEW',
-        page
+        eventType: 'PAGE_VIEW',
+        page,
+        ...eventProperties()
       })
     },
-    productView({ commit }, product) {
+    productView({ commit, rootState }, product) {
       commit('addEvent', {
-        event: 'PRODUCT_VIEW',
-        product
+        eventType: 'PRODUCT_VIEW',
+        product,
+        ...eventProperties()
       })
     },
-    addToCart({ commit }, product) {
+    addToCart({ commit, rootState }, product) {
       commit('addEvent', {
-        event: 'ADD_TO_CART',
-        product
+        eventType: 'ADD_TO_CART',
+        product,
+        ...eventProperties()
       })
     },
-    removeFromCart({ commit }, lineItem) {
+    removeFromCart({ commit, rootState }, lineItem) {
       commit('addEvent', {
-        event: 'REMOVE_FROM_CART',
-        lineItem
+        eventType: 'REMOVE_FROM_CART',
+        lineItem,
+        ...eventProperties()
       })
     },
-    checkout({ commit }, cart) {
+    checkout({ commit, rootState }, cart) {
       commit('addEvent', {
-        event: 'CHECKOUT',
-        cart
+        eventType: 'CHECKOUT',
+        cart,
+        ...eventProperties()
       })
     }
   }
