@@ -5,3 +5,12 @@ export const get = () => {
     testDataProperty3: 3
   })
 }
+export const set = name => {
+  switch (name) {
+    case 'session':
+      return JSON.stringify({
+        anonymousID: '12345',
+        sessionID: '123456'
+      })
+  }
+}

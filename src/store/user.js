@@ -34,21 +34,30 @@ const user = {
         Cookies.set('session', JSON.stringify({ anonymousID, sessionID }))
       }
     },
-    refreshSession(context) {
+    readSession(context) {
       if (process.browser) {
         let sessionCookie = Cookies.get('session')
         if (sessionCookie == undefined) {
           context.dispatch('createSession')
         } else {
-          Cookies.set(
-            'session',
-            JSON.stringify({
-              anonymousID: context.state.anonymousID,
-              sessionID: context.state.sessionID
-            })
+          context.commit(
+            'setAnonymousID',
+            JSON.parse(sessionCookie).anonymousID
           )
+          context.commit('setSessionID', JSON.parse(sessionCookie).sessionID)
+          context.dispatch('refreshSession')
         }
       }
+      Cookies.set
+    },
+    refreshSession(context) {
+      Cookies.set(
+        'session',
+        JSON.stringify({
+          anonymousID: context.state.anonymousID,
+          sessionID: context.state.sessionID
+        })
+      )
     }
   }
 }

@@ -65,9 +65,9 @@ const events = {
         ...eventProperties(rootState)
       })
     },
-    checkout({ commit, rootState }, cart) {
+    checkoutInit({ commit, rootState }, cart) {
       commit('addEvent', {
-        eventType: 'CHECKOUT',
+        eventType: 'CHECKOUT_INIT',
         cart,
         ...eventProperties(rootState)
       })
