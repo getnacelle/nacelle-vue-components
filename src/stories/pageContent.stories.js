@@ -730,12 +730,12 @@ storiesOf('Components | Content / Page Content', module)
           page: {
             source: 'contentful',
             sections: defaultObj.contentful,
-            products: productArray
-          }
+          },
+          products: productArray
         }
       },
       template: `
-        <page-content :page="page" />
+        <page-content :page="page" :products="products"/>
       `
     })
   )
@@ -752,9 +752,9 @@ storiesOf('Components | Content / Page Content', module)
         return {
           page: {
             source: 'contentful',
-            sections: defaultObj.contentful,
-            products: productArray
-          }
+            sections: defaultObj.contentful
+          },
+          products: productArray
         }
       },
       computed: {
@@ -765,7 +765,7 @@ storiesOf('Components | Content / Page Content', module)
         }
       },
       template: `
-        <page-content :page="page">
+        <page-content :page="page" :products="products">
           <template v-slot="{ page }">
             <div>
               <h3>Custom Content Mapper</h3>
@@ -798,9 +798,9 @@ storiesOf('Components | Content / Page Content', module)
         return {
           page: {
             source: 'contentful',
-            sections: defaultObj.contentful,
-            products: productArray
-          }
+            sections: defaultObj.contentful
+          },
+          products: productArray
         }
       },
       computed: {
@@ -811,7 +811,7 @@ storiesOf('Components | Content / Page Content', module)
         }
       },
       template: `
-        <page-content :page="page">
+        <page-content :page="page" :products="products">
           <template v-slot:section="{ section }">
             <div style="padding: 1em">
               {{ section.props.title }}
@@ -839,9 +839,9 @@ storiesOf('Components | Content / Page Content', module)
         return {
           page: {
             source: 'shopify',
-            sections: defaultObj.shopify,
-            products: productArray
-          }
+            sections: defaultObj.shopify
+          },
+          products: productArray
         }
       },
       computed: {
@@ -852,7 +852,7 @@ storiesOf('Components | Content / Page Content', module)
         }
       },
       template: `
-        <page-content :page="page" />
+        <page-content :page="page" :products="products"/>
       `
     }),
     {

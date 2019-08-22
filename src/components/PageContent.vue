@@ -35,9 +35,12 @@ export default {
       type: Object,
       default: () => ({
         source: '',
-        sections: [],
-        products: []
+        sections: []
       })
+    },
+    products: {
+      type: Array,
+      default: () => ([])
     },
     customContentToHtml: {
       type: Boolean,
@@ -71,13 +74,6 @@ export default {
       }
 
       return []
-    },
-    pageProducts() {
-      if (this.page && this.page.products && this.page.products.length > 0) {
-        return this.page.products
-      }
-
-      return null
     }
   },
   methods: {
@@ -222,7 +218,7 @@ export default {
           title,
           handle,
           contentType,
-          products: this.pageProducts,
+          products: this.products,
           columns: columns || 4
         }
       }
@@ -333,7 +329,7 @@ export default {
           handle,
           contentType,
           title,
-          products: this.pageProducts,
+          products: this.products,
           columns: parseInt(columns, 10) || 4
         }
       }
