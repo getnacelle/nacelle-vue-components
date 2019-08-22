@@ -1,10 +1,21 @@
 <template>
   <div class="product-grid section">
     <div class="container">
-      <h3 class="title has-text-centered">
-        {{ title }}
-      </h3>
-      <product-grid :products="products" :columns="columns" />
+      <slot
+        name="header"
+        :title="title"
+      >
+        <component :is="titleTag" class="title has-text-centered">
+          {{ title }}
+        </component>
+      </slot>
+      <slot
+        name="products"
+        :products="products"
+        :columns="columns"
+      >
+        <product-grid :products="products" :columns="columns" />
+      </slot>
     </div>
   </div>
 </template>
@@ -28,6 +39,10 @@ export default {
     columns: {
       type: Number,
       default: 4
+    },
+    titleTag: {
+      type: String,
+      default: 'h3'
     }
   }
 }

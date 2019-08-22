@@ -158,3 +158,45 @@ storiesOf('Components | Content / Hero Banner', module)
       }
     }
   )
+
+  storiesOf('Components | Content / Hero Banner', module)
+  .addDecorator(withInfo)
+  .add(
+    'Custom Slots',
+    () => ({
+      components: { ContentHeroBanner},
+      data() {
+        return {
+          ...defaults,
+          mobileFullHeight: true,
+          mobileBackgroundImgUrl: 
+            'https://nacelle-assets.s3-us-west-2.amazonaws.com/default-mobile-banner.png'
+        }
+      },
+      template: `
+        <content-hero-banner
+          :backgroundImgUrl="backgroundImgUrl"
+          :mobileBackgroundImgUrl="mobileBackgroundImgUrl"
+          :mobileFullHeight="mobileFullHeight"
+          :title="title"
+          :subtitle="subtitle"
+          :ctaText="ctaText"
+        >
+          <template v-slot:background="{ backgroundImgUrl }">
+            <img :src="backgroundImgUrl" width="300px" alt="" />
+          </template>
+          <template v-slot:body>
+            <h5>Testing Slots</h5>
+          </template>
+          <template v-slot:cta="{ ctaText }">
+            <p>{{ ctaText }}</p>
+          </template>
+        </content-hero-banner>
+      `
+    }),
+    {
+      info: {
+        // summary: "Hello"
+      }
+    }
+  )

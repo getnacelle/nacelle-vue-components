@@ -29,7 +29,7 @@ import { mockProductCollection } from '../../config/defaultObjects'
 
 const productArray = mockProductCollection.products
 
-storiesOf('Components | Content', module)
+storiesOf('Components | Content / Product Grid', module)
   .addDecorator(withInfo)
   .addDecorator(StoryRouter())
   .addDecorator(() => {
@@ -40,7 +40,7 @@ storiesOf('Components | Content', module)
     }
   })
   .add(
-    'Product Grid',
+    'Default',
     () => ({
       components: { ContentProductGrid },
       store,
@@ -51,6 +51,49 @@ storiesOf('Components | Content', module)
         }
       },
       template: '<content-product-grid :title="title" :products="products" />'
+    }),
+    {
+      info: {
+        // summary: "Hello"
+      }
+    }
+  )
+
+  storiesOf('Components | Content / Product Grid', module)
+  .addDecorator(withInfo)
+  .addDecorator(StoryRouter())
+  .addDecorator(() => {
+    return {
+      template: `
+        <div style="padding: 3rem;"><story/></div>
+      `
+    }
+  })
+  .add(
+    'Custom Slots',
+    () => ({
+      components: { ContentProductGrid },
+      store,
+      data() {
+        return {
+          title: 'Product Grid',
+          products: productArray
+        }
+      },
+      template: `
+        <content-product-grid :title="title" :products="products">
+          <template v-slot:header>
+            <h1 style="font-size: 3em; margin-bottom: 1em">Custom Header</h1>
+          </template>
+          <template v-slot:products="{ products }">
+            <ul>
+              <li v-for="product in products" :key="product.id">
+                {{ product.title }}
+              </li>
+            </ul>
+          </template>
+        </content-product-grid>
+      `
     }),
     {
       info: {
