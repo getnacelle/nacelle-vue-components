@@ -31,7 +31,7 @@ const user = {
       context.commit('setAnonymousID', anonymousID)
       context.commit('setSessionID', sessionID)
       if (process.browser) {
-        Cookies.set('session', { anonymousID, sessionID })
+        Cookies.set('session', JSON.stringify({ anonymousID, sessionID }))
       }
     },
     refreshSession(context) {
@@ -40,10 +40,13 @@ const user = {
         if (sessionCookie == undefined) {
           context.dispatch('createSession')
         } else {
-          Cookies.set('session', {
-            anonymousID: context.state.anonymousID,
-            sessionID: context.state.sessionID
-          })
+          Cookies.set(
+            'session',
+            JSON.stringify({
+              anonymousID: context.state.anonymousID,
+              sessionID: context.state.sessionID
+            })
+          )
         }
       }
     }
