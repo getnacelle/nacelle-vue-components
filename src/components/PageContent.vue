@@ -4,9 +4,9 @@
       <div v-for="section in mappedSections" :key="section.id">
         <slot name="section" :section="section">
           <component
-            v-if="section.props.contentType"
-            :key="section.id"
-            :is="section.props.contentType"
+            v-if="section.contentType"
+            :is="section.contentType"
+            :id="section.handle"
             v-bind="section.props"
           />
         </slot>
@@ -146,8 +146,6 @@ export default {
 
         props = {
           title,
-          handle,
-          contentType,
           subtitle: contentHtml ? contentHtml : '',
           ctaText,
           ctaUrl,
@@ -174,8 +172,6 @@ export default {
 
         props = {
           title,
-          handle,
-          contentType,
           copy: contentHtml,
           ctaText,
           ctaUrl,
@@ -203,8 +199,6 @@ export default {
 
         props = {
           title,
-          handle,
-          contentType,
           slides,
           slidesPerView: slidesPerView || 1,
           alignment
@@ -216,15 +210,14 @@ export default {
 
         props = {
           title,
-          handle,
-          contentType,
           products: this.products,
           columns: columns || 4
         }
       }
 
       return {
-        id: handle,
+        handle,
+        contentType,
         props
       }
     },
@@ -254,8 +247,6 @@ export default {
 
         props = {
           title,
-          handle,
-          contentType,
           subtitle,
           ctaText,
           ctaUrl,
@@ -285,8 +276,6 @@ export default {
 
         props = {
           title,
-          handle,
-          contentType,
           copy: contentHtml,
           ctaText,
           ctaUrl,
@@ -314,8 +303,6 @@ export default {
         }
 
         props = {
-          handle,
-          contentType,
           title,
           slides,
           slidesPerView: slidesPerView || 1,
@@ -325,9 +312,8 @@ export default {
 
       if (fields && fields.contentType === 'ContentProductGrid') {
         const { columns } = fields
+        
         props = {
-          handle,
-          contentType,
           title,
           products: this.products,
           columns: parseInt(columns, 10) || 4
@@ -335,7 +321,8 @@ export default {
       }
 
       return {
-        id: handle,
+        handle,
+        contentType,
         props
       }
     }
