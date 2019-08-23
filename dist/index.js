@@ -4,8 +4,9 @@
 //
 // YOU SHOULD NEVER UPDATE THIS FILE DIRECTLY
 
+import BlogArticleContent from './components/BlogArticleContent.vue'
+import BlogArticleHeader from './components/BlogArticleHeader.vue'
 import BlogArticlePreview from './components/BlogArticlePreview.vue'
-import BlogArticleView from './components/BlogArticleView.vue'
 import BlogAuthor from './components/BlogAuthor.vue'
 import BlogCategoryLabel from './components/BlogCategoryLabel.vue'
 import BlogContent from './components/BlogContent.vue'
@@ -60,12 +61,13 @@ import ReadUserData from './components/ReadUserData.vue'
 import SiteHeader from './components/SiteHeader.vue'
 
 // Export components individually
-export { BlogArticlePreview, BlogArticleView, BlogAuthor, BlogCategoryLabel, BlogContent, BlogHeader, BlogHeroImage, BlogPublishDate, BrandHeader, CartFlyout, CartFlyoutCheckoutButton, CartFlyoutHeader, CartFlyoutItem, CartFlyoutItemRemoveButton, CartFlyoutMessaging, CartFlyoutSubtotal, ContentHeroBanner, ContentProductGrid, ContentSideBySide, ContentTestimonial, ContentTestimonials, CtaButton, EventDispatcher, InterfaceCloseButton, InterfaceFeaturedMedia, InterfaceIcon, InterfaceLogo, InterfaceModal, MainNav, MainNavBurger, MainNavCart, MainNavFlyout, MessagingFreeShippingCounter, MixinTestBench, PageContent, ProductAddToCartButton, ProductCard, ProductCategory, ProductDescription, ProductGrid, ProductImage, ProductMediaSelectView, ProductOptionSwatch, ProductOptionSwatches, ProductOptions, ProductPrice, ProductQuantityUpdate, ProductShopLook, ProductTitle, ProductVariantSelect, ProductVariantTitle, ProductVideo, ReadUserData, SiteHeader }
+export { BlogArticleContent, BlogArticleHeader, BlogArticlePreview, BlogAuthor, BlogCategoryLabel, BlogContent, BlogHeader, BlogHeroImage, BlogPublishDate, BrandHeader, CartFlyout, CartFlyoutCheckoutButton, CartFlyoutHeader, CartFlyoutItem, CartFlyoutItemRemoveButton, CartFlyoutMessaging, CartFlyoutSubtotal, ContentHeroBanner, ContentProductGrid, ContentSideBySide, ContentTestimonial, ContentTestimonials, CtaButton, EventDispatcher, InterfaceCloseButton, InterfaceFeaturedMedia, InterfaceIcon, InterfaceLogo, InterfaceModal, MainNav, MainNavBurger, MainNavCart, MainNavFlyout, MessagingFreeShippingCounter, MixinTestBench, PageContent, ProductAddToCartButton, ProductCard, ProductCategory, ProductDescription, ProductGrid, ProductImage, ProductMediaSelectView, ProductOptionSwatch, ProductOptionSwatches, ProductOptions, ProductPrice, ProductQuantityUpdate, ProductShopLook, ProductTitle, ProductVariantSelect, ProductVariantTitle, ProductVideo, ReadUserData, SiteHeader }
 
 // What should happen if the user installs the library as a plugin
 function install(Vue) {
+  Vue.component('BlogArticleContent', BlogArticleContent)
+  Vue.component('BlogArticleHeader', BlogArticleHeader)
   Vue.component('BlogArticlePreview', BlogArticlePreview)
-  Vue.component('BlogArticleView', BlogArticleView)
   Vue.component('BlogAuthor', BlogAuthor)
   Vue.component('BlogCategoryLabel', BlogCategoryLabel)
   Vue.component('BlogContent', BlogContent)
