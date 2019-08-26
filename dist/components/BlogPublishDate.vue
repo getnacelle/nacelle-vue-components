@@ -1,21 +1,16 @@
 <template>
   <div>
-    <p v-if="!relativeTime">{{verb}} on {{absoluteDate}}</p>
-    <p v-else>{{verb}} {{relativeDate}}</p>
+    <p >{{verb}} on {{absoluteDate}}</p>
   </div>
 </template>
 
 <script>
-import { DateTime } from 'luxon'
+import dayjs from 'dayjs'
 export default {
   props: {
     verb: {
       type: String,
       default: 'Published'
-    },
-    relativeTime: {
-      type: Boolean,
-      default: false
     },
     date: {
       type: String,
@@ -24,10 +19,7 @@ export default {
   },
   computed: {
     absoluteDate() {
-      return DateTime.fromISO(this.date).toLocaleString(DateTime.DATE_FULL)
-    },
-    relativeDate() {
-      return DateTime.fromISO(this.date).toRelative()
+      return dayjs(this.date).format('MMMM D, YYYY')
     }
   }
 }

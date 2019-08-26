@@ -1,9 +1,9 @@
 <template>
   <section class="section">
     <div class="container">
-      <h3 v-if="title.length > 0" class="title has-text-centered">
+      <component v-if="title.length > 0" :is="titleTag" class="title has-text-centered">
         {{ title }}
-      </h3>
+      </component>
       <div class="glide-wrapper" v-if="slides.length > 0">
         <vue-glide
           :type="'carousel'"
@@ -75,6 +75,10 @@ export default {
     alignment: {
       type: String,
       default: 'left'
+    },
+    titleTag: {
+      type: String,
+      default: 'h3'
     }
   }
 }

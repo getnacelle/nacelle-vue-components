@@ -3,6 +3,7 @@
     <main-nav
       :logoSrc="logoSrc"
       :logoWidth="logoWidth"
+      :logoAlt="logoAlt"
       :menu="menu"
     >
       <template slot="menu">
@@ -51,6 +52,10 @@ export default {
     logoWidth: {
       type: Number,
       default: 112
+    },
+    logoAlt: {
+      type: String,
+      default: ''
     },
     menu: {
       type: Array

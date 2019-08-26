@@ -4,6 +4,9 @@
 //
 // YOU SHOULD NEVER UPDATE THIS FILE DIRECTLY
 
+import BlogArticleContent from './components/BlogArticleContent.vue'
+import BlogArticleHeader from './components/BlogArticleHeader.vue'
+import BlogArticlePreview from './components/BlogArticlePreview.vue'
 import BlogAuthor from './components/BlogAuthor.vue'
 import BlogCategoryLabel from './components/BlogCategoryLabel.vue'
 import BlogContent from './components/BlogContent.vue'
@@ -24,7 +27,9 @@ import ContentSideBySide from './components/ContentSideBySide.vue'
 import ContentTestimonial from './components/ContentTestimonial.vue'
 import ContentTestimonials from './components/ContentTestimonials.vue'
 import CtaButton from './components/CtaButton.vue'
+import EventDispatcher from './components/EventDispatcher.vue'
 import InterfaceCloseButton from './components/InterfaceCloseButton.vue'
+import InterfaceFeaturedMedia from './components/InterfaceFeaturedMedia.vue'
 import InterfaceIcon from './components/InterfaceIcon.vue'
 import InterfaceLogo from './components/InterfaceLogo.vue'
 import InterfaceModal from './components/InterfaceModal.vue'
@@ -33,6 +38,8 @@ import MainNavBurger from './components/MainNavBurger.vue'
 import MainNavCart from './components/MainNavCart.vue'
 import MainNavFlyout from './components/MainNavFlyout.vue'
 import MessagingFreeShippingCounter from './components/MessagingFreeShippingCounter.vue'
+import MixinTestBench from './components/MixinTestBench.vue'
+import PageContent from './components/PageContent.vue'
 import ProductAddToCartButton from './components/ProductAddToCartButton.vue'
 import ProductCard from './components/ProductCard.vue'
 import ProductCategory from './components/ProductCategory.vue'
@@ -45,18 +52,22 @@ import ProductOptionSwatches from './components/ProductOptionSwatches.vue'
 import ProductOptions from './components/ProductOptions.vue'
 import ProductPrice from './components/ProductPrice.vue'
 import ProductQuantityUpdate from './components/ProductQuantityUpdate.vue'
+import ProductShopLook from './components/ProductShopLook.vue'
 import ProductTitle from './components/ProductTitle.vue'
 import ProductVariantSelect from './components/ProductVariantSelect.vue'
 import ProductVariantTitle from './components/ProductVariantTitle.vue'
 import ProductVideo from './components/ProductVideo.vue'
-import ShopifyPageContent from './components/ShopifyPageContent.vue'
+import ReadUserData from './components/ReadUserData.vue'
 import SiteHeader from './components/SiteHeader.vue'
 
 // Export components individually
-export { BlogAuthor, BlogCategoryLabel, BlogContent, BlogHeader, BlogHeroImage, BlogPublishDate, BrandHeader, CartFlyout, CartFlyoutCheckoutButton, CartFlyoutHeader, CartFlyoutItem, CartFlyoutItemRemoveButton, CartFlyoutMessaging, CartFlyoutSubtotal, ContentHeroBanner, ContentProductGrid, ContentSideBySide, ContentTestimonial, ContentTestimonials, CtaButton, InterfaceCloseButton, InterfaceIcon, InterfaceLogo, InterfaceModal, MainNav, MainNavBurger, MainNavCart, MainNavFlyout, MessagingFreeShippingCounter, ProductAddToCartButton, ProductCard, ProductCategory, ProductDescription, ProductGrid, ProductImage, ProductMediaSelectView, ProductOptionSwatch, ProductOptionSwatches, ProductOptions, ProductPrice, ProductQuantityUpdate, ProductTitle, ProductVariantSelect, ProductVariantTitle, ProductVideo, ShopifyPageContent, SiteHeader }
+export { BlogArticleContent, BlogArticleHeader, BlogArticlePreview, BlogAuthor, BlogCategoryLabel, BlogContent, BlogHeader, BlogHeroImage, BlogPublishDate, BrandHeader, CartFlyout, CartFlyoutCheckoutButton, CartFlyoutHeader, CartFlyoutItem, CartFlyoutItemRemoveButton, CartFlyoutMessaging, CartFlyoutSubtotal, ContentHeroBanner, ContentProductGrid, ContentSideBySide, ContentTestimonial, ContentTestimonials, CtaButton, EventDispatcher, InterfaceCloseButton, InterfaceFeaturedMedia, InterfaceIcon, InterfaceLogo, InterfaceModal, MainNav, MainNavBurger, MainNavCart, MainNavFlyout, MessagingFreeShippingCounter, MixinTestBench, PageContent, ProductAddToCartButton, ProductCard, ProductCategory, ProductDescription, ProductGrid, ProductImage, ProductMediaSelectView, ProductOptionSwatch, ProductOptionSwatches, ProductOptions, ProductPrice, ProductQuantityUpdate, ProductShopLook, ProductTitle, ProductVariantSelect, ProductVariantTitle, ProductVideo, ReadUserData, SiteHeader }
 
 // What should happen if the user installs the library as a plugin
 function install(Vue) {
+  Vue.component('BlogArticleContent', BlogArticleContent)
+  Vue.component('BlogArticleHeader', BlogArticleHeader)
+  Vue.component('BlogArticlePreview', BlogArticlePreview)
   Vue.component('BlogAuthor', BlogAuthor)
   Vue.component('BlogCategoryLabel', BlogCategoryLabel)
   Vue.component('BlogContent', BlogContent)
@@ -77,7 +88,9 @@ function install(Vue) {
   Vue.component('ContentTestimonial', ContentTestimonial)
   Vue.component('ContentTestimonials', ContentTestimonials)
   Vue.component('CtaButton', CtaButton)
+  Vue.component('EventDispatcher', EventDispatcher)
   Vue.component('InterfaceCloseButton', InterfaceCloseButton)
+  Vue.component('InterfaceFeaturedMedia', InterfaceFeaturedMedia)
   Vue.component('InterfaceIcon', InterfaceIcon)
   Vue.component('InterfaceLogo', InterfaceLogo)
   Vue.component('InterfaceModal', InterfaceModal)
@@ -86,6 +99,8 @@ function install(Vue) {
   Vue.component('MainNavCart', MainNavCart)
   Vue.component('MainNavFlyout', MainNavFlyout)
   Vue.component('MessagingFreeShippingCounter', MessagingFreeShippingCounter)
+  Vue.component('MixinTestBench', MixinTestBench)
+  Vue.component('PageContent', PageContent)
   Vue.component('ProductAddToCartButton', ProductAddToCartButton)
   Vue.component('ProductCard', ProductCard)
   Vue.component('ProductCategory', ProductCategory)
@@ -98,11 +113,12 @@ function install(Vue) {
   Vue.component('ProductOptions', ProductOptions)
   Vue.component('ProductPrice', ProductPrice)
   Vue.component('ProductQuantityUpdate', ProductQuantityUpdate)
+  Vue.component('ProductShopLook', ProductShopLook)
   Vue.component('ProductTitle', ProductTitle)
   Vue.component('ProductVariantSelect', ProductVariantSelect)
   Vue.component('ProductVariantTitle', ProductVariantTitle)
   Vue.component('ProductVideo', ProductVideo)
-  Vue.component('ShopifyPageContent', ShopifyPageContent)
+  Vue.component('ReadUserData', ReadUserData)
   Vue.component('SiteHeader', SiteHeader)
 }
 

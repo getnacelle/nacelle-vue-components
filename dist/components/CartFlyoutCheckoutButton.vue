@@ -7,7 +7,8 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import gql from 'graphql-tag'
+import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
 export default {
   props: {
     checkoutText: {
@@ -20,11 +21,41 @@ export default {
       loading: false
     }
   },
+  computed: {
+    ...mapGetters('cart', ['checkoutLineItems', 'checkoutIdForBackend'])
+  },
   methods: {
+    ...mapMutations('cart', ['setCartError']),
     ...mapActions('cart', ['processCheckout']),
-    checkout() {
+    async checkout() {
+      let vm = this
       this.loading = true
-      this.processCheckout()
+      let processCheckoutObject = await this.$apollo
+        .mutate({
+          mutation: gql`
+            mutation($input: CheckoutInput) {
+              processCheckout(input: $input) {
+                id
+                url
+                completed
+              }
+            }
+          `,
+          variables: {
+            input: {
+              cartItems: vm.checkoutLineItems,
+              checkoutId: vm.checkoutIdForBackend
+            }
+          }
+        })
+        .then(data => {
+          return data.data.processCheckout
+        })
+        .catch(err => {
+          console.log(err)
+          vm.setCartError()
+        })
+      this.processCheckout(processCheckoutObject)
     }
   }
 }
