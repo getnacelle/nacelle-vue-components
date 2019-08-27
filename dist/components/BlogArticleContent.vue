@@ -6,7 +6,7 @@
 
     <slot></slot>
 
-    <client-only v-if="hasProducts">
+    <client-only>
       <product-shop-look
         v-for="(shopImage, index) in shopImages"
         :key="index"
@@ -140,7 +140,8 @@ export default {
       })
     },
     moveImage(imageNode, shopLookNode) {
-      imageNode.parentNode.replaceChild(shopLookNode, imageNode)
+      imageNode.parentNode.insertBefore(shopLookNode, imageNode)
+      imageNode.style.display = 'none'
     }
   }
 }

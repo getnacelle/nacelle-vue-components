@@ -1,5 +1,7 @@
 import uuid from 'uuidv4'
+import localforage from 'localforage'
 import * as Cookies from 'es-cookie'
+
 const user = {
   namespaced: true,
   state: {
@@ -25,39 +27,53 @@ const user = {
     }
   },
   actions: {
-    createSession(context) {
+    async initUserData(context) {
+      await context.dispatch('readAnonymousID')
+      await context.dispatch('readSession')
+    },
+
+    //// ANONYMOUS ID ACTIONS //////////////////////////////////////////
+    async createAnonymousID(context) {
       let anonymousID = uuid()
-      let sessionID = uuid()
+      await localforage.set('anonymousID', anonymousID)
       context.commit('setAnonymousID', anonymousID)
+    },
+    async readAnonymousID(context) {
+      let anonymousID = await localforage.get('anonymousID')
+      if (anonymousID != null) {
+        context.commit('setAnonymousID', anonymousID)
+      } else {
+        context.dispatch('createAnonymousID')
+      }
+    },
+
+    //// SESSION ACTIONS //////////////////////////////////////////
+    async createSession(context) {
+      let sessionID = uuid()
       context.commit('setSessionID', sessionID)
       if (process.browser) {
-        Cookies.set('session', JSON.stringify({ anonymousID, sessionID }))
+        Cookies.set('session-id', sessionID, {
+          expires: new Date().setMinutes(30)
+        })
       }
     },
     readSession(context) {
       if (process.browser) {
-        let sessionCookie = Cookies.get('session')
+        let sessionCookie = Cookies.get('session-id')
         if (sessionCookie == undefined) {
           context.dispatch('createSession')
         } else {
-          context.commit(
-            'setAnonymousID',
-            JSON.parse(sessionCookie).anonymousID
-          )
-          context.commit('setSessionID', JSON.parse(sessionCookie).sessionID)
+          context.commit('setSessionID', sessionCookie)
           context.dispatch('refreshSession')
         }
       }
-      Cookies.set
     },
     refreshSession(context) {
-      Cookies.set(
-        'session',
-        JSON.stringify({
-          anonymousID: context.state.anonymousID,
-          sessionID: context.state.sessionID
+      if (process.browser) {
+        Cookies.set('session-id', context.state.sessionID, {
+          expires: new Date().setMinutes(30)
         })
-      )
+      }
     }
   }
 }
