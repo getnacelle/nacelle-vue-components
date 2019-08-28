@@ -1,5 +1,7 @@
 <template>
-  <button class="button" @click="removeLineItem(variantId)">Remove</button>
+  <button class="button nacelle" @click="removeLineItem(variantId)">
+    <slot>Remove</slot>
+  </button>
 </template>
 
 <script>

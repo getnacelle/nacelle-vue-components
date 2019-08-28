@@ -1,5 +1,5 @@
 <template>
-  <div class="ui-border-bottom">
+  <div class="flyout-cart-messaging nacelle ui-border-bottom">
     <slot></slot>
   </div>
 </template>

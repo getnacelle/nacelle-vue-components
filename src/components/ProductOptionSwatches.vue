@@ -1,5 +1,5 @@
 <template>
-  <div class="swatches columns is-marginless is-multiline">
+  <div class="swatches columns is-marginless is-multiline nacelle">
     <product-option-swatch
       v-on:swatchValue="setOptionValue"
       v-for="value in option.values"
@@ -78,9 +78,5 @@ export default {
 .swatches {
   display: flex;
   flex-wrap: wrap;
-}
-h3 {
-  font-weight: 600;
-  text-transform: uppercase;
 }
 </style>

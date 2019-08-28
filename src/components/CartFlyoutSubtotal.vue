@@ -1,9 +1,11 @@
 <template>
-  <div class="subtotal" v-if="cartSubtotal">
-    <h4>
-      <span>Subtotal:</span>
-      <product-price :price="cartSubtotal" />
-    </h4>
+  <div class="subtotal nacelle" v-if="cartSubtotal">
+    <slot :subtotal="cartSubtotal">
+      <component :is="titleTag" class="subtotal-title">
+        <span>Subtotal:</span>
+        <product-price :price="cartSubtotal" />
+      </component>
+    </slot>
   </div>
 </template>
 
@@ -13,6 +15,12 @@ import { mapGetters } from 'vuex'
 export default {
   components: {
     ProductPrice
+  },
+  props: {
+    titleTag: {
+      type: String,
+      default: 'h4'
+    }
   },
   computed: {
     ...mapGetters('cart', ['cartSubtotal'])
@@ -25,12 +33,14 @@ export default {
   border-top: 1px solid #dedede;
   padding: 1.5rem 0;
 }
-h4 {
+
+.subtotal-title {
   font-size: 14pt;
   text-transform: uppercase;
   text-align: center;
   font-weight: 700;
   color: #616161;
+  
   span:first-child {
     margin-right: 0.5rem;
   }

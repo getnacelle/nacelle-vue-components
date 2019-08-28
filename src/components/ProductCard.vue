@@ -1,5 +1,5 @@
 <template>
-  <div class="product-card">
+  <div class="product-card nacelle">
     <router-link :to="`${pathFragment}${product.handle}`">
       <product-image :source="mediaSrc" />
     </router-link>
@@ -189,6 +189,7 @@ export default {
 .product-card-details /deep/ a {
   flex-basis: 80%;
 }
+
 .handler {
   position: absolute;
   top: 0;

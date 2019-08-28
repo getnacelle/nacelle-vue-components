@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="product-video nacelle">
     <video
       ref="product-video"
       :src="source"

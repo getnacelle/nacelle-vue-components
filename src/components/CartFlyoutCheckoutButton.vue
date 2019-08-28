@@ -1,6 +1,6 @@
 <template>
   <div
-    class="button is-primary checkout-button"
+    class="button is-primary checkout-button nacelle"
     :class="{'is-loading': loading}"
     @click="checkout"
   >{{checkoutText}}</div>

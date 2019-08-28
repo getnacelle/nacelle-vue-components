@@ -1,7 +1,7 @@
 <template>
   <div>
     <button
-      class="button is-primary"
+      class="add-to-cart-button button is-primary nacelle"
       :disabled="!allOptionsSelected || allOptionsSelected && variant == undefined || !variantInLineItems && allOptionsSelected && variant.availableForSale != true"
       @click="addToCart"
       v-if="this.$parent.$options._componentTag == 'product-variant-select'"
@@ -92,6 +92,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-</style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="main-nav" role="navigation" aria-label="main navigation">
+  <div class="main-nav nacelle" role="navigation" aria-label="main navigation">
     <div class="main-nav-left">
       <main-nav-burger />
     </div>

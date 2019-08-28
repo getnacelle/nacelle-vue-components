@@ -1,11 +1,24 @@
 <template>
-  <p>
+  <div class="free-shipping-counter nacelle">
     <span v-if="!freeShippingThresholdPassed">
-      Only
-      <product-price class="free-shipping" :price="amountUntilFreeShipping" />left to get free shipping!
+      <slot
+        name="no-free-shipping"
+        :amount="amountUntilFreeShipping"
+      >
+        Only
+        <product-price
+          :price="amountUntilFreeShipping"
+          class="free-shipping"
+        />
+        left to get free shipping!
+      </slot>
     </span>
-    <span v-else>You get free shipping!</span>
-  </p>
+    <span v-else>
+      <slot name="free-shipping">
+        You get free shipping!
+      </slot>
+    </span>
+  </div>
 </template>
 
 <script>

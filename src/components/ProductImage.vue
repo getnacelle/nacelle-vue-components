@@ -1,9 +1,18 @@
 <template>
-  <div v-observe-visibility="{
-    callback: visibilityChanged,
-    once: true,
-  }">
-    <img v-if="visibility" :src="source" :alt="alt" :width="width" ref="product-image" />
+  <div 
+    v-observe-visibility="{
+      callback: visibilityChanged,
+      once: true,
+    }"
+    class="product-image nacelle"
+  >
+    <img
+      v-if="visibility"
+      :src="source"
+      :alt="alt"
+      :width="width"
+      ref="product-image"
+    />
   </div>
 </template>
 
@@ -61,7 +70,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-div,
+.product-image,
 img {
   width: 100%;
 }
