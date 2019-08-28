@@ -1,6 +1,6 @@
 <template>
   <transition name="slide">
-    <div class="flyout" v-if="cartVisible">
+    <div class="flyout nacelle" v-if="cartVisible">
       <cart-flyout-header v-on:close="handleClose" />
       <cart-flyout-messaging>
         <messaging-free-shipping-counter />
@@ -75,12 +75,12 @@ export default {
   @media screen and (max-width: 768px) {
     width: 100%;
   }
+}
 
-  .cart-items {
-    flex-grow: 5;
-    overflow: scroll;
-    -webkit-overflow-scrolling: touch;
-  }
+.cart-items {
+  flex-grow: 5;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 .slide-enter-active,

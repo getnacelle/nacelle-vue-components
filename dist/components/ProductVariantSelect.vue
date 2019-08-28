@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="variant-select nacelle">
     <product-options
       v-show="allOptions[0].values.length > 1"
       :options="allOptions"

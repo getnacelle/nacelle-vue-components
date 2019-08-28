@@ -10,7 +10,7 @@ describe('InterfaceIcon.vue', () => {
 
     expect(wrapper.find('img').exists()).toBe(true)
     expect(wrapper.html()).toEqual(
-      '<div iconaction="cart/showCart"><img src="https://nacelle-assets.s3-us-west-2.amazonaws.com/default-cart-icon.svg" class="icon"></div>'
+      '<div class="interface-icon nacelle" iconaction="cart/showCart"><img src="https://nacelle-assets.s3-us-west-2.amazonaws.com/default-cart-icon.svg" class="icon"></div>'
     )
   })
 })

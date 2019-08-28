@@ -1,5 +1,5 @@
 <template>
-  <div class="media-select-view columns is-multiline">
+  <div class="media-select-view columns is-multiline nacelle">
     <div class="media-viewer column is-12">
       <transition name="fade" mode="out-in">
         <component

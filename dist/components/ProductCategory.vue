@@ -1,6 +1,10 @@
 <template>
-  <div>
-    <p>{{category}}</p>
+  <div class="product-category nacelle">
+    <slot :category="category">
+      <p class="product-category-text">
+        {{category}}
+      </p>
+    </slot>
   </div>
 </template>
 
@@ -16,7 +20,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-p {
+.product-category-text {
   text-transform: uppercase;
   font-weight: 600;
   font-size: 10pt;

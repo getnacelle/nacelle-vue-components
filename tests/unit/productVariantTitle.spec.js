@@ -6,6 +6,6 @@ describe('ProductVariantTitle.vue', () => {
     const wrapper = shallowMount(ProductVariantTitle, {
       propsData: { title: 'Great Product' }
     })
-    expect(wrapper.html()).toBe('<p>Great Product</p>')
+    expect(wrapper.html()).toBe('<p class="variant-title nacelle">Great Product</p>')
   })
 })

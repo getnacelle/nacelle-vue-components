@@ -7,7 +7,7 @@ describe('ProductDescription.vue', () => {
       propsData: { description: '<p>This is the description</p>' }
     })
     expect(wrapper.html()).toBe(
-      '<div class="description"><p>This is the description</p></div>'
+      '<div class="product-description nacelle"><p>This is the description</p></div>'
     )
   })
 })

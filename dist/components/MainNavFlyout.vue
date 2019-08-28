@@ -1,6 +1,6 @@
 <template>
   <transition name="slide">
-    <div class="nav-flyout" v-if="menuVisible">
+    <div class="nav-flyout nacelle" v-if="menuVisible">
       <div class="nav-flyout-header">
         <slot name="brand">
           <router-link class="navbar-item" to="/">

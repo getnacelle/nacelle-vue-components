@@ -1,5 +1,5 @@
 <template>
-  <div class="quantity-updater no-select">
+  <div class="quantity-updater no-select nacelle">
     <div class="quantity-value">{{quantityInCart}}</div>
     <div class="switches">
       <div class="increment switch" @click="increment">
@@ -90,27 +90,32 @@ export default {
   justify-content: space-between;
   overflow: hidden;
   // margin-right: 1rem;
-  .quantity-value {
-    width: 3rem;
+}
+
+.quantity-value {
+  width: 3rem;
+}
+
+.switches {
+  width: 2rem;
+  font-size: 14pt;
+  border-left: 1px solid #dbdbdb;
+}
+
+.switch {
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+
+  &:first-child {
+    border-bottom: 1px solid #dbdbdb;
   }
-  .switches {
-    width: 2rem;
-    font-size: 14pt;
-    border-left: 1px solid #dbdbdb;
-  }
-  .switch {
-    text-align: center;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s ease;
-    &:first-child {
-      border-bottom: 1px solid #dbdbdb;
-    }
-    &:hover {
-      background: #f5f5f5;
-    }
+  
+  &:hover {
+    background: #f5f5f5;
   }
 }
 </style>

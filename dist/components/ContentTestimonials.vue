@@ -1,5 +1,5 @@
 <template>
-  <section class="section">
+  <section class="testimonials section nacelle">
     <div class="container">
       <component v-if="title.length > 0" :is="titleTag" class="title has-text-centered">
         {{ title }}

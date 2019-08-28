@@ -1,5 +1,9 @@
 <template>
-  <img :src="source" @click="close" />
+  <img
+    :src="source"
+    class="interface-close-button nacelle"
+    @click="close"
+  />
 </template>
 
 <script>

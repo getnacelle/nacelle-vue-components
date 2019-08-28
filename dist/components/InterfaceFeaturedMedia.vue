@@ -1,5 +1,5 @@
 <template>
-  <div class="featured-media">
+  <div class="featured-media nacelle">
     <figure v-if="source && type.includes('image')">
       <img :src="media.src">
     </figure>

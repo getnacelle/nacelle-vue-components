@@ -2,9 +2,7 @@
   <p
     v-if="title != 'Default Title'"
     class="variant-title nacelle"
-  >
-    {{title}}
-  </p>
+  >{{title}}</p>
 </template>
 
 <script>

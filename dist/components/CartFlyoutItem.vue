@@ -1,5 +1,5 @@
 <template>
-  <div class="columns is-marginless is-mobile flyout-cart-item">
+  <div class="columns is-marginless is-mobile flyout-cart-item nacelle">
     <router-link class="column is-3" :to="`${pathFragment}${item.handle}`" @click.native="hideCart">
       <product-image :source="item.image.thumbnailSrc" :alt="item.title" />
     </router-link>

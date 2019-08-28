@@ -1,5 +1,5 @@
 <template>
-  <div class="page-content">
+  <div class="page-content nacelle">
     <slot :page="page">
       <div v-for="section in mappedSections" :key="section.id">
         <slot name="section" :section="section">
