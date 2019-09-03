@@ -4,9 +4,8 @@ export default {
       selectedOptions: []
     }
   },
-
   watch: {
-    lineItems() {
+    quantityTotal() {
       this.selectedOptions = []
     }
   },

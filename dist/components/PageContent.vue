@@ -12,6 +12,9 @@
         </slot>
       </div>
     </slot>
+    <slot name="body" :body="body">
+      <div class="page-content-body content" v-html="body" />
+    </slot>
   </div>
 </template>
 
@@ -74,6 +77,21 @@ export default {
       }
 
       return []
+    },
+    body() {
+      if (this.page && this.page.fields && this.page.fields.body) {
+        const { source } = this.page
+        
+        if (source === 'shopify') {
+          return this.page.fields.body
+        }
+
+        if (source === 'contentful') {
+          return this.contentToHtml(this.page.fields.body)
+        }
+
+        return ''
+      }
     }
   },
   methods: {
