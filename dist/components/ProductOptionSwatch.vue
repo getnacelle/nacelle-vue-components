@@ -1,6 +1,15 @@
 <template>
-  <div class="no-select" :class="[swatchStyle, availableClass]" @click="emitValue">
-    <div class="inside-color" v-if="swatchStyle == 'bubble'" :class="swatchClass" :style="swatchBg"></div>
+  <div
+    :class="[swatchStyle, availableClass]"
+    class="option-swatch nacelle no-select"
+    @click="emitValue"
+  >
+    <div
+      v-if="swatchStyle == 'bubble'"
+      :class="swatchClass"
+      :style="swatchBg"
+      class="inside-color"
+    />
     <span v-if="swatchStyle != 'bubble'">{{value}}</span>
   </div>
 </template>

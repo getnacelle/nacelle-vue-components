@@ -1,5 +1,5 @@
 <template>
-  <div class="site-header" :class="{ 'is-sticky': isSticky }">
+  <div class="site-header nacelle" :class="{ 'is-sticky': isSticky }">
     <main-nav
       :logoSrc="logoSrc"
       :logoWidth="logoWidth"

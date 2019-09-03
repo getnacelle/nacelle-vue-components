@@ -2,7 +2,7 @@
   <component 
     :is="tag"
     v-bind="linkProps()"
-    class="button is-primary"
+    class="cta-button button is-primary nacelle"
     @click="(event) => $emit('clicked', event)"
   >
     <slot></slot>

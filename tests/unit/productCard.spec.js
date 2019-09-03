@@ -49,7 +49,7 @@ describe('ProductCard.vue', () => {
 
     expect(wrapper.find('.product-card').exists()).toBe(true)
 
-    const title = wrapper.find('.title')
+    const title = wrapper.find('.product-title')
     expect(title.text()).toBe('Awesome T-Shirt')
   })
 })

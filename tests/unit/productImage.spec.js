@@ -12,7 +12,7 @@ describe('ProductImage/vue', () => {
     })
     wrapper.setData({ visible: true })
     expect(wrapper.html()).toBe(
-      '<div><img src="https://www.sparkawards.com/wp-content/uploads/2011/05/Product_Lg_Type-1024x791.jpg" alt="chair"></div>'
+      '<div class="product-image nacelle"><img src="https://www.sparkawards.com/wp-content/uploads/2011/05/Product_Lg_Type-1024x791.jpg" alt="chair"></div>'
     )
   })
 })

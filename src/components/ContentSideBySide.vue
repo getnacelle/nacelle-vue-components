@@ -1,5 +1,5 @@
 <template>
-  <section class="sbs sbs-target">
+  <section class="sbs nacelle">
     <div class="columns" :class="columnClasses">
       <div class="column is-half sbs-image">
         <img :src="imageUrl" alt="" />

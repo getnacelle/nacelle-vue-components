@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="interface-icon nacelle">
     <router-link v-if="path" :to="path">
       <img class="icon" :src="iconSrc" />
     </router-link>

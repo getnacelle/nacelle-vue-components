@@ -1,7 +1,7 @@
 <template>
   <button
     role="button"
-    class="burger"
+    class="burger nacelle"
     aria-label="menu"
     :class="{ 'is-active': menuVisible }"
     @click="toggleShowMenu"

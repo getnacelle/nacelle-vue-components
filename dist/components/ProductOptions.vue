@@ -1,7 +1,7 @@
 <template>
-  <div v-if="options" class="options">
+  <div v-if="options" class="options nacelle">
     <div class="option" v-for="option in options" :key="option.name">
-      <h3>{{option.name}}</h3>
+      <h3 class="option-label">{{option.name}}</h3>
       <product-option-swatches
         v-on:optionSet="setSelectedOptions"
         :option="option"
@@ -119,13 +119,16 @@ export default {
 .swatches {
   display: flex;
 }
+
 .reset-options {
   margin-bottom: 2rem;
 }
-h3 {
+
+.option-label {
   font-weight: 600;
   text-transform: uppercase;
 }
+
 .selected {
   background: red;
 }

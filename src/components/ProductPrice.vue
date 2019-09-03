@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span class="product-price nacelle">
     {{price | currency({
     symbol: '$',
     thousandsSeparator: ',',
@@ -31,7 +31,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-div {
+.product-price {
   margin-bottom: 1rem;
 }
 </style>

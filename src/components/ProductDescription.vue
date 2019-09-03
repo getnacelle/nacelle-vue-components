@@ -1,5 +1,5 @@
 <template>
-  <div class="description" v-html="description"></div>
+  <div class="product-description nacelle" v-html="description"></div>
 </template>
 
 <script>
@@ -14,7 +14,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.description {
+.product-description {
   margin-bottom: 1rem;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-wrapper" v-on:close="closeModal">
+  <div class="modal-wrapper nacelle" v-on:close="closeModal">
     <transition name="fade">
       <div v-if="modalOpen" class="modal-outer">
         <div class="container">

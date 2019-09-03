@@ -1,5 +1,5 @@
 <template>
-  <component class="title" :is="element">{{title}}</component>
+  <component class="product-title nacelle" :is="element">{{title}}</component>
 </template>
 
 <script>
@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.title {
+.product-title {
   font-size: 22pt;
   font-weight: 600;
   margin-bottom: 1rem;

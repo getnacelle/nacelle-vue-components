@@ -121,7 +121,7 @@ export default {
     bannerClasses() {
       const mobileHeightClass = this.mobileFullHeight ? 'is-mobile-fullheight' : ''
 
-      return `hero is-${this.size} is-align-${this.alignment} ${mobileHeightClass}`
+      return `hero nacelle is-${this.size} is-align-${this.alignment} ${mobileHeightClass}`
     }
   }
 }

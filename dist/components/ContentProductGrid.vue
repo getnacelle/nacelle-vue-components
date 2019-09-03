@@ -1,5 +1,5 @@
 <template>
-  <div class="product-grid section">
+  <div class="product-grid section nacelle">
     <div class="container">
       <slot
         name="header"

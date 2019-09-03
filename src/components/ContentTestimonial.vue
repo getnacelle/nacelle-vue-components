@@ -1,5 +1,5 @@
 <template>
-  <div class="testimonial columns">
+  <div class="testimonial columns nacelle">
     <div v-if="hasImage" class="testimonial-image column is-paddingless">
       <figure class="image is-square">
         <img :src="imageUrl" :class="{ 'is-rounded' : roundedImage }" alt="" />

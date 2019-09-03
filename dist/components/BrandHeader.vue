@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="brand-header nacelle">
     <div v-if="logoAlign == 'left'" class="columns is-marginless is-paddingless">
       <div class="column" :class="logoColumnWidth">
         <interface-logo :src="logoSrc" />
