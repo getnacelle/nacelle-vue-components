@@ -4,6 +4,11 @@ export default {
       selectedOptions: []
     }
   },
+  watch: {
+    quantityTotal() {
+      this.selectedOptions = []
+    }
+  },
   computed: {
     allOptionsSelected() {
       if (

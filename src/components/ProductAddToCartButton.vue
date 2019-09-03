@@ -16,9 +16,9 @@
       <span v-if="variantInLineItems">Added!</span>
     </button>
     <button class="button is-primary" @click="addToCart" v-else>
-      <span v-if="!variantInLineItems && !onlyOneOption">Select Options</span>
-      <span v-if="!variantInLineItems && onlyOneOption">Add to Cart</span>
-      <span v-if="variantInLineItems">Added!</span>
+      <span v-if="!onlyOneOption">Select Options</span>
+      <span v-if="onlyOneOption && !variantInLineItems">Add to Cart</span>
+      <span v-if="onlyOneOption &&variantInLineItems">Added!</span>
     </button>
   </div>
 </template>

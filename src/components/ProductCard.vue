@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapGetters } from 'vuex'
 import ProductImage from './ProductImage'
 import ProductTitle from './ProductTitle'
 import ProductPrice from './ProductPrice'
@@ -109,8 +109,14 @@ export default {
       confirmedSelection: false
     }
   },
+  watch: {
+    quantityTotal() {
+      this.confirmedSelection = false
+    }
+  },
   computed: {
     ...mapState('cart', ['lineItems']),
+    ...mapGetters('cart', ['quantityTotal']),
 
     currentVariant() {
       if (this.product.variants && this.product.variants.length == 1) {

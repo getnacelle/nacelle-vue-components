@@ -4,6 +4,12 @@ export default {
       selectedOptions: []
     }
   },
+
+  watch: {
+    lineItems() {
+      this.selectedOptions = []
+    }
+  },
   computed: {
     allOptionsSelected() {
       if (

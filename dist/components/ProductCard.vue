@@ -109,6 +109,11 @@ export default {
       confirmedSelection: false
     }
   },
+  watch: {
+    lineItems() {
+      this.confirmedSelection = false
+    }
+  },
   computed: {
     ...mapState('cart', ['lineItems']),
 

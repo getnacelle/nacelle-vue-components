@@ -13,7 +13,7 @@
         />
       </transition>
     </div>
-    <div class="media-select column is-12">
+    <div class="media-select column is-12" v-if="media && media.length > 1">
       <div class="columns is-mobile">
         <div v-for="item in media" :key="item.id" class="column is-one-fifth">
           <product-image
