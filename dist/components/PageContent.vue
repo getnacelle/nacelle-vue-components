@@ -13,7 +13,13 @@
       </div>
     </slot>
     <slot name="body" :body="body">
-      <div class="page-content-body content" v-html="body" />
+      <div class="page-content-body section">
+        <div class="container">
+          <div class="columns is-centered">
+            <div class="column is-8 content" v-html="body" />
+          </div>
+        </div>
+      </div>
     </slot>
   </div>
 </template>
