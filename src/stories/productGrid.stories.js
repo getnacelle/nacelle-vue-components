@@ -11,7 +11,7 @@ import { defaultProduct, defaultProduct2 } from '../../config/defaultObjects.js'
 
 import { mockProductCollection } from '../../config/defaultObjects'
 
-const productArray = mockProductCollection.products
+const productArray = [defaultProduct, defaultProduct, defaultProduct]
 storiesOf('Components | Product / Composition', module)
   .addDecorator(withInfo)
   .addDecorator(StoryRouter())

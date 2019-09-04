@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { configure } from '@storybook/vue'
+import { addParameters, configure } from '@storybook/vue'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import '../../src/base-styles.css'
@@ -12,3 +12,10 @@ function loadStories() {
 }
 
 configure(loadStories, module)
+
+addParameters({
+  options: {
+    showPanel: true,
+    panelPosition: 'right'
+  }
+})

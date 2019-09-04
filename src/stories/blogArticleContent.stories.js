@@ -1,10 +1,21 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { storiesOf } from '@storybook/vue'
 import { withInfo } from 'storybook-addon-vue-info'
-import { withKnobs, text, boolean, array, select, object } from '@storybook/addon-knobs';
+import {
+  withKnobs,
+  text,
+  boolean,
+  array,
+  select,
+  object
+} from '@storybook/addon-knobs'
 import StoryRouter from 'storybook-vue-router'
 import store from '../store/store'
-import { defaultProduct, shopifyArticle, contentfulArticle } from '../../config/defaultObjects.js'
+import {
+  defaultProduct,
+  shopifyArticle,
+  contentfulArticle
+} from '../../config/defaultObjects.js'
 
 import BlogArticleContent from '../components/BlogArticleContent'
 
@@ -70,7 +81,7 @@ storiesOf('Components | Content / Blog / Article Content', module)
     }
   )
 
-  storiesOf('Components | Content / Blog / Article Content', module)
+storiesOf('Components | Content / Blog / Article Content', module)
   .addDecorator(withInfo)
   .addDecorator(withKnobs)
   .addDecorator(StoryRouter())
@@ -97,7 +108,7 @@ storiesOf('Components | Content / Blog / Article Content', module)
     }
   )
 
-  storiesOf('Components | Content / Blog / Article Content', module)
+storiesOf('Components | Content / Blog / Article Content', module)
   .addDecorator(withInfo)
   .addDecorator(withKnobs)
   .addDecorator(StoryRouter())

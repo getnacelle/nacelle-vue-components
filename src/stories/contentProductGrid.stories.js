@@ -25,9 +25,9 @@ import store from '../store/store'
 //     id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
 //   }]
 // }
-import { mockProductCollection } from '../../config/defaultObjects'
+import { defaultProduct } from '../../config/defaultObjects'
 
-const productArray = mockProductCollection.products
+const productArray = [defaultProduct, defaultProduct, defaultProduct]
 
 storiesOf('Components | Content / Product Grid', module)
   .addDecorator(withInfo)
@@ -59,7 +59,7 @@ storiesOf('Components | Content / Product Grid', module)
     }
   )
 
-  storiesOf('Components | Content / Product Grid', module)
+storiesOf('Components | Content / Product Grid', module)
   .addDecorator(withInfo)
   .addDecorator(StoryRouter())
   .addDecorator(() => {
