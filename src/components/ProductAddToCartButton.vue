@@ -16,9 +16,11 @@
       <span v-if="variantInLineItems">Added!</span>
     </button>
     <button class="button is-primary" @click="addToCart" v-else>
-      <span v-if="!onlyOneOption">Select Options</span>
-      <span v-if="onlyOneOption && !variantInLineItems">Add to Cart</span>
-      <span v-if="onlyOneOption &&variantInLineItems">Added!</span>
+      <slot>
+        <span v-if="!onlyOneOption">Select Options</span>
+        <span v-if="onlyOneOption && !variantInLineItems">Add to Cart</span>
+        <span v-if="onlyOneOption &&variantInLineItems">Added!</span>
+      </slot>
     </button>
   </div>
 </template>
@@ -41,6 +43,7 @@ export default {
         return []
       }
     },
+
     quantity: { type: Number, default: 1 },
     allOptionsSelected: { type: Boolean, default: false },
     confirmedSelection: { type: Boolean, default: false },
