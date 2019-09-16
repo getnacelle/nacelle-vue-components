@@ -54,7 +54,8 @@ const cart = (options = {}) => {
           return state.lineItems.map(lineItem => {
             return {
               variantId: lineItem.variant.id,
-              quantity: lineItem.quantity
+              quantity: lineItem.quantity,
+              metafields: lineItem.metafields
             }
           })
         } else {

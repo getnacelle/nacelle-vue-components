@@ -4,6 +4,7 @@ import modal from './modal'
 import events from './events'
 import product from './product'
 import user from './user'
+import space from './space'
 
 export default function createStoreConfig() {
   return {
@@ -13,7 +14,8 @@ export default function createStoreConfig() {
       modal,
       events,
       product,
-      user
+      user,
+      space
     }
   }
 }

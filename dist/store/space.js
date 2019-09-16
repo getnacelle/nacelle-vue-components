@@ -1,0 +1,84 @@
+const space = {
+  namespaced: true,
+  state: {
+    id: '',
+    name: '',
+    domain: '',
+    metafields: [],
+    linklists: [],
+    facebookCatalogID: ''
+  },
+  mutations: {
+    setId(state, id) {
+      state.id = id
+    },
+  
+    setName(state, name) {
+      state.name = name
+    },
+  
+    setDomain(state, domain) {
+      state.domain = domain
+    },
+  
+    setMetafields(state, metafields) {
+      state.metafields = metafields
+    },
+  
+    addMetafield(state, metafield) {
+      state.metafields.push(metafield)
+    },
+  
+    setLinklists(state, payload) {
+      state.linklists = payload
+    },
+  
+    addLinklist(state, linklist) {
+      state.linklists.push(linklist)
+    }
+  },
+  getters: {
+    getMetatag: (state) => (tag) => {
+      return state.metafields.find(field => (
+        field.namespace === 'metatag' && field.key === tag
+      ))
+    },
+    getMetaNamespace: (state) => (namespace) => {
+      return state.metafields.reduce((obj, metafield) => {
+        if (metafield.namespace === namespace) {
+          obj[metafield.key] = metafield.value
+        }
+  
+        return obj
+      }, {})
+    },
+    getMetafield: (state) => (namespace, tag) => {
+      const metafield = state.metafields.find(field => (
+        field.namespace === namespace && field.key === tag
+      ))
+  
+      if (metafield) {
+        return metafield.value
+      }
+  
+      return undefined
+    },
+    getLinks: (state) => handle => {
+      if (state.linklists) {
+        const linklist = state.linklists.find(
+          linklist => linklist.handle === handle
+        )
+  
+        if (linklist) {
+          return linklist.links
+        }
+  
+        return []
+      }
+  
+      return []
+    }
+  }
+}
+
+export default space
