@@ -38,6 +38,20 @@ const space = {
     }
   },
   getters: {
+    metafieldsObj(state) {
+      return state.metafields.reduce((obj, metafield) => {
+        const { namespace, key, value } = metafield
+
+        if (obj[namespace]) {
+          obj[namespace][key] = value
+        } else {
+          obj[namespace] = {}
+          obj[namespace][key] = value
+        }
+
+        return obj
+      }, {})
+    },
     getMetatag: (state) => (tag) => {
       return state.metafields.find(field => (
         field.namespace === 'metatag' && field.key === tag

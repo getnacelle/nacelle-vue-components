@@ -31,4 +31,34 @@ describe('Space Store', () => {
       description: 'The future of furniture'
     })
   })
+
+  it('metafieldsObj returns metafields object', async () => {
+    store.state.space.metafields = [
+      {
+        namespace: 'metatag',
+        key: 'description',
+        value: 'The future of furniture'
+      },
+      {
+        namespace: 'icons',
+        key: 'twitter',
+        value: 'mock_url'
+      },
+      {
+        namespace: 'icons',
+        key: 'facebook',
+        value: 'mock_url'
+      }
+    ]
+
+    expect(store.getters['space/metafieldsObj']).toEqual({
+      metatag: {
+        description: 'The future of furniture'
+      },
+      icons: {
+        twitter: 'mock_url',
+        facebook: 'mock_url'
+      }
+    })
+  })
 })
