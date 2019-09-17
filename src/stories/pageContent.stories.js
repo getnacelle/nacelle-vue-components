@@ -640,76 +640,99 @@ const defaultObj = {
   shopify: [
     {
       "node": {
-        "title": "The future of furniture",
-        "handle": "hero-banner",
-        "contentHtml": "",
+        "title": "Widget Co Hero",
+        "handle": "widget-co-hero",
+        "contentHtml": "Bringing You the Best Widgets!",
         "image": {
-          "id": "Z2lkOi8vc2hvcGlmeS9BcnRpY2xlSW1hZ2UvNjEzMDAwODEwMA==",
-          "originalSrc": "https://cdn.shopify.com/s/files/1/0094/4098/5124/articles/iStock-476157466.jpg?v=1562792247"
+          "id": "Z2lkOi8vc2hvcGlmeS9BcnRpY2xlSW1hZ2UvOTYyOTI3MDExMw==",
+          "originalSrc": "https://cdn.shopify.com/s/files/1/0255/4491/7089/articles/contentful-demo-4.jpeg?v=1568650754"
         },
         "tags": [
-          "field::backgroundAlt::Living room with Starship furniture",
-          "field::backgroundAltTag::Living room with Starship furniture",
+          "field::alignment::left",
           "field::contentType::ContentHeroBanner",
-          "field::ctaText::Shop Now",
-          "field::ctaUrl::/shop"
+          "field::ctaText::Shop Now!",
+          "field::ctaUrl::/shop",
+          "field::textColor::#fff"
         ]
       }
     },
     {
       "node": {
-        "title": "New Arrivals",
-        "handle": "product-grid",
+        "title": "What People Are Saying",
+        "handle": "what-people-are-saying",
         "contentHtml": "",
         "image": null,
         "tags": [
-          "field::contentType::ContentProductGrid"
+          "field::contentType::ContentTestimonials"
         ]
       }
     },
     {
       "node": {
-        "title": "Living Room Decor",
-        "handle": "side-by-side",
-        "contentHtml": "Exceeding reaction chamber thermal limit. We have begun power-supply calibration. Force fields have been established on all turbo lifts and crawlways.",
-        "image": {
-          "id": "Z2lkOi8vc2hvcGlmeS9BcnRpY2xlSW1hZ2UvNjExNTA5ODY2MA==",
-          "originalSrc": "https://cdn.shopify.com/s/files/1/0094/4098/5124/articles/starship1.jpg?v=1562695773"
-        },
+        "title": "Mr. Spacely",
+        "handle": "mr-spacely",
+        "contentHtml": "These were exactly what I was looking for!",
+        "image": null,
         "tags": [
-          "field::backgroundColor::#f2eee8",
-          "field::contentType::ContentSideBySide",
-          "field::ctaText::Shop Now",
-          "field::ctaUrl::/shop"
+          "childSection",
+          "field::contentType::ContentTestimonial"
         ]
       }
     },
     {
       "node": {
-        "title": "Modern Styles",
-        "handle": "side-by-side-2",
-        "contentHtml": "Run a manual sweep of anomalous airborne or electromagnetic readings. Radiation levels in our atmosphere have increased by 3,000 percent.",
+        "title": "Hundreds of Colors",
+        "handle": "hundreds-of-colors",
+        "contentHtml": "So many options to choose from! Widgets for every occasion!",
         "image": {
-          "id": "Z2lkOi8vc2hvcGlmeS9BcnRpY2xlSW1hZ2UvNjExNTEzMTQyOA==",
-          "originalSrc": "https://cdn.shopify.com/s/files/1/0094/4098/5124/articles/starship2.jpg?v=1562696241"
+          "id": "Z2lkOi8vc2hvcGlmeS9BcnRpY2xlSW1hZ2UvOTYyOTQ5OTQ4OQ==",
+          "originalSrc": "https://cdn.shopify.com/s/files/1/0255/4491/7089/articles/demo-photo6.jpeg?v=1568653303"
         },
         "tags": [
-          "field::backgroundColor::#f2eee8",
+          "field::backgroundColor::#D9B18C",
           "field::contentType::ContentSideBySide",
-          "field::ctaText::Shop Now",
-          "field::ctaUrl::/shop",
+          "field::ctaText::/shop",
+          "field::ctaText::Find Your Color",
           "field::reverseDesktop::true"
         ]
       }
     },
     {
       "node": {
-        "title": "Testimonials",
-        "handle": "testimonials",
-        "contentHtml": "Deflector power at maximum. Energy discharge in six seconds. Warp reactor core primary coolant failure. Fluctuate phaser resonance frequencies. Resistance is futile.",
+        "title": "Mr. Cogswell",
+        "handle": "mr-cogswell",
+        "contentHtml": "Their quality and attention to detail is unparalleled.",
         "image": null,
         "tags": [
+          "childSection",
           "field::contentType::ContentTestimonial"
+        ]
+      }
+    },
+    {
+      "node": {
+        "title": "Locally Crafted!",
+        "handle": "locally-crafted",
+        "contentHtml": "Our widgets are produced right in your backyard!",
+        "image": {
+          "id": "Z2lkOi8vc2hvcGlmeS9BcnRpY2xlSW1hZ2UvOTYyOTQzMzk1Mw==",
+          "originalSrc": "https://cdn.shopify.com/s/files/1/0255/4491/7089/articles/IconEb1_822px.jpg?v=1568652668"
+        },
+        "tags": [
+          "field::contentType::ContentSideBySide",
+          "field::ctaText::Learn More!",
+          "field::ctaUrl::/about-us"
+        ]
+      }
+    },
+    {
+      "node": {
+        "title": "What's New",
+        "handle": "whats-new",
+        "contentHtml": "",
+        "image": null,
+        "tags": [
+          "field::contentType::ContentProductGrid"
         ]
       }
     }
@@ -812,7 +835,7 @@ storiesOf('Components | Content / Page Content', module)
         <page-content :page="page" :products="products">
           <template v-slot:section="{ section }">
             <div style="padding: 1em">
-              {{ section.props.title }}
+              {{ section.data.title }}
             </div>
           </template>
         </page-content>
@@ -851,6 +874,117 @@ storiesOf('Components | Content / Page Content', module)
       },
       template: `
         <page-content :page="page" :products="products"/>
+      `
+    }),
+    {
+      info: {
+        summary: ``
+      }
+    }
+  )
+
+  storiesOf('Components | Content / Page Content', module)
+  .addDecorator(withInfo)
+  .addDecorator(StoryRouter())
+  .add(
+    'Custom Contentful Content Types',
+    () => ({
+      components: { PageContent },
+      store,
+      data() {
+        return {
+          page: {
+            source: 'contentful',
+            sections: [
+              ...defaultObj.contentful,
+              {
+                "fields": {
+                  "contentType": "NewContentSection",
+                  "title": "New Content Section",
+                  "handle": "new-content-section",
+                  "customField": true,
+                  "customField2": false,
+                  "publishDate": "2019-08-13T00:00-07:00",
+                  "blogHandle": "homepage"
+                }
+              }
+            ]
+          },
+          products: productArray
+        }
+      },
+      computed: {
+        customMappedContent() {
+          return this.page.content.map(section => {
+            return section.id
+          })
+        }
+      },
+      template: `
+        <page-content :page="page" :products="products">
+          <template v-slot:section="{ section }">
+            <div style="padding: 1em">
+              {{ section.data.title }}
+              <pre>{{ section.data }}</pre>
+            </div>
+          </template>
+        </page-content>
+      `
+    }),
+    {
+      info: {
+        summary: ``
+      }
+    }
+  )
+
+  storiesOf('Components | Content / Page Content', module)
+  .addDecorator(withInfo)
+  .addDecorator(StoryRouter())
+  .add(
+    'Custom Shopify Content Types',
+    () => ({
+      components: { PageContent },
+      store,
+      data() {
+        return {
+          page: {
+            source: 'shopify',
+            sections: [
+              ...defaultObj.shopify,
+              {
+                "node": {
+                  "title": "New Shopify Section",
+                  "handle": "new-shopify-section",
+                  "contentHtml": "This is some content",
+                  "image": {},
+                  "tags": [
+                    "field::contentType::NewShopifySection",
+                    "field::customField::true"
+                  ]
+                }
+              }
+            ]
+          },
+          products: productArray
+        }
+      },
+      computed: {
+        customMappedContent() {
+          return this.page.content.map(section => {
+            return section.id
+          })
+        }
+      },
+      template: `
+        <page-content :page="page" :products="products">
+          <template v-slot:section="{ section }">
+            <div style="padding: 1em">
+              {{ section.data.title }}
+              <pre>{{ section.data }}</pre>
+            </div>
+          </template>
+        </page-content>
       `
     }),
     {
