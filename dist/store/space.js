@@ -66,9 +66,9 @@ const space = {
         return obj
       }, {})
     },
-    getMetafield: (state) => (namespace, tag) => {
+    getMetafield: (state) => (namespace, key) => {
       const metafield = state.metafields.find(field => (
-        field.namespace === namespace && field.key === tag
+        field.namespace === namespace && field.key === key
       ))
   
       if (metafield) {

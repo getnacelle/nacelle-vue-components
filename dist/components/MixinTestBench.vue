@@ -4,7 +4,14 @@
 
 <script>
 import store from '../store/store'
-export default {}
+export default {
+  props: {
+    product: {
+      type: Object,
+      default: () => {}
+    }
+  }
+}
 </script>
 
 <style>
