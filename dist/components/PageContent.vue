@@ -132,14 +132,16 @@ export default {
     reduceShopifySections(sections) {
       return sections.reduce((sections, section, index) => {
         const formatted = this.formatShopifySection(section)
+        const { tags } = formatted
 
         if (index > 0 && formatted.tags.includes('childSection')) {
           const parent = sections[sections.length - 1]
+          const child = this.mapShopifySection(formatted)
 
           if (parent.children) {
-            parent.children.push(formatted)
+            parent.children.push(child)
           } else {
-            parent.children = [formatted]
+            parent.children = [child]
           }
         } else {
           sections.push(formatted)
@@ -210,9 +212,9 @@ export default {
         if (section.children) {
           slides = section.children.map(child => {
             return {
-              name: child.title,
-              quote: child.contentHtml,
-              imageUrl: child.image ? child.image.originalSrc : undefined
+              name: child.data.title,
+              quote: child.data.contentHtml,
+              imageUrl: child.data.image ? child.data.image.originalSrc : undefined
             }
           })
         }
