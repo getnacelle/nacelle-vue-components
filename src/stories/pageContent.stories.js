@@ -963,6 +963,29 @@ storiesOf('Components | Content / Page Content', module)
                     "field::customField::true"
                   ]
                 }
+              },
+              {
+                "node": {
+                  "title": "Custom Slider",
+                  "handle": "custom-slider",
+                  "contentHtml": "",
+                  "image": null,
+                  "tags": [
+                    "field::contentType::CustomSlider"
+                  ]
+                }
+              },
+              {
+                "node": {
+                  "title": "Custom Slider Slide",
+                  "handle": "custom-slider-slide",
+                  "contentHtml": "",
+                  "image": null,
+                  "tags": [
+                    "childSection",
+                    "field::contentType::CustomSliderSlide"
+                  ]
+                }
               }
             ]
           },
