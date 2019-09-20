@@ -7,7 +7,7 @@
             v-if="section.contentType"
             :is="section.contentType"
             :id="section.handle"
-            v-bind="section.props"
+            v-bind="section.data"
           />
         </slot>
       </div>
@@ -132,14 +132,16 @@ export default {
     reduceShopifySections(sections) {
       return sections.reduce((sections, section, index) => {
         const formatted = this.formatShopifySection(section)
+        const { tags } = formatted
 
         if (index > 0 && formatted.tags.includes('childSection')) {
           const parent = sections[sections.length - 1]
+          const child = this.mapShopifySection(formatted)
 
           if (parent.children) {
-            parent.children.push(formatted)
+            parent.children.push(child)
           } else {
-            parent.children = [formatted]
+            parent.children = [child]
           }
         } else {
           sections.push(formatted)
@@ -149,13 +151,13 @@ export default {
       }, [])
     },
     mapShopifySection(section) {
-      const { title, handle, contentHtml, contentType } = section
+      const { title, handle, contentHtml, contentType, ...fields } = section
       const clickHandler = () => {
-        this.$router.push(section.ctaUrl)
+        this.$router.push(fields.ctaUrl)
       }
-      let props = {}
+      let data = {}
 
-      if (section.contentType === 'ContentHeroBanner') {
+      if (contentType === 'ContentHeroBanner') {
         const {
           ctaText,
           ctaUrl,
@@ -168,7 +170,7 @@ export default {
           backgroundAltTag
         } = section
 
-        props = {
+        data = {
           title,
           subtitle: contentHtml ? contentHtml : '',
           ctaText,
@@ -182,9 +184,7 @@ export default {
           mobileBackgroundImgUrl,
           backgroundAltTag
         }
-      }
-
-      if (section.contentType === 'ContentSideBySide') {
+      } else if (contentType === 'ContentSideBySide') {
         const {
           ctaText,
           ctaUrl,
@@ -194,7 +194,7 @@ export default {
           reverseMobile
         } = section
 
-        props = {
+        data = {
           title,
           copy: contentHtml,
           ctaText,
@@ -205,44 +205,47 @@ export default {
           reverseDesktop: (reverseDesktop === 'true'),
           reverseMobile: (reverseMobile === 'true')
         }
-      }
-
-      if (section.contentType === 'ContentTestimonials') {
+      } else if (contentType === 'ContentTestimonials') {
         const { slidesPerView, alignment } = section
         let slides = []
 
         if (section.children) {
           slides = section.children.map(child => {
             return {
-              name: child.title,
-              quote: child.contentHtml,
-              imageUrl: child.image ? child.image.originalSrc : undefined
+              name: child.data.title,
+              quote: child.data.contentHtml,
+              imageUrl: child.data.image ? child.data.image.originalSrc : undefined
             }
           })
         }
 
-        props = {
+        data = {
           title,
           slides,
           slidesPerView: slidesPerView || 1,
           alignment
         }
-      }
-
-      if (section.contentType === 'ContentProductGrid') {
+      } else if (contentType === 'ContentProductGrid') {
         const { columns } = section
 
-        props = {
+        data = {
           title,
           products: this.products,
           columns: columns || 4
+        }
+      } else {
+        data = { 
+          title,
+          handle,
+          contentHtml,
+          ...fields
         }
       }
 
       return {
         handle,
         contentType,
-        props
+        data
       }
     },
     mapContentfulSection(section) {
@@ -251,103 +254,101 @@ export default {
       const contentHtml = this.contentToHtml(content)
       const imageSrc =
         featuredMedia && featuredMedia.fields ? featuredMedia.fields.file.url : ''
-      let props = {}
+      let data = {}
 
-      if (fields && fields.contentType === 'ContentHeroBanner') {
-        const {
-          subtitle,
-          ctaUrl,
-          ctaText,
-          size,
-          alignment,
-          mobileFullHeight,
-          textColor,
-          mobileBackgroundImage,
-          backgroundAltTag
-        } = fields
-        const clickHandler = () => {
-          this.$router.push(fields.ctaUrl)
-        }
+      if (fields) {
+        if (fields.contentType === 'ContentHeroBanner') {
+          const {
+            subtitle,
+            ctaUrl,
+            ctaText,
+            size,
+            alignment,
+            mobileFullHeight,
+            textColor,
+            mobileBackgroundImage,
+            backgroundAltTag
+          } = fields
+          const clickHandler = () => {
+            this.$router.push(fields.ctaUrl)
+          }
 
-        props = {
-          title,
-          subtitle,
-          ctaText,
-          ctaUrl,
-          ctaHandler: clickHandler,
-          backgroundImgUrl: imageSrc,
-          size,
-          alignment,
-          mobileFullHeight: (String(fields.mobileFullHeight) === 'true'),
-          textColor,
-          mobileBackgroundImgUrl: 
-            mobileBackgroundImage ? mobileBackgroundImage.fields.file.url : '',
-          backgroundAltTag
-        }
-      }
+          data = {
+            title,
+            subtitle,
+            ctaText,
+            ctaUrl,
+            ctaHandler: clickHandler,
+            backgroundImgUrl: imageSrc,
+            size,
+            alignment,
+            mobileFullHeight: (String(fields.mobileFullHeight) === 'true'),
+            textColor,
+            mobileBackgroundImgUrl: 
+              mobileBackgroundImage ? mobileBackgroundImage.fields.file.url : '',
+            backgroundAltTag
+          }
+        } else if (fields.contentType === 'ContentSideBySide') {
+          const {
+            ctaText,
+            ctaUrl,
+            backgroundColor,
+            reverseDesktop,
+            reverseMobile
+          } = fields
+          const clickHandler = () => {
+            this.$router.push(fields.ctaUrl)
+          }
 
-      if (fields && fields.contentType === 'ContentSideBySide') {
-        const {
-          ctaText,
-          ctaUrl,
-          backgroundColor,
-          reverseDesktop,
-          reverseMobile
-        } = fields
-        const clickHandler = () => {
-          this.$router.push(fields.ctaUrl)
-        }
+          data = {
+            title,
+            copy: contentHtml,
+            ctaText,
+            ctaUrl,
+            ctaHandler: clickHandler,
+            backgroundColor,
+            imageUrl: imageSrc,
+            reverseDesktop: (String(reverseDesktop) === 'true'),
+            reverseMobile: (String(reverseMobile) === 'true')
+          }
+        } else if (fields.contentType === 'ContentTestimonials') {
+          const { slidesPerView, alignment } = fields
+          let slides = []
 
-        props = {
-          title,
-          copy: contentHtml,
-          ctaText,
-          ctaUrl,
-          ctaHandler: clickHandler,
-          backgroundColor,
-          imageUrl: imageSrc,
-          reverseDesktop: (String(reverseDesktop) === 'true'),
-          reverseMobile: (String(reverseMobile) === 'true')
-        }
-      }
+          if (fields.slides) {
+            slides = fields.slides.map(child => {
+              return {
+                name: child.fields.name,
+                quote: child.fields.quotation,
+                imageUrl:
+                  child.fields.featuredMedia ? child.fields.featuredMedia.fields.file.url : undefined
+              }
+            })
+          }
 
-      if (fields && fields.contentType === 'ContentTestimonials') {
-        const { slidesPerView, alignment } = fields
-        let slides = []
-
-        if (fields.slides) {
-          slides = fields.slides.map(child => {
-            return {
-              name: child.fields.name,
-              quote: child.fields.quotation,
-              imageUrl:
-                child.fields.featuredMedia ? child.fields.featuredMedia.fields.file.url : undefined
-            }
-          })
-        }
-
-        props = {
-          title,
-          slides,
-          slidesPerView: slidesPerView || 1,
-          alignment
-        }
-      }
-
-      if (fields && fields.contentType === 'ContentProductGrid') {
-        const { columns } = fields
-        
-        props = {
-          title,
-          products: this.products,
-          columns: parseInt(columns, 10) || 4
+          data = {
+            title,
+            slides,
+            slidesPerView: slidesPerView || 1,
+            alignment
+          }
+        } else if (fields.contentType === 'ContentProductGrid') {
+          const { columns } = fields
+          
+          data = {
+            title,
+            products: this.products,
+            columns: parseInt(columns, 10) || 4
+          }
+        } else {
+          data = { ...fields }
         }
       }
 
       return {
         handle,
         contentType,
-        props
+        data
       }
     }
   }

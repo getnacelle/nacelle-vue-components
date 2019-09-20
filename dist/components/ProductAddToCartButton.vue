@@ -16,9 +16,11 @@
       <span v-if="variantInLineItems">Added!</span>
     </button>
     <button class="button is-primary" @click="addToCart" v-else>
-      <span v-if="!onlyOneOption">Select Options</span>
-      <span v-if="onlyOneOption && !variantInLineItems">Add to Cart</span>
-      <span v-if="onlyOneOption &&variantInLineItems">Added!</span>
+      <slot>
+        <span v-if="!onlyOneOption">Select Options</span>
+        <span v-if="onlyOneOption && !variantInLineItems">Add to Cart</span>
+        <span v-if="onlyOneOption &&variantInLineItems">Added!</span>
+      </slot>
     </button>
   </div>
 </template>
@@ -35,6 +37,13 @@ export default {
     variant: {
       type: Object
     },
+    metafields: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    },
+
     quantity: { type: Number, default: 1 },
     allOptionsSelected: { type: Boolean, default: false },
     confirmedSelection: { type: Boolean, default: false },
@@ -43,6 +52,7 @@ export default {
 
   computed: {
     ...mapState('cart', ['lineItems']),
+    ...mapGetters('cart', ['checkoutLineItems']),
     variantInLineItems() {
       let vm = this
       if (vm.variant != null) {
@@ -83,7 +93,8 @@ export default {
           variant: this.variant,
           quantity: this.quantity,
           productId: this.product.id,
-          handle: this.product.handle
+          handle: this.product.handle,
+          metafields: this.metafields
         }
         this.addLineItem(lineItem)
         this.showCart()
