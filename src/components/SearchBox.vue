@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import SearchInput from '~/components/SearchInput'
-import SearchAutocomplete from '~/components/SearchAutocomplete'
+import SearchInput from './SearchInput'
+import SearchAutocomplete from './SearchAutocomplete'
 import { mapMutations } from 'vuex'
 export default {
   components: {
