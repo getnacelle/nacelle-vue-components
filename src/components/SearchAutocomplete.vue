@@ -27,9 +27,9 @@
 </template>
 
 <script>
-import SearchResults from '~/components/SearchResults'
-import SearchNoResults from '~/components/SearchNoResults'
-import SearchAutocompleteItem from '~/components/SearchAutocompleteItem'
+import SearchResults from './SearchResults'
+import SearchNoResults from './SearchNoResults'
+import SearchAutocompleteItem from './SearchAutocompleteItem'
 import { allProductsJSON } from '@nacelle/nacelle-graphql-queries-mixins'
 import { mapState, mapMutations, mapGetters } from 'vuex'
 import ClickOutside from 'vue-click-outside'
