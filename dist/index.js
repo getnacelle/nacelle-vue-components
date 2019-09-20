@@ -51,10 +51,17 @@ import ProductVariantSelect from './components/ProductVariantSelect.vue'
 import ProductVariantTitle from './components/ProductVariantTitle.vue'
 import ProductVideo from './components/ProductVideo.vue'
 import ReadUserData from './components/ReadUserData.vue'
+import SearchAutocomplete from './components/SearchAutocomplete.vue'
+import SearchAutocompleteItem from './components/SearchAutocompleteItem.vue'
+import SearchBox from './components/SearchBox.vue'
+import SearchFilters from './components/SearchFilters.vue'
+import SearchInput from './components/SearchInput.vue'
+import SearchNoResults from './components/SearchNoResults.vue'
+import SearchResults from './components/SearchResults.vue'
 import SiteHeader from './components/SiteHeader.vue'
 
 // Export components individually
-export { BlogArticleContent, BlogArticleHeader, BrandHeader, CartFlyout, CartFlyoutCheckoutButton, CartFlyoutHeader, CartFlyoutItem, CartFlyoutItemRemoveButton, CartFlyoutMessaging, CartFlyoutSubtotal, ContentHeroBanner, ContentProductGrid, ContentSideBySide, ContentTestimonial, ContentTestimonials, CtaButton, EventDispatcher, InterfaceCloseButton, InterfaceFeaturedMedia, InterfaceIcon, InterfaceLogo, InterfaceModal, MainNav, MainNavBurger, MainNavCart, MainNavFlyout, MessagingFreeShippingCounter, MixinTestBench, PageContent, ProductAddToCartButton, ProductCard, ProductCategory, ProductDescription, ProductGrid, ProductImage, ProductMediaSelectView, ProductOptionSwatch, ProductOptionSwatches, ProductOptions, ProductPrice, ProductQuantityUpdate, ProductShopLook, ProductTitle, ProductVariantSelect, ProductVariantTitle, ProductVideo, ReadUserData, SiteHeader }
+export { BlogArticleContent, BlogArticleHeader, BrandHeader, CartFlyout, CartFlyoutCheckoutButton, CartFlyoutHeader, CartFlyoutItem, CartFlyoutItemRemoveButton, CartFlyoutMessaging, CartFlyoutSubtotal, ContentHeroBanner, ContentProductGrid, ContentSideBySide, ContentTestimonial, ContentTestimonials, CtaButton, EventDispatcher, InterfaceCloseButton, InterfaceFeaturedMedia, InterfaceIcon, InterfaceLogo, InterfaceModal, MainNav, MainNavBurger, MainNavCart, MainNavFlyout, MessagingFreeShippingCounter, MixinTestBench, PageContent, ProductAddToCartButton, ProductCard, ProductCategory, ProductDescription, ProductGrid, ProductImage, ProductMediaSelectView, ProductOptionSwatch, ProductOptionSwatches, ProductOptions, ProductPrice, ProductQuantityUpdate, ProductShopLook, ProductTitle, ProductVariantSelect, ProductVariantTitle, ProductVideo, ReadUserData, SearchAutocomplete, SearchAutocompleteItem, SearchBox, SearchFilters, SearchInput, SearchNoResults, SearchResults, SiteHeader }
 
 // What should happen if the user installs the library as a plugin
 function install(Vue) {
@@ -105,6 +112,13 @@ function install(Vue) {
   Vue.component('ProductVariantTitle', ProductVariantTitle)
   Vue.component('ProductVideo', ProductVideo)
   Vue.component('ReadUserData', ReadUserData)
+  Vue.component('SearchAutocomplete', SearchAutocomplete)
+  Vue.component('SearchAutocompleteItem', SearchAutocompleteItem)
+  Vue.component('SearchBox', SearchBox)
+  Vue.component('SearchFilters', SearchFilters)
+  Vue.component('SearchInput', SearchInput)
+  Vue.component('SearchNoResults', SearchNoResults)
+  Vue.component('SearchResults', SearchResults)
   Vue.component('SiteHeader', SiteHeader)
 }
 
