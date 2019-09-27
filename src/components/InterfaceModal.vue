@@ -1,7 +1,12 @@
 <template>
-  <div class="modal-wrapper nacelle" v-on:close="closeModal">
+  <div v-on:close="closeModal" class="modal-wrapper nacelle">
     <transition name="fade">
-      <div v-if="modalOpen" class="modal-outer">
+      <div
+        v-if="modalOpen"
+        @click="clickOuter"
+        ref="outer"
+        class="modal-outer"
+      >
         <div class="container">
           <div class="columns">
             <div class="modal-inner column is-6">
@@ -32,6 +37,13 @@ export default {
   methods: {
     closeModal() {
       this.$emit('closeModal')
+    },
+    clickOuter(e) {
+      const { target } = e
+
+      if (target === this.$refs.outer) {
+        this.closeModal()
+      }
     }
   }
 }
