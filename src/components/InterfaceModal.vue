@@ -54,18 +54,14 @@ img {
   top: 0;
   left: 0;
   bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 2rem;
   padding-top: 6rem;
   width: 100%;
   background-color: rgba(#000, 0.7);
-  overflow: scroll;
   z-index: 998;
-
-  @media screen and (min-width: 769px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
 }
 
 .close {
@@ -86,6 +82,8 @@ img {
   background-color: #ffffff;
   border-radius: 2px;
   min-height: 8rem;
+  max-height: 100%;
+  overflow: scroll;
 }
 
 .fade-enter-active,
