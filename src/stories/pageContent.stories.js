@@ -905,7 +905,25 @@ storiesOf('Components | Content / Page Content', module)
                   "customField": true,
                   "customField2": false,
                   "publishDate": "2019-08-13T00:00-07:00",
-                  "blogHandle": "homepage"
+                  "blogHandle": "homepage",
+                  "content": {
+                    "data": {},
+                    "content": [
+                      {
+                        "data": {},
+                        "content": [
+                          {
+                            "data": {},
+                            "marks": [],
+                            "value": "Test",
+                            "nodeType": "text"
+                          }
+                        ],
+                        "nodeType": "paragraph"
+                      }
+                    ],
+                    "nodeType": "document"
+                  },
                 }
               }
             ]

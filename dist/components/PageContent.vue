@@ -251,7 +251,7 @@ export default {
     mapContentfulSection(section) {
       const { fields } = section
       const { contentType, handle, title, content, featuredMedia } = fields
-      const contentHtml = this.contentToHtml(content)
+      const contentHtml = content ? this.contentToHtml(content) : ''
       const imageSrc =
         featuredMedia && featuredMedia.fields ? featuredMedia.fields.file.url : ''
       let data = {}
@@ -341,7 +341,10 @@ export default {
             columns: parseInt(columns, 10) || 4
           }
         } else {
-          data = { ...fields }
+          data = {
+            ...fields,
+            contentHtml
+          }
         }
       }
 
