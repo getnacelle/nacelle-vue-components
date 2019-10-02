@@ -12,8 +12,13 @@
         :key="index"
         :imageSrc="shopImage.src"
         :products="shopImage.products"
+        :buttonText="shopLookButtonText"
         @ready="(node) => moveImage(shopImage.node, node)"
-      />
+      >
+        <template v-slot:product-card="{ product }">
+          <slot name="product-card" :product="product" />
+        </template>
+      </product-shop-look>
     </client-only>
   </div>
 </template>
@@ -49,6 +54,10 @@ export default {
     contentToHtmlFn: {
       type: Function,
       default: () => {}
+    },
+    shopLookButtonText: {
+      type: String,
+      default: 'Shop the look'
     }
   },
   data() {
