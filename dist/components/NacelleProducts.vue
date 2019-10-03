@@ -49,7 +49,10 @@ export default {
       .products(handlesArr)
       .then((result) => {
         if (result && result.length > 0) {
-          if (this.singleProduct) {
+          if (
+            this.singleProduct ||
+            result.length === 1
+          ) {
             this.product = result[0]
           }
 
