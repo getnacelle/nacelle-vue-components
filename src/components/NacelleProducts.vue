@@ -1,6 +1,10 @@
 <template>
-  <div class="nacelle product-fetch">
-    <slot :product="product" :products="products" />
+  <div class="nacelle product-data-load">
+    <slot
+      v-if="product || products.length > 0"
+      :product="product"
+      :products="products"
+    />
   </div>
 </template>
 
@@ -20,7 +24,7 @@ export default {
   },
   data () {
     return {
-      product: {},
+      product: undefined,
       products: []
     }
   },
