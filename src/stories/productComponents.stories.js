@@ -18,7 +18,7 @@ import ProductVariantSelect from '../components/ProductVariantSelect'
 import CartFlyout from '../components/CartFlyout'
 import CartFlyoutItem from '../components/CartFlyoutItem'
 
-import { defaultMultivariate } from '../../config/defaultObjects.js'
+import defaultMultivariate  from '../../config/defaults/multivariateProduct'
 import allOptionsSelected from '../mixins/allOptionsSelected'
 
 storiesOf('Components | Product/Composition', module)
@@ -46,26 +46,34 @@ storiesOf('Components | Product/Composition', module)
           variant: defaultMultivariate.variants[0]
         }
       },
+      methods: {
+        onOptionsSelect ({ options, selectedVariant}) {
+          this.variant = selectedVariant
+        }
+      },
 
       template: `
       <section class="section">
-
-      <div class="container is-marginless is-paddingless">
-      <div class="columns">
-      <div class="column is-6">
-        <product-image :source="product.featuredMedia.src"/>
-      </div>
+        <div class="container is-marginless is-paddingless">
+          <div class="columns">
             <div class="column is-6">
-        <product-title :title="product.title"/>
-        <product-category :category="product.category"/>
-        <product-description :description="product.description"/>
-        <product-price :price="variant.price"></product-price>
-        <div class="columns is-marginless is-paddingless">
-      <product-variant-select :product="product" :variant="variant" />
+              <product-image :source="product.featuredMedia.src"/>
+            </div>
+            <div class="column is-6">
+              <product-title :title="product.title"/>
+              <product-category :category="product.category"/>
+              <product-description :description="product.description"/>
+              <product-price :price="variant.price"></product-price>
+              <div class="columns is-marginless is-paddingless">
+                <product-variant-select
+                  :product="product"
+                  :variant="variant"
+                  v-on:options-selected="onOptionsSelect"
+                />
+              </div>
+            </div>
+          </div>
         </div>
-        </div>
-      </div>
-      </div>
       </section>`
     }),
     {
