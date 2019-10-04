@@ -47,7 +47,7 @@ storiesOf('Components | Product/Composition', module)
         }
       },
       methods: {
-        onOptionsSelect ({ options, selectedVariant}) {
+        onVariantSelect ({ options, selectedVariant}) {
           this.variant = selectedVariant
         }
       },
@@ -68,7 +68,7 @@ storiesOf('Components | Product/Composition', module)
                 <product-variant-select
                   :product="product"
                   :variant="variant"
-                  v-on:options-selected="onOptionsSelect"
+                  v-on:variant-selected="onVariantSelect"
                 />
               </div>
             </div>
