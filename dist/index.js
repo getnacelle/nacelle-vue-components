@@ -50,6 +50,7 @@ import ProductPrice from './components/ProductPrice.vue'
 import ProductQuantityUpdate from './components/ProductQuantityUpdate.vue'
 import ProductShopLook from './components/ProductShopLook.vue'
 import ProductTitle from './components/ProductTitle.vue'
+import ProductVariantDropdown from './components/ProductVariantDropdown.vue'
 import ProductVariantSelect from './components/ProductVariantSelect.vue'
 import ProductVariantTitle from './components/ProductVariantTitle.vue'
 import ProductVideo from './components/ProductVideo.vue'
@@ -64,7 +65,7 @@ import SearchResults from './components/SearchResults.vue'
 import SiteHeader from './components/SiteHeader.vue'
 
 // Export components individually
-export { BlogArticleContent, BlogArticleHeader, BrandHeader, CartFlyout, CartFlyoutCheckoutButton, CartFlyoutHeader, CartFlyoutItem, CartFlyoutItemRemoveButton, CartFlyoutMessaging, CartFlyoutSubtotal, ContentHeroBanner, ContentProductGrid, ContentSideBySide, ContentTestimonial, ContentTestimonials, CtaButton, EventDispatcher, InterfaceCloseButton, InterfaceFeaturedMedia, InterfaceIcon, InterfaceLogo, InterfaceModal, MainNav, MainNavBurger, MainNavCart, MainNavFlyout, MessagingFreeShippingCounter, MixinTestBench, NacelleCollection, NacelleContent, NacelleProducts, PageContent, ProductAddToCartButton, ProductCard, ProductCategory, ProductDescription, ProductGrid, ProductImage, ProductMediaSelectView, ProductOptionSwatch, ProductOptionSwatches, ProductOptions, ProductPrice, ProductQuantityUpdate, ProductShopLook, ProductTitle, ProductVariantSelect, ProductVariantTitle, ProductVideo, ReadUserData, SearchAutocomplete, SearchAutocompleteItem, SearchBox, SearchFilters, SearchInput, SearchNoResults, SearchResults, SiteHeader }
+export { BlogArticleContent, BlogArticleHeader, BrandHeader, CartFlyout, CartFlyoutCheckoutButton, CartFlyoutHeader, CartFlyoutItem, CartFlyoutItemRemoveButton, CartFlyoutMessaging, CartFlyoutSubtotal, ContentHeroBanner, ContentProductGrid, ContentSideBySide, ContentTestimonial, ContentTestimonials, CtaButton, EventDispatcher, InterfaceCloseButton, InterfaceFeaturedMedia, InterfaceIcon, InterfaceLogo, InterfaceModal, MainNav, MainNavBurger, MainNavCart, MainNavFlyout, MessagingFreeShippingCounter, MixinTestBench, NacelleCollection, NacelleContent, NacelleProducts, PageContent, ProductAddToCartButton, ProductCard, ProductCategory, ProductDescription, ProductGrid, ProductImage, ProductMediaSelectView, ProductOptionSwatch, ProductOptionSwatches, ProductOptions, ProductPrice, ProductQuantityUpdate, ProductShopLook, ProductTitle, ProductVariantDropdown, ProductVariantSelect, ProductVariantTitle, ProductVideo, ReadUserData, SearchAutocomplete, SearchAutocompleteItem, SearchBox, SearchFilters, SearchInput, SearchNoResults, SearchResults, SiteHeader }
 
 // What should happen if the user installs the library as a plugin
 function install(Vue) {
@@ -114,6 +115,7 @@ function install(Vue) {
   Vue.component('ProductQuantityUpdate', ProductQuantityUpdate)
   Vue.component('ProductShopLook', ProductShopLook)
   Vue.component('ProductTitle', ProductTitle)
+  Vue.component('ProductVariantDropdown', ProductVariantDropdown)
   Vue.component('ProductVariantSelect', ProductVariantSelect)
   Vue.component('ProductVariantTitle', ProductVariantTitle)
   Vue.component('ProductVideo', ProductVideo)
