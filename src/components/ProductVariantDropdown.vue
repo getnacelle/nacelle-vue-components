@@ -1,6 +1,6 @@
 <template>
   <div class="variant-dropdown nacelle">
-    <div class="select">
+    <div v-if="!hideDropdown" class="select">
       <select
         v-model="selectedVariant"
         @change="$emit('variant-selected', { selectedVariant })"
@@ -9,6 +9,7 @@
           v-for="variant in product.variants"
           :key="variant.id"
           :value="variant"
+          :disabled="!variant.availableForSale"
         >
           {{ variant.title }}
         </option>
@@ -75,6 +76,10 @@ export default {
     showAddToCart: {
       type: Boolean,
       default: true
+    },
+    hideForSingleVariant: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -82,14 +87,26 @@ export default {
       selectedVariant: undefined
     }
   },
+  computed: {
+    productHasVariants () {
+      return (
+        this.product &&
+        this.product.variants &&
+        this.product.variants.length > 0
+      )
+    },
+    hideDropdown () {
+      return (
+        this.hideForSingleVariant &&
+        this.productHasVariants &&
+        this.product.variants.length === 1
+      )
+    }
+  },
   created () {
     if (this.variant) {
       this.selectedVariant = this.variant
-    } else if (
-      this.product &&
-      this.product.variants &&
-      this.product.variants.length > 0
-    ) {
+    } else if (this.productHasVariants) {
       this.selectedVariant = this.product.variants[0]
     }
   }

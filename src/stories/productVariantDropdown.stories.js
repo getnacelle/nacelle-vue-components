@@ -27,7 +27,7 @@ storiesOf('Components | Product', module)
       store,
       props: {
         showAtc: {
-          default: boolean('Show Add to Cart', true)
+          default: boolean('Show Add to Cart', true),
         }
       },
       data() {

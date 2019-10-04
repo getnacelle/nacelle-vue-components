@@ -64,7 +64,7 @@ export default {
       "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODg3MjA2MjkyNjk1Mw==",
       "title": "Small \/ Blue",
       "price": "35.0",
-      "availableForSale": true,
+      "availableForSale": false,
       "selectedOptions": [
         {
           "name": "Size",
