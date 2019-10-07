@@ -31,6 +31,10 @@ export default {
   methods: {
     setSelected(options) {
       this.selectedOptions = options
+      this.$emit('variant-selected', {
+        options,
+        selectedVariant: this.selectedVariant
+      })
     }
   }
 }
