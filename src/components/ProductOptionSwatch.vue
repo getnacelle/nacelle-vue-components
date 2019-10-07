@@ -210,29 +210,35 @@ export default {
   transition: border 0.1s ease;
   border: 2px solid #a9a8a8;
 }
+
 .tab {
-  transition: background 0.2s ease;
+  transition: background-color 0.2s ease;
   border: 1px solid #a9a8a8;
   border-radius: 2px;
+  padding: 0 0.5rem;
   height: 2rem;
-  width: 4rem;
+  width: auto;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 9pt;
   text-transform: uppercase;
 }
+
 .tab.selected {
-  background: #a9a8a8;
+  background-color: #a9a8a8;
   color: white;
   font-weight: bold;
 }
+
 .swatch-color-red {
   background-color: rgb(148, 20, 20);
 }
+
 .swatch-color-blue {
   background-color: rgb(0, 68, 68);
 }
+
 .not-available {
   text-decoration: line-through;
   border: 1px dashed rgb(219, 219, 219);

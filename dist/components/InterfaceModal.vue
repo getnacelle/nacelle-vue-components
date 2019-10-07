@@ -1,7 +1,12 @@
 <template>
-  <div class="modal-wrapper nacelle" v-on:close="closeModal">
+  <div v-on:close="closeModal" class="modal-wrapper nacelle">
     <transition name="fade">
-      <div v-if="modalOpen" class="modal-outer">
+      <div
+        v-if="modalOpen"
+        @click="clickOuter"
+        ref="outer"
+        class="modal-outer"
+      >
         <div class="container">
           <div class="columns">
             <div class="modal-inner column is-6">
@@ -32,6 +37,13 @@ export default {
   methods: {
     closeModal() {
       this.$emit('closeModal')
+    },
+    clickOuter(e) {
+      const { target } = e
+
+      if (target === this.$refs.outer) {
+        this.closeModal()
+      }
     }
   }
 }
@@ -54,18 +66,14 @@ img {
   top: 0;
   left: 0;
   bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 2rem;
   padding-top: 6rem;
   width: 100%;
   background-color: rgba(#000, 0.7);
-  overflow: scroll;
   z-index: 998;
-
-  @media screen and (min-width: 769px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
 }
 
 .close {
@@ -86,6 +94,8 @@ img {
   background-color: #ffffff;
   border-radius: 2px;
   min-height: 8rem;
+  max-height: 100%;
+  overflow: scroll;
 }
 
 .fade-enter-active,

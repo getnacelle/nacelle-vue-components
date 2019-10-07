@@ -2,7 +2,7 @@
   <div class="shop-look nacelle">
     <img :src="imageSrc" alt="" @click="toggleProductCard" />
     <button class="button is-primary" @click="toggleProductCard">
-      Shop the look
+      {{ buttonText }}
     </button>
     <transition name="fade">
       <div v-if="productVisible" class="shop-look-modal">
@@ -12,7 +12,9 @@
             :key="product.id"
             class="shop-look-product"
           >
-            <product-card :product="product" />
+            <slot name="product-card" :product="product">
+              <product-card :product="product" />
+            </slot>
           </div>
           <interface-close-button class="close" v-on:close="toggleProductCard" />
         </div>
@@ -39,6 +41,10 @@ export default {
     products: {
       type: Array,
       required: true
+    },
+    buttonText: {
+      type: String,
+      default: 'Shop the look'
     }
   },
   data() {

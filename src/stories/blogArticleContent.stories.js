@@ -87,6 +87,40 @@ storiesOf('Components | Content / Blog / Article Content', module)
   .addDecorator(StoryRouter())
   .addDecorator(storyWrapper)
   .add(
+    'Shop Look with Custom Product Card',
+    () => ({
+      components: { BlogArticleContent },
+      store,
+      data() {
+        return {
+          article: shopifyArticle,
+          products: [defaultProduct]
+        }
+      },
+      template: `
+        <blog-article-content
+          :article="article"
+          :products="products"
+        >
+          <template v-slot:product-card="{ product }">
+            {{ product }}
+          </template>
+        </blog-article-content>
+      `
+    }),
+    {
+      info: {
+        // summary: "Hello"
+      }
+    }
+  )
+
+storiesOf('Components | Content / Blog / Article Content', module)
+  .addDecorator(withInfo)
+  .addDecorator(withKnobs)
+  .addDecorator(StoryRouter())
+  .addDecorator(storyWrapper)
+  .add(
     'Contentful',
     () => ({
       components: { BlogArticleContent },
