@@ -13,20 +13,20 @@ storiesOf('Components | Product', module)
       store,
       data() {
         return {
-          // options: [
-          //   {
-          //     name: 'Size',
-          //     values: ['xs', 'small', 'medium', 'large', 'xl', 'xxl']
-          //   },
-          //   {
-          //     name: 'Shape',
-          //     values: ['Oval', 'Triangle', 'Square']
-          //   },
-          //   {
-          //     name: 'Color',
-          //     values: ['white', 'red', 'blue']
-          //   }
-          // ]
+          options: [
+            {
+              name: 'Size',
+              values: ['xs', 'small', 'medium', 'large', 'xl', 'xxl']
+            },
+            {
+              name: 'Shape',
+              values: ['Oval', 'Triangle', 'Square']
+            },
+            {
+              name: 'Color',
+              values: ['white', 'red', 'blue']
+            }
+          ]
         }
       },
       template: '<product-options style="width:500px" :options="options"/>'

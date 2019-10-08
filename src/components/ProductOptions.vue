@@ -20,11 +20,6 @@
       <span v-if="allOptionsSelected && variant == undefined">Select other options</span>
       <span v-if="!allOptionsSelected">Select your options</span>
     </button>
-    <button
-      class="button is-small reset-options"
-      v-if="selectedOptions.length > 0"
-      @click="resetSelectedOptions"
-    >Reset Options</button>
   </div>
 </template>
 
@@ -83,10 +78,6 @@ export default {
     }
   },
   methods: {
-    resetSelectedOptions() {
-      this.selectedOptions = []
-      this.clearOptionValue = true
-    },
     setSelectedOptions(selectedOption) {
       let vm = this
       let searchOptions = this.selectedOptions.filter(option => {

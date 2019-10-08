@@ -49,7 +49,7 @@ export default {
   },
   computed: {
     swatchClass() {
-      if (this.optionName == 'Color') {
+      if (this.value && this.optionName == 'Color') {
         return `swatch-color-${this.value.toLowerCase()}`
       }
     },
@@ -61,24 +61,27 @@ export default {
       }
     },
     variantsWithOptionValue() {
-      let vm = this
-      return this.variants.filter(variant => {
-        if (
-          variant.selectedOptions.filter(option => {
-            return option.value == vm.value
-          }).length > 0 &&
-          variant.availableForSale
-        ) {
-          return true
-        } else {
-          return false
-        }
-      })
+      if (this.variants) {
+        let vm = this
+        return this.variants.filter(variant => {
+          if (
+            variant.selectedOptions.filter(option => {
+              return option.value == vm.value
+            }).length > 0 &&
+            variant.availableForSale
+          ) {
+            return true
+          } else {
+            return false
+          }
+        })
+      }
     },
 
     optionAvailable() {
       let vm = this
       if (
+        vm.variantsWithOptionValue &&
         vm.variantsWithOptionValue.length == 1 &&
         vm.selectedOptions.length > 0
       ) {
@@ -105,11 +108,15 @@ export default {
         // this is the last piece. for the variant that remains, determine whether or not its options are selected
         //
       } else if (
+        vm.variantsWithOptionValue &&
         vm.variantsWithOptionValue.length == 1 &&
         vm.selectedOptions.length == 0
       ) {
         return true
-      } else if (this.variantsWithOptionValue.length > 1) {
+      } else if (
+        vm.variantsWithOptionValue &&
+        this.variantsWithOptionValue.length > 1
+      ) {
         // return this.variantsWithOptionValue.filter(variant =>{
         //   if(vm.selectedOptions.filter(option=>{
         //     if(option.name )
