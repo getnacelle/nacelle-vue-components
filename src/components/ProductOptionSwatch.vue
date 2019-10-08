@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="[swatchStyle, availableClass]"
+    :class="[swatchStyle, availableClass, swatchNameClass]"
     class="option-swatch nacelle no-select"
     @click="emitValue"
   >
@@ -176,6 +176,11 @@ export default {
         return 'available'
       } else {
         return 'not-available'
+      }
+    },
+    swatchNameClass() {
+      if (this.optionName) {
+        return `swatch-${this.optionName}`
       }
     }
   }
