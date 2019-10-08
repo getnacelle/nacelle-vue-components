@@ -8,6 +8,7 @@
       :variants="product.variants"
       v-on:clear="selectedOptions = []"
     />
+    <slot name="above-button"></slot>
     <div class="columns is-mobile">
       <div class="column is-half" v-if="allOptionsSelected && selectedVariant">
         <product-quantity-update
