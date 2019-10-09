@@ -180,6 +180,7 @@ export default {
     },
     swatchNameClass() {
       if (this.optionName) {
+        let formattedOptionName = this.optionName.replace(' ', '-')
         return `swatch-${this.optionName}`
       }
     }

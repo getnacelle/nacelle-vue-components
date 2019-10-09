@@ -13,33 +13,33 @@ export default {
         },
         {
           name: 'Color',
-          value: 'Red',
+          value: 'Ruby-Red',
+          __typename: 'SelectedOption'
+        }
+      ],
+      swatchSrc: 'https://nacell-demo-assets.s3.amazonaws.com/swatches/Red.png',
+      __typename: 'Variant'
+    },
+    {
+      id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODgzNTQ4OTkwNjc5Mw==',
+      title: 'Medium / Red',
+      price: '43.0',
+      availableForSale: true,
+      selectedOptions: [
+        {
+          name: 'Size',
+          value: 'Medium',
+          __typename: 'SelectedOption'
+        },
+        {
+          name: 'Color',
+          value: 'Ruby-Red',
           __typename: 'SelectedOption'
         }
       ],
       swatchSrc: 'https://nacell-demo-assets.s3.amazonaws.com/swatches/Red.png',
       __typename: 'Variant'
     }
-    // {
-    //   id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODgzNTQ4OTkwNjc5Mw==',
-    //   title: 'Medium / Red',
-    //   price: '43.0',
-    //   availableForSale: true,
-    //   selectedOptions: [
-    //     {
-    //       name: 'Size',
-    //       value: 'Medium',
-    //       __typename: 'SelectedOption'
-    //     },
-    //     {
-    //       name: 'Color',
-    //       value: 'Red',
-    //       __typename: 'SelectedOption'
-    //     }
-    //   ],
-    //   swatchSrc: 'https://nacell-demo-assets.s3.amazonaws.com/swatches/Red.png',
-    //   __typename: 'Variant'
-    // }
     // {
     //   id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODg3MjA2MjQwMjY2NQ==',
     //   title: 'Large / Red',
@@ -132,7 +132,7 @@ export default {
     },
     {
       name: 'Color',
-      values: ['Red', 'Blue'],
+      values: ['Ruby Red', 'Blue'],
       __typename: 'ProductOption'
     }
   ],
