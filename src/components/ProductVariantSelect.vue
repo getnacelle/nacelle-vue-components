@@ -12,10 +12,9 @@
     <div class="columns is-mobile">
       <div
         class="column auto"
-        v-if="allOptionsSelected && selectedVariant && selectedVariant.availableForSale"
+        v-if="allOptionsSelected && selectedVariant && selectedVariant.availableForSale && showQuantitySelect"
       >
         <product-quantity-update
-          v-if="showQuantitySelect"
           :product="product"
           :variant="selectedVariant"
           :allOptionsSelected="allOptionsSelected"
