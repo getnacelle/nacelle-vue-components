@@ -10,14 +10,17 @@
     />
     <slot name="above-button"></slot>
     <div class="columns is-mobile">
-      <div class="column is-half" v-if="allOptionsSelected && selectedVariant">
+      <div
+        class="column"
+        v-if="allOptionsSelected && selectedVariant && selectedVariant.availableForSale"
+      >
         <product-quantity-update
           :product="product"
           :variant="selectedVariant"
           :allOptionsSelected="allOptionsSelected"
         />
       </div>
-      <div class="column is-half">
+      <div class="column">
         <product-add-to-cart-button
           :product="product"
           :variant="selectedVariant"

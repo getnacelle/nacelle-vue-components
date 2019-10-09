@@ -56,6 +56,13 @@ export default {
       }
     }
   },
+  watch: {
+    allOptionsSelected(val) {
+      if (val == true) {
+        this.$emit('selectedOptionsSet', this.selectedOptions)
+      }
+    }
+  },
   computed: {
     isChildOfModal() {
       if (this.$parent.$options._componentTag == 'interface-modal') {
@@ -65,16 +72,44 @@ export default {
       }
     },
     allOptionsSelected() {
-      if (this.selectedOptions.length == this.options.length) {
-        return true
-      } else if (
-        this.options.length == 1 &&
-        this.options[0].values.length == 1
-      ) {
+      let vm = this
+      if (this.options.length == 1 && this.options[0].values.length == 1) {
         return true
       } else {
-        return false
+        let optionsSelected = this.options.map(option => {
+          let searchOptions = this.selectedOptions.filter(selected => {
+            return selected.name == option.name
+          })
+          if (searchOptions.length == 1) {
+            return true
+          } else if (option.values.length == 1) {
+            return true
+          } else {
+            return false
+          }
+        })
+
+        if (
+          optionsSelected.every(option => {
+            return option == true
+          })
+        ) {
+          return true
+        } else {
+          return false
+        }
       }
+
+      // if (this.selectedOptions.length == this.options.length) {
+      //   return true
+      // } else if (
+      //   this.options.length == 1 &&
+      //   this.options[0].values.length == 1
+      // ) {
+      //   return true
+      // } else {
+      //   return false
+      // }
     }
   },
   methods: {
@@ -90,9 +125,6 @@ export default {
           return option.name == selectedOption.name
         })
         vm.selectedOptions.splice(index, 1, selectedOption)
-      }
-      if (vm.allOptionsSelected) {
-        vm.$emit('selectedOptionsSet', vm.selectedOptions)
       }
     },
     confirmSelection() {

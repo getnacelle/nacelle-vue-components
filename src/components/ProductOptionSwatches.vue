@@ -67,6 +67,11 @@ export default {
     setOptionValue(value) {
       this.selectedOptionValue = value
     }
+  },
+  created() {
+    if (this.option.values.length == 1) {
+      this.setOptionValue(this.option.values[0].value)
+    }
   }
 }
 </script>
