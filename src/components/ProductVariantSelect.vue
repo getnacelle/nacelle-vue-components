@@ -11,16 +11,17 @@
     <slot name="above-button"></slot>
     <div class="columns is-mobile">
       <div
-        class="column"
+        class="column auto"
         v-if="allOptionsSelected && selectedVariant && selectedVariant.availableForSale"
       >
         <product-quantity-update
+          v-if="showQuantitySelect"
           :product="product"
           :variant="selectedVariant"
           :allOptionsSelected="allOptionsSelected"
         />
       </div>
-      <div class="column">
+      <div class="column auto">
         <product-add-to-cart-button
           :product="product"
           :variant="selectedVariant"
@@ -45,6 +46,10 @@ export default {
     },
     variant: {
       type: Object
+    },
+    showQuantitySelect: {
+      type: Boolean,
+      default: true
     }
   },
   mixins: [allOptionsSelected, availableOptions],
