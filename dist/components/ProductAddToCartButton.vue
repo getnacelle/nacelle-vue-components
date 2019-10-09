@@ -9,7 +9,7 @@
       <span v-if="!variantInLineItems && !allOptionsSelected">Select Options</span>
       <span
         v-if="!variantInLineItems && allOptionsSelected && variant == undefined || !variantInLineItems && allOptionsSelected && variant.availableForSale != true"
-      >Select Different Options</span>
+      >Out of Stock</span>
       <span
         v-if="!variantInLineItems && allOptionsSelected && variant && variant.availableForSale == true"
       >Add to Cart</span>

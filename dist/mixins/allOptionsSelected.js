@@ -11,6 +11,9 @@ export default {
   },
   computed: {
     allOptionsSelected() {
+      if (this.product.variants && this.product.variants.length == 1) {
+        return true
+      }
       if (
         this.allOptions &&
         this.selectedOptions &&
