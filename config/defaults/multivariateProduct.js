@@ -4,7 +4,7 @@ export default {
       id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODg3MjA2MTcxNDUzNw==',
       title: 'Small / Red',
       price: '35.0',
-      availableForSale: true,
+      availableForSale: false,
       selectedOptions: [
         {
           name: 'Size',
@@ -24,7 +24,7 @@ export default {
       id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODgzNTQ4OTkwNjc5Mw==',
       title: 'Medium / Red',
       price: '43.0',
-      availableForSale: true,
+      availableForSale: false,
       selectedOptions: [
         {
           name: 'Size',

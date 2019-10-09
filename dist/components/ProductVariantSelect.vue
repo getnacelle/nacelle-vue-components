@@ -1,7 +1,7 @@
 <template>
   <div class="variant-select nacelle">
     <product-options
-      v-show="allOptions[0].values.length > 1"
+      v-show="allOptions[0].values.length > 1 && product.availableForSale"
       :options="allOptions"
       :variant="selectedVariant"
       v-on:selectedOptionsSet="setSelected"

@@ -6,9 +6,9 @@
       @click="addToCart"
       v-if="this.$parent.$options._componentTag == 'product-variant-select'"
     >
-      <span v-if="!variantInLineItems && !allOptionsSelected">Select Options</span>
+      <span v-if="!variantInLineItems && !allOptionsSelected && product.availableForSale">Select Options</span>
       <span
-        v-if="!variantInLineItems && allOptionsSelected && variant == undefined || !variantInLineItems && allOptionsSelected && variant.availableForSale != true"
+        v-if="!variantInLineItems && allOptionsSelected && variant == undefined || !variantInLineItems && allOptionsSelected && variant.availableForSale != true || !product.availableForSale"
       >Out of Stock</span>
       <span
         v-if="!variantInLineItems && allOptionsSelected && variant && variant.availableForSale == true"
@@ -53,6 +53,7 @@ export default {
   computed: {
     ...mapState('cart', ['lineItems']),
     ...mapGetters('cart', ['checkoutLineItems']),
+
     variantInLineItems() {
       let vm = this
       if (vm.variant != null) {
