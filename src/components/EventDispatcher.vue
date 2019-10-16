@@ -85,6 +85,8 @@ export default {
         content_ids: vm.logEntry.product.productId,
         content_name: vm.logEntry.product.title,
         content_type: 'product',
+        value: vm.logEntry.product.variant.price,
+        currency: 'USD',
         product_catalog_id: vm.facebookCatalogID
       })
     },
