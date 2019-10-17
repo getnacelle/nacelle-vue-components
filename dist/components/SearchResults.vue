@@ -1,7 +1,11 @@
 <template>
   <div>
     <transition name="fade" mode="out-in">
-      <div v-if="searchResults && searchResults.length == 0" key="no-results" class="no-results">
+      <div
+        v-if="searchResults && searchResults.length == 0"
+        key="no-results"
+        class="no-results"
+      >
         <slot name="no-results"></slot>
       </div>
       <div key="results" class="search-results" v-else>
@@ -13,7 +17,7 @@
 
 <script>
 import Fuse from 'fuse.js'
-import mapMutations from 'vuex'
+
 export default {
   props: {
     searchKeys: {
@@ -40,20 +44,27 @@ export default {
   },
   computed: {
     searchResults() {
-      if (this.searchData && this.searchQuery && this.searchQuery.value != '') {
-        let options = {
+      if (
+        this.searchQuery &&
+        this.searchQuery.value !== '' &&
+        this.searchData
+      ) {
+        const options = {
           keys: this.searchKeys,
           threshold: this.relevanceThreshold
         }
-        this.$emit('results')
-        let results = new Fuse(this.searchData, options).search(
+        const results = new Fuse(this.searchData, options).search(
           this.searchQuery.value
         )
+
+        this.$emit('results')
+        
         return results
-      } else {
-        return this.searchData
-        this.$emit('no-query')
       }
+
+      this.$emit('no-query')
+
+      return this.searchData
     }
   }
 }
@@ -64,6 +75,7 @@ export default {
 .no-results {
   min-height: 400px;
 }
+
 .no-results {
   display: flex;
   justify-content: center;

@@ -5,6 +5,7 @@
         :placeholderText="placeholderText"
         @keydown.enter.native="navigateToSearchResults"
         :position="position"
+        @focus.native="getData"
       />
       <button class="button" @click="navigateToSearchResults">Search</button>
       <search-autocomplete />
@@ -18,7 +19,8 @@
 <script>
 import SearchInput from './SearchInput'
 import SearchAutocomplete from './SearchAutocomplete'
-import { mapMutations } from 'vuex'
+import { mapMutations, mapActions } from 'vuex'
+
 export default {
   components: {
     SearchInput,
@@ -29,6 +31,10 @@ export default {
       type: String,
       default: 'global'
     },
+    searchCategory: {
+      type: String,
+      default: 'product'
+    },
     placeholderText: {
       type: String,
       default: 'Search products..'
@@ -36,6 +42,13 @@ export default {
   },
   methods: {
     ...mapMutations('menu', ['disableMenu']),
+    ...mapActions('search', ['getProductData']),
+    getData() {
+      console.log('getting Data')
+      if (this.searchCategory === 'product') {
+        this.getProductData()
+      }
+    },
     navigateToSearchResults() {
       this.disableMenu()
 
@@ -48,6 +61,7 @@ export default {
 <style lang="scss" scoped>
 .search {
   display: flex;
+  position: relative;
 }
 .global-searchbox input,
 .global-searchbox button {
