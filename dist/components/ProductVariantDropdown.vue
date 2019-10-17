@@ -2,13 +2,16 @@
   <div class="variant-dropdown nacelle">
     <div v-if="!hideDropdown" class="select">
       <select
-        v-model="selectedVariant"
+        v-bind="selectedVariant"
         @change="$emit('variant-selected', { selectedVariant })"
       >
+      <option selected>Choose a {{attributeName}}</option>
+      
         <option
           v-for="variant in product.variants"
           :key="variant.id"
           :value="variant"
+          :hidden="!variant.availableForSale"
           :disabled="!variant.availableForSale"
         >
           {{ variant.title }}
@@ -47,6 +50,10 @@ export default {
     ProductAddToCartButton
   },
   props: {
+    attributeName: {
+      type: String,
+      default: 'size'
+    },
     product: {
       type: Object,
       default: () => {

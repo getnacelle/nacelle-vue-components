@@ -18,8 +18,8 @@
     <button class="button is-primary" @click="addToCart" v-else>
       <slot>
         <span v-if="!onlyOneOption">Select Options</span>
-        <span v-if="onlyOneOption && !variantInLineItems">Add to Cart</span>
-        <span v-if="onlyOneOption &&variantInLineItems">Added!</span>
+        <span v-if="onlyOneOption && !variantInLineItems && variant.availableForSale == true">Add to Cart</span>
+        <span v-if="onlyOneOption && variantInLineItems">Added!</span>
       </slot>
     </button>
   </div>
