@@ -24,7 +24,7 @@ export default {
       id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODgzNTQ4OTkwNjc5Mw==',
       title: 'Medium / Red',
       price: '43.0',
-      availableForSale: false,
+      availableForSale: true,
       selectedOptions: [
         {
           name: 'Size',
