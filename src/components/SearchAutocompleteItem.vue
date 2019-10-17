@@ -13,7 +13,14 @@
 </template>
 
 <script>
+import ProductImage from './ProductImage'
+import ProductPrice from './ProductPrice'
+
 export default {
+  components: {
+    ProductImage,
+    ProductPrice
+  },
   props: {
     item: {
       type: Object,

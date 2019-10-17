@@ -5,6 +5,7 @@ import events from './events'
 import product from './product'
 import user from './user'
 import space from './space'
+import search from './search'
 
 export default function createStoreConfig() {
   return {
@@ -15,7 +16,8 @@ export default function createStoreConfig() {
       events,
       product,
       user,
-      space
+      space,
+      search
     }
   }
 }
