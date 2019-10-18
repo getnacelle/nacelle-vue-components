@@ -5,7 +5,9 @@
         v-bind="selectedVariant"
         @change="$emit('variant-selected', { selectedVariant })"
       >
-      <option selected>Choose a {{attributeName}}</option>
+        <option :selected="typeof selectedVariant === undefined">
+          Choose a {{attributeName}}
+        </option>
       
         <option
           v-for="variant in product.variants"
@@ -13,6 +15,7 @@
           :value="variant"
           :hidden="!variant.availableForSale"
           :disabled="!variant.availableForSale"
+          :selected="selectedVariant && selectedVariant.id === variant.id"
         >
           {{ variant.title }}
         </option>
@@ -111,10 +114,12 @@ export default {
     }
   },
   created () {
-    if (this.variant) {
+    if (this.variant && this.variant.availableForSale === true) {
       this.selectedVariant = this.variant
     } else if (this.productHasVariants) {
-      this.selectedVariant = this.product.variants[0]
+      this.selectedVariant = this.product.variants.find(variant => {
+        return variant.availableForSale === true
+      })
     }
   }
 }

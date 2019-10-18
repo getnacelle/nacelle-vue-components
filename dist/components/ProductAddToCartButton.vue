@@ -1,25 +1,39 @@
 <template>
   <div>
     <button
-      class="add-to-cart-button button is-primary nacelle"
-      :disabled="!allOptionsSelected || allOptionsSelected && variant == undefined || !variantInLineItems && allOptionsSelected && variant.availableForSale != true"
+      v-if="isProductVariantSelectChild"
+      :disabled="disableAtcButton"
       @click="addToCart"
-      v-if="this.$parent.$options._componentTag == 'product-variant-select'"
+      class="add-to-cart-button button is-primary nacelle"
     >
-      <span v-if="!variantInLineItems && !allOptionsSelected && product.availableForSale">Select Options</span>
+      <span v-if="!variantInLineItems && !allOptionsSelected && product.availableForSale">
+        Select Options
+      </span>
       <span
         v-if="!variantInLineItems && allOptionsSelected && variant == undefined || !variantInLineItems && allOptionsSelected && variant.availableForSale != true || !product.availableForSale"
-      >Out of Stock</span>
+      >
+        Out of Stock
+      </span>
       <span
         v-if="!variantInLineItems && allOptionsSelected && variant && variant.availableForSale == true"
-      >Add to Cart</span>
-      <span v-if="variantInLineItems">Added!</span>
+      >
+        Add to Cart
+      </span>
+      <span v-if="variantInLineItems">
+        Added!
+      </span>
     </button>
     <button class="button is-primary" @click="addToCart" v-else>
       <slot>
-        <span v-if="!onlyOneOption">Select Options</span>
-        <span v-if="onlyOneOption && !variantInLineItems && variant.availableForSale == true">Add to Cart</span>
-        <span v-if="onlyOneOption && variantInLineItems">Added!</span>
+        <span v-if="!onlyOneOption">
+          Select Options
+        </span>
+        <span v-if="onlyOneOption && !variantInLineItems && variant.availableForSale == true">
+          Add to Cart
+        </span>
+        <span v-if="onlyOneOption && variantInLineItems">
+          Added!
+        </span>
       </slot>
     </button>
   </div>
@@ -68,6 +82,21 @@ export default {
       } else {
         return false
       }
+    },
+
+    isProductVariantSelectChild () {
+      return this.$parent.$options._componentTag == 'product-variant-select'
+    },
+
+    disableAtcButton () {
+      return (
+        !this.allOptionsSelected ||
+        this.allOptionsSelected &&
+        this.variant == undefined ||
+        !this.variantInLineItems &&
+        this.allOptionsSelected &&
+        this.variant.availableForSale != true
+      )
     }
   },
 
