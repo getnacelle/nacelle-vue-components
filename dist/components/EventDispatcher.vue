@@ -11,8 +11,9 @@ export default {
     ...mapGetters('cart', ['quantityTotal']),
     ...mapState('cart', ['lineItems']),
     productIDs() {
+      let vm = this
       let productIDs = this.lineItems.map(item => {
-        return item.productId
+        return vm.decodeBase64ProductId(item.variant.id)
       })
     },
     logEntry() {
@@ -51,7 +52,7 @@ export default {
   methods: {
     decodeBase64ProductId(encodedId) {
       const decodedId = Buffer.from(encodedId, 'base64').toString('ascii')
-      return decodedId.split('gid://shopify/Product/')[1]
+      return decodedId.split('gid://shopify/ProductVariant/')[1]
     },
     //// PAGE VIEW METHODS /////////////////////////////////
     facebookPageView() {
@@ -65,7 +66,9 @@ export default {
     facebookProductView() {
       let vm = this
       fbq('track', 'ViewContent', {
-        content_ids: vm.decodeBase64ProductId(vm.logEntry.product.productId),
+        content_ids: vm.decodeBase64ProductId(
+          vm.logEntry.product.variants[0].id
+        ),
         content_name: vm.logEntry.product.title,
         content_type: 'product',
         product_catalog_id: vm.facebookCatalogID
@@ -75,7 +78,7 @@ export default {
     googleAnalyticsProductView() {
       let vm = this
       ga('ec:addProduct', {
-        id: vm.logEntry.product.productId,
+        id: vm.decodeBase64ProductId(vm.logEntry.product.id),
         name: vm.logEntry.product.title
       })
       ga('ec:setAction', 'detail')
@@ -86,7 +89,9 @@ export default {
     facebookAddToCart() {
       let vm = this
       fbq('track', 'AddToCart', {
-        content_ids: vm.decodeBase64ProductId(vm.logEntry.product.productId),
+        content_ids: vm.decodeBase64ProductId(
+          vm.logEntry.product.variants[0].id
+        ),
         content_name: vm.logEntry.product.title,
         content_type: 'product',
         value: vm.logEntry.product.variant.price,
@@ -98,7 +103,7 @@ export default {
     googleAnalyticsAddToCart() {
       let vm = this
       ga('ec:addProduct', {
-        id: vm.decodeBase64ProductId(vm.logEntry.product.productId),
+        id: vm.decodeBase64ProductId(vm.logEntry.product.id),
         name: vm.logEntry.product.title
       })
       ga('ec:setAction', 'add')
