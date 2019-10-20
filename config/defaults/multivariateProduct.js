@@ -119,6 +119,7 @@ export default {
   handle: 'ocean-blue-shirt',
   description:
     'Ocean blue cotton shirt with a narrow collar and buttons down the front and long sleeves. Comfortable fit and tiled kalidoscope patterns.',
+  availableForSale: true,
   priceRange: {
     min: '35.0',
     max: '43.0',

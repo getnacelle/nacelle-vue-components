@@ -7,7 +7,7 @@ import { mapState, mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapState('events', ['log']),
-    ...mapState('space', ['facebookCatalogID']),
+    ...mapState(['facebookCatalogID']),
     ...mapGetters('cart', ['quantityTotal']),
     ...mapState('cart', ['lineItems']),
     productIDs() {
@@ -49,6 +49,10 @@ export default {
     }
   },
   methods: {
+    decodeBase64ProductId(encodedId) {
+      const decodedId = Buffer.from(encodedId, 'base64').toString('ascii')
+      return decodedId.split('gid://shopify/Product/')[1]
+    },
     //// PAGE VIEW METHODS /////////////////////////////////
     facebookPageView() {
       fbq('track', 'PageView')
@@ -61,7 +65,7 @@ export default {
     facebookProductView() {
       let vm = this
       fbq('track', 'ViewContent', {
-        content_ids: vm.logEntry.product.productId,
+        content_ids: vm.decodeBase64ProductId(vm.logEntry.product.productId),
         content_name: vm.logEntry.product.title,
         content_type: 'product',
         product_catalog_id: vm.facebookCatalogID
@@ -82,7 +86,7 @@ export default {
     facebookAddToCart() {
       let vm = this
       fbq('track', 'AddToCart', {
-        content_ids: vm.logEntry.product.productId,
+        content_ids: vm.decodeBase64ProductId(vm.logEntry.product.productId),
         content_name: vm.logEntry.product.title,
         content_type: 'product',
         value: vm.logEntry.product.variant.price,
@@ -94,7 +98,7 @@ export default {
     googleAnalyticsAddToCart() {
       let vm = this
       ga('ec:addProduct', {
-        id: vm.logEntry.product.productId,
+        id: vm.decodeBase64ProductId(vm.logEntry.product.productId),
         name: vm.logEntry.product.title
       })
       ga('ec:setAction', 'add')
@@ -116,7 +120,9 @@ export default {
     facebookCheckoutInitiate() {
       let vm = this
       fbq('track', 'InitiateCheckout', {
-        content_ids: vm.productIDs,
+        content_ids: vm.productIDs.map(id => {
+          return vm.decodeBase64ProductId(id)
+        }),
         content_type: 'product',
         num_items: vm.quantityTotal,
         product_catalog_id: vm.facebookCatalogID

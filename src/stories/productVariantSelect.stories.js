@@ -36,7 +36,12 @@ storiesOf('Components | Product', module)
           variant: defaultMultivariate.variants[0]
         }
       },
-
+      methods: {
+        onVariantSelect ({ selectedVariant }) {
+          console.log(selectedVariant)
+          this.variant = selectedVariant
+        }
+      },
       template: `
       <section class="section">
         <div class="columns is-centered">
