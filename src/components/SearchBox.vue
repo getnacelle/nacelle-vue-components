@@ -60,8 +60,11 @@ export default {
       this.disableMenu()
 
       if (this.navigateOnSubmit) {
-        const queryVal = this.query && this.query.value ? this.query.value : ''
-        this.$router.push({ path: '/search', query: { q: queryVal } })
+        if (this.query && this.query.value && this.query.value.length > 0) {
+          this.$router.push({ path: '/search', query: { q: this.query.value } })
+        } else {
+          this.$router.push({ path: '/search' })
+        }
       }
     }
   }
