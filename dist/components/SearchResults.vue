@@ -45,16 +45,17 @@ export default {
   computed: {
     searchResults() {
       if (
+        this.searchData &&
         this.searchQuery &&
-        this.searchQuery.value !== '' &&
-        this.searchData
+        this.searchQuery.value &&
+        String(this.searchQuery.value) !== ''
       ) {
         const options = {
           keys: this.searchKeys,
           threshold: this.relevanceThreshold
         }
         const results = new Fuse(this.searchData, options).search(
-          this.searchQuery.value
+          String(this.searchQuery.value)
         )
 
         this.$emit('results')
