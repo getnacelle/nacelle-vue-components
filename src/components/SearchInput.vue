@@ -32,7 +32,7 @@ export default {
       if (newVal == null) {
         this.localQuery = null
       }
-      if (this.position != 'global' && newVal && newVal.origin != 'in-page') {
+      if (this.position != 'global' && newVal) {
         this.localQuery = newVal.value
       }
     }

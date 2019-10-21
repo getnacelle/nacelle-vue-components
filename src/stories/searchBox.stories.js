@@ -2,7 +2,7 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import { storiesOf } from '@storybook/vue'
-import { action } from '@storybook/addon-actions'
+import { withActions, action } from '@storybook/addon-actions'
 import { linkTo } from '@storybook/addon-links'
 import { withKnobs, button } from '@storybook/addon-knobs'
 import { withInfo } from 'storybook-addon-vue-info'
@@ -17,6 +17,7 @@ storiesOf('Components | Search', module)
   .addDecorator(withInfo)
   .addDecorator(withKnobs)
   .addDecorator(StoryRouter())
+  .addDecorator(withActions())
   .addDecorator(() => {
     return {
       template: `
@@ -25,7 +26,7 @@ storiesOf('Components | Search', module)
     }
   })
   .add(
-    'Search Box',
+    'Search Box - Global',
     () => {
       mock.onGet('/data/shop/static.json').reply(200, staticData)
 
@@ -34,6 +35,38 @@ storiesOf('Components | Search', module)
         components: { SearchBox },
         template: `
           <search-box />
+        `
+      }
+    },
+    {
+      info: {
+        // summary: "Hello"
+      }
+    }
+  )
+
+  storiesOf('Components | Search', module)
+  .addDecorator(withInfo)
+  .addDecorator(withKnobs)
+  .addDecorator(StoryRouter())
+  .addDecorator(withActions())
+  .addDecorator(() => {
+    return {
+      template: `
+        <div style="max-width: 450px; margin: 3rem auto;"><story/></div>
+      `
+    }
+  })
+  .add(
+    'Search Box - In Page',
+    () => {
+      mock.onGet('/data/shop/static.json').reply(200, staticData)
+
+      return {
+        store,
+        components: { SearchBox },
+        template: `
+          <search-box position="in-page" />
         `
       }
     },

@@ -60,9 +60,9 @@ export default {
 
     filters() {
       let vm = this
-      if (vm.passedData && vm.filterProperties) {
+      if (vm.inputData && vm.filterProperties) {
         let propertyValues = vm.filterProperties.map(property => {
-          let rawValues = vm.passedData
+          let rawValues = vm.inputData
             .map(item => {
               return item[`${property.field}`]
             })
@@ -80,8 +80,8 @@ export default {
     },
     outputData() {
       let vm = this
-      if (vm.activeFilters.length > 0 && vm.passedData) {
-        let output = this.passedData.filter(item => {
+      if (vm.activeFilters.length > 0 && vm.inputData) {
+        let output = this.inputData.filter(item => {
           let filterChecks = vm.activeFilters.map(filter => {
             if (filter.value == item[filter.property]) {
               return true
@@ -95,9 +95,9 @@ export default {
           return itemShouldPass
         })
         return output
-      } else {
-        return vm.passedData
       }
+      
+      return vm.inputData
     }
   },
   methods: {
@@ -200,7 +200,7 @@ export default {
   },
   created() {
     if (process.browser) {
-      this.passedData = this.getPassedData()
+      // this.passedData = this.getPassedData()
       let vm = this
       this.readFiltersFromQueryParams().then(res => {
         this.activeFilters = res
