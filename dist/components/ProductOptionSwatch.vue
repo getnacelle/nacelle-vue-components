@@ -50,7 +50,8 @@ export default {
   computed: {
     swatchClass() {
       if (this.value && this.optionName == 'Color') {
-        return `swatch-color-${this.value.toLowerCase()}`
+        const color = String(this.value)
+        return `swatch-color-${color.toLowerCase()}`
       }
 
       return ''
