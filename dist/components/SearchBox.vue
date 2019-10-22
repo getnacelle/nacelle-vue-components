@@ -39,10 +39,6 @@ export default {
     placeholderText: {
       type: String,
       default: 'Search products..'
-    },
-    navigateOnSubmit: {
-      type: Boolean,
-      default: true
     }
   },
   computed: {
@@ -57,14 +53,14 @@ export default {
       }
     },
     navigateToSearchResults() {
+      const queryVal = this.query && this.query.value ? this.query.value : ''
+
       this.disableMenu()
 
-      if (this.navigateOnSubmit) {
-        if (this.query && this.query.value && this.query.value.length > 0) {
-          this.$router.push({ path: '/search', query: { q: this.query.value } })
-        } else {
-          this.$router.push({ path: '/search' })
-        }
+      if (this.position == 'global') {
+        this.$router.push({ path: '/search', query: { q: queryVal } })
+      } else {
+        this.$router.push({query: { q: queryVal } })
       }
     }
   }
