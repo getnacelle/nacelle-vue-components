@@ -94,7 +94,7 @@ export default {
     facebookAddToCart() {
       let vm = this
       fbq('track', 'AddToCart', {
-        content_ids: vm.decodeBase64VariantId(vm.logEntry.variant.id),
+        content_ids: vm.decodeBase64VariantId(vm.logEntry.product.variant.id),
         content_name: vm.logEntry.product.title,
         content_type: 'product',
         value: vm.logEntry.product.variant.price,
