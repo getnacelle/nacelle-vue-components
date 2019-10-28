@@ -1,25 +1,26 @@
 <template>
   <div class="search" :class="`${position}-searchbox`">
-    <template v-if="position == 'global'">
-      <search-input
-        :placeholderText="placeholderText"
-        @keydown.enter.native="navigateToSearchResults"
-        :position="position"
-        @focus.native="getData"
-      />
-      <button class="button" @click="navigateToSearchResults">Search</button>
-      <search-autocomplete />
-    </template>
-    <template v-else>
-      <search-input :placeholderText="placeholderText" :position="position" />
-    </template>
+    <search-input
+      :placeholderText="placeholderText"
+      :position="position"
+      @focus.native="getData"
+      @keydown.enter.native="navigateToSearchResults"
+    />
+    <button
+      v-if="position == 'global'"
+      class="button"
+      @click="navigateToSearchResults"
+    >
+      Search
+    </button>
+    <search-autocomplete v-if="position == 'global'"/>
   </div>
 </template>
 
 <script>
 import SearchInput from './SearchInput'
 import SearchAutocomplete from './SearchAutocomplete'
-import { mapMutations, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
   components: {
@@ -40,19 +41,27 @@ export default {
       default: 'Search products..'
     }
   },
+  computed: {
+    ...mapState('search', ['query'])
+  },
   methods: {
     ...mapMutations('menu', ['disableMenu']),
     ...mapActions('search', ['getProductData']),
     getData() {
-      console.log('getting Data')
       if (this.searchCategory === 'product') {
         this.getProductData()
       }
     },
     navigateToSearchResults() {
+      const queryVal = this.query && this.query.value ? this.query.value : ''
+
       this.disableMenu()
 
-      this.$router.push('/search')
+      if (this.position == 'global') {
+        this.$router.push({ path: '/search', query: { q: queryVal } })
+      } else {
+        this.$router.push({query: { q: queryVal } })
+      }
     }
   }
 }

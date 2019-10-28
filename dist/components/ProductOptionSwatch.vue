@@ -50,8 +50,11 @@ export default {
   computed: {
     swatchClass() {
       if (this.value && this.optionName == 'Color') {
-        return `swatch-color-${this.value.toLowerCase()}`
+        const color = String(this.value)
+        return `swatch-color-${color.toLowerCase()}`
       }
+
+      return ''
     },
     swatchBg() {
       if (this.swatchSrc) {
@@ -59,6 +62,8 @@ export default {
           background: `url(${this.swatchSrc})`
         }
       }
+
+      return null
     },
     variantsWithOptionValue() {
       if (this.variants) {
