@@ -53,6 +53,10 @@ export default {
   methods: {
     decodeBase64ProductId(encodedId) {
       const decodedId = Buffer.from(encodedId, 'base64').toString('ascii')
+      return decodedId.split('gid://shopify/Product/')[1]
+    },
+    decodeBase64VariantId(encodedId) {
+      const decodedId = Buffer.from(encodedId, 'base64').toString('ascii')
       return decodedId.split('gid://shopify/ProductVariant/')[1]
     },
     //// PAGE VIEW METHODS /////////////////////////////////
@@ -67,7 +71,7 @@ export default {
     facebookProductView() {
       let vm = this
       fbq('track', 'ViewContent', {
-        content_ids: vm.decodeBase64ProductId(
+        content_ids: vm.decodeBase64VariantId(
           vm.logEntry.product.variants[0].id
         ),
         content_name: vm.logEntry.product.title,
