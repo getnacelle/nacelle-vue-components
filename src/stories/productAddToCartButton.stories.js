@@ -16,20 +16,24 @@ storiesOf('Components | Product', module)
       components: { ProductAddToCartButton },
       data() {
         return {
-          image: {
-            source:
-              'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
+          product: {
+            availableForSale: false,
+            image: {
+              source:
+                'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
+            },
+            title: 'Gray T-Shirt',
+            productId: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM1OTkyMDE4NjE3Mzc=',
+            handle: 'gray-t-shirt'
           },
-          title: 'Gray T-Shirt',
-          productId: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM1OTkyMDE4NjE3Mzc=',
-          handle: 'gray-t-shirt',
+
           variant: {
             id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
           }
         }
       },
       template:
-        '<product-add-to-cart-button :image="image" :title="title" :productId="productId" :handle="handle" :variant="variant"/>'
+        '<product-add-to-cart-button :product="product" :variant="variant"/>'
     }),
     {
       info: {

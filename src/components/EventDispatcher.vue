@@ -15,6 +15,7 @@ export default {
       let productIDs = this.lineItems.map(item => {
         return vm.decodeBase64ProductId(item.variant.id)
       })
+      return productIDs
     },
     logEntry() {
       return JSON.parse(JSON.stringify(this.log)).pop()
@@ -89,9 +90,7 @@ export default {
     facebookAddToCart() {
       let vm = this
       fbq('track', 'AddToCart', {
-        content_ids: vm.decodeBase64ProductId(
-          vm.logEntry.product.variants[0].id
-        ),
+        content_ids: vm.decodeBase64ProductId(vm.logEntry.product.variant.id),
         content_name: vm.logEntry.product.title,
         content_type: 'product',
         value: vm.logEntry.product.variant.price,
