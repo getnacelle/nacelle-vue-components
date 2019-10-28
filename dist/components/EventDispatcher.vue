@@ -106,7 +106,7 @@ export default {
     googleAnalyticsAddToCart() {
       let vm = this
       ga('ec:addProduct', {
-        id: vm.decodeBase64ProductId(vm.logEntry.product.id),
+        id: vm.decodeBase64ProductId(vm.logEntry.product.productId),
         name: vm.logEntry.product.title
       })
       ga('ec:setAction', 'add')
