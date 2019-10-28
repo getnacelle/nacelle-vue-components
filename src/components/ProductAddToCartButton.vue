@@ -106,7 +106,7 @@ export default {
     ]),
     ...mapMutations('cart', ['showCart']),
     addToCart() {
-      if (this.allOptionsSelected) {
+      if (this.allOptionsSelected && this.product.availableForSale) {
         let lineItem = {
           image: this.product.featuredMedia,
           title: this.product.title,
