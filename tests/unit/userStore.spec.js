@@ -36,7 +36,6 @@ describe('User Store', () => {
     const storeConfig = createStoreConfig()
     const store = new Vuex.Store(storeConfig)
     store.dispatch('user/readSession')
-    console.log(store.state.user.sessionID)
     expect(store.state.user.sessionID).not.toBeNull()
   })
 })
