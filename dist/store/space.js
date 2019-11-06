@@ -92,6 +92,33 @@ const space = {
   
       return []
     }
+  },
+  actions: {
+    updateSpace({commit}, space) {
+      if (space) {
+        const { id, name, domain, metafields, linklists } = space
+
+        if (id) {
+          commit('setId', id)
+        }
+
+        if (name) {
+          commit('setName', name)
+        }
+
+        if (domain) {
+          commit('setDomain', domain)
+        }
+
+        if (metafields) {
+          commit('setMetafields', metafields)
+        }
+
+        if (linklists) {
+          commit('setLinklists', linklists)
+        }
+      }
+    }
   }
 }
 

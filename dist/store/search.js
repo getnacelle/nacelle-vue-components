@@ -94,15 +94,11 @@ const search = {
         
         axios('/data/shop/static.json')
           .then(res => {
-            if (
-              res &&
-              res.data &&
-              res.data.products
-            ) {
+            if (res && res.data) {
               commit('dataHasLoaded')
               commit('isNotSearching') 
 
-              const products = res.data.products
+              const products = res.data
                 .filter(product => {
                   return (
                     product &&
