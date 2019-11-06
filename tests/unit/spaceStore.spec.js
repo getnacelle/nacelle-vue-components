@@ -61,4 +61,24 @@ describe('Space Store', () => {
       }
     })
   })
+
+  it('updateSpace sets space', async () => {
+    const id = '12345'
+    const name = 'test-store'
+    const domain = 'test-store.com'
+    const space = {
+      id,
+      name,
+      domain,
+      metafields: []
+    }
+    
+
+    store.dispatch('space/updateSpace', space)
+
+    expect(store.state.space.id).toEqual(id)
+    expect(store.state.space.name).toEqual(name)
+    expect(store.state.space.domain).toEqual(domain)
+    expect(store.state.space.metafields.length).toEqual(0)
+  }) 
 })
