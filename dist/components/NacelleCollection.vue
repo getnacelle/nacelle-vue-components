@@ -18,13 +18,15 @@ export default {
     }
   },
   created () {
-    this.$nacelle
-      .collection(this.handle)
-      .then((result) => {
-        if (result) {
-          this.collection = result
-        }
-      })
+    if (process.browser) {
+      this.$nacelle
+        .collection(this.handle)
+        .then((result) => {
+          if (result) {
+            this.collection = result
+          }
+        })
+    }
   }
 }
 </script>

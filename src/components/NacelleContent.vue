@@ -22,13 +22,15 @@ export default {
     }
   },
   created () {
-    this.$nacelle
-      .content(this.handle, this.type)
-      .then((result) => {
-        if (result) {
-          this.content = result
-        }
-      })
+    if (process.client) {
+      this.$nacelle
+        .content(this.handle, this.type)
+        .then((result) => {
+          if (result) {
+            this.content = result
+          }
+        })
+    }
   }
 }
 </script>

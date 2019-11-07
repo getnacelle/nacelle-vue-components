@@ -1,7 +1,7 @@
 <template>
   <div class="nacelle product-data-load">
     <slot
-      v-if="product || products.length > 0"
+      v-if="product && products.length > 0"
       :product="product"
       :products="products"
     />
@@ -24,11 +24,17 @@ export default {
   },
   data () {
     return {
-      product: undefined,
       products: []
     }
   },
   computed: {
+    product () {
+      if (this.products.length > 0) {
+        return this.products[0]
+      }
+
+      return undefined
+    },
     singleProduct () {
       if (
         this.handle.length > 0 &&
@@ -41,28 +47,31 @@ export default {
     }
   },
   created () {
-    let handlesArr = []
+    if (process.browser) {
+      let handlesArr = []
 
-    if (this.singleProduct) {
-      handlesArr.push(this.handle)
-    } else {
-      handlesArr = this.handles
-    }
+      if (this.singleProduct) {
+        handlesArr.push(this.handle)
+      } else {
+        handlesArr = this.handles
+      }
 
-    this.$nacelle
-      .products(handlesArr)
-      .then((result) => {
-        if (result && result.length > 0) {
-          if (
-            this.singleProduct ||
-            result.length === 1
-          ) {
-            this.product = result[0]
+      this.$nacelle
+        .products(handlesArr)
+        .then((result) => {
+          if (result && result.length > 0) {
+            // filter out non-existant products
+            this.products = result.filter(product => {
+              return (
+                product &&
+                product.id &&
+                product.handle &&
+                product.title
+              )
+            })
           }
-
-          this.products = result
-        }
-      })
+        })
+    }
   }
 }
 </script>
