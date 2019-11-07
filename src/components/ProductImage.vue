@@ -69,6 +69,8 @@ export default {
           return this.source
             .split('&width=')[0]
             .concat(`&width=${this.offsetWidth}`)
+        } else {
+          return this.source
         }
       } else return this.source
     }
