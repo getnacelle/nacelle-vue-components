@@ -47,7 +47,7 @@ export default {
     }
   },
   created () {
-    if (process.client) {
+    if (process.browser || process.client) {
       let handlesArr = []
 
       if (this.singleProduct) {

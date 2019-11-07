@@ -18,7 +18,7 @@ export default {
     }
   },
   created () {
-    if (process.client) {
+    if (process.browser || process.client) {
       this.$nacelle
         .collection(this.handle)
         .then((result) => {
