@@ -22,7 +22,7 @@ export default {
     }
   },
   created () {
-    if (process.browser) {
+    if (process.client) {
       this.$nacelle
         .content(this.handle, this.type)
         .then((result) => {
