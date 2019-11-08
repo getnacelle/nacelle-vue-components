@@ -26,6 +26,15 @@ function fromMagentoCDN(url) {
   return str1.concat('/', str2, '/', str3) === 'media/catalog/product'
 }
 
+function shopifyOptimizeSize({ src, offsetWidth } = {}) {
+  return src.split('&width=')[0].concat(`&width=${offsetWidth}`)
+}
+
+function shopifyOptimizeFormat(src) {
+  // Request image in "progressive JPEG" format
+  return src.split('&format=')[0].concat('&format=pjpg')
+}
+
 export default {
   props: {
     source: {
@@ -44,7 +53,11 @@ export default {
       type: Boolean,
       default: true
     },
-    optimized: {
+    optimizedSize: {
+      type: Boolean,
+      default: true
+    },
+    optimizedFormat: {
       type: Boolean,
       default: true
     }
@@ -64,11 +77,23 @@ export default {
       return true
     },
     sourceOptimized() {
-      if (this.optimized) {
-        if (fromShopifyCDN(this.source)) {
+      if (fromShopifyCDN(this.source)) {
+        if (this.optimizedSize && this.optimizedFormat) {
+          return shopifyOptimizeFormat(
+            shopifyOptimizeSize({
+              src: this.source,
+              offsetWidth: this.offsetWidth
+            })
+          )
+        } else if (this.optimizedSize && !this.optimizedFormat) {
+          return shopifyOptimizeSize({
+            src: this.source,
+            offsetWidth: this.offsetWidth
+          })
+        } else if (!this.optimizedSize && this.optimizedFormat) {
+          return shopifyOptimizeFormat(this.source)
+        } else {
           return this.source
-            .split('&width=')[0]
-            .concat(`&width=${this.offsetWidth}`)
         }
       } else return this.source
     }
