@@ -9,7 +9,7 @@
   >
     <img
       v-if="visibility"
-      :src="optimizeSource(source)"
+      :src="optimizeSource({url: source, containerRef: 'img-card'})"
       :alt="alt"
       :width="width"
       ref="product-image"
@@ -44,8 +44,7 @@ export default {
   },
   data() {
     return {
-      visible: false,
-      offsetWidth: null
+      visible: false
     }
   },
   computed: {
