@@ -47,7 +47,9 @@ export default {
     }
   },
   methods: {
-    optimizeSource(url) {
+    optimizeSource({url, containerRef} = {}) {
+      // The 'containerRef' named parameter is a ref which
+      // must be assigned to the image's containing element
       if (fromShopifyCDN(url)) {
         if (this.optimizedSize && this.optimizedFormat) {
           return shopifyOptimizeFormat(
