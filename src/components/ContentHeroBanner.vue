@@ -10,48 +10,32 @@
         <source
           v-if="mobileBackgroundImgUrl.length > 0"
           media="(min-width: 787px)"
-          :srcset="backgroundImgUrl"
-        >
+          :srcset="optimizeSource(backgroundImgUrl)"
+        />
         <source
           v-if="mobileBackgroundImgUrl.length > 0"
           media="(max-width: 786px)"
-          :srcset="mobileBackgroundImgUrl"
-        >
-        <img :src="backgroundImgUrl" :alt="backgroundAltTag">
+          :srcset="optimizeSource(mobileBackgroundImgUrl)"
+        />
+        <img :src="optimizeSource(backgroundImgUrl)" :alt="backgroundAltTag" />
       </picture>
     </slot>
     <div class="hero-body">
       <div class="container">
         <div class="hero-body-inner">
-          <slot
-            name="body"
-            :textColor="textColor"
-            :title="title"
-            :subtitle="subtitle"
-          >
+          <slot name="body" :textColor="textColor" :title="title" :subtitle="subtitle">
             <h1
               class="title"
               :style="textColor && textColor.length > 0 ? `color: ${textColor}` : ''"
-            >
-              {{ title }}
-            </h1>
+            >{{ title }}</h1>
             <h3
               class="subtitle"
               :style="textColor && textColor.length > 0 ? `color: ${textColor}` : ''"
-            >
-              {{ subtitle}}
-            </h3>
+            >{{ subtitle}}</h3>
           </slot>
-          <slot
-            name="cta"
-            :ctaUrl="ctaUrl"
-            :ctaText="ctaText"
-            :ctaHandler="ctaHandler"
-          >
+          <slot name="cta" :ctaUrl="ctaUrl" :ctaText="ctaText" :ctaHandler="ctaHandler">
             <p v-if="ctaText.length > 0">
-              <cta-button :to="ctaUrl" @clicked="ctaHandler">
-                {{ ctaText }}
-              </cta-button>
+              <cta-button :to="ctaUrl" @clicked="ctaHandler">{{ ctaText }}</cta-button>
             </p>
           </slot>
         </div>
@@ -62,6 +46,7 @@
 
 <script>
 import CtaButton from './CtaButton'
+import optimizeImage from '../mixins/optimizeImage'
 
 export default {
   components: {
@@ -119,11 +104,14 @@ export default {
   },
   computed: {
     bannerClasses() {
-      const mobileHeightClass = this.mobileFullHeight ? 'is-mobile-fullheight' : ''
+      const mobileHeightClass = this.mobileFullHeight
+        ? 'is-mobile-fullheight'
+        : ''
 
       return `hero nacelle is-${this.size} is-align-${this.alignment} ${mobileHeightClass}`
     }
-  }
+  },
+  mixins: [optimizeImage]
 }
 </script>
 
