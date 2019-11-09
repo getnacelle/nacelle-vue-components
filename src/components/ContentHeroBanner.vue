@@ -6,19 +6,19 @@
       :backgroundImgUrl="backgroundImgUrl"
       :backgroundAltTag="backgroundAltTag"
     >
-      <picture class="hero-background" ref="img-card">
+      <picture class="hero-background" ref="hero-img-card">
         <source
           v-if="mobileBackgroundImgUrl.length > 0"
           media="(min-width: 787px)"
-          :srcset="optimizeSource({url: backgroundImgUrl, containerRef:'img-card'})"
+          :srcset="optimizeSource({url: backgroundImgUrl, containerRef:'hero-img-card'})"
         />
         <source
           v-if="mobileBackgroundImgUrl.length > 0"
           media="(max-width: 786px)"
-          :srcset="optimizeSource({url: mobileBackgroundImgUrl, containerRef:'img-card'})"
+          :srcset="optimizeSource({url: mobileBackgroundImgUrl, containerRef:'hero-img-card'})"
         />
         <img
-          :src="optimizeSource({url: backgroundImgUrl, containerRef:'img-card'})"
+          :src="optimizeSource({url: backgroundImgUrl, containerRef:'hero-img-card'})"
           :alt="backgroundAltTag"
         />
       </picture>
