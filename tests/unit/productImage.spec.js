@@ -40,7 +40,7 @@ describe('ProductImage/vue', () => {
         optimizedFormat: false
       }
     })
-    wrapper.setData({ visible: true, offsetWidth: 450 })
+    wrapper.setData({ visible: true, containerWidth: 450 })
     expect(wrapper.html()).toBe(
       '<div class="product-image nacelle"><img src="https://cdn.shopify.com/s/files/1/0094/4098/5124/products/68.png?v=1563167567&amp;width=450" alt="pillow"></div>'
     )
@@ -54,7 +54,7 @@ describe('ProductImage/vue', () => {
         alt: 'pillow',
       }
     })
-    wrapper.setData({ visible: true, offsetWidth: 450 })
+    wrapper.setData({ visible: true, containerWidth: 450 })
     expect(wrapper.html()).toBe(
       '<div class="product-image nacelle"><img src="https://cdn.shopify.com/s/files/1/0094/4098/5124/products/68.png?v=1563167567&amp;width=450&amp;format=pjpg" alt="pillow"></div>'
     )

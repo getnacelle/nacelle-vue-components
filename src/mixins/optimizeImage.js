@@ -13,9 +13,9 @@ function fromMagentoCDN(url) {
 // For more information, see: 
 //  https://help.shopify.com/en/themes/liquid/filters/url-filters#img_url
 
-function shopifyOptimizeSize({ src, offsetWidth } = {}) {
+function shopifyOptimizeSize({ src, containerWidth } = {}) {
   // Request size which matches the width of the bounding element
-  return offsetWidth !== null ? src.split('&width=')[0].concat(`&width=${offsetWidth}`) : src
+  return offsetWidth !== null ? src.split('&width=')[0].concat(`&width=${containerWidth}`) : src
 }
 
 function shopifyOptimizeFormat(src) {
@@ -43,7 +43,7 @@ export default {
   },
   data() {
     return {
-      offsetWidth: null,
+      containerWidth: null,
       container: null
     }
   },
@@ -57,13 +57,13 @@ export default {
           return shopifyOptimizeFormat(
             shopifyOptimizeSize({
               src: url,
-              offsetWidth: this.offsetWidth
+              containerWidth: this.containerWidth
             })
           )
         } else if (this.optimizedSize && !this.optimizedFormat) {
           return shopifyOptimizeSize({
             src: url,
-            offsetWidth: this.offsetWidth
+            containerWidth: this.containerWidth
           })
         } else if (!this.optimizedSize && this.optimizedFormat) {
           return shopifyOptimizeFormat(url)
@@ -73,9 +73,9 @@ export default {
       } else return url
     }
   },
-  mounted() {
+  created() {
     if (process.client && (this.container !== null)) {
-      this.offsetWidth = this.$refs[this.container].offsetWidth
+      this.containerWidth = this.$refs[this.container].offsetWidth
     }
   }
 }
