@@ -54,17 +54,17 @@ export default {
       this.container = containerRef
       if (fromShopifyCDN(url)) {
         if (this.optimizedSize && this.optimizedFormat) {
-          return shopifyOptimizeFormat(
-            shopifyOptimizeSize({
-              src: url,
-              containerWidth: this.containerWidth
-            })
-          )
+          if (this.containerWidth !== null) {
+            return shopifyOptimizeFormat(shopifyOptimizeSize({src: url, containerWidth: this.containerWidth}))
+          } else {
+            return 'data:,' // effectively an empty 'src' string
+          }
         } else if (this.optimizedSize && !this.optimizedFormat) {
-          return shopifyOptimizeSize({
-            src: url,
-            containerWidth: this.containerWidth
-          })
+          if (this.containerWidth !== null) {
+            return shopifyOptimizeSize({src: url, containerWidth: this.containerWidth})
+          } else {
+            return 'data:,' // effectively an empty 'src' string
+          }
         } else if (!this.optimizedSize && this.optimizedFormat) {
           return shopifyOptimizeFormat(url)
         } else {
