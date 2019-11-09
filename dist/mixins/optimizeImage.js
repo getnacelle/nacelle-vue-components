@@ -74,7 +74,7 @@ export default {
     }
   },
   mounted() {
-    if (process.client) {
+    if (process.client && (this.container !== null)) {
       this.offsetWidth = this.$refs[this.container].offsetWidth
     }
   }
