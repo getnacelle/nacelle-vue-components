@@ -73,7 +73,7 @@ export default {
       } else return url
     }
   },
-  created() {
+  mounted() {
     if (process.client && (this.container !== null)) {
       this.containerWidth = this.$refs[this.container].offsetWidth
     }
