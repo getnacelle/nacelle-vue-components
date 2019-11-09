@@ -15,7 +15,7 @@ function fromMagentoCDN(url) {
 
 function shopifyOptimizeSize({ src, offsetWidth } = {}) {
   // Request size which matches the width of the bounding element
-  return src.split('&width=')[0].concat(`&width=${offsetWidth}`)
+  return offsetWidth !== null ? src.split('&width=')[0].concat(`&width=${offsetWidth}`) : src
 }
 
 function shopifyOptimizeFormat(src) {
@@ -43,13 +43,15 @@ export default {
   },
   data() {
     return {
-      offsetWidth: null
+      offsetWidth: null,
+      container: null
     }
   },
   methods: {
     optimizeSource({url, containerRef} = {}) {
       // The 'containerRef' named parameter is a ref which
       // must be assigned to the image's containing element
+      this.container = containerRef
       if (fromShopifyCDN(url)) {
         if (this.optimizedSize && this.optimizedFormat) {
           return shopifyOptimizeFormat(
@@ -73,7 +75,7 @@ export default {
   },
   mounted() {
     if (process.client) {
-      this.offsetWidth = this.$refs['img-card'].offsetWidth
+      this.offsetWidth = this.$refs[this.container].offsetWidth
     }
   }
 }
