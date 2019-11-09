@@ -57,13 +57,13 @@ export default {
           if (this.containerWidth !== null) {
             return shopifyOptimizeFormat(shopifyOptimizeSize({src: url, containerWidth: this.containerWidth}))
           } else {
-            return "data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E" // effectively an empty svg
+            return "data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E" // empty svg
           }
         } else if (this.optimizedSize && !this.optimizedFormat) {
           if (this.containerWidth !== null) {
             return shopifyOptimizeSize({src: url, containerWidth: this.containerWidth})
           } else {
-            return "data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E" // effectively an empty svg
+            return "data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E" // empty svg
           }
         } else if (!this.optimizedSize && this.optimizedFormat) {
           return shopifyOptimizeFormat(url)
@@ -74,6 +74,11 @@ export default {
     }
   },
   mounted() {
+    if (process.client && (this.container !== null)) {
+      this.containerWidth = this.$refs[this.container].offsetWidth
+    }
+  },
+  updated() {
     if (process.client && (this.container !== null)) {
       this.containerWidth = this.$refs[this.container].offsetWidth
     }
