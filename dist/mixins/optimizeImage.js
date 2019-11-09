@@ -15,7 +15,7 @@ function fromMagentoCDN(url) {
 
 function shopifyOptimizeSize({ src, containerWidth } = {}) {
   // Request size which matches the width of the bounding element
-  return offsetWidth !== null ? src.split('&width=')[0].concat(`&width=${containerWidth}`) : src
+  return containerWidth !== null ? src.split('&width=')[0].concat(`&width=${containerWidth}`) : src
 }
 
 function shopifyOptimizeFormat(src) {
