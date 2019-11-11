@@ -8,20 +8,23 @@ function fromMagentoCDN(url) {
   return str1.concat('/', str2, '/', str3) === 'media/catalog/product'
 }
 
-// OPTIMIZATIONS SPECIFIC TO IMAGES FROM THE SHOPIFY CDN
-//
-// For more information, see: 
-//  https://help.shopify.com/en/themes/liquid/filters/url-filters#img_url
-
-function shopifyOptimizeSize({ src, containerWidth } = {}) {
-  // Request size which matches the width of the bounding element
-  return containerWidth !== null ? src.split('&width=')[0].concat(`&width=${containerWidth}`) : src
+function shopifyOptimizeSize({ src, containerWidth, containerPosition } = {}) {
+  // Request size which matches the width of the bounding element,
+  // unless the parent container uses absolute positioning
+  if (containerPosition !== "absolute") {
+    return containerWidth !== null ? src.split('&width=')[0].concat(`&width=${containerWidth}`) : src
+  } else {
+    return src
+  }
 }
 
 function shopifyOptimizeFormat(src) {
   // Request image in "progressive JPEG" (pjpg) format
   // NOTE: Transformation to pjpg only works on png and jpg images,
   // so return the original image if it is a gif / other.
+  //
+  // For more information, see: 
+  //  https://help.shopify.com/en/themes/liquid/filters/url-filters#img_url
   const extension = Array.from(src.split('?v=')[0].split('.')).pop()
   if (extension === 'png' || extension === 'jpg') {
     return src.split('&format=')[0].concat('&format=pjpg')
@@ -44,7 +47,8 @@ export default {
   data() {
     return {
       containerWidth: null,
-      container: null
+      containerPosition: null,
+      container: null,
     }
   },
   methods: {
@@ -55,13 +59,13 @@ export default {
       if (fromShopifyCDN(url)) {
         if (this.optimizedSize && this.optimizedFormat) {
           if (this.containerWidth !== null) {
-            return shopifyOptimizeFormat(shopifyOptimizeSize({src: url, containerWidth: this.containerWidth}))
+            return shopifyOptimizeFormat(shopifyOptimizeSize({src: url, containerWidth: this.containerWidth, containerPosition: this.containerPosition}))
           } else {
             return "data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E" // empty svg
           }
         } else if (this.optimizedSize && !this.optimizedFormat) {
           if (this.containerWidth !== null) {
-            return shopifyOptimizeSize({src: url, containerWidth: this.containerWidth})
+            return shopifyOptimizeSize({src: url, containerWidth: this.containerWidth, containerPosition: this.containerPosition})
           } else {
             return "data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E" // empty svg
           }
@@ -71,16 +75,18 @@ export default {
           return url
         }
       } else return url
+    },
+    calculateContainer() {
+      if (process.client && (this.container !== null)) {
+        this.containerWidth = this.$refs[this.container].offsetWidth
+        this.containerPosition = window.getComputedStyle(this.$refs[this.container]).position
+      }
     }
   },
   mounted() {
-    if (process.client && (this.container !== null)) {
-      this.containerWidth = this.$refs[this.container].offsetWidth
-    }
+    this.calculateContainer()
   },
   updated() {
-    if (process.client && (this.container !== null)) {
-      this.containerWidth = this.$refs[this.container].offsetWidth
-    }
+    this.calculateContainer()
   }
 }
