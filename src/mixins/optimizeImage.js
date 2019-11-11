@@ -1,52 +1,18 @@
-function fromShopifyCDN(url) {
-  return url.split('.com')[0] === 'https://cdn.shopify'
-}
-
-// eslint-disable-next-line no-unused-vars
-function fromMagentoCDN(url) {
-  // Note that not all Magento stores use images from the Magento CDN
-  const [, str1, str2, str3] = url.split('://')[1].split('/')
-  return str1.concat('/', str2, '/', str3) === 'media/catalog/product'
-}
-
-function shopifyOptimizeSize({ src, containerWidth, containerPosition } = {}) {
-  // Request size which closely matches the width of the bounding element,
-  // unless the parent container uses absolute positioning.
-  // Round up size to the nearest 50px increment.
-  if (containerPosition !== 'absolute') {
-    const roundedUpToNearest50px = x => +x + 49 - ((+x + 49) % 50)
-    return containerWidth !== null
-      ? src
-          .split('&width=')[0]
-          .concat(`&width=${roundedUpToNearest50px(containerWidth)}`)
-      : src
-  } else {
-    return src
-  }
-}
-
-function shopifyOptimizeFormat(src) {
-  // Request image in "progressive JPEG" (pjpg) format
-  // NOTE: Transformation to pjpg only works on png and jpg images,
-  // so return the original image if it is a gif / other.
-  //
-  // For more information, see:
-  //  https://help.shopify.com/en/themes/liquid/filters/url-filters#img_url
-  const extension = Array.from(src.split('?v=')[0].split('.')).pop()
-  if (extension === 'png' || extension === 'jpg') {
-    return src.split('&format=')[0].concat('&format=pjpg')
-  } else {
-    return src
-  }
-}
-
 export default {
   props: {
-    optimizedSize: {
+    resize: {
       type: Boolean,
       default: true,
     },
-    optimizedFormat: {
+    reformat: {
+      type: Boolean,
+      default: true,
+    },
+    format: {
+      type: String,
+      default: 'webp',
+    },
+    blurUp: {
       type: Boolean,
       default: true,
     },
@@ -56,6 +22,8 @@ export default {
       containerWidth: null,
       containerPosition: null,
       container: null,
+      emptySvg:
+        "data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E",
     }
   },
   methods: {
@@ -63,31 +31,29 @@ export default {
       // The 'containerRef' named parameter is a ref which
       // must be assigned to the image's containing element
       this.container = containerRef
-      if (fromShopifyCDN(url)) {
-        if (this.optimizedSize && this.optimizedFormat) {
+      if (this.fromShopifyCDN(url)) {
+        if (this.resize && this.reformat) {
           if (this.containerWidth !== null) {
-            return shopifyOptimizeFormat(
-              shopifyOptimizeSize({
-                src: url,
-                containerWidth: this.containerWidth,
-                containerPosition: this.containerPosition,
-              })
-            )
-          } else {
-            return "data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E" // empty svg
-          }
-        } else if (this.optimizedSize && !this.optimizedFormat) {
-          if (this.containerWidth !== null) {
-            return shopifyOptimizeSize({
-              src: url,
-              containerWidth: this.containerWidth,
-              containerPosition: this.containerPosition,
+            return this.shopifyReformat({
+              src: this.shopifyResize({ src: url }),
             })
           } else {
-            return "data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E" // empty svg
+            if (this.blurUp) {
+              return this.shopifyResize({ src: url, width: 20 })
+            } else {
+              return this.emptySvg
+            }
           }
-        } else if (!this.optimizedSize && this.optimizedFormat) {
-          return shopifyOptimizeFormat(url)
+        } else if (this.resize && !this.reformat) {
+          if (this.containerWidth !== null) {
+            return this.shopifyResize({ src: url })
+          } else if (this.blurUp) {
+            return this.shopifyResize({ src: url, width: 20 })
+          } else {
+            return this.emptySvg
+          }
+        } else if (!this.resize && this.reformat) {
+          return this.shopifyReformat({ src: url })
         } else {
           return url
         }
@@ -100,6 +66,52 @@ export default {
           this.$refs[this.container]
         ).position
       }
+    },
+    shopifyResize({ src, width = 'auto' } = {}) {
+      // Request size which closely matches the width of the bounding element,
+      // unless the parent container uses absolute positioning.
+      // Round up size to the nearest 50px increment.
+      if (width === 'auto' && this.containerPosition !== 'absolute') {
+        const roundedUpToNearest50px = x => +x + 49 - ((+x + 49) % 50)
+        return width !== null
+          ? src
+              .split('&width=')[0]
+              .concat(`&width=${roundedUpToNearest50px(this.containerWidth)}`)
+          : src
+      } else if (width !== 'auto') {
+        return src.split('&width=')[0].concat(`&width=${width}`)
+      } else {
+        return src
+      }
+    },
+    shopifyReformat({ src, format = 'webp' } = {}) {
+      // Takes either a png or jpg (other formats will not work),
+      // Returns query string for image in WebP or PJPG format.
+      // NOTE 1: Transformation only works on png and jpg images.
+      // NOTE 2: This function defaults to webp (preferred by Lighthouse)
+      //
+      // Example 1:
+      //  shopifyReformat({ src = "https://cdn.shopify.com/s/files/myPicture.png", format = 'pjpg'})
+      //  returns: "https://cdn.shopify.com/s/files/myPicture.png&format=pjpg"
+      // Example 2:
+      //  shopifyReformat({ src = "https://cdn.shopify.com/s/files/myPicture.jpg", format = 'webp'})
+      //  returns: "https://cdn.shopify.com/s/files/myPicture.jpg&format=webp"
+      //
+      const extension = Array.from(src.split('?v=')[0].split('.')).pop()
+      if (extension === 'png' || extension === 'jpg') {
+        return src.split('&format=')[0].concat(`&format=${format}`)
+      } else {
+        // return the original image if it is a gif / not a png or jpg
+        return src
+      }
+    },
+    fromShopifyCDN(url) {
+      return url.split('.com')[0] === 'https://cdn.shopify'
+    },
+    fromMagentoCDN(url) {
+      // Note that not all Magento stores use images from the Magento CDN
+      const [, str1, str2, str3] = url.split('://')[1].split('/')
+      return str1.concat('/', str2, '/', str3) === 'media/catalog/product'
     },
   },
   mounted() {
