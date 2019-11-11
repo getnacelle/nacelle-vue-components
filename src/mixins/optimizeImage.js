@@ -9,10 +9,12 @@ function fromMagentoCDN(url) {
 }
 
 function shopifyOptimizeSize({ src, containerWidth, containerPosition } = {}) {
-  // Request size which matches the width of the bounding element,
-  // unless the parent container uses absolute positioning
+  // Request size which closely matches the width of the bounding element,
+  // unless the parent container uses absolute positioning.
+  // Round up size to the nearest 50px increment.
   if (containerPosition !== "absolute") {
-    return containerWidth !== null ? src.split('&width=')[0].concat(`&width=${containerWidth}`) : src
+    const roundedUpToNearest50px = x => (+x + 49) - ((+x + 49) % 50)
+    return containerWidth !== null ? src.split('&width=')[0].concat(`&width=${roundedUpToNearest50px(containerWidth)}`) : src
   } else {
     return src
   }
