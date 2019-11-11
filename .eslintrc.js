@@ -1,10 +1,12 @@
 module.exports = {
   "env": {
-    "es6": true
+    "es6": true,
+    "commonjs": true
   },
  "extends" : [
    "prettier"
  ],
+ "parser": "babel-eslint",
  "parserOptions": {
     "ecmaVersion": 2017,
     "sourceType": "module",
@@ -83,9 +85,12 @@ module.exports = {
     "prettier/prettier": [
       "error",
       {
-        "trailingComma": "es5",
+        "semi": false,
         "singleQuote": true,
         "printWidth": 80,
+        "tabWidth": 2,
+        "trailingComma": "es5",
+        "endOfLine": "lf",
       }
     ],
     "quotes": [
