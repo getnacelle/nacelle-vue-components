@@ -10,17 +10,14 @@
         <source
           v-if="mobileBackgroundImgUrl.length > 0"
           media="(min-width: 787px)"
-          :srcset="optimizeSource({url: backgroundImgUrl, containerRef:'hero-img-card'})"
+          :srcset="optimizeSource(imageOptions)"
         />
         <source
           v-if="mobileBackgroundImgUrl.length > 0"
           media="(max-width: 786px)"
-          :srcset="optimizeSource({url: mobileBackgroundImgUrl, containerRef:'hero-img-card'})"
+          :srcset="optimizeSource(imageOptions)"
         />
-        <img
-          :src="optimizeSource({url: backgroundImgUrl, containerRef:'hero-img-card'})"
-          :alt="backgroundAltTag"
-        />
+        <img :src="optimizeSource(imageOptions)" :alt="backgroundAltTag" />
       </picture>
     </slot>
     <div class="hero-body">
@@ -105,6 +102,15 @@ export default {
       default: ''
     }
   },
+  data() {
+    return {
+      imageOptions: {
+        url: this.backgroundImgUrl,
+        containerRef: 'hero-img-card',
+        optimizeSize: false
+      }
+    }
+  },
   computed: {
     bannerClasses() {
       const mobileHeightClass = this.mobileFullHeight
@@ -164,4 +170,3 @@ export default {
   max-width: 500px;
 }
 </style>
-
