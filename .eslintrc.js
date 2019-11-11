@@ -1,15 +1,18 @@
 module.exports = {
- "extends" : [
-   "airbnb",
-   "prettier"
- ],
- "parserOptions": {
-    "ecmaVersion": 2017
-  },
   "env": {
     "es6": true
   },
- "rules": {
+ "extends" : [
+   "prettier"
+ ],
+ "parserOptions": {
+    "ecmaVersion": 2017,
+    "sourceType": "module",
+  },
+  "plugins": [
+    "prettier",
+  ],
+  "rules": {
     "no-debugger": 0,
     "no-alert": 0,
     "no-await-in-loop": 0,
@@ -77,6 +80,14 @@ module.exports = {
         ]
       }
     ],
+    "prettier/prettier": [
+      "error",
+      {
+        "trailingComma": "es5",
+        "singleQuote": true,
+        "printWidth": 80,
+      }
+    ],
     "quotes": [
       2,
       "single",
@@ -85,16 +96,5 @@ module.exports = {
         "allowTemplateLiterals": true
       }
     ],
-    "prettier/prettier": [
-      "error",
-      {
-        "trailingComma": "es5",
-        "singleQuote": true,
-        "printWidth": 80,
-      }
-    ]
-  },
-  "plugins": [
-    "prettier",
-  ]
+  }
 }
