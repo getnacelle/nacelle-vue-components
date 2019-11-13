@@ -43,9 +43,10 @@ describe('ProductImage/vue', () => {
     wrapper.setData({
       visible: true,
       containerWidth: 450,
+      containerHeight: 300,
     })
     expect(wrapper.html()).toBe(
-      '<div class="product-image nacelle"><img src="https://cdn.shopify.com/s/files/1/0094/4098/5124/products/68.png?v=1563167567&amp;width=450" alt="pillow"></div>'
+      '<div class="product-image nacelle"><img src="https://cdn.shopify.com/s/files/1/0094/4098/5124/products/68_450x300.png?v=1563167567" alt="pillow"></div>'
     )
   })
 
@@ -60,9 +61,10 @@ describe('ProductImage/vue', () => {
     wrapper.setData({
       visible: true,
       containerWidth: 450,
+      containerHeight: 300,
     })
     expect(wrapper.html()).toBe(
-      '<div class="product-image nacelle"><img src="https://cdn.shopify.com/s/files/1/0094/4098/5124/products/68.png?v=1563167567&amp;width=450&amp;format=webp" alt="pillow"></div>'
+      '<div class="product-image nacelle"><img src="https://cdn.shopify.com/s/files/1/0094/4098/5124/products/68_450x300.png?v=1563167567&amp;format=webp" alt="pillow"></div>'
     )
   })
 })
