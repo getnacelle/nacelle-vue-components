@@ -12,6 +12,10 @@ export default {
       type: String,
       default: 'webp',
     },
+    cropDirection: {
+      type: String,
+      default: 'center',
+    },
     blurUp: {
       type: Boolean,
       default: true,
@@ -19,9 +23,12 @@ export default {
   },
   data() {
     return {
-      containerWidth: null,
-      containerPosition: null,
       container: null,
+      blurred: null,
+      containerWidth: null,
+      containerHeight: null,
+      containerPosition: null,
+      newUrl: null,
       emptySvg:
         "data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E",
     }
@@ -33,56 +40,81 @@ export default {
       this.container = containerRef
       if (this.fromShopifyCDN(url)) {
         if (this.resize && this.reformat) {
-          if (this.containerWidth !== null) {
-            return this.shopifyReformat({
+          if (this.newUrl !== null) {
+            this.newUrl = this.shopifyReformat({
               src: this.shopifyResize({ src: url }),
             })
           } else {
             if (this.blurUp) {
-              return this.shopifyResize({ src: url, width: 20 })
+              this.newUrl = this.shopifyResize({
+                src: url,
+                width: 20,
+                height: '',
+              })
+              this.blurred = this.newUrl
             } else {
-              return this.emptySvg
+              this.newUrl = this.emptySvg
             }
           }
         } else if (this.resize && !this.reformat) {
-          if (this.containerWidth !== null) {
-            return this.shopifyResize({ src: url })
+          if (this.newUrl !== null) {
+            this.newUrl = this.shopifyResize({ src: url })
           } else if (this.blurUp) {
-            return this.shopifyResize({ src: url, width: 20 })
+            this.newUrl = this.shopifyResize({
+              src: url,
+              width: 20,
+              height: '',
+            })
           } else {
-            return this.emptySvg
+            this.newUrl = this.emptySvg
           }
         } else if (!this.resize && this.reformat) {
-          return this.shopifyReformat({ src: url })
+          this.newUrl = this.shopifyReformat({ src: url })
         } else {
-          return url
+          this.newUrl = url
         }
-      } else return url
+      } else this.newUrl = url
+      return this.newUrl
     },
     calculateContainer() {
       if (process.client && this.container !== null) {
-        this.containerWidth = this.$refs[this.container].offsetWidth
+        this.containerHeight = this.$refs[this.container].clientHeight
+        this.containerWidth = this.$refs[this.container].clientWidth
         this.containerPosition = window.getComputedStyle(
           this.$refs[this.container]
         ).position
       }
     },
-    shopifyResize({ src, width = 'auto' } = {}) {
+    shopifyResize({ src, width = 'auto', height = 'auto' } = {}) {
       // Request size which closely matches the width of the bounding element,
       // unless the parent container uses absolute positioning.
       // Round up size to the nearest 50px increment.
-      if (width === 'auto' && this.containerPosition !== 'absolute') {
-        const roundedUpToNearest50px = x => +x + 49 - ((+x + 49) % 50)
-        return width !== null
-          ? src
-              .split('&width=')[0]
-              .concat(`&width=${roundedUpToNearest50px(this.containerWidth)}`)
-          : src
-      } else if (width !== 'auto') {
-        return src.split('&width=')[0].concat(`&width=${width}`)
-      } else {
-        return src
+      const isAbsolute = this.containerPosition === 'absolute'
+      function roundedUpToNearest50px(x) {
+        // Return a blank string if less than 50px
+        if (x >= 50) {
+          return +x + 49 - ((+x + 49) % 50)
+        }
+        return ''
       }
+
+      const [baseWithExt, args] = src.split('?')
+      const [extension] = Array.from(baseWithExt.split('.')).reverse()
+      const [base] = baseWithExt.split(`.${extension}`)
+      const newWidth =
+        width === 'auto' ? roundedUpToNearest50px(this.containerWidth) : width
+      const newHeight =
+        height === 'auto'
+          ? roundedUpToNearest50px(this.containerHeight)
+          : height
+      const newSizeString = `_${newWidth}x${newHeight}`
+      const cropString = isAbsolute ? `_crop_${this.cropDirection}` : ''
+      const newBase = base.concat(newSizeString, cropString)
+      const newArgs = args
+        .split('&')
+        .filter(el => el.includes('width=') === false)
+      const newSrc = newBase.concat(`.${extension}?${newArgs}`)
+      return newSrc
     },
     shopifyReformat({ src, format = 'webp' } = {}) {
       // Takes either a png or jpg (other formats will not work),
