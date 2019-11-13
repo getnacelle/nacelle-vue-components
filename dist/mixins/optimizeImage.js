@@ -1,5 +1,14 @@
+import { ObserveVisibility } from 'vue-observe-visibility'
+
 export default {
+  directives: {
+    ObserveVisibility,
+  },
   props: {
+    observeVisibility: {
+      type: Boolean,
+      default: true,
+    },
     resize: {
       type: Boolean,
       default: true,
@@ -23,6 +32,7 @@ export default {
   },
   data() {
     return {
+      visible: false,
       container: null,
       blurred: null,
       containerWidth: null,
@@ -33,48 +43,62 @@ export default {
         "data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E",
     }
   },
+  computed: {
+    visibility() {
+      if (this.observeVisibility) {
+        return this.visible
+      }
+      return true
+    },
+  },
   methods: {
+    visibilityChanged(isVisible) {
+      this.visible = isVisible
+    },
     optimizeSource({ url, containerRef } = {}) {
       // The 'containerRef' named parameter is a ref which
       // must be assigned to the image's containing element
       this.container = containerRef
-      if (this.fromShopifyCDN(url)) {
-        if (this.resize && this.reformat) {
-          if (this.newUrl !== null) {
-            this.newUrl = this.shopifyReformat({
-              src: this.shopifyResize({ src: url }),
-            })
-          } else {
-            if (this.blurUp) {
-              this.newUrl = this.shopifyResize({
+      if (url !== undefined) {
+        if (this.fromShopifyCDN(url)) {
+          if (this.resize && this.reformat) {
+            if (this.newUrl !== null) {
+              this.newUrl = this.shopifyReformat({
+                src: this.shopifyResize({ src: url }),
+              })
+            } else {
+              if (this.blurUp) {
+                this.blurred = this.shopifyResize({
+                  src: url,
+                  width: 20,
+                  height: '',
+                })
+                this.newUrl = this.blurred
+              } else {
+                this.newUrl = this.emptySvg
+              }
+            }
+          } else if (this.resize && !this.reformat) {
+            if (this.newUrl !== null) {
+              this.newUrl = this.shopifyResize({ src: url })
+            } else if (this.blurUp) {
+              this.blurred = this.shopifyResize({
                 src: url,
                 width: 20,
                 height: '',
               })
-              this.blurred = this.newUrl
+              this.newUrl = this.blurred
             } else {
               this.newUrl = this.emptySvg
             }
-          }
-        } else if (this.resize && !this.reformat) {
-          if (this.newUrl !== null) {
-            this.newUrl = this.shopifyResize({ src: url })
-          } else if (this.blurUp) {
-            this.newUrl = this.shopifyResize({
-              src: url,
-              width: 20,
-              height: '',
-            })
+          } else if (!this.resize && this.reformat) {
+            this.newUrl = this.shopifyReformat({ src: url })
           } else {
-            this.newUrl = this.emptySvg
+            this.newUrl = url
           }
-        } else if (!this.resize && this.reformat) {
-          this.newUrl = this.shopifyReformat({ src: url })
-        } else {
-          this.newUrl = url
-        }
-      } else this.newUrl = url
-      return this.newUrl
+        } else this.newUrl = url
+        return this.newUrl
+      }
     },
     calculateContainer() {
       if (process.client && this.container !== null) {
@@ -89,7 +113,7 @@ export default {
       // Request size which closely matches the width of the bounding element,
       // unless the parent container uses absolute positioning.
       // Round up size to the nearest 50px increment.
-      const isAbsolute = this.containerPosition === 'absolute'
+      const containerIsAbsolute = this.containerPosition === 'absolute'
       function roundedUpToNearest50px(x) {
         // Return a blank string if less than 50px
         if (x >= 50) {
@@ -108,7 +132,9 @@ export default {
           ? roundedUpToNearest50px(this.containerHeight)
           : height
       const newSizeString = `_${newWidth}x${newHeight}`
-      const cropString = isAbsolute ? `_crop_${this.cropDirection}` : ''
+      const cropString = containerIsAbsolute
+        ? `_crop_${this.cropDirection}`
+        : ''
       const newBase = base.concat(newSizeString, cropString)
       const newArgs = args
         .split('&')
