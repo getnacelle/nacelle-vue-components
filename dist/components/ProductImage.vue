@@ -19,7 +19,6 @@
 
 <script>
 import Vue from 'vue'
-import { ObserveVisibility } from 'vue-observe-visibility'
 import optimizeImage from '../mixins/optimizeImage'
 
 export default {
@@ -35,41 +34,9 @@ export default {
     },
     width: {
       type: Number
-    },
-    observeVisibility: {
-      type: Boolean,
-      default: true
     }
   },
-  data() {
-    return {
-      visible: false
-    }
-  },
-  computed: {
-    visibility() {
-      if (this.observeVisibility) {
-        return this.visible
-      }
-      return true
-    }
-  },
-  methods: {
-    visibilityChanged(isVisible, entry) {
-      this.visible = isVisible
-    }
-  },
-  mixins: [optimizeImage],
-  directives: {
-    ObserveVisibility
-  }
-  // mounted() {
-  // let vm = this
-  // this.$refs['product-image'].addEventListener('load', e => {
-  //   console.log(e)
-  //   vm.$emit('image-loaded')
-  // })
-  // }
+  mixins: [optimizeImage]
 }
 </script>
 
