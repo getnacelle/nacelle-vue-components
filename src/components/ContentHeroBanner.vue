@@ -10,14 +10,17 @@
         <source
           v-if="mobileBackgroundImgUrl.length > 0"
           media="(min-width: 787px)"
-          :srcset="optimizeSource(imageOptions)"
+          :srcset="optimizeSource({url: backgroundImgUrl, containerRef: 'hero-img-card'})"
         />
         <source
           v-if="mobileBackgroundImgUrl.length > 0"
           media="(max-width: 786px)"
-          :srcset="optimizeSource(imageOptions)"
+          :srcset="optimizeSource({url: mobileBackgroundImgUrl, containerRef: 'hero-img-card'})"
         />
-        <img :src="optimizeSource(imageOptions)" :alt="backgroundAltTag" />
+        <img
+          :src="optimizeSource({url: backgroundImgUrl, containerRef: 'hero-img-card'})"
+          :alt="backgroundAltTag"
+        />
       </picture>
     </slot>
     <div class="hero-body">
@@ -106,8 +109,7 @@ export default {
     return {
       imageOptions: {
         url: this.backgroundImgUrl,
-        containerRef: 'hero-img-card',
-        optimizeSize: false
+        containerRef: 'hero-img-card'
       }
     }
   },
