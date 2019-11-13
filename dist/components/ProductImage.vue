@@ -19,9 +19,8 @@
 
 <script>
 import Vue from 'vue'
-import VueObserveVisibility from 'vue-observe-visibility'
+import { ObserveVisibility } from 'vue-observe-visibility'
 import optimizeImage from '../mixins/optimizeImage'
-Vue.use(VueObserveVisibility)
 
 export default {
   props: {
@@ -60,7 +59,10 @@ export default {
       this.visible = isVisible
     }
   },
-  mixins: [optimizeImage]
+  mixins: [optimizeImage],
+  directives: {
+    ObserveVisibility
+  }
   // mounted() {
   // let vm = this
   // this.$refs['product-image'].addEventListener('load', e => {
