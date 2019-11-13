@@ -1,8 +1,15 @@
 <template>
   <section class="sbs nacelle">
     <div class="columns" :class="columnClasses">
-      <div class="column is-half sbs-image" ref="img-card">
-        <img :src="optimizeSource({url: imageUrl, containerRef:'img-card'})" alt />
+      <div
+        class="column is-half sbs-image"
+        ref="img-card"
+        v-observe-visibility="{
+      callback: visibilityChanged,
+      once: true,
+    }"
+      >
+        <img v-if="visibility" :src="optimizeSource({url: imageUrl, containerRef:'img-card'})" alt />
       </div>
       <div
         class="column is-half sbs-copy"
