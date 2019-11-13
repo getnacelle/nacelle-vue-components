@@ -1,35 +1,29 @@
 <template>
   <section class="sbs nacelle">
     <div class="columns" :class="columnClasses">
-      <div class="column is-half sbs-image">
-        <img :src="imageUrl" alt="" />
+      <div
+        class="column is-half sbs-image"
+        ref="img-card"
+        v-observe-visibility="{
+      callback: visibilityChanged,
+      once: true,
+    }"
+      >
+        <img v-if="visibility" :src="optimizeSource({url: imageUrl, containerRef:'img-card'})" alt />
       </div>
       <div
         class="column is-half sbs-copy"
         :style="backgroundColor ? `background-color: ${backgroundColor}` : null "
       >
-        <slot
-          name="body"
-          :title="title"
-          :copy="copy"
-        >
+        <slot name="body" :title="title" :copy="copy">
           <div class="has-text-centered">
-            <component :is="titleTag" class="title">
-              {{ title }}
-            </component>
+            <component :is="titleTag" class="title">{{ title }}</component>
             <div class="content" v-html="copy" />
           </div>
         </slot>
-        <slot
-          name="cta"
-          :ctaUrl="ctaUrl"
-          :ctaText="ctaText"
-          :ctaHandler="ctaHandler"
-        >
+        <slot name="cta" :ctaUrl="ctaUrl" :ctaText="ctaText" :ctaHandler="ctaHandler">
           <p v-if="ctaText.length > 0" class="has-text-centered">
-            <cta-button :to="ctaUrl" @clicked="ctaHandler">
-              {{ ctaText }}
-            </cta-button>
+            <cta-button :to="ctaUrl" @clicked="ctaHandler">{{ ctaText }}</cta-button>
           </p>
         </slot>
       </div>
@@ -39,6 +33,7 @@
 
 <script>
 import CtaButton from './CtaButton'
+import optimizeImage from '../mixins/optimizeImage'
 
 export default {
   components: {
@@ -93,7 +88,8 @@ export default {
 
       return `${desktopReverse} ${mobileReverse}`
     }
-  }
+  },
+  mixins: [optimizeImage]
 }
 </script>
 

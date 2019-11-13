@@ -1,14 +1,15 @@
 <template>
-  <div 
+  <div
     v-observe-visibility="{
       callback: visibilityChanged,
       once: true,
     }"
     class="product-image nacelle"
+    ref="img-card"
   >
     <img
       v-if="visibility"
-      :src="source"
+      :src="optimizeSource({url: source, containerRef: 'img-card'})"
       :alt="alt"
       :width="width"
       ref="product-image"
@@ -18,8 +19,7 @@
 
 <script>
 import Vue from 'vue'
-import VueObserveVisibility from 'vue-observe-visibility'
-Vue.use(VueObserveVisibility)
+import optimizeImage from '../mixins/optimizeImage'
 
 export default {
   props: {
@@ -34,38 +34,9 @@ export default {
     },
     width: {
       type: Number
-    },
-    observeVisibility: {
-      type: Boolean,
-      default: true
     }
   },
-  data() {
-    return {
-      visible: false
-    }
-  },
-  computed: {
-    visibility() {
-      if (this.observeVisibility) {
-        return this.visible
-      }
-
-      return true
-    }
-  },
-  methods: {
-    visibilityChanged(isVisible, entry) {
-      this.visible = isVisible
-    }
-  }
-  // mounted() {
-  //   let vm = this
-  //   this.$refs['product-image'].addEventListener('load', e => {
-  //     console.log(e)
-  //     vm.$emit('image-loaded')
-  //   })
-  // }
+  mixins: [optimizeImage]
 }
 </script>
 
