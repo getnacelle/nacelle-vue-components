@@ -59,7 +59,7 @@ export default {
       // The 'containerRef' named parameter is a ref which
       // must be assigned to the image's containing element
       this.container = containerRef
-      if (url !== undefined) {
+      if (url) {
         if (this.fromShopifyCDN(url)) {
           if (this.resize && this.reformat) {
             if (this.newUrl !== null) {
@@ -101,7 +101,7 @@ export default {
       }
     },
     calculateContainer() {
-      if (process.client && this.container !== null) {
+      if ((process.client || process.browser) && this.container !== null) {
         this.containerHeight = this.$refs[this.container].clientHeight
         this.containerWidth = this.$refs[this.container].clientWidth
         this.containerPosition = window.getComputedStyle(
