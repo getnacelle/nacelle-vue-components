@@ -2,17 +2,18 @@
   <div
     v-observe-visibility="{
       callback: visibilityChanged,
-      once: true,
+      once: true
     }"
     class="product-image nacelle"
     ref="img-card"
   >
     <img
       v-if="visibility"
-      :src="optimizeSource({url: source, containerRef: 'img-card'})"
+      ref="product-image"
+      :src="optimizeSource({ url: source, containerRef: 'img-card' })"
       :alt="alt"
       :width="width"
-      ref="product-image"
+      :style="cssVars"
     />
   </div>
 </template>
@@ -34,6 +35,17 @@ export default {
     },
     width: {
       type: Number
+    },
+    fadeIn: {
+      type: Number,
+      default: 1
+    }
+  },
+  computed: {
+    cssVars() {
+      return {
+        '--fade-in-time': `${this.fadeIn}s`
+      }
     }
   },
   mixins: [optimizeImage]
@@ -44,5 +56,44 @@ export default {
 .product-image,
 img {
   width: 100%;
+  animation: fadein var(--fade-in-time);
+  -moz-animation: fadein var(--fade-in-time); /* Firefox */
+  -webkit-animation: fadein var(--fade-in-time); /* Safari and Chrome */
+  -o-animation: fadein var(--fade-in-time); /* Opera */
+}
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadein {
+  /* Firefox */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadein {
+  /* Safari and Chrome */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-o-keyframes fadein {
+  /* Opera */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>
