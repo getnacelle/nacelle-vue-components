@@ -99,6 +99,7 @@ export default {
         } else this.newUrl = url
         return this.newUrl
       }
+      return null
     },
     calculateContainer() {
       if (process.client && this.container !== null) {
@@ -109,11 +110,10 @@ export default {
         ).position
       }
     },
-    shopifyResize({ src, width = 'auto', height = 'auto' } = {}) {
+    shopifyResize({ src = null, width = 'auto', height = 'auto' } = {}) {
       // Request size which closely matches the width of the bounding element,
       // unless the parent container uses absolute positioning.
       // Round up size to the nearest 50px increment.
-      const containerIsAbsolute = this.containerPosition === 'absolute'
       function roundedUpToNearest50px(x) {
         // Return a blank string if less than 50px
         if (x >= 50) {
@@ -121,7 +121,6 @@ export default {
         }
         return ''
       }
-
       const [baseWithExt, args] = src.split('?')
       const [extension] = Array.from(baseWithExt.split('.')).reverse()
       const [base] = baseWithExt.split(`.${extension}`)
@@ -131,10 +130,12 @@ export default {
         height === 'auto'
           ? roundedUpToNearest50px(this.containerHeight)
           : height
-      const newSizeString = `_${newWidth}x${newHeight}`
-      const cropString = containerIsAbsolute
-        ? `_crop_${this.cropDirection}`
-        : ''
+      const newSizeString =
+        newWidth !== '' || newHeight !== '' ? `_${newWidth}x${newHeight}` : ''
+      const cropString =
+        this.containerPosition === 'absolute'
+          ? `_crop_${this.cropDirection}`
+          : ''
       const newBase = base.concat(newSizeString, cropString)
       const newArgs = args
         .split('&')
@@ -142,26 +143,29 @@ export default {
       const newSrc = newBase.concat(`.${extension}?${newArgs}`)
       return newSrc
     },
-    shopifyReformat({ src, format = 'webp' } = {}) {
+    shopifyReformat({ src = null, format = 'webp' } = {}) {
       // Takes either a png or jpg (other formats will not work),
       // Returns query string for image in WebP or PJPG format.
       // NOTE 1: Transformation only works on png and jpg images.
       // NOTE 2: This function defaults to webp (preferred by Lighthouse)
       //
       // Example 1:
-      //  shopifyReformat({ src = "https://cdn.shopify.com/s/files/myPicture.png", format = 'pjpg'})
+      //  shopifyReformat({ src: "https://cdn.shopify.com/s/files/myPicture.png", format: 'pjpg'})
       //  returns: "https://cdn.shopify.com/s/files/myPicture.png&format=pjpg"
       // Example 2:
-      //  shopifyReformat({ src = "https://cdn.shopify.com/s/files/myPicture.jpg", format = 'webp'})
+      //  shopifyReformat({ src: "https://cdn.shopify.com/s/files/myPicture.jpg", format: 'webp'})
       //  returns: "https://cdn.shopify.com/s/files/myPicture.jpg&format=webp"
       //
-      const extension = Array.from(src.split('?v=')[0].split('.')).pop()
-      if (extension === 'png' || extension === 'jpg') {
-        return src.split('&format=')[0].concat(`&format=${format}`)
-      } else {
-        // return the original image if it is a gif / not a png or jpg
-        return src
+      if (src !== null) {
+        const extension = Array.from(src.split('?v=')[0].split('.')).pop()
+        if (extension === 'png' || extension === 'jpg') {
+          return src.split('&format=')[0].concat(`&format=${format}`)
+        } else {
+          // return the original image if it is a gif / not a png or jpg
+          return src
+        }
       }
+      return null
     },
     fromShopifyCDN(url) {
       return url.split('.com')[0] === 'https://cdn.shopify'
