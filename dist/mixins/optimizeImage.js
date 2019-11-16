@@ -55,12 +55,12 @@ export default {
     visibilityChanged(isVisible) {
       this.visible = isVisible
     },
-    optimizeSource({ url, containerRef } = {}) {
+    optimizeSource({ url = null, containerRef = null } = {}) {
       // The 'containerRef' named parameter is a ref which
       // must be assigned to the image's containing element
-      this.container = containerRef
-      if (url !== undefined) {
-        if (this.fromShopifyCDN(url)) {
+      if (typeof url === 'string' && containerRef !== null) {
+        this.container = containerRef
+        if (this.fromShopifyCDN({ url })) {
           if (this.resize && this.reformat) {
             if (this.newUrl !== null) {
               this.newUrl = this.shopifyReformat({
@@ -99,7 +99,7 @@ export default {
         } else this.newUrl = url
         return this.newUrl
       }
-      return null
+      return url
     },
     calculateContainer() {
       if (process.client && this.container !== null) {
@@ -121,27 +121,30 @@ export default {
         }
         return ''
       }
-      const [baseWithExt, args] = src.split('?')
-      const [extension] = Array.from(baseWithExt.split('.')).reverse()
-      const [base] = baseWithExt.split(`.${extension}`)
-      const newWidth =
-        width === 'auto' ? roundedUpToNearest50px(this.containerWidth) : width
-      const newHeight =
-        height === 'auto'
-          ? roundedUpToNearest50px(this.containerHeight)
-          : height
-      const newSizeString =
-        newWidth !== '' || newHeight !== '' ? `_${newWidth}x${newHeight}` : ''
-      const cropString =
-        this.containerPosition === 'absolute'
-          ? `_crop_${this.cropDirection}`
-          : ''
-      const newBase = base.concat(newSizeString, cropString)
-      const newArgs = args
-        .split('&')
-        .filter(el => el.includes('width=') === false)
-      const newSrc = newBase.concat(`.${extension}?${newArgs}`)
-      return newSrc
+      if (typeof src === 'string') {
+        const [baseWithExt, args] = src.split('?')
+        const [extension] = Array.from(baseWithExt.split('.')).reverse()
+        const [base] = baseWithExt.split(`.${extension}`)
+        const newWidth =
+          width === 'auto' ? roundedUpToNearest50px(this.containerWidth) : width
+        const newHeight =
+          height === 'auto'
+            ? roundedUpToNearest50px(this.containerHeight)
+            : height
+        const newSizeString =
+          newWidth !== '' || newHeight !== '' ? `_${newWidth}x${newHeight}` : ''
+        const cropString =
+          this.containerPosition === 'absolute'
+            ? `_crop_${this.cropDirection}`
+            : ''
+        const newBase = base.concat(newSizeString, cropString)
+        const newArgs = args
+          ? args.split('&').filter(el => el.includes('width=') === false)
+          : null
+        const newSrc = newBase.concat(`.${extension}?${newArgs}`)
+        return newSrc
+      }
+      return null
     },
     shopifyReformat({ src = null, format = 'webp' } = {}) {
       // Takes either a png or jpg (other formats will not work),
@@ -156,7 +159,7 @@ export default {
       //  shopifyReformat({ src: "https://cdn.shopify.com/s/files/myPicture.jpg", format: 'webp'})
       //  returns: "https://cdn.shopify.com/s/files/myPicture.jpg&format=webp"
       //
-      if (src !== null) {
+      if (typeof src === 'string') {
         const extension = Array.from(src.split('?v=')[0].split('.')).pop()
         if (extension === 'png' || extension === 'jpg') {
           return src.split('&format=')[0].concat(`&format=${format}`)
@@ -164,16 +167,23 @@ export default {
           // return the original image if it is a gif / not a png or jpg
           return src
         }
+      } else {
+        return null
       }
-      return null
     },
-    fromShopifyCDN(url) {
-      return url.split('.com')[0] === 'https://cdn.shopify'
+    fromShopifyCDN({ url = null } = {}) {
+      if (typeof url === 'string') {
+        return url.split('.com')[0] === 'https://cdn.shopify'
+      }
+      return false
     },
-    fromMagentoCDN(url) {
+    fromMagentoCDN({ url = null } = {}) {
       // Note that not all Magento stores use images from the Magento CDN
-      const [, str1, str2, str3] = url.split('://')[1].split('/')
-      return str1.concat('/', str2, '/', str3) === 'media/catalog/product'
+      if (typeof url === 'string') {
+        const [, str1, str2, str3] = url.split('://')[1].split('/')
+        return str1.concat('/', str2, '/', str3) === 'media/catalog/product'
+      }
+      return false
     },
   },
   mounted() {
