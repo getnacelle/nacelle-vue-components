@@ -9,6 +9,7 @@
           :key="selectedMedia.src"
           :width="featuredMediaWidth"
           :observeVisibility="false"
+          :fadeIn="fadeIn"
           ref="selected-media"
         />
       </transition>
@@ -45,6 +46,10 @@ export default {
     featuredMedia: {
       type: Object,
       required: true
+    },
+    fadeIn: {
+      type: Number,
+      default: 1
     }
   },
   data() {
