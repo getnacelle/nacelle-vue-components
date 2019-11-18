@@ -9,14 +9,11 @@ const search = {
     filtersCleared: false,
     searchData: {},
     loadedData: false,
-    searchLoading: false
+    searchLoading: false,
   },
   getters: {
     queryOrigin(state) {
-      if (
-        state.query &&
-        state.query.origin
-      ) {
+      if (state.query && state.query.origin) {
         return state.query.origin
       }
 
@@ -29,7 +26,7 @@ const search = {
         state.searchData.products.length > 0
       )
     },
-    productData (state) {
+    productData(state) {
       if (
         state.searchData &&
         state.searchData.products &&
@@ -39,13 +36,13 @@ const search = {
       }
 
       return []
-    }
+    },
   },
   mutations: {
     setQuery(state, query) {
       state.query = query
     },
-  
+
     setAutocompleteVisible(state) {
       state.autocompleteVisible = true
     },
@@ -65,7 +62,7 @@ const search = {
     setSearchData(state, data) {
       state.searchData = {
         ...state.searchData,
-        ...data
+        ...data,
       }
     },
 
@@ -83,7 +80,7 @@ const search = {
 
     isNotSearching(state) {
       state.searchLoading = false
-    }
+    },
   },
 
   actions: {
@@ -91,32 +88,28 @@ const search = {
       if (!getters.hasProductData) {
         commit('dataNotLoaded')
         commit('isSearching')
-        
-        axios('/data/shop/static.json')
+
+        axios
+          .get('/data/search.json')
           .then(res => {
             if (res && res.data) {
               commit('dataHasLoaded')
-              commit('isNotSearching') 
+              commit('isNotSearching')
 
               const products = res.data
-                .filter(product => {
-                  return (
-                    product &&
-                    product.node &&
-                    product.node.title &&
-                    product.node.variants
-                  )
-                })
-                .map(product => {
-                  return transformProduct(product.node)
-                })
-              
+                .filter(product => product && product.title && product.variants)
+                .map(product => transformProduct(product))
+
               commit('setSearchData', { products })
             }
           })
+          .catch(err => {
+            console.log(err)
+            return err
+          })
       }
-    }
-  }
+    },
+  },
 }
 
 export default search

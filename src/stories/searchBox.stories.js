@@ -9,70 +9,66 @@ import { withInfo } from 'storybook-addon-vue-info'
 import StoryRouter from 'storybook-vue-router'
 import store from '../store/store'
 import SearchBox from '../components/SearchBox'
-import staticData from '../../config/defaults/static-products'
-
-const mock = new MockAdapter(axios);
+import searchResults from '../../config/defaults/search-results'
 
 storiesOf('Components | Search', module)
   .addDecorator(withInfo)
   .addDecorator(withKnobs)
   .addDecorator(StoryRouter())
   .addDecorator(withActions())
-  .addDecorator(() => {
-    return {
-      template: `
-        <div style="max-width: 450px; margin: 3rem auto;"><story/></div>
-      `
-    }
-  })
+  .addDecorator(() => ({
+    template: `
+      <div style="max-width: 450px; margin: 3rem auto;"><story/></div>
+    `,
+  }))
   .add(
     'Search Box - Global',
-    () => {
-      mock.onGet('/data/shop/static.json').reply(200, staticData)
+    () => ({
+      store,
+      components: { SearchBox },
+      template: `
+        <search-box />
+      `,
+      created() {
+        const mock = new MockAdapter(axios)
 
-      return {
-        store,
-        components: { SearchBox },
-        template: `
-          <search-box />
-        `
-      }
-    },
+        mock.onGet('/data/search.json').reply(200, searchResults)
+      },
+    }),
     {
       info: {
         // summary: "Hello"
-      }
+      },
     }
   )
 
-  storiesOf('Components | Search', module)
+storiesOf('Components | Search', module)
   .addDecorator(withInfo)
   .addDecorator(withKnobs)
   .addDecorator(StoryRouter())
   .addDecorator(withActions())
-  .addDecorator(() => {
-    return {
-      template: `
-        <div style="max-width: 450px; margin: 3rem auto;"><story/></div>
-      `
-    }
-  })
+  .addDecorator(() => ({
+    template: `
+      <div style="max-width: 450px; margin: 3rem auto;"><story/></div>
+    `,
+  }))
   .add(
     'Search Box - In Page',
-    () => {
-      mock.onGet('/data/shop/static.json').reply(200, staticData)
+    () => ({
+      store,
+      components: { SearchBox },
+      template: `
+        <search-box position="in-page" />
+      `,
+      created() {
+        const mock = new MockAdapter(axios)
 
-      return {
-        store,
-        components: { SearchBox },
-        template: `
-          <search-box position="in-page" />
-        `
-      }
-    },
+        mock.onGet('/data/search.json').reply(200, searchResults)
+      },
+    }),
     {
       info: {
         // summary: "Hello"
-      }
+      },
     }
   )

@@ -102,7 +102,7 @@ export default {
       return url
     },
     calculateContainer() {
-      if (process.client && this.container !== null) {
+      if ((process.client || process.browser) && this.container !== null) {
         this.containerHeight = this.$refs[this.container].clientHeight
         this.containerWidth = this.$refs[this.container].clientWidth
         this.containerPosition = window.getComputedStyle(
