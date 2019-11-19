@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { BLOCKS } from '@contentful/rich-text-types';
+import { BLOCKS } from '@contentful/rich-text-types'
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
 import ContentHeroBanner from './ContentHeroBanner'
 import ContentSideBySide from './ContentSideBySide'
@@ -49,7 +49,7 @@ export default {
     },
     products: {
       type: Array,
-      default: () => ([])
+      default: () => []
     },
     customContentToHtml: {
       type: Boolean,
@@ -76,7 +76,9 @@ export default {
         }
 
         if (source === 'shopify') {
-          return this.reduceShopifySections(sections).map(this.mapShopifySection)
+          return this.reduceShopifySections(sections).map(
+            this.mapShopifySection
+          )
         }
 
         return sections
@@ -87,7 +89,7 @@ export default {
     body() {
       if (this.page && this.page.fields && this.page.fields.body) {
         const { source } = this.page
-        
+
         if (source === 'shopify') {
           return this.page.fields.body
         }
@@ -104,25 +106,25 @@ export default {
     defaultContentToHtml(content) {
       const options = {
         renderNode: {
-          [BLOCKS.EMBEDDED_ASSET]: (node) => `
+          [BLOCKS.EMBEDDED_ASSET]: node => `
             <img class="post-image" src="${node.data.target.fields.file.url}" alt="${node.data.target.fields.title}" />
           `
         }
       }
-    
+
       return documentToHtmlString(content, options)
     },
     formatShopifySection(section) {
       const { tags, ...rest } = section.node
       const tagFields = {}
-      
+
       tags.forEach(tag => {
         if (tag.includes('field::')) {
-          const [ field, key, value ] = tag.split('::')
+          const [field, key, value] = tag.split('::')
           tagFields[key] = value
         }
       })
-    
+
       return {
         ...tagFields,
         ...rest,
@@ -167,7 +169,8 @@ export default {
           mobileFullHeight,
           textColor,
           mobileBackgroundImgUrl,
-          backgroundAltTag
+          backgroundAltTag,
+          blurUp
         } = section
 
         data = {
@@ -179,10 +182,11 @@ export default {
           backgroundImgUrl: image ? image.originalSrc : '',
           size,
           alignment,
-          mobileFullHeight: (mobileFullHeight === 'true'),
+          mobileFullHeight: mobileFullHeight === 'true',
           textColor,
           mobileBackgroundImgUrl,
-          backgroundAltTag
+          backgroundAltTag,
+          blurUp: blurUp ? blurUp : false
         }
       } else if (contentType === 'ContentSideBySide') {
         const {
@@ -202,8 +206,8 @@ export default {
           ctaHandler: clickHandler,
           backgroundColor,
           imageUrl: image ? image.originalSrc : '',
-          reverseDesktop: (reverseDesktop === 'true'),
-          reverseMobile: (reverseMobile === 'true')
+          reverseDesktop: reverseDesktop === 'true',
+          reverseMobile: reverseMobile === 'true'
         }
       } else if (contentType === 'ContentTestimonials') {
         const { slidesPerView, alignment } = section
@@ -214,7 +218,9 @@ export default {
             return {
               name: child.data.title,
               quote: child.data.contentHtml,
-              imageUrl: child.data.image ? child.data.image.originalSrc : undefined
+              imageUrl: child.data.image
+                ? child.data.image.originalSrc
+                : undefined
             }
           })
         }
@@ -234,7 +240,7 @@ export default {
           columns: columns || 4
         }
       } else {
-        data = { 
+        data = {
           title,
           handle,
           contentHtml,
@@ -253,7 +259,9 @@ export default {
       const { contentType, handle, title, content, featuredMedia } = fields
       const contentHtml = content ? this.contentToHtml(content) : ''
       const imageSrc =
-        featuredMedia && featuredMedia.fields ? featuredMedia.fields.file.url : ''
+        featuredMedia && featuredMedia.fields
+          ? featuredMedia.fields.file.url
+          : ''
       let data = {}
 
       if (fields) {
@@ -267,7 +275,8 @@ export default {
             mobileFullHeight,
             textColor,
             mobileBackgroundImage,
-            backgroundAltTag
+            backgroundAltTag,
+            blurUp
           } = fields
           const clickHandler = () => {
             this.$router.push(fields.ctaUrl)
@@ -282,11 +291,13 @@ export default {
             backgroundImgUrl: imageSrc,
             size,
             alignment,
-            mobileFullHeight: (String(fields.mobileFullHeight) === 'true'),
+            mobileFullHeight: String(fields.mobileFullHeight) === 'true',
             textColor,
-            mobileBackgroundImgUrl: 
-              mobileBackgroundImage ? mobileBackgroundImage.fields.file.url : '',
-            backgroundAltTag
+            mobileBackgroundImgUrl: mobileBackgroundImage
+              ? mobileBackgroundImage.fields.file.url
+              : '',
+            backgroundAltTag,
+            blurUp: blurUp ? blurUp : false
           }
         } else if (fields.contentType === 'ContentSideBySide') {
           const {
@@ -308,8 +319,8 @@ export default {
             ctaHandler: clickHandler,
             backgroundColor,
             imageUrl: imageSrc,
-            reverseDesktop: (String(reverseDesktop) === 'true'),
-            reverseMobile: (String(reverseMobile) === 'true')
+            reverseDesktop: String(reverseDesktop) === 'true',
+            reverseMobile: String(reverseMobile) === 'true'
           }
         } else if (fields.contentType === 'ContentTestimonials') {
           const { slidesPerView, alignment } = fields
@@ -320,8 +331,9 @@ export default {
               return {
                 name: child.fields.name,
                 quote: child.fields.quotation,
-                imageUrl:
-                  child.fields.featuredMedia ? child.fields.featuredMedia.fields.file.url : undefined
+                imageUrl: child.fields.featuredMedia
+                  ? child.fields.featuredMedia.fields.file.url
+                  : undefined
               }
             })
           }
@@ -334,7 +346,7 @@ export default {
           }
         } else if (fields.contentType === 'ContentProductGrid') {
           const { columns } = fields
-          
+
           data = {
             title,
             products: this.products,
@@ -358,6 +370,4 @@ export default {
 }
 </script>
 
-<style>
-
-</style>
+<style></style>
