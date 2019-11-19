@@ -5,15 +5,15 @@
         class="column is-half sbs-image"
         ref="img-card"
         v-observe-visibility="{
-      callback: visibilityChanged,
-      once: true,
-    }"
+          callback: visibilityChanged,
+          once: true
+        }"
       >
-        <img v-if="visibility" :src="optimizeSource({url: imageUrl, containerRef:'img-card'})" alt />
+        <img v-if="visibility" :src="url" alt />
       </div>
       <div
         class="column is-half sbs-copy"
-        :style="backgroundColor ? `background-color: ${backgroundColor}` : null "
+        :style="backgroundColor ? `background-color: ${backgroundColor}` : null"
       >
         <slot name="body" :title="title" :copy="copy">
           <div class="has-text-centered">
@@ -21,9 +21,16 @@
             <div class="content" v-html="copy" />
           </div>
         </slot>
-        <slot name="cta" :ctaUrl="ctaUrl" :ctaText="ctaText" :ctaHandler="ctaHandler">
+        <slot
+          name="cta"
+          :ctaUrl="ctaUrl"
+          :ctaText="ctaText"
+          :ctaHandler="ctaHandler"
+        >
           <p v-if="ctaText.length > 0" class="has-text-centered">
-            <cta-button :to="ctaUrl" @clicked="ctaHandler">{{ ctaText }}</cta-button>
+            <cta-button :to="ctaUrl" @clicked="ctaHandler">{{
+              ctaText
+            }}</cta-button>
           </p>
         </slot>
       </div>
@@ -153,4 +160,3 @@ export default {
   padding: 2rem 3rem;
 }
 </style>
-

@@ -10,35 +10,52 @@
         <source
           v-if="mobileBackgroundImgUrl.length > 0"
           media="(min-width: 787px)"
-          :srcset="optimizeSource({url: backgroundImgUrl, containerRef: 'hero-img-card'})"
+          :srcset="url"
         />
         <source
           v-if="mobileBackgroundImgUrl.length > 0"
           media="(max-width: 786px)"
-          :srcset="optimizeSource({url: mobileBackgroundImgUrl, containerRef: 'hero-img-card'})"
+          :srcset="url"
         />
-        <img
-          :src="optimizeSource({url: backgroundImgUrl, containerRef: 'hero-img-card'})"
-          :alt="backgroundAltTag"
-        />
+        <img :src="url" :alt="backgroundAltTag" />
       </picture>
     </slot>
     <div class="hero-body">
       <div class="container">
         <div class="hero-body-inner">
-          <slot name="body" :textColor="textColor" :title="title" :subtitle="subtitle">
+          <slot
+            name="body"
+            :textColor="textColor"
+            :title="title"
+            :subtitle="subtitle"
+          >
             <h1
               class="title"
-              :style="textColor && textColor.length > 0 ? `color: ${textColor}` : ''"
-            >{{ title }}</h1>
+              :style="
+                textColor && textColor.length > 0 ? `color: ${textColor}` : ''
+              "
+            >
+              {{ title }}
+            </h1>
             <h3
               class="subtitle"
-              :style="textColor && textColor.length > 0 ? `color: ${textColor}` : ''"
-            >{{ subtitle}}</h3>
+              :style="
+                textColor && textColor.length > 0 ? `color: ${textColor}` : ''
+              "
+            >
+              {{ subtitle }}
+            </h3>
           </slot>
-          <slot name="cta" :ctaUrl="ctaUrl" :ctaText="ctaText" :ctaHandler="ctaHandler">
+          <slot
+            name="cta"
+            :ctaUrl="ctaUrl"
+            :ctaText="ctaText"
+            :ctaHandler="ctaHandler"
+          >
             <p v-if="ctaText.length > 0">
-              <cta-button :to="ctaUrl" @clicked="ctaHandler">{{ ctaText }}</cta-button>
+              <cta-button :to="ctaUrl" @clicked="ctaHandler">{{
+                ctaText
+              }}</cta-button>
             </p>
           </slot>
         </div>
