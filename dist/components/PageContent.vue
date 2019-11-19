@@ -188,7 +188,7 @@ export default {
           textColor,
           mobileBackgroundImgUrl,
           backgroundAltTag,
-          blurUp: blurUp ? blurUp : false,
+          blurUp: blurUp ? blurUp : true,
           byDominantColor: byDominantColor ? byDominantColor : false,
           observeVisibility: observeVisibility ? observeVisibility : false
         }
@@ -303,7 +303,7 @@ export default {
               ? mobileBackgroundImage.fields.file.url
               : '',
             backgroundAltTag,
-            blurUp: blurUp ? blurUp : false,
+            blurUp: blurUp ? blurUp : true,
             byDominantColor: byDominantColor ? byDominantColor : false,
             observeVisibility: observeVisibility ? observeVisibility : false
           }
