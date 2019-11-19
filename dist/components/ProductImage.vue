@@ -10,7 +10,7 @@
     <img
       v-if="visibility"
       ref="product-image"
-      :src="optimizeSource({ url: source, containerRef: 'img-card' })"
+      :src="source"
       :alt="alt"
       :width="width"
       :style="cssVars"
