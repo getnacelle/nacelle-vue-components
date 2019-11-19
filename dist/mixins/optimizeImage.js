@@ -29,6 +29,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    byDominantColor: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -39,8 +43,6 @@ export default {
       containerHeight: null,
       containerPosition: null,
       newUrl: null,
-      emptySvg:
-        "data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E",
     }
   },
   computed: {
@@ -68,28 +70,24 @@ export default {
               })
             } else {
               if (this.blurUp) {
-                this.blurred = this.shopifyResize({
-                  src: url,
-                  width: 20,
-                  height: '',
-                })
+                this.blurred = this.getBlurred({ src: url })
                 this.newUrl = this.blurred
+              } else if (this.byDominantColor) {
+                this.newUrl = this.getDominantColor({ src: url })
               } else {
-                this.newUrl = this.emptySvg
+                this.newUrl = ''
               }
             }
           } else if (this.resize && !this.reformat) {
             if (this.newUrl !== null) {
               this.newUrl = this.shopifyResize({ src: url })
             } else if (this.blurUp) {
-              this.blurred = this.shopifyResize({
-                src: url,
-                width: 20,
-                height: '',
-              })
+              this.blurred = this.getBlurred({ src: url })
               this.newUrl = this.blurred
+            } else if (this.byDominantColor) {
+              this.newUrl = this.getDominantColor({ src: url })
             } else {
-              this.newUrl = this.emptySvg
+              this.newUrl = ''
             }
           } else if (!this.resize && this.reformat) {
             this.newUrl = this.shopifyReformat({ src: url })
@@ -109,6 +107,20 @@ export default {
           this.$refs[this.container]
         ).position
       }
+    },
+    getBlurred({ src = null } = {}) {
+      return this.shopifyResize({
+        src,
+        width: 20,
+        height: '',
+      })
+    },
+    getDominantColor({ src = null } = {}) {
+      return this.shopifyResize({
+        src,
+        width: 1,
+        height: '',
+      })
     },
     shopifyResize({ src = null, width = 'auto', height = 'auto' } = {}) {
       // Request size which closely matches the width of the bounding element,
