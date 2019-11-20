@@ -2,10 +2,10 @@
 import { storiesOf } from '@storybook/vue'
 import { withInfo } from 'storybook-addon-vue-info'
 import { withKnobs, button } from '@storybook/addon-knobs'
-import InterfaceModal from '../components/InterfaceModal'
+import ErrorModal from '../components/ErrorModal'
 import store from '../store/store'
 
-const label = 'Show Modal'
+const label = 'Trigger Error'
 
 storiesOf('Components | General', module)
   .addDecorator(withInfo)
@@ -14,24 +14,16 @@ storiesOf('Components | General', module)
     template: '<div style="padding: 3rem;"><story/></div>'
   }))
   .add(
-    'Modal',
+    'Error Modal',
     () => ({
       store,
-      components: { InterfaceModal },
-      data () {
-        return {
-          open: true
-        }
-      },
+      components: { ErrorModal },
       template: `
-        <interface-modal :modalOpen="open" v-on:closeModal="open = false">
-        <h1>This is a modal.</h1>
-        <p>Great work!</p>
-        </interface-modal>
+        <error-modal/>
       `,
       created () {
         button(label, () => {
-          this.open = true
+          store.commit('cart/setCartError', 'this is an error')
         })
       }
     }),
