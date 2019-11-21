@@ -1,18 +1,24 @@
 <template>
-  <div v-on:close="closeModal" class="modal-wrapper nacelle">
+  <div
+    class="modal-wrapper nacelle"
+    @close="closeModal"
+  >
     <transition name="fade">
       <div
         v-if="modalOpen"
-        @click="clickOuter"
         ref="outer"
         class="modal-outer"
+        @click="clickOuter"
       >
         <div class="container">
           <div class="columns">
             <div class="modal-inner column is-6">
-              <interface-close-button class="close" v-on:close="closeModal" />
+              <interface-close-button
+                class="close"
+                @close="closeModal"
+              />
               <div class="modal-content">
-                <slot v-on:close="closeModal"></slot>
+                <slot @close="closeModal" />
               </div>
             </div>
           </div>
@@ -23,7 +29,6 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
 import InterfaceCloseButton from './InterfaceCloseButton'
 export default {
   components: {
@@ -35,10 +40,10 @@ export default {
     }
   },
   methods: {
-    closeModal() {
+    closeModal () {
       this.$emit('closeModal')
     },
-    clickOuter(e) {
+    clickOuter (e) {
       const { target } = e
 
       if (target === this.$refs.outer) {
@@ -73,7 +78,7 @@ img {
   padding-top: 6rem;
   width: 100%;
   background-color: rgba(#000, 0.7);
-  z-index: 998;
+  z-index: 9999;
 }
 
 .close {
@@ -95,7 +100,7 @@ img {
   border-radius: 2px;
   min-height: 8rem;
   max-height: 100%;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .fade-enter-active,
@@ -107,4 +112,3 @@ img {
   opacity: 0;
 }
 </style>
-

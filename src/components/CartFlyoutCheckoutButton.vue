@@ -3,7 +3,9 @@
     class="button is-primary checkout-button nacelle"
     :class="{'is-loading': loading}"
     @click="checkout"
-  >{{checkoutText}}</div>
+  >
+    {{ checkoutText }}
+  </div>
 </template>
 
 <script>
@@ -16,7 +18,7 @@ export default {
       default: 'Checkout'
     }
   },
-  data() {
+  data () {
     return {
       loading: false
     }
@@ -27,10 +29,10 @@ export default {
   methods: {
     ...mapMutations('cart', ['setCartError']),
     ...mapActions('cart', ['processCheckout']),
-    async checkout() {
-      let vm = this
+    async checkout () {
+      const vm = this
       this.loading = true
-      let processCheckoutObject = await this.$apollo
+      const processCheckoutObject = await this.$apollo
         .mutate({
           mutation: gql`
             mutation($input: CheckoutInput) {
@@ -53,7 +55,8 @@ export default {
         })
         .catch(err => {
           console.log(err)
-          vm.setCartError()
+          vm.setCartError(err)
+          vm.loading = false
         })
       this.processCheckout(processCheckoutObject)
     }

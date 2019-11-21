@@ -1,13 +1,14 @@
 <template>
   <span class="product-price nacelle">
-    {{price | currency({
-    symbol: '$',
-    thousandsSeparator: ',',
-    fractionCount: 2,
-    fractionSeparator: '.',
-    symbolPosition: 'front',
-    symbolSpacing: false
-    })}}
+    {{ price | currency({
+      symbol: '$',
+      thousandsSeparator: ',',
+      fractionCount: 2,
+      fractionSeparator: '.',
+      symbolPosition: 'front',
+      symbolSpacing: false
+    }) }}
+
   </span>
 </template>
 
