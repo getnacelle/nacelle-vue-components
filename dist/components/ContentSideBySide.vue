@@ -9,7 +9,7 @@
           once: true
         }"
       >
-        <img v-if="visibility" :src="url" alt />
+        <img v-if="visibility" :src="imageUrl" alt />
       </div>
       <div
         class="column is-half sbs-copy"
@@ -21,16 +21,13 @@
             <div class="content" v-html="copy" />
           </div>
         </slot>
-        <slot
-          name="cta"
-          :ctaUrl="ctaUrl"
-          :ctaText="ctaText"
-          :ctaHandler="ctaHandler"
-        >
+        <slot name="cta" :ctaUrl="ctaUrl" :ctaText="ctaText" :ctaHandler="ctaHandler">
           <p v-if="ctaText.length > 0" class="has-text-centered">
-            <cta-button :to="ctaUrl" @clicked="ctaHandler">{{
+            <cta-button :to="ctaUrl" @clicked="ctaHandler">
+              {{
               ctaText
-            }}</cta-button>
+              }}
+            </cta-button>
           </p>
         </slot>
       </div>

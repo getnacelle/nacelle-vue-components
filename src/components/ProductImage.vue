@@ -10,7 +10,7 @@
     <img
       v-if="visibility"
       ref="product-image"
-      :src="url"
+      :src="source"
       :alt="alt"
       :width="width"
       :style="cssVars"

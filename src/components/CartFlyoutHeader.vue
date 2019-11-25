@@ -1,12 +1,21 @@
 <template>
   <div class="flyout-cart-header ui-border-bottom nacelle">
-    <slot name="title" :title="title">
-      <component :is="titleTag" class="flyout-cart-hearder-title">
-        {{title}}
+    <slot
+      name="title"
+      :title="title"
+    >
+      <component
+        :is="titleTag"
+        class="flyout-cart-hearder-title"
+      >
+        {{ title }}
       </component>
     </slot>
     <slot name="close-button">
-      <interface-close-button class="close" v-on:close="close" />
+      <interface-close-button
+        class="close"
+        @close="close"
+      />
     </slot>
   </div>
 </template>
@@ -29,7 +38,7 @@ export default {
     }
   },
   methods: {
-    close() {
+    close () {
       this.$emit('close')
     }
   }
@@ -43,7 +52,7 @@ export default {
 
 .close {
   position: absolute;
-  top: 0;
+  top: 1.5rem;
   right: 2rem;
 }
 
