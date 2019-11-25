@@ -1,7 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { storiesOf } from '@storybook/vue'
-import { action } from '@storybook/addon-actions'
-import { linkTo } from '@storybook/addon-links'
 import { withInfo } from 'storybook-addon-vue-info'
 
 import store from '../store/store'
@@ -18,8 +16,7 @@ import ProductVariantSelect from '../components/ProductVariantSelect'
 import CartFlyout from '../components/CartFlyout'
 import CartFlyoutItem from '../components/CartFlyoutItem'
 
-import defaultMultivariate  from '../../config/defaults/multivariateProduct'
-import allOptionsSelected from '../mixins/allOptionsSelected'
+import defaultMultivariate from '../../config/defaults/multivariateProduct'
 
 storiesOf('Components | Product/Composition', module)
   .addDecorator(withInfo)
@@ -47,7 +44,7 @@ storiesOf('Components | Product/Composition', module)
         }
       },
       methods: {
-        onVariantSelect ({ options, selectedVariant}) {
+        onVariantSelect ({ options, selectedVariant }) {
           this.variant = selectedVariant
         }
       },

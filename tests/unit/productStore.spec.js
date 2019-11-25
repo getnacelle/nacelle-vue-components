@@ -1,7 +1,6 @@
 import store from '../../src/store/store'
 import { defaultProduct } from '../../config/defaultObjects.js'
 
-
 describe('Event Store', () => {
   it('sets the product in vuex store', () => {
     store.commit('product/setProduct', defaultProduct)
@@ -12,7 +11,7 @@ describe('Event Store', () => {
 
   it('gets first variant if no variant selected', () => {
     store.commit('product/setProduct', defaultProduct)
-    
+
     expect(store.getters['product/currentVariant'].id)
       .toEqual(defaultProduct.variants[0].id)
   })

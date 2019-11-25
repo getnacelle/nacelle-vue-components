@@ -25,7 +25,7 @@ describe('User Store', () => {
     const storeConfig = createStoreConfig()
     const store = new Vuex.Store(storeConfig)
     store.dispatch('user/createSession')
-    let cookie = Cookies.get('session-id')
+    const cookie = Cookies.get('session-id')
     expect(store.state.user.sessionID).not.toBeNull()
     expect(cookie).toBeDefined()
   })

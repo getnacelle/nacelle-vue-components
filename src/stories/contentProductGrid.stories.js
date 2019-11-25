@@ -1,5 +1,4 @@
 import { storiesOf } from '@storybook/vue'
-import { withKnobs, object } from '@storybook/addon-knobs'
 import { withInfo } from 'storybook-addon-vue-info'
 import StoryRouter from 'storybook-vue-router'
 

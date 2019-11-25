@@ -25,7 +25,7 @@ describe('NacelleContent.vue', () => {
     })
 
     await delay() // mock data-loader loading content data
-    
+
     expect(typeof wrapper.vm.content !== 'undefined').toBe(true)
   })
 })

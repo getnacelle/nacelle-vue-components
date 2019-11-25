@@ -24,7 +24,7 @@ export default {
               description: 'This is a mock content response',
               sections: defaultContent.contentful,
               tags: [],
-              fields: {},
+              fields: {}
             })
           }, 100)
         })
@@ -35,7 +35,7 @@ export default {
             resolve(staticCollection)
           })
         })
-      },
+      }
     }
-  },
+  }
 }

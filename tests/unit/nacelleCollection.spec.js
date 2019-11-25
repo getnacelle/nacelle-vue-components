@@ -14,8 +14,6 @@ describe('NacelleCollection.vue', () => {
 
   beforeEach(() => {
     global.IntersectionObserver = class IntersectionObserver {
-      constructor() {}
-
       observe() {
         return null
       }
@@ -33,8 +31,8 @@ describe('NacelleCollection.vue', () => {
     const wrapper = shallowMount(NacelleCollection, {
       localVue,
       propsData: {
-        handle: 'test',
-      },
+        handle: 'test'
+      }
     })
 
     await delay() // mock data-loader loading product data

@@ -1,6 +1,6 @@
 import multivariateProduct from '../config/defaults/multivariateProduct'
 
-export default { 
+export default {
   install (Vue) {
     Vue.prototype.$axios = (url) => {
       if (url === '/data/shop/static.json') {

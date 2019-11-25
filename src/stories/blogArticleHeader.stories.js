@@ -1,11 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { storiesOf } from '@storybook/vue'
 import { withInfo } from 'storybook-addon-vue-info'
-import { withKnobs, text, array} from '@storybook/addon-knobs';
+import { withKnobs, text, array } from '@storybook/addon-knobs'
 import StoryRouter from 'storybook-vue-router'
 
 import BlogArticleHeader from '../components/BlogArticleHeader'
-
 
 storiesOf('Components | Content / Blog / Article Header', module)
   .addDecorator(withInfo)
@@ -51,7 +50,7 @@ storiesOf('Components | Content / Blog / Article Header', module)
     }
   )
 
-  storiesOf('Components | Content / Blog / Article Header', module)
+storiesOf('Components | Content / Blog / Article Header', module)
   .addDecorator(withInfo)
   .addDecorator(withKnobs)
   .addDecorator(StoryRouter())

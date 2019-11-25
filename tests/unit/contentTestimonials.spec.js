@@ -3,18 +3,18 @@ import ContentTestimonials from '@/components/ContentTestimonials'
 
 describe('ContentTestimonials.vue', () => {
   const slides = [
-    { 
+    {
       name: '@username1',
       quote: 'Lorem ipsum'
     },
-    { 
+    {
       name: '@username-two',
       quote: 'Lorem ipsum'
     },
-    { 
+    {
       name: '@user-three',
       quote: 'Lorem ipsum'
-    },
+    }
   ]
 
   it('renders a testimonial for each slide prop', async () => {

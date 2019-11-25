@@ -2,37 +2,37 @@ import { ObserveVisibility } from 'vue-observe-visibility'
 
 export default {
   directives: {
-    ObserveVisibility,
+    ObserveVisibility
   },
   props: {
     observeVisibility: {
       type: Boolean,
-      default: true,
+      default: true
     },
     resize: {
       type: Boolean,
-      default: true,
+      default: true
     },
     reformat: {
       type: Boolean,
-      default: true,
+      default: true
     },
     format: {
       type: String,
-      default: 'webp',
+      default: 'webp'
     },
     cropDirection: {
       type: String,
-      default: 'center',
+      default: 'center'
     },
     blurUp: {
       type: Boolean,
-      default: true,
+      default: true
     },
     byDominantColor: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
@@ -42,7 +42,7 @@ export default {
       containerWidth: null,
       containerHeight: null,
       containerPosition: null,
-      newUrl: null,
+      newUrl: null
     }
   },
   computed: {
@@ -51,7 +51,7 @@ export default {
         return this.visible
       }
       return true
-    },
+    }
   },
   methods: {
     visibilityChanged(isVisible) {
@@ -66,7 +66,7 @@ export default {
           if (this.resize && this.reformat) {
             if (this.newUrl !== null) {
               this.newUrl = this.shopifyReformat({
-                src: this.shopifyResize({ src: url }),
+                src: this.shopifyResize({ src: url })
               })
             } else {
               if (this.blurUp) {
@@ -112,14 +112,14 @@ export default {
       return this.shopifyResize({
         src,
         width: 20,
-        height: '',
+        height: ''
       })
     },
     getDominantColor({ src = null } = {}) {
       return this.shopifyResize({
         src,
         width: 1,
-        height: '',
+        height: ''
       })
     },
     shopifyResize({ src = null, width = 'auto', height = 'auto' } = {}) {
@@ -196,12 +196,12 @@ export default {
         return str1.concat('/', str2, '/', str3) === 'media/catalog/product'
       }
       return false
-    },
+    }
   },
   mounted() {
     this.calculateContainer()
   },
   updated() {
     this.calculateContainer()
-  },
+  }
 }

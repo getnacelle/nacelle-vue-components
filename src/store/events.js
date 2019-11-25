@@ -1,15 +1,15 @@
 const eventProperties = rootState => {
-  let timestamp = Date.now()
-  let spaceID = rootState && rootState.space ? rootState.space.id : null
-  let sessionID = rootState && rootState.user ? rootState.user.sessionID : null
-  let customerID =
+  const timestamp = Date.now()
+  const spaceID = rootState && rootState.space ? rootState.space.id : null
+  const sessionID = rootState && rootState.user ? rootState.user.sessionID : null
+  const customerID =
     rootState && rootState.user ? rootState.user.customerID : null
-  let anonymousID = rootState ? rootState.user.anonymousID : null
-  let cart =
+  const anonymousID = rootState ? rootState.user.anonymousID : null
+  const cart =
     rootState && rootState.cart && rootState.cart.lineItems
       ? JSON.stringify(rootState.cart.lineItems)
       : null
-  let handle = this ? this.$route.params.handle : null
+  const handle = this ? this.$route.params.handle : null
   let urlParams
   if (process.browser) {
     urlParams = window.location.search

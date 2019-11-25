@@ -72,7 +72,6 @@ describe('Space Store', () => {
       domain,
       metafields: []
     }
-    
 
     store.dispatch('space/updateSpace', space)
 
@@ -80,5 +79,5 @@ describe('Space Store', () => {
     expect(store.state.space.name).toEqual(name)
     expect(store.state.space.domain).toEqual(domain)
     expect(store.state.space.metafields.length).toEqual(0)
-  }) 
+  })
 })

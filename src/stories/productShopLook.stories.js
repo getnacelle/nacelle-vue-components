@@ -1,9 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { storiesOf } from '@storybook/vue'
-import { action } from '@storybook/addon-actions'
-import { linkTo } from '@storybook/addon-links'
 import { withInfo } from 'storybook-addon-vue-info'
-import { withKnobs, text, boolean, array, select, object } from '@storybook/addon-knobs';
+import { withKnobs } from '@storybook/addon-knobs'
 import StoryRouter from 'storybook-vue-router'
 import store from '../store/store'
 import { defaultProduct } from '../../config/defaultObjects.js'

@@ -1,4 +1,3 @@
-import store from '../../src/store/store'
 import { mount } from '@vue/test-utils'
 import CartFlyoutHeader from '@/components/CartFlyoutHeader'
 
