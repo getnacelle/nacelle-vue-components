@@ -1,6 +1,5 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import InterfaceLogo from '@/components/InterfaceLogo'
-import StoryRouter from 'storybook-vue-router'
 
 describe('InterfaceLogo.vue', () => {
   it('renders an image', async () => {
