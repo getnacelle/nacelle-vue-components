@@ -7,8 +7,16 @@
       :backgroundAltTag="backgroundAltTag"
     >
       <picture class="hero-background" ref="hero-img-card">
-        <source v-if="mobileBackgroundImgUrl.length > 0" media="(min-width: 787px)" :srcset="url" />
-        <source v-if="mobileBackgroundImgUrl.length > 0" media="(max-width: 786px)" :srcset="url" />
+        <source
+          v-if="mobileBackgroundImgUrl.length > 0"
+          media="(min-width: 787px)"
+          :srcset="backgroundImgUrl"
+        />
+        <source
+          v-if="mobileBackgroundImgUrl.length > 0"
+          media="(max-width: 786px)"
+          :srcset="mobileBackgroundImgUrl"
+        />
         <img :src="backgroundImgUrl" :alt="backgroundAltTag" />
       </picture>
     </slot>
@@ -46,7 +54,6 @@
 
 <script>
 import CtaButton from './CtaButton'
-import optimizeImage from '../mixins/optimizeImage'
 
 export default {
   components: {
@@ -118,8 +125,7 @@ export default {
 
       return `hero nacelle is-${this.size} is-align-${this.alignment} ${mobileHeightClass}`
     }
-  },
-  mixins: [optimizeImage]
+  }
 }
 </script>
 
