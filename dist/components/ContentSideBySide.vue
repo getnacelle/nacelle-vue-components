@@ -9,7 +9,10 @@
           once: true
         }"
       >
-        <img v-if="visibility" :src="imageUrl" alt />
+        <picture>
+          <source :srcset="optimizeSource({ url: imageUrl, format: 'webp' })" type="image/webp" />
+          <img v-if="visibility" :src="imageUrl" alt />
+        </picture>
       </div>
       <div
         class="column is-half sbs-copy"
@@ -37,7 +40,8 @@
 
 <script>
 import CtaButton from './CtaButton'
-import optimizeImage from '../mixins/optimizeImage'
+import imageOptimize from '../mixins/imageOptimize'
+import imageVisibility from '../mixins/imageVisibility'
 
 export default {
   components: {
@@ -59,6 +63,10 @@ export default {
     copy: {
       type: String,
       default: ''
+    },
+    containerRef: {
+      type: String,
+      default: 'img-card'
     },
     ctaText: {
       type: String,
@@ -93,7 +101,7 @@ export default {
       return `${desktopReverse} ${mobileReverse}`
     }
   },
-  mixins: [optimizeImage]
+  mixins: [imageOptimize, imageVisibility]
 }
 </script>
 

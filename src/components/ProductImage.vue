@@ -7,20 +7,24 @@
     class="product-image nacelle"
     ref="img-card"
   >
-    <img
-      v-if="visibility"
-      ref="product-image"
-      :src="source"
-      :alt="alt"
-      :width="width"
-      :style="cssVars"
-    />
+    <picture>
+      <source :srcset="optimizeSource({ url: source, format: 'webp' })" type="image/webp" />
+      <img
+        v-if="visibility"
+        ref="product-image"
+        :src="source"
+        :alt="alt"
+        :width="width"
+        :style="cssVars"
+      />
+    </picture>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
-import optimizeImage from '../mixins/optimizeImage'
+import imageOptimize from '../mixins/imageOptimize'
+import imageVisibility from '../mixins/imageVisibility'
 
 export default {
   props: {
@@ -39,6 +43,10 @@ export default {
     fadeIn: {
       type: Number,
       default: 1
+    },
+    containerRef: {
+      type: String,
+      default: 'img-card'
     }
   },
   computed: {
@@ -48,7 +56,7 @@ export default {
       }
     }
   },
-  mixins: [optimizeImage]
+  mixins: [imageOptimize, imageVisibility]
 }
 </script>
 
