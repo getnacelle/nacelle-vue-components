@@ -27,5 +27,5 @@ $ npm run test:unit
 
 ```bash
 # build the dist package 
-$ npm run build-library 
+$ npm run build-library  
 ```

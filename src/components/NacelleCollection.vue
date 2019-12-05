@@ -1,25 +1,14 @@
 <template>
   <div class="nacelle collection-data-load">
-    <slot
-      v-if="collection"
-      :collection="collection"
-      :products="products"
-    />
-    <button
-      v-if="showButton"
-      @click="fetchProducts"
-      class="nacelle button">
-      {{ buttonText }}
-    </button>
-    <div
-      v-else
-      ref="fetchMore"
-      class="fetch-more-component"
-    />
+    <slot v-if="collection" :collection="collection" :products="products" />
+    <button v-if="showButton" @click="fetchProducts" class="nacelle button">{{ buttonText }}</button>
+    <div v-else ref="fetchMore" class="fetch-more-component" />
   </div>
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex'
+
 export default {
   props: {
     handle: {
@@ -43,14 +32,17 @@ export default {
       default: 'Load More'
     }
   },
-  data () {
+  data() {
     return {
       collection: undefined,
       products: [],
-      productIndex: 0
+      productIndex: 0,
+      isLoadingProducts: false,
+      isObserverInitialized: false
     }
   },
   computed: {
+    ...mapGetters('collections', ['getCollection']),
     showButton() {
       return (
         this.useButtonLoadMore &&
@@ -60,78 +52,101 @@ export default {
       )
     }
   },
-  created () {
+  created() {
     if (process.browser || process.client) {
-      this.$nacelle
-        .collection(this.handle)
-        .then((result) => {
+      const storeCollection = this.getCollection(this.handle)
+
+      if (storeCollection) {
+        this.collection = storeCollection.collection
+        this.products = storeCollection.products
+      } else {
+        this.$nacelle.collection(this.handle).then(result => {
           if (result) {
             this.collection = result
             this.products = []
+            this.addCollection({
+              handle: this.handle,
+              collection: this.collection,
+              products: this.products,
+              productIndex: 0
+            })
             this.fetchProducts()
           }
         })
+      }
     }
   },
   mounted() {
-    if (
-      process.browser ||
-      process.client &&
-      !this.useButtonLoadMore
-    ) {
-      const options = {
-        root: null,
-        rootMargin: '100px',
-        threshold: 0.1
-      }
-      const onChange = (changes, observer) => {
-        if (changes[0].isIntersecting) {
-          this.fetchProducts()
-        }
-      }
-
-      if (this.$refs.fetchMore) {
-        const observer = new IntersectionObserver(onChange, options)
-        const observee = this.$refs.fetchMore
-
-        observer.observe(observee)
-      }
-    }
+    this.initObserver()
+  },
+  updated() {
+    this.initObserver()
   },
   methods: {
-    fetchProducts() {
-      if (process.browser || process.client) {
-        if (this.collection && Array.isArray(this.collection.products)) {
-          let handles = this.collection.products
-
-          if (this.paginate) {
-            handles = this.collection.products.slice(
-              this.productIndex,
-              this.productIndex + this.productsPerPage
-            )
-          }
-
-          this.$nacelle.products(handles).then(result => {
-            if (result && result.length > 0) {
-              // filter out non-existant products
-              const validProducts = result.filter(product => {
-                return (
-                  product &&
-                  product.id &&
-                  product.handle &&
-                  product.title
-                )
-              })
-
-              this.products = [
-                ...this.products,
-                ...validProducts
-              ]
-
-              this.productIndex = this.products.length
-            }
-          })
+    ...mapMutations('collections', ['addCollection', 'updateCollection']),
+    onChange(changes) {
+      if (changes[0].isIntersecting) {
+        this.fetchProducts()
+      }
+    },
+    initObserver() {
+      if (
+        !this.isObserverInitialized &&
+        (process.browser || process.client) &&
+        !this.useButtonLoadMore
+      ) {
+        const options = {
+          root: null,
+          rootMargin: '100px',
+          threshold: 0.1
         }
+
+        if (this.$refs.fetchMore) {
+          const observer = new IntersectionObserver(this.onChange, options)
+          const observee = this.$refs.fetchMore
+
+          observer.observe(observee)
+          this.isObserverInitialized = true
+        }
+      }
+    },
+    fetchProducts() {
+      if (
+        !this.isLoadingProducts &&
+        (process.browser || process.client) &&
+        this.collection &&
+        Array.isArray(this.collection.products) &&
+        this.products.length < this.collection.products.length
+      ) {
+        let handles = this.collection.products
+
+        this.isLoadingProducts = true
+
+        if (this.paginate) {
+          handles = this.collection.products.slice(
+            this.productIndex,
+            this.productIndex + this.productsPerPage
+          )
+        }
+
+        this.$nacelle.products(handles).then(result => {
+          if (result && result.length > 0) {
+            // filter out non-existant products
+            const validProducts = result.filter(product => {
+              return product && product.id && product.handle && product.title
+            })
+
+            this.products = [...this.products, ...validProducts]
+            this.productIndex = this.products.length
+            this.updateCollection({
+              handle: this.handle,
+              collection: this.collection,
+              products: this.products,
+              productIndex: this.productIndex
+            })
+            this.isLoadingProducts = false
+          }
+        })
       }
     }
   }
@@ -139,5 +154,4 @@ export default {
 </script>
 
 <style>
-
 </style>
