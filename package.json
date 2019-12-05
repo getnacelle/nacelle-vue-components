@@ -15,7 +15,7 @@
   "dependencies": {
     "@contentful/rich-text-html-renderer": "^13.4.0",
     "@contentful/rich-text-types": "^13.4.0",
-    "@nacelle/nacelle-tools": "dev",
+    "@nacelle/nacelle-tools": "latest",
     "axios": "^0.19.0",
     "dayjs": "^1.8.15",
     "es-cookie": "^1.2.0",
