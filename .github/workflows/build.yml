@@ -1,8 +1,8 @@
 on:
-    push:
-      # Sequence of patterns matched against refs/heads
-      branches:    
-        - master
+  push:
+    # Sequence of patterns matched against refs/heads
+    branches:    
+      - master
   name: Build and Publish
   jobs:
     build:
