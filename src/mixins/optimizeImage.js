@@ -2,39 +2,39 @@ import { ObserveVisibility } from 'vue-observe-visibility'
 
 export default {
   directives: {
-    ObserveVisibility,
+    ObserveVisibility
   },
   props: {
     observeVisibility: {
       type: Boolean,
-      default: true,
+      default: true
     },
     resize: {
       type: Boolean,
-      default: true,
+      default: true
     },
     reformat: {
       type: Boolean,
-      default: true,
+      default: true
     },
     format: {
       type: String,
-      default: 'webp',
+      default: 'webp'
     },
     cropDirection: {
       type: String,
-      default: 'center',
+      default: 'center'
     },
     blurUp: {
       type: Boolean,
-      default: true,
+      default: true
     },
     byDominantColor: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
-  data() {
+  data () {
     return {
       visible: false,
       container: null,
@@ -42,22 +42,22 @@ export default {
       containerWidth: null,
       containerHeight: null,
       containerPosition: null,
-      newUrl: null,
+      newUrl: null
     }
   },
   computed: {
-    visibility() {
+    visibility () {
       if (this.observeVisibility) {
         return this.visible
       }
       return true
-    },
+    }
   },
   methods: {
-    visibilityChanged(isVisible) {
+    visibilityChanged (isVisible) {
       this.visible = isVisible
     },
-    optimizeSource({ url = null, containerRef = null } = {}) {
+    optimizeSource ({ url = null, containerRef = null } = {}) {
       // The 'containerRef' named parameter is a ref which
       // must be assigned to the image's containing element
       if (typeof url === 'string' && containerRef !== null) {
@@ -66,7 +66,7 @@ export default {
           if (this.resize && this.reformat) {
             if (this.newUrl !== null) {
               this.newUrl = this.shopifyReformat({
-                src: this.shopifyResize({ src: url }),
+                src: this.shopifyResize({ src: url })
               })
             } else {
               if (this.blurUp) {
@@ -99,7 +99,7 @@ export default {
       }
       return url
     },
-    calculateContainer() {
+    calculateContainer () {
       if ((process.client || process.browser) && this.container !== null) {
         this.containerHeight = this.$refs[this.container].clientHeight
         this.containerWidth = this.$refs[this.container].clientWidth
@@ -108,25 +108,25 @@ export default {
         ).position
       }
     },
-    getBlurred({ src = null } = {}) {
+    getBlurred ({ src = null } = {}) {
       return this.shopifyResize({
         src,
         width: 20,
-        height: '',
+        height: ''
       })
     },
-    getDominantColor({ src = null } = {}) {
+    getDominantColor ({ src = null } = {}) {
       return this.shopifyResize({
         src,
         width: 1,
-        height: '',
+        height: ''
       })
     },
-    shopifyResize({ src = null, width = 'auto', height = 'auto' } = {}) {
+    shopifyResize ({ src = null, width = 'auto', height = 'auto' } = {}) {
       // Request size which closely matches the width of the bounding element,
       // unless the parent container uses absolute positioning.
       // Round up size to the nearest 50px increment.
-      function roundedUpToNearest50px(x) {
+      function roundedUpToNearest50px (x) {
         // Return a blank string if less than 50px
         if (x >= 50) {
           return +x + 49 - ((+x + 49) % 50)
@@ -158,7 +158,7 @@ export default {
       }
       return null
     },
-    shopifyReformat({ src = null, format = 'webp' } = {}) {
+    shopifyReformat ({ src = null, format = 'webp' } = {}) {
       // Takes either a png or jpg (other formats will not work),
       // Returns query string for image in WebP or PJPG format.
       // NOTE 1: Transformation only works on png and jpg images.
@@ -183,25 +183,25 @@ export default {
         return null
       }
     },
-    fromShopifyCDN({ url = null } = {}) {
+    fromShopifyCDN ({ url = null } = {}) {
       if (typeof url === 'string') {
         return url.split('.com')[0] === 'https://cdn.shopify'
       }
       return false
     },
-    fromMagentoCDN({ url = null } = {}) {
+    fromMagentoCDN ({ url = null } = {}) {
       // Note that not all Magento stores use images from the Magento CDN
       if (typeof url === 'string') {
         const [, str1, str2, str3] = url.split('://')[1].split('/')
         return str1.concat('/', str2, '/', str3) === 'media/catalog/product'
       }
       return false
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.calculateContainer()
   },
-  updated() {
+  updated () {
     this.calculateContainer()
-  },
+  }
 }
