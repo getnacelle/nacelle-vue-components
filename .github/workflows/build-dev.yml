@@ -1,0 +1,27 @@
+on:
+    push:
+      # Sequence of patterns matched against refs/heads
+      branches:    
+        - dev
+  name: Build and Publish
+  jobs:
+    build:
+      name: Publish
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v1.1.0
+        - name: "Setup Node.js"
+          uses: "actions/setup-node@v1"
+          with:
+            node-version: "10.x"
+            registry-url: "https://registry.npmjs.org"
+        - run : npm install
+        - run: npm run build-library
+        - name: "Automated Version Bump"
+          uses: "phips28/gh-action-bump-version@master"
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        - run: npm publish --tag dev
+          env:
+            NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
