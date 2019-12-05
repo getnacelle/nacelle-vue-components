@@ -252,7 +252,6 @@ const cart = (options = {}) => {
           await dispatch('saveCheckoutId', payload.id)
           let url
           const linkerParam = await dispatch('getLinkerParam')
-          alert(linkerParam)
           if (payload.url.includes('?')) {
             url = `${payload.url}&c=${JSON.stringify(rootState.user.userData)}&${linkerParam}`
           } else {
