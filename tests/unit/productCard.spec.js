@@ -3,6 +3,18 @@ import store from '../../src/store/store'
 import ProductCard from '@/components/ProductCard'
 
 describe('ProductCard.vue', () => {
+  beforeEach(() => {
+    global.IntersectionObserver = class IntersectionObserver {
+      observe() {
+        return null
+      }
+
+      unobserve() {
+        return null
+      }
+    }
+  })
+
   const defaultProduct = {
     priceRange: {
       max: '29.99'
