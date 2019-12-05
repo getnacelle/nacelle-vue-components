@@ -241,11 +241,18 @@ const cart = (options = {}) => {
         return checkoutId
       },
 
+      async getLinkerParam () {
+        return new Promise((resolve, reject) => {
+          ga((tracker) => resolve(tracker.get('linkerParam')))
+        })
+      },
+
       async saveAndRedirect ({ dispatch, rootState }, payload) {
         if (payload && process.browser) {
           await dispatch('saveCheckoutId', payload.id)
           let url
-          const linkerParam = ga((tracker) => tracker.get('linkerParam'))
+          const linkerParam = await dispatch('getLinkerParam')
+          alert(linkerParam)
           if (payload.url.includes('?')) {
             url = `${payload.url}&c=${JSON.stringify(rootState.user.userData)}&${linkerParam}`
           } else {
