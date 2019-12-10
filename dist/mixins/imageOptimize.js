@@ -65,38 +65,6 @@ export default {
           } else {
             newSource = source
           }
-          // if (this.resize && this.reformat) {
-          //   // if (newSource !== null) {
-          //   newSource = this.shopifyReformat({
-          //     src: this.shopifyResize({ src: source }),
-          //     format
-          //   })
-          //   // } else {
-          //   //   if (this.blurUp) {
-          //   //     this.blurred = this.getBlurred({ src: source })
-          //   //     newSource = this.blurred
-          //   //   } else if (this.byDominantColor) {
-          //   //     newSource = this.getDominantColor({ src: source })
-          //   //   } else {
-          //   //     newSource = ''
-          //   //   }
-          //   // }
-          // } else if (!this.resize && this.reformat) {
-          //   newSource = this.shopifyReformat({ src: source, format })
-          // } else if (this.resize && !this.reformat) {
-          //   // if (newSource !== null) {
-          //   newSource = this.shopifyResize({ src: source })
-          //   // } else if (this.blurUp) {
-          //   //   this.blurred = this.getBlurred({ src: source })
-          //   //   newSource = this.blurred
-          //   // } else if (this.byDominantColor) {
-          //   //   newSource = this.getDominantColor({ src: source })
-          //   // } else {
-          //   //   newSource = ''
-          //   // }
-          // } else {
-          //   newSource = source
-          // }
         } else newSource = url
         return newSource
       }
