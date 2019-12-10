@@ -7,7 +7,7 @@ export default {
     },
     resize: {
       type: Boolean,
-      default: true
+      default: false
     },
     reformat: {
       type: Boolean,
@@ -19,7 +19,7 @@ export default {
     },
     blurUp: {
       type: Boolean,
-      default: true
+      default: false
     },
     byDominantColor: {
       type: Boolean,
@@ -138,8 +138,7 @@ export default {
     shopifyReformat({ src = null, format = 'webp' } = {}) {
       // Takes either a png or jpg (other formats will not work),
       // Returns query string for image in WebP or PJPG format.
-      // NOTE 1: Transformation only works on png and jpg images.
-      // NOTE 2: This function defaults to webp (preferred by Lighthouse)
+      // NOTE: Transformation only works on png and jpg images.
       //
       // Example 1:
       //  shopifyReformat({ src: "https://cdn.shopify.com/s/files/myPicture.png", format: 'pjpg'})
