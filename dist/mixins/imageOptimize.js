@@ -1,3 +1,5 @@
+import { mapGetters } from 'vuex'
+
 export default {
   props: {
     containerRef: {
@@ -32,47 +34,71 @@ export default {
       containerWidth: null,
       containerHeight: null,
       containerPosition: null,
-      newUrl: null
+      originCDN: null
+    }
+  },
+  computed: {
+    ...mapGetters('space', ['getMetafield']),
+    cdn() {
+      return this.getMetafield('cdn', 'provider')
+    },
+    cdnShopifyToCloudinary() {
+      return this.originCDN === 'shopify' && this.cdn.toLowerCase() === 'cloudinary'
+    },
+    cloudinaryCloudName() {
+      return this.getMetafield('cdn', 'cloudinary-cloud-name')
+    },
+    cloudinaryUrlBase() {
+      return `https://res.cloudinary.com/${this.cloudinaryCloudName}/image/upload/nacelle/`
     }
   },
   methods: {
-    optimizeSource({ url = null, format = 'webp' } = {}) {
+    optimizeSource({ url = null, format = 'auto' } = {}) {
+      let newSource
       if (typeof url === 'string' && this.containerRef) {
         if (this.fromShopifyCDN({ url })) {
-          if (this.resize && this.reformat) {
-            if (this.newUrl !== null) {
-              this.newUrl = this.shopifyReformat({
-                src: this.shopifyResize({ src: url }),
-                format
-              })
-            } else {
-              if (this.blurUp) {
-                this.blurred = this.getBlurred({ src: url })
-                this.newUrl = this.blurred
-              } else if (this.byDominantColor) {
-                this.newUrl = this.getDominantColor({ src: url })
-              } else {
-                this.newUrl = ''
-              }
-            }
-          } else if (this.resize && !this.reformat) {
-            if (this.newUrl !== null) {
-              this.newUrl = this.shopifyResize({ src: url })
-            } else if (this.blurUp) {
-              this.blurred = this.getBlurred({ src: url })
-              this.newUrl = this.blurred
-            } else if (this.byDominantColor) {
-              this.newUrl = this.getDominantColor({ src: url })
-            } else {
-              this.newUrl = ''
-            }
-          } else if (!this.resize && this.reformat) {
-            this.newUrl = this.shopifyReformat({ src: url, format })
+          this.originCDN = 'shopify'
+          const source = (this.cdn.toLowerCase() === 'cloudinary') ? this.shopifyToCloudinary({ url }) : url
+          if (this.reformat && this.cdn.toLowerCase() === 'cloudinary') {
+            newSource = source.split('upload/')
+              .reduce((acc, el, idx) => idx === 1 ? acc.concat(`upload/f_${format}/${el}`) : acc.concat(el))
           } else {
-            this.newUrl = url
+            newSource = source
           }
-        } else this.newUrl = url
-        return this.newUrl
+          // if (this.resize && this.reformat) {
+          //   // if (newSource !== null) {
+          //   newSource = this.shopifyReformat({
+          //     src: this.shopifyResize({ src: source }),
+          //     format
+          //   })
+          //   // } else {
+          //   //   if (this.blurUp) {
+          //   //     this.blurred = this.getBlurred({ src: source })
+          //   //     newSource = this.blurred
+          //   //   } else if (this.byDominantColor) {
+          //   //     newSource = this.getDominantColor({ src: source })
+          //   //   } else {
+          //   //     newSource = ''
+          //   //   }
+          //   // }
+          // } else if (!this.resize && this.reformat) {
+          //   newSource = this.shopifyReformat({ src: source, format })
+          // } else if (this.resize && !this.reformat) {
+          //   // if (newSource !== null) {
+          //   newSource = this.shopifyResize({ src: source })
+          //   // } else if (this.blurUp) {
+          //   //   this.blurred = this.getBlurred({ src: source })
+          //   //   newSource = this.blurred
+          //   // } else if (this.byDominantColor) {
+          //   //   newSource = this.getDominantColor({ src: source })
+          //   // } else {
+          //   //   newSource = ''
+          //   // }
+          // } else {
+          //   newSource = source
+          // }
+        } else newSource = url
+        return newSource
       }
       return url
     },
@@ -157,6 +183,16 @@ export default {
         }
       } else {
         return null
+      }
+    },
+    shopifyToCloudinary({ url }) {
+      return typeof (url) === 'string'
+        ? `${this.cloudinaryUrlBase}${url.split('https://cdn.shopify.com/s/files/')[1].split('&')[0]}`
+        : url
+    },
+    fromCloudinaryCDN({ url = null } = {}) {
+      if (typeof url === 'string') {
+        return url.split('.com')[0] === 'https://res.cloudinary'
       }
     },
     fromShopifyCDN({ url = null } = {}) {
