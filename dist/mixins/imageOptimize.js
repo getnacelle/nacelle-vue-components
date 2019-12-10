@@ -50,6 +50,10 @@ export default {
     },
     cloudinaryUrlBase() {
       return `https://res.cloudinary.com/${this.cloudinaryCloudName}/image/upload/nacelle/`
+    },
+    shopifyPathPrefix() {
+      const path = this.getMetafield('cdn', 'shopify-path-prefix') || 'https://cdn.shopify.com/s/files/'
+      return path.split('').reverse()[0] !== '/' ? path.concat('/') : path
     }
   },
   methods: {
@@ -155,7 +159,7 @@ export default {
     },
     shopifyToCloudinary({ url }) {
       return typeof (url) === 'string'
-        ? `${this.cloudinaryUrlBase}${url.split('https://cdn.shopify.com/s/files/')[1].split('&')[0]}`
+        ? `${this.cloudinaryUrlBase}${url.split(this.shopifyPathPrefix)[1].split('&')[0]}`
         : url
     },
     fromCloudinaryCDN({ url = null } = {}) {
