@@ -49,7 +49,7 @@ export default {
       return this.getMetafield('cdn', 'cloudinary-cloud-name')
     },
     cloudinaryUrlBase() {
-      return `https://res.cloudinary.com/${this.cloudinaryCloudName}/image/upload/nacelle/`
+      return `https://res.cloudinary.com/${this.cloudinaryCloudName}/image/fetch/`
     },
     shopifyPathPrefix() {
       const path = this.getMetafield('cdn', 'shopify-path-prefix') || 'https://cdn.shopify.com/s/files/'
@@ -158,22 +158,22 @@ export default {
         return null
       }
     },
-    cloudinaryReformat({ src = null, format = 'auto' } = {}) {
-      // Takes an image stored in Cloudinary and returns query string
-      // for image in the requested format (e.g., 'webp' , 'pjpg' , etc.).
+    cloudinaryReformat({ src = null, format = 'auto', api = 'fetch' } = {}) {
+      // Perform an on-the-fly image format transformation. Choose between
+      // Cloudinary's 'fetch' and 'upload' APIs
       //
       if (typeof src === 'string') {
         const transformFormat = `f_${format}`
-        const pathChar = src.split('upload/')[1].split('/')[0].includes('_') ? ',' : '/'
+        const pathChar = src.split(`${api}/`)[1].split('/')[0].includes('_') ? ',' : '/'
         if (format === 'auto' || format === 'webp' || format === 'jpg' || format === 'png') {
-          return src.split('upload/')
+          return src.split(`${api}/`)
             .reduce((acc, el, idx) => idx === 0
-              ? acc.concat(el, `upload/${transformFormat}${pathChar}`)
+              ? acc.concat(el, api, '/', transformFormat, pathChar)
               : acc.concat(el), '')
         } else if (format === 'pjpg') {
-          return src.split('upload/')
+          return src.split(`${api}/`)
             .reduce((acc, el, idx) => idx === 0
-              ? acc.concat(el, `upload/f_jpg,fl_progressive${pathChar}`)
+              ? acc.concat(el, api, '/', 'f_jpg,fl_progressive', pathChar)
               : acc.concat(el), '')
         } else {
           // return the original image if not being converted to a possible extension
@@ -182,10 +182,16 @@ export default {
       }
       return null
     },
-    shopifyToCloudinary({ url }) {
-      return typeof (url) === 'string'
-        ? `${this.cloudinaryUrlBase}${url.split(this.shopifyPathPrefix)[1].split('&')[0]}`
-        : url
+    shopifyToCloudinary({ url, api = 'fetch' } = {}) {
+      if (api === 'fetch') {
+        return typeof (url) === 'string'
+          ? `${this.cloudinaryUrlBase}${url.split('&')[0]}`
+          : url
+      } else if (api === 'upload') {
+        return typeof (url) === 'string'
+          ? `${this.cloudinaryUrlBase}${url.split(this.shopifyPathPrefix)[1].split('&')[0]}`
+          : url
+      }
     },
     fromCloudinaryCDN({ url = null } = {}) {
       if (typeof url === 'string') {
