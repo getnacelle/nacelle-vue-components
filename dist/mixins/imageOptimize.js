@@ -59,13 +59,12 @@ export default {
   methods: {
     optimizeSource({ url = null, format = 'auto' } = {}) {
       let newSource
-      if (typeof url === 'string' && this.containerRef) {
+      if (typeof url === 'string') {
         if (this.fromShopifyCDN({ url })) {
           this.originCDN = 'shopify'
           const source = (this.cdn.toLowerCase() === 'cloudinary') ? this.shopifyToCloudinary({ url }) : url
           if (this.reformat && this.cdn.toLowerCase() === 'cloudinary') {
-            newSource = source.split('upload/')
-              .reduce((acc, el, idx) => idx === 1 ? acc.concat(`upload/f_${format}/${el}`) : acc.concat(el))
+            newSource = this.cloudinaryReformat({ src: source, format })
           } else {
             newSource = source
           }
@@ -156,6 +155,30 @@ export default {
       } else {
         return null
       }
+    },
+    cloudinaryReformat({ src = null, format = 'webp' } = {}) {
+      // Takes an image stored in Cloudinary and returns query string
+      // for image in the requested format (e.g., 'webp' , 'pjpg' , etc.).
+      //
+      if (typeof src === 'string') {
+        const transformFormat = `f_${format}`
+        const pathChar = src.split('upload/')[1].split('/')[0].includes('_') ? ',' : '/'
+        if (format === 'png' || format === 'jpg' || format === 'webp') {
+          return src.split('upload/')
+            .reduce((acc, el, idx) => idx === 0
+              ? acc.concat(el, `upload/${transformFormat}${pathChar}`)
+              : acc.concat(el), '')
+        } else if (format === 'pjpg') {
+          return src.split('upload/')
+            .reduce((acc, el, idx) => idx === 0
+              ? acc.concat(el, `upload/f_jpg,fl_progressive${pathChar}`)
+              : acc.concat(el), '')
+        } else {
+          // return the original image if not being converted to a possible extension
+          return src
+        }
+      }
+      return null
     },
     shopifyToCloudinary({ url }) {
       return typeof (url) === 'string'
