@@ -10,7 +10,9 @@
         }"
       >
         <picture>
+          <source :srcset="optimizeSource({ url: imageUrl, format: 'auto' })" />
           <source :srcset="optimizeSource({ url: imageUrl, format: 'webp' })" type="image/webp" />
+          <source :srcset="optimizeSource({ url: imageUrl, format: 'jpg' })" type="image/jpeg" />
           <img v-if="visibility" :src="imageUrl" alt />
         </picture>
       </div>
