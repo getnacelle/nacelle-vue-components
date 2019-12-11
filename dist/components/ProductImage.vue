@@ -8,7 +8,20 @@
     ref="img-card"
   >
     <picture>
-      <source :srcset="optimizeSource({ url: source, format: 'webp' })" type="image/webp" />
+      <source
+        v-if="visibility && reformat"
+        :srcset="optimizeSource({ url: source, format: 'auto' })"
+      />
+      <source
+        v-if="visibility && reformat"
+        :srcset="optimizeSource({ url: source, format: 'webp' })"
+        type="image/webp"
+      />
+      <source
+        v-if="visibility && reformat"
+        :srcset="optimizeSource({ url: source, format: 'jpg' })"
+        type="image/jpeg"
+      />
       <img
         v-if="visibility"
         ref="product-image"

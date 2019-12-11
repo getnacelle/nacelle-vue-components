@@ -10,13 +10,14 @@
         <source
           v-if="mobileBackgroundImgUrl.length > 0"
           media="(min-width: 787px)"
-          :srcset="backgroundImgUrl"
+          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'auto' })"
         />
         <source
           v-if="mobileBackgroundImgUrl.length > 0"
           media="(max-width: 786px)"
-          :srcset="mobileBackgroundImgUrl"
+          :srcset="optimizeSource({ url: mobileBackgroundImgUrl, format: 'auto' })"
         />
+        <source :srcset="optimizeSource({ url: backgroundImgUrl, format: 'auto' })" />
         <img :src="backgroundImgUrl" :alt="backgroundAltTag" />
       </picture>
     </slot>
@@ -54,6 +55,7 @@
 
 <script>
 import CtaButton from './CtaButton'
+import imageOptimize from '../mixins/imageOptimize'
 
 export default {
   components: {
@@ -125,7 +127,8 @@ export default {
 
       return `hero nacelle is-${this.size} is-align-${this.alignment} ${mobileHeightClass}`
     }
-  }
+  },
+  mixins: [imageOptimize]
 }
 </script>
 
