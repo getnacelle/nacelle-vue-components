@@ -40,7 +40,7 @@ export default {
   computed: {
     ...mapGetters('space', ['getMetafield']),
     cdn() {
-      return this.getMetafield('cdn', 'provider')
+      return this.getMetafield('cdn', 'provider') || 'shopify'
     },
     cdnShopifyToCloudinary() {
       return this.originCDN === 'shopify' && this.cdn.toLowerCase() === 'cloudinary'
@@ -65,6 +65,8 @@ export default {
           const source = (this.cdn.toLowerCase() === 'cloudinary') ? this.shopifyToCloudinary({ url }) : url
           if (this.reformat && this.cdn.toLowerCase() === 'cloudinary') {
             newSource = this.cloudinaryReformat({ src: source, format })
+          } else if (this.reformat && this.cdn.toLowerCase() === 'shopify') {
+            newSource = this.shopifyReformat({ src: source, format })
           } else {
             newSource = source
           }
@@ -147,7 +149,7 @@ export default {
       if (typeof src === 'string') {
         const extension = Array.from(src.split('?v=')[0].split('.')).pop()
         if (extension === 'png' || extension === 'jpg') {
-          return src.split('&format=')[0].concat(`&format=${format}`)
+          return src.split('&format=')[0].concat(`&format=${format === 'auto' ? 'jpg' : format}`)
         } else {
           // return the original image if it is a gif / not a png or jpg
           return src
@@ -156,14 +158,14 @@ export default {
         return null
       }
     },
-    cloudinaryReformat({ src = null, format = 'webp' } = {}) {
+    cloudinaryReformat({ src = null, format = 'auto' } = {}) {
       // Takes an image stored in Cloudinary and returns query string
       // for image in the requested format (e.g., 'webp' , 'pjpg' , etc.).
       //
       if (typeof src === 'string') {
         const transformFormat = `f_${format}`
         const pathChar = src.split('upload/')[1].split('/')[0].includes('_') ? ',' : '/'
-        if (format === 'png' || format === 'jpg' || format === 'webp') {
+        if (format === 'auto' || format === 'webp' || format === 'jpg' || format === 'png') {
           return src.split('upload/')
             .reduce((acc, el, idx) => idx === 0
               ? acc.concat(el, `upload/${transformFormat}${pathChar}`)
