@@ -32,14 +32,14 @@ const user = {
       await context.dispatch('readSession')
     },
 
-    //// ANONYMOUS ID ACTIONS //////////////////////////////////////////
+    // ANONYMOUS ID ACTIONS //////////////////////////////////////////
     async createAnonymousID(context) {
-      let anonymousID = uuid()
-      await localforage.set('anonymousID', anonymousID)
+      const anonymousID = uuid()
+      await localforage.setItem('anonymousID', anonymousID)
       context.commit('setAnonymousID', anonymousID)
     },
     async readAnonymousID(context) {
-      let anonymousID = await localforage.get('anonymousID')
+      const anonymousID = await localforage.getItem('anonymousID')
       if (anonymousID != null) {
         context.commit('setAnonymousID', anonymousID)
       } else {
@@ -47,9 +47,9 @@ const user = {
       }
     },
 
-    //// SESSION ACTIONS //////////////////////////////////////////
+    // SESSION ACTIONS //////////////////////////////////////////
     async createSession(context) {
-      let sessionID = uuid()
+      const sessionID = uuid()
       context.commit('setSessionID', sessionID)
       if (process.browser) {
         Cookies.set('session-id', sessionID, {
@@ -59,8 +59,8 @@ const user = {
     },
     readSession(context) {
       if (process.browser) {
-        let sessionCookie = Cookies.get('session-id')
-        if (sessionCookie == undefined) {
+        const sessionCookie = Cookies.get('session-id')
+        if (sessionCookie === undefined) {
           context.dispatch('createSession')
         } else {
           context.commit('setSessionID', sessionCookie)

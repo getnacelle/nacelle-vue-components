@@ -1,29 +1,34 @@
 const eventProperties = rootState => {
-  let timestamp = Date.now()
-  let spaceID = rootState && rootState.space ? rootState.space.id : null
-  let sessionID = rootState && rootState.user ? rootState.user.sessionID : null
-  let customerID =
-    rootState && rootState.user ? rootState.user.customerID : null
-  let anonymousID = rootState ? rootState.user.anonymousID : null
-  let cart =
-    rootState && rootState.cart && rootState.cart.lineItems
-      ? JSON.stringify(rootState.cart.lineItems)
+  const { user, space, cart } = rootState || {}
+  const timestamp = Date.now()
+  const spaceID = space ? space.id : null
+  const customerID = user && user.customerID ? user.customerID : null
+  const anonymousID = user && user.anonymousID ? user.anonymousID : null
+  const customer = user || null
+  const cartJsonString =
+    cart && cart.lineItems
+      ? JSON.stringify(cart.lineItems)
       : null
-  let handle = this ? this.$route.params.handle : null
-  let urlParams
+  let urlParams = null
+  let domain = null
+  let url = null
+
   if (process.browser) {
     urlParams = window.location.search
+    domain = window.location.origin
+    url = window.location.href
   }
 
   return {
     timestamp,
     spaceID,
-    sessionID,
     customerID,
     anonymousID,
-    cart,
-    handle,
-    urlParams
+    customer,
+    cart: cartJsonString,
+    urlParams,
+    url,
+    domain
   }
 }
 const events = {
@@ -37,38 +42,38 @@ const events = {
     }
   },
   actions: {
-    pageView({ commit, rootState }, page) {
+    pageView({ commit, rootState }, payload) {
       commit('addEvent', {
         eventType: 'PAGE_VIEW',
-        page,
+        payload,
         ...eventProperties(rootState)
       })
     },
     productView({ commit, rootState }, product) {
       commit('addEvent', {
         eventType: 'PRODUCT_VIEW',
-        product,
+        payload: { product },
         ...eventProperties(rootState)
       })
     },
-    addToCart({ commit, rootState }, product) {
+    addToCart({ commit, rootState }, payload) {
       commit('addEvent', {
         eventType: 'ADD_TO_CART',
-        product,
+        payload,
         ...eventProperties(rootState)
       })
     },
-    removeFromCart({ commit, rootState }, lineItem) {
+    removeFromCart({ commit, rootState }, payload) {
       commit('addEvent', {
         eventType: 'REMOVE_FROM_CART',
-        lineItem,
+        payload,
         ...eventProperties(rootState)
       })
     },
-    checkoutInit({ commit, rootState }, cart) {
+    checkoutInit({ commit, rootState }, payload) {
       commit('addEvent', {
         eventType: 'CHECKOUT_INIT',
-        cart,
+        payload,
         ...eventProperties(rootState)
       })
     }

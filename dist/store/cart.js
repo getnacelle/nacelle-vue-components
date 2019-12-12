@@ -72,9 +72,9 @@ const cart = (options = {}) => {
     mutations: {
       addLineItemMutation (state, payload) {
         const index = state.lineItems.findIndex(
-          lineItem => lineItem.variant.id == payload.variant.id
+          lineItem => lineItem.variant.id === payload.variant.id
         )
-        if (index == -1) {
+        if (index === -1) {
           state.lineItems.push(payload)
         } else {
           state.lineItems[index].quantity++
@@ -82,25 +82,25 @@ const cart = (options = {}) => {
       },
       removeLineItemMutation (state, payload) {
         const index = state.lineItems.findIndex(
-          lineItem => lineItem.variant.id == payload
+          lineItem => lineItem.variant.id === payload
         )
         state.lineItems.splice(index, 1)
       },
       incrementLineItemMutation (state, payload) {
         const index = state.lineItems.findIndex(
-          lineItem => lineItem.variant.id == payload
+          lineItem => lineItem.variant.id === payload
         )
-        if (index != -1) {
+        if (index !== -1) {
           state.lineItems[index].quantity++
         }
       },
       decrementLineItemMutation (state, payload) {
         const index = state.lineItems.findIndex(
-          lineItem => lineItem.variant.id == payload
+          lineItem => lineItem.variant.id === payload
         )
-        if (index != -1 && state.lineItems[index].quantity >= 1) {
+        if (index !== -1 && state.lineItems[index].quantity >= 1) {
           state.lineItems[index].quantity--
-          if (state.lineItems[index].quantity == 0) {
+          if (state.lineItems[index].quantity === 0) {
             state.lineItems.splice(index, 1)
           }
         }
@@ -137,7 +137,14 @@ const cart = (options = {}) => {
         context.dispatch('saveLineItems', context.state.lineItems)
         // context.commit('showCart')
         if (context.rootState.events) {
-          context.dispatch('events/addToCart', payload, { root: true })
+          context.dispatch(
+            'events/addToCart',
+            {
+              product: payload,
+              cart: context.state.lineItems
+            },
+            { root: true }
+          )
         }
       },
 
@@ -146,7 +153,14 @@ const cart = (options = {}) => {
           const lineItem = state.lineItems.find(
             item => item.variant.id === payload
           )
-          dispatch('events/removeFromCart', lineItem, { root: true })
+          dispatch(
+            'events/removeFromCart',
+            {
+              product: lineItem,
+              cart: state.lineItems
+            },
+            { root: true }
+          )
         }
 
         commit('removeLineItemMutation', payload)
@@ -208,7 +222,7 @@ const cart = (options = {}) => {
         }
       },
       async removeLineItemsIfCheckoutComplete (context) {
-        if (context.state.checkoutComplete == true) {
+        if (context.state.checkoutComplete === true) {
           await localforage.removeItem('line-items')
           await localforage.removeItem('checkout-id')
         }
@@ -242,9 +256,11 @@ const cart = (options = {}) => {
       },
 
       async getLinkerParam () {
-        return new Promise((resolve, reject) => {
-          ga((tracker) => resolve(tracker.get('linkerParam')))
-        })
+        if (window.ga) {
+          return new Promise((resolve, reject) => {
+            window.ga((tracker) => resolve(tracker.get('linkerParam')))
+          })
+        }
       },
 
       async saveAndRedirect ({ dispatch, rootState }, payload) {
@@ -270,7 +286,7 @@ const cart = (options = {}) => {
         // let checkoutId = await dispatch('getCheckoutIdForBackend')
 
         if (rootState.events) {
-          dispatch('events/checkout', state.lineItems, { root: true })
+          dispatch('events/checkoutInit', { cart: state.lineItems }, { root: true })
         }
 
         await dispatch('saveAndRedirect', payload)

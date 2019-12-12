@@ -11,8 +11,8 @@ export default {
     ...mapGetters('cart', ['quantityTotal']),
     ...mapState('cart', ['lineItems']),
     productIDs() {
-      let vm = this
-      let productIDs = this.lineItems.map(item => {
+      const vm = this
+      const productIDs = this.lineItems.map(item => {
         return vm.decodeBase64ProductId(item.productId)
       })
       return productIDs
@@ -23,27 +23,23 @@ export default {
   },
   watch: {
     log(log) {
-      let vm = this
+      const vm = this
       switch (vm.logEntry.eventType) {
         case 'PAGE_VIEW':
           vm.facebookPageView()
           vm.googleAnalyticsPageView()
           break
-
         case 'PRODUCT_VIEW':
           vm.facebookProductView()
           vm.googleAnalyticsProductView()
           break
-
         case 'ADD_TO_CART':
           vm.facebookAddToCart()
           vm.googleAnalyticsAddToCart()
           break
-
         case 'REMOVE_FROM_CART':
           vm.googleAnalyticsRemoveFromCart()
           break
-
         case 'CHECKOUT':
           vm.facebookCheckoutInitiate()
           break
@@ -59,82 +55,94 @@ export default {
       const decodedId = Buffer.from(encodedId, 'base64').toString('ascii')
       return decodedId.split('gid://shopify/ProductVariant/')[1]
     },
-    //// PAGE VIEW METHODS /////////////////////////////////
+    /// / PAGE VIEW METHODS /////////////////////////////////
     facebookPageView() {
-      fbq('track', 'PageView')
+      if (window.fbq) {
+        window.fbq('track', 'PageView')
+      }
     },
     googleAnalyticsPageView() {
-      ga('send', 'pageview', this.logEntry.page.pageUrl)
+      if (window.ga) {
+        window.ga('send', 'pageview', this.logEntry.url)
+      }
     },
-
-    //// PRODUCT VIEW METHODS //////////////////////////////
+    /// / PRODUCT VIEW METHODS //////////////////////////////
     facebookProductView() {
-      let vm = this
-      fbq('track', 'ViewContent', {
-        content_ids: vm.decodeBase64VariantId(
-          vm.logEntry.product.variants[0].id
-        ),
-        content_name: vm.logEntry.product.title,
-        content_type: 'product',
-        product_catalog_id: vm.facebookCatalogID
-      })
+      const vm = this
+      if (window.fbq) {
+        window.fbq('track', 'ViewContent', {
+          content_ids: vm.decodeBase64VariantId(
+            vm.logEntry.payload.product.variants[0].id
+          ),
+          content_name: vm.logEntry.payload.product.title,
+          content_type: 'product',
+          product_catalog_id: vm.facebookCatalogID
+        })
+      }
     },
-
     googleAnalyticsProductView() {
-      let vm = this
-      ga('ec:addProduct', {
-        id: vm.decodeBase64ProductId(vm.logEntry.product.productId),
-        name: vm.logEntry.product.title
-      })
-      ga('ec:setAction', 'detail')
-      ga('send', 'pageview')
+      const vm = this
+      if (window.ga) {
+        window.ga('ec:addProduct', {
+          id: vm.decodeBase64ProductId(vm.logEntry.payload.product.productId),
+          name: vm.logEntry.payload.product.title
+        })
+        window.ga('ec:setAction', 'detail')
+        window.ga('send', 'pageview')
+      }
     },
-
-    //// ADD TO CART METHODS ///////////////////////////////
+    /// / ADD TO CART METHODS ///////////////////////////////
     facebookAddToCart() {
-      let vm = this
-      fbq('track', 'AddToCart', {
-        content_ids: vm.decodeBase64VariantId(vm.logEntry.product.variant.id),
-        content_name: vm.logEntry.product.title,
-        content_type: 'product',
-        value: vm.logEntry.product.variant.price,
-        currency: 'USD',
-        product_catalog_id: vm.facebookCatalogID
-      })
+      const vm = this
+      if (window.fbq) {
+        window.fbq('track', 'AddToCart', {
+          content_ids: vm.decodeBase64VariantId(
+            vm.logEntry.payload.product.variant.id
+          ),
+          content_name: vm.logEntry.payload.product.title,
+          content_type: 'product',
+          value: vm.logEntry.payload.product.variant.price,
+          currency: 'USD',
+          product_catalog_id: vm.facebookCatalogID
+        })
+      }
     },
-
     googleAnalyticsAddToCart() {
-      let vm = this
-      ga('ec:addProduct', {
-        id: vm.decodeBase64ProductId(vm.logEntry.product.productId),
-        name: vm.logEntry.product.title
-      })
-      ga('ec:setAction', 'add')
-      ga('send', 'event', 'UX', 'click', 'add to cart')
+      const vm = this
+      if (window.ga) {
+        window.ga('ec:addProduct', {
+          id: vm.decodeBase64ProductId(vm.logEntry.payload.product.productId),
+          name: vm.logEntry.payload.product.title
+        })
+        window.ga('ec:setAction', 'add')
+        window.ga('send', 'event', 'UX', 'click', 'add to cart')
+      }
     },
-
-    //// REMOVE FROM CART METHODS ///////////////////////////////
+    /// / REMOVE FROM CART METHODS ///////////////////////////////
     googleAnalyticsRemoveFromCart() {
-      let vm = this
-      ga('ec:addProduct', {
-        id: vm.logEntry.lineItem.productId,
-        name: vm.logEntry.lineItem.title
-      })
-      ga('ec:setAction', 'remove')
-      ga('send', 'event', 'UX', 'click', 'remove from cart')
+      const vm = this
+      if (window.ga) {
+        window.ga('ec:addProduct', {
+          id: vm.logEntry.payload.product.productId,
+          name: vm.logEntry.payload.product.title
+        })
+        window.ga('ec:setAction', 'remove')
+        window.ga('send', 'event', 'UX', 'click', 'remove from cart')
+      }
     },
-
-    //// CHECKOUT INITIATION METHODS ///////////////////////////////
+    /// / CHECKOUT INITIATION METHODS ///////////////////////////////
     facebookCheckoutInitiate() {
-      let vm = this
-      fbq('track', 'InitiateCheckout', {
-        content_ids: vm.productIDs.map(id => {
-          return vm.decodeBase64ProductId(id)
-        }),
-        content_type: 'product',
-        num_items: vm.quantityTotal,
-        product_catalog_id: vm.facebookCatalogID
-      })
+      const vm = this
+      if (window.fbq) {
+        window.fbq('track', 'InitiateCheckout', {
+          content_ids: vm.productIDs.map(id => {
+            return vm.decodeBase64ProductId(id)
+          }),
+          content_type: 'product',
+          num_items: vm.quantityTotal,
+          product_catalog_id: vm.facebookCatalogID
+        })
+      }
     }
   }
 }
