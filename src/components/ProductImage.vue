@@ -11,16 +11,19 @@
       <source
         v-if="visibility && cloudinaryCanAutoFormat && validImage"
         :srcset="optimizeSource({ url: source, format: 'auto' })"
+        @error="fallback"
       />
       <source
         v-if="visibility && reformat && validImage"
         :srcset="optimizeSource({ url: source, format: 'webp' })"
         type="image/webp"
+        @error="fallback"
       />
       <source
         v-if="visibility && reformat && validImage"
         :srcset="optimizeSource({ url: source, format: 'jpg' })"
         type="image/jpeg"
+        @error="fallback"
       />
       <img
         v-if="visibility"

@@ -11,6 +11,7 @@
           v-if="mobileBackgroundImgUrl.length > 0 && cloudinaryCanAutoFormat"
           media="(min-width: 787px)"
           :srcset="optimizeSource({ url: backgroundImgUrl, format: 'auto' })"
+          @error="fallback"
         />
         <source
           v-if="mobileBackgroundImgUrl.length > 0 && reformat"
@@ -28,6 +29,26 @@
           v-if="mobileBackgroundImgUrl.length > 0 && cloudinaryCanAutoFormat"
           media="(max-width: 786px)"
           :srcset="optimizeSource({ url: mobileBackgroundImgUrl, format: 'auto' })"
+          @error="fallback"
+        />
+        <source
+          v-if="mobileBackgroundImgUrl.length > 0  && reformat"
+          media="(max-width: 786px)"
+          :srcset="optimizeSource({ url: mobileBackgroundImgUrl, format: 'webp' })"
+          type="image/webp"
+          @error="fallback"
+        />
+        <source
+          v-if="mobileBackgroundImgUrl.length > 0 && reformat"
+          media="(max-width: 786px)"
+          :srcset="optimizeSource({ url: mobileBackgroundImgUrl, format: 'jpg' })"
+          type="image/jpeg"
+          @error="fallback"
+        />
+        <source
+          v-if="cloudinaryCanAutoFormat"
+          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'auto' })"
+          @error="fallback"
         />
         <source
           v-if="mobileBackgroundImgUrl.length > 0  && reformat"

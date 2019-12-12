@@ -223,4 +223,10 @@ export default {
       return false
     }
   }
+  // mounted() {
+  //   this.calculateContainer()
+  // },
+  // updated() {
+  //   this.calculateContainer()
+  // }
 }
