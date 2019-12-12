@@ -9,16 +9,16 @@
   >
     <picture>
       <source
-        v-if="visibility && reformat"
+        v-if="visibility && cloudinaryCanAutoFormat && validImage"
         :srcset="optimizeSource({ url: source, format: 'auto' })"
       />
       <source
-        v-if="visibility && reformat"
+        v-if="visibility && reformat && validImage"
         :srcset="optimizeSource({ url: source, format: 'webp' })"
         type="image/webp"
       />
       <source
-        v-if="visibility && reformat"
+        v-if="visibility && reformat && validImage"
         :srcset="optimizeSource({ url: source, format: 'jpg' })"
         type="image/jpeg"
       />
@@ -29,6 +29,7 @@
         :alt="alt"
         :width="width"
         :style="cssVars"
+        @error="fallback"
       />
     </picture>
   </div>
@@ -67,6 +68,9 @@ export default {
       return {
         '--fade-in-time': `${this.fadeIn}s`
       }
+    },
+    fallbackImage() {
+      return this.source
     }
   },
   mixins: [imageOptimize, imageVisibility]
