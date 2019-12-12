@@ -34,7 +34,8 @@ export default {
       containerWidth: null,
       containerHeight: null,
       containerPosition: null,
-      originCDN: null
+      originCDN: null,
+      validImage: true
     }
   },
   computed: {
@@ -45,11 +46,17 @@ export default {
     cdnShopifyToCloudinary() {
       return this.originCDN === 'shopify' && this.cdn.toLowerCase() === 'cloudinary'
     },
+    cloudinaryCanAutoFormat() {
+      return Boolean(this.reformat && this.cdn.toLowerCase() === 'cloudinary' && this.cloudinaryCloudName)
+    },
     cloudinaryCloudName() {
       return this.getMetafield('cdn', 'cloudinary-cloud-name')
     },
     cloudinaryUrlBase() {
       return `https://res.cloudinary.com/${this.cloudinaryCloudName}/image/fetch/`
+    },
+    fallbackImage() {
+      return 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"/>'
     },
     shopifyPathPrefix() {
       const path = this.getMetafield('cdn', 'shopify-path-prefix') || 'https://cdn.shopify.com/s/files/'
@@ -83,6 +90,9 @@ export default {
           this.$refs[this.containerRef]
         ).position
       }
+    },
+    fallback() {
+      this.validImage = false
     },
     getBlurred({ src = null } = {}) {
       return this.shopifyResize({
@@ -212,11 +222,5 @@ export default {
       }
       return false
     }
-  },
-  mounted() {
-    this.calculateContainer()
-  },
-  updated() {
-    this.calculateContainer()
   }
 }
