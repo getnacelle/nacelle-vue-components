@@ -1,5 +1,10 @@
-import { mount, shallowMount } from '@vue/test-utils'
+import { mount, shallowMount, createLocalVue } from '@vue/test-utils'
 import ContentHeroBanner from '@/components/ContentHeroBanner'
+import Vuex from 'vuex'
+
+import store from '../../src/store/store'
+const localVue = createLocalVue()
+localVue.use(Vuex)
 
 const defaults = {
   backgroundImgUrl:
@@ -12,6 +17,7 @@ const defaults = {
 describe('ContentHeroBanner.vue', () => {
   it('renders a banner', async () => {
     const wrapper = shallowMount(ContentHeroBanner, {
+      store,
       propsData: { ...defaults }
     })
     expect(wrapper.classes()).toContain('hero')
@@ -20,6 +26,7 @@ describe('ContentHeroBanner.vue', () => {
   it('button click triggers custom event', () => {
     const mockClickHandler = jest.fn()
     const wrapper = mount(ContentHeroBanner, {
+      store,
       propsData: {
         ...defaults,
         ctaHandler: mockClickHandler
