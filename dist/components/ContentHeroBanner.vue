@@ -8,16 +8,64 @@
     >
       <picture class="hero-background" ref="hero-img-card">
         <source
-          v-if="mobileBackgroundImgUrl.length > 0"
+          v-if="mobileBackgroundImgUrl.length > 0 && cloudinaryCanAutoFormat"
           media="(min-width: 787px)"
           :srcset="optimizeSource({ url: backgroundImgUrl, format: 'auto' })"
+          @error="fallback"
         />
         <source
-          v-if="mobileBackgroundImgUrl.length > 0"
+          v-if="mobileBackgroundImgUrl.length > 0 && reformat"
+          media="(min-width: 787px)"
+          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'webp' })"
+          type="image/webp"
+          @error="fallback"
+        />
+        <source
+          v-if="mobileBackgroundImgUrl.length > 0 && reformat"
+          media="(min-width: 787px)"
+          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'jpg' })"
+          type="image/jpeg"
+          @error="fallback"
+        />
+        <source
+          v-if="mobileBackgroundImgUrl.length > 0 && cloudinaryCanAutoFormat"
           media="(max-width: 786px)"
           :srcset="optimizeSource({ url: mobileBackgroundImgUrl, format: 'auto' })"
+          @error="fallback"
         />
-        <source :srcset="optimizeSource({ url: backgroundImgUrl, format: 'auto' })" />
+        <source
+          v-if="mobileBackgroundImgUrl.length > 0  && reformat"
+          media="(max-width: 786px)"
+          :srcset="optimizeSource({ url: mobileBackgroundImgUrl, format: 'webp' })"
+          type="image/webp"
+          @error="fallback"
+        />
+        <source
+          v-if="mobileBackgroundImgUrl.length > 0 && reformat"
+          media="(max-width: 786px)"
+          :srcset="optimizeSource({ url: mobileBackgroundImgUrl, format: 'jpg' })"
+          type="image/jpeg"
+          @error="fallback"
+        />
+        <source
+          v-if="cloudinaryCanAutoFormat"
+          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'auto' })"
+          @error="fallback"
+        />
+        <source
+          v-if="reformat"
+          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'webp' })"
+          type="image/webp"
+          @error="fallback"
+        />
+        <source
+          v-if="reformat"
+          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'jpg' })"
+          type="image/jpeg"
+          @error="fallback"
+        />
+        <source v-if="reformat" :srcset="optimizeSource({ url: backgroundImgUrl, format: 'webp' })" />
+        <source v-if="reformat" :srcset="optimizeSource({ url: backgroundImgUrl, format: 'jpg' })" />
         <img :src="backgroundImgUrl" :alt="backgroundAltTag" />
       </picture>
     </slot>
@@ -126,6 +174,9 @@ export default {
         : ''
 
       return `hero nacelle is-${this.size} is-align-${this.alignment} ${mobileHeightClass}`
+    },
+    fallbackImage() {
+      return this.backgroundImgUrl
     }
   },
   mixins: [imageOptimize]

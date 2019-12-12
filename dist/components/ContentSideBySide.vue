@@ -10,9 +10,23 @@
         }"
       >
         <picture>
-          <source :srcset="optimizeSource({ url: imageUrl, format: 'auto' })" />
-          <source :srcset="optimizeSource({ url: imageUrl, format: 'webp' })" type="image/webp" />
-          <source :srcset="optimizeSource({ url: imageUrl, format: 'jpg' })" type="image/jpeg" />
+          <source
+            v-if="visibility && cloudinaryCanAutoFormat"
+            :srcset="optimizeSource({ url: imageUrl, format: 'auto' })"
+            @error="fallback"
+          />
+          <source
+            v-if="visibility && reformat"
+            :srcset="optimizeSource({ url: imageUrl, format: 'webp' })"
+            type="image/webp"
+            @error="fallback"
+          />
+          <source
+            v-if="visibility && reformat"
+            :srcset="optimizeSource({ url: imageUrl, format: 'jpg' })"
+            type="image/jpeg"
+            @error="fallback"
+          />
           <img v-if="visibility" :src="imageUrl" alt />
         </picture>
       </div>
@@ -101,6 +115,9 @@ export default {
       const mobileReverse = this.reverseMobile ? 'is-mobile-column-reverse' : ''
 
       return `${desktopReverse} ${mobileReverse}`
+    },
+    fallbackImage() {
+      return this.imageUrl
     }
   },
   mixins: [imageOptimize, imageVisibility]
