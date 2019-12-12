@@ -45,11 +45,17 @@ export default {
     cdnShopifyToCloudinary() {
       return this.originCDN === 'shopify' && this.cdn.toLowerCase() === 'cloudinary'
     },
+    cloudinaryCanAutoFormat() {
+      return Boolean(this.reformat && this.cdn.toLowerCase() === 'cloudinary' && this.cloudinaryCloudName)
+    },
     cloudinaryCloudName() {
       return this.getMetafield('cdn', 'cloudinary-cloud-name')
     },
     cloudinaryUrlBase() {
       return `https://res.cloudinary.com/${this.cloudinaryCloudName}/image/fetch/`
+    },
+    fallbackImage() {
+      return 'https://via.placeholder.com/300'
     },
     shopifyPathPrefix() {
       const path = this.getMetafield('cdn', 'shopify-path-prefix') || 'https://cdn.shopify.com/s/files/'
@@ -83,6 +89,9 @@ export default {
           this.$refs[this.containerRef]
         ).position
       }
+    },
+    fallback(event) {
+      event.target.src = this.fallbackImage
     },
     getBlurred({ src = null } = {}) {
       return this.shopifyResize({
@@ -212,11 +221,11 @@ export default {
       }
       return false
     }
-  },
-  mounted() {
-    this.calculateContainer()
-  },
-  updated() {
-    this.calculateContainer()
   }
+  // mounted() {
+  //   this.calculateContainer()
+  // },
+  // updated() {
+  //   this.calculateContainer()
+  // }
 }
