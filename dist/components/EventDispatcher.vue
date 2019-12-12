@@ -35,21 +35,17 @@ export default {
           vm.facebookPageView()
           vm.googleAnalyticsPageView()
           break
-
         case 'PRODUCT_VIEW':
           vm.facebookProductView()
           vm.googleAnalyticsProductView()
           break
-
         case 'ADD_TO_CART':
           vm.facebookAddToCart()
           vm.googleAnalyticsAddToCart()
           break
-
         case 'REMOVE_FROM_CART':
           vm.googleAnalyticsRemoveFromCart()
           break
-
         case 'CHECKOUT':
           vm.facebookCheckoutInitiate()
           break
@@ -91,7 +87,6 @@ export default {
         })
       }
     },
-
     googleAnalyticsProductView() {
       if (typeof this.ga !== 'undefined') {
         const vm = this
@@ -118,7 +113,6 @@ export default {
         })
       }
     },
-
     googleAnalyticsAddToCart() {
       if (typeof this.ga !== 'undefined') {
         const vm = this

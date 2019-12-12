@@ -150,7 +150,14 @@ const cart = (options = {}) => {
         context.dispatch('saveLineItems', context.state.lineItems)
         // context.commit('showCart')
         if (context.rootState.events) {
-          context.dispatch('events/addToCart', payload, { root: true })
+          context.dispatch(
+            'events/addToCart',
+            {
+              product: payload,
+              cart: context.state.lineItems
+            },
+            { root: true }
+          )
         }
       },
 
@@ -159,7 +166,14 @@ const cart = (options = {}) => {
           const lineItem = state.lineItems.find(
             item => item.variant.id === payload
           )
-          dispatch('events/removeFromCart', lineItem, { root: true })
+          dispatch(
+            'events/removeFromCart',
+            {
+              product: lineItem,
+              cart: state.lineItems
+            },
+            { root: true }
+          )
         }
 
         commit('removeLineItemMutation', payload)
@@ -314,7 +328,7 @@ const cart = (options = {}) => {
         // let checkoutId = await dispatch('getCheckoutIdForBackend')
 
         if (rootState.events) {
-          dispatch('events/checkoutInit', state.lineItems, { root: true })
+          dispatch('events/checkoutInit', { cart: state.lineItems }, { root: true })
         }
 
         await dispatch('saveAndRedirect', payload)

@@ -32,14 +32,14 @@ const user = {
       await context.dispatch('readSession')
     },
 
-    /// / ANONYMOUS ID ACTIONS //////////////////////////////////////////
+    // ANONYMOUS ID ACTIONS //////////////////////////////////////////
     async createAnonymousID(context) {
       const anonymousID = uuid()
-      await localforage.set('anonymousID', anonymousID)
+      await localforage.setItem('anonymousID', anonymousID)
       context.commit('setAnonymousID', anonymousID)
     },
     async readAnonymousID(context) {
-      const anonymousID = await localforage.get('anonymousID')
+      const anonymousID = await localforage.getItem('anonymousID')
       if (anonymousID != null) {
         context.commit('setAnonymousID', anonymousID)
       } else {
@@ -47,7 +47,7 @@ const user = {
       }
     },
 
-    /// / SESSION ACTIONS //////////////////////////////////////////
+    // SESSION ACTIONS //////////////////////////////////////////
     async createSession(context) {
       const sessionID = uuid()
       context.commit('setSessionID', sessionID)
