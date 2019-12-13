@@ -8,13 +8,16 @@ const user = {
     anonymousID: null,
     customerID: null,
     customerEmail: null,
+    customerPhone: null,
     sessionID: null,
     language: 'en-US'
   },
   mutations: {
     setUserData(state, payload) {
-      state.customerID = payload.customerID
-      state.customerEmail = payload.customerEmail
+      const { customerID, customerEmail, customerPhone } = payload
+      state.customerID = customerID
+      state.customerEmail = customerEmail
+      state.customerPhone = customerPhone
     },
     setAnonymousID(state, id) {
       state.anonymousID = id
@@ -30,6 +33,14 @@ const user = {
     async initUserData(context) {
       await context.dispatch('readAnonymousID')
       await context.dispatch('readSession')
+
+      if (process.browser) {
+        const userData = Cookies.get('user-data')
+
+        if (userData) {
+          context.commit('setUserData', JSON.parse(userData))
+        }
+      }
     },
 
     // ANONYMOUS ID ACTIONS //////////////////////////////////////////
