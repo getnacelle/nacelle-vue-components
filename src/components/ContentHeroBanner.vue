@@ -8,54 +8,103 @@
     >
       <picture class="hero-background" ref="hero-img-card">
         <source
-          v-if="mobileBackgroundImgUrl.length > 0"
+          v-if="mobileBackgroundImgUrl.length > 0 && cloudinaryCanAutoFormat"
           media="(min-width: 787px)"
-          :srcset="url"
+          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'auto' })"
+          @error="fallback"
         />
         <source
-          v-if="mobileBackgroundImgUrl.length > 0"
-          media="(max-width: 786px)"
-          :srcset="url"
+          v-if="mobileBackgroundImgUrl.length > 0 && reformat"
+          media="(min-width: 787px)"
+          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'webp' })"
+          type="image/webp"
         />
-        <img :src="backgroundImgUrl" :alt="backgroundAltTag" />
+        <source
+          v-if="mobileBackgroundImgUrl.length > 0 && reformat"
+          media="(min-width: 787px)"
+          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'jpg' })"
+          type="image/jpeg"
+        />
+        <source
+          v-if="mobileBackgroundImgUrl.length > 0 && cloudinaryCanAutoFormat"
+          media="(max-width: 786px)"
+          :srcset="optimizeSource({ url: mobileBackgroundImgUrl, format: 'auto' })"
+          @error="fallback"
+        />
+        <source
+          v-if="mobileBackgroundImgUrl.length > 0  && reformat"
+          media="(max-width: 786px)"
+          :srcset="optimizeSource({ url: mobileBackgroundImgUrl, format: 'webp' })"
+          type="image/webp"
+          @error="fallback"
+        />
+        <source
+          v-if="mobileBackgroundImgUrl.length > 0 && reformat"
+          media="(max-width: 786px)"
+          :srcset="optimizeSource({ url: mobileBackgroundImgUrl, format: 'jpg' })"
+          type="image/jpeg"
+          @error="fallback"
+        />
+        <source
+          v-if="cloudinaryCanAutoFormat"
+          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'auto' })"
+          @error="fallback"
+        />
+        <source
+          v-if="mobileBackgroundImgUrl.length > 0  && reformat"
+          media="(max-width: 786px)"
+          :srcset="optimizeSource({ url: mobileBackgroundImgUrl, format: 'webp' })"
+          type="image/webp"
+        />
+        <source
+          v-if="mobileBackgroundImgUrl.length > 0 && reformat"
+          media="(max-width: 786px)"
+          :srcset="optimizeSource({ url: mobileBackgroundImgUrl, format: 'jpg' })"
+          type="image/jpeg"
+        />
+        <source
+          v-if="cloudinaryCanAutoFormat"
+          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'auto' })"
+        />
+        <source
+          v-if="reformat"
+          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'webp' })"
+          type="image/webp"
+        />
+        <source
+          v-if="reformat"
+          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'jpg' })"
+          type="image/jpeg"
+        />
+        <source v-if="reformat" :srcset="optimizeSource({ url: backgroundImgUrl, format: 'webp' })" />
+        <source v-if="reformat" :srcset="optimizeSource({ url: backgroundImgUrl, format: 'jpg' })" />
+        <img :src="backgroundImgUrl" :alt="backgroundAltTag" @error="fallback" />
       </picture>
     </slot>
     <div class="hero-body">
       <div class="container">
         <div class="hero-body-inner">
-          <slot
-            name="body"
-            :textColor="textColor"
-            :title="title"
-            :subtitle="subtitle"
-          >
+          <slot name="body" :textColor="textColor" :title="title" :subtitle="subtitle">
             <h1
               class="title"
               :style="
                 textColor && textColor.length > 0 ? `color: ${textColor}` : ''
               "
-            >
-              {{ title }}
-            </h1>
+            >{{ title }}</h1>
             <h3
               class="subtitle"
               :style="
                 textColor && textColor.length > 0 ? `color: ${textColor}` : ''
               "
-            >
-              {{ subtitle }}
-            </h3>
+            >{{ subtitle }}</h3>
           </slot>
-          <slot
-            name="cta"
-            :ctaUrl="ctaUrl"
-            :ctaText="ctaText"
-            :ctaHandler="ctaHandler"
-          >
+          <slot name="cta" :ctaUrl="ctaUrl" :ctaText="ctaText" :ctaHandler="ctaHandler">
             <p v-if="ctaText.length > 0">
-              <cta-button :to="ctaUrl" @clicked="ctaHandler">{{
+              <cta-button :to="ctaUrl" @clicked="ctaHandler">
+                {{
                 ctaText
-              }}</cta-button>
+                }}
+              </cta-button>
             </p>
           </slot>
         </div>
@@ -66,7 +115,7 @@
 
 <script>
 import CtaButton from './CtaButton'
-import optimizeImage from '../mixins/optimizeImage'
+import imageOptimize from '../mixins/imageOptimize'
 
 export default {
   components: {
@@ -137,9 +186,12 @@ export default {
         : ''
 
       return `hero nacelle is-${this.size} is-align-${this.alignment} ${mobileHeightClass}`
+    },
+    fallbackImage() {
+      return this.backgroundImgUrl
     }
   },
-  mixins: [optimizeImage]
+  mixins: [imageOptimize]
 }
 </script>
 

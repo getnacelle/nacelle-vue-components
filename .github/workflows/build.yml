@@ -1,0 +1,10 @@
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1.1.0
+      - name: "Setup Node.js"
+        uses: "actions/setup-node@v1"
+      - uses: stefanoeb/jest-action@1.0.0

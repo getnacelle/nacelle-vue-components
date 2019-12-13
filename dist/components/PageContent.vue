@@ -169,10 +169,7 @@ export default {
           mobileFullHeight,
           textColor,
           mobileBackgroundImgUrl,
-          backgroundAltTag,
-          blurUp,
-          byDominantColor,
-          observeVisibility
+          backgroundAltTag
         } = section
 
         data = {
@@ -187,10 +184,7 @@ export default {
           mobileFullHeight: mobileFullHeight === 'true',
           textColor,
           mobileBackgroundImgUrl,
-          backgroundAltTag,
-          blurUp: blurUp ? blurUp : false,
-          byDominantColor: byDominantColor ? byDominantColor : false,
-          observeVisibility: observeVisibility ? observeVisibility : false
+          backgroundAltTag
         }
       } else if (contentType === 'ContentSideBySide') {
         const {
@@ -279,10 +273,7 @@ export default {
             mobileFullHeight,
             textColor,
             mobileBackgroundImage,
-            backgroundAltTag,
-            blurUp,
-            byDominantColor,
-            observeVisibility
+            backgroundAltTag
           } = fields
           const clickHandler = () => {
             this.$router.push(fields.ctaUrl)
@@ -302,10 +293,7 @@ export default {
             mobileBackgroundImgUrl: mobileBackgroundImage
               ? mobileBackgroundImage.fields.file.url
               : '',
-            backgroundAltTag,
-            blurUp: blurUp ? blurUp : false,
-            byDominantColor: byDominantColor ? byDominantColor : false,
-            observeVisibility: observeVisibility ? observeVisibility : false
+            backgroundAltTag
           }
         } else if (fields.contentType === 'ContentSideBySide') {
           const {

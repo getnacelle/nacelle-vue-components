@@ -26,6 +26,6 @@ $ npm run test:unit
 ## Build the Library
 
 ```bash
-# build the dist package
-$ npm run build-library
+# build the dist package 
+$ npm run build-library  
 ```
