@@ -38,7 +38,7 @@ export default {
     },
     fadeIn: {
       type: Number,
-      default: 1
+      default: 0.3
     }
   },
   computed: {
