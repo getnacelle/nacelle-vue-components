@@ -7,20 +7,41 @@
     class="product-image nacelle"
     ref="img-card"
   >
-    <img
-      v-if="visibility"
-      ref="product-image"
-      :src="source"
-      :alt="alt"
-      :width="width"
-      :style="cssVars"
-    />
+    <picture>
+      <source
+        v-if="visibility && cloudinaryCanAutoFormat && validImage"
+        :srcset="optimizeSource({ url: source, format: 'auto' })"
+        @error="fallback"
+      />
+      <source
+        v-if="visibility && reformat && validImage"
+        :srcset="optimizeSource({ url: source, format: 'webp' })"
+        type="image/webp"
+        @error="fallback"
+      />
+      <source
+        v-if="visibility && reformat && validImage"
+        :srcset="optimizeSource({ url: source, format: 'jpg' })"
+        type="image/jpeg"
+        @error="fallback"
+      />
+      <img
+        v-if="visibility"
+        ref="product-image"
+        :src="source"
+        :alt="alt"
+        :width="width"
+        :style="cssVars"
+        @error="fallback"
+      />
+    </picture>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
-import optimizeImage from '../mixins/optimizeImage'
+import imageOptimize from '../mixins/imageOptimize'
+import imageVisibility from '../mixins/imageVisibility'
 
 export default {
   props: {
@@ -39,6 +60,10 @@ export default {
     fadeIn: {
       type: Number,
       default: 0.3
+    },
+    containerRef: {
+      type: String,
+      default: 'img-card'
     }
   },
   computed: {
@@ -46,9 +71,12 @@ export default {
       return {
         '--fade-in-time': `${this.fadeIn}s`
       }
+    },
+    fallbackImage() {
+      return this.source
     }
   },
-  mixins: [optimizeImage]
+  mixins: [imageOptimize, imageVisibility]
 }
 </script>
 

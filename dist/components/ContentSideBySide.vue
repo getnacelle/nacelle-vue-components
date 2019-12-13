@@ -9,7 +9,23 @@
           once: true
         }"
       >
-        <img v-if="visibility" :src="imageUrl" alt />
+        <picture>
+          <source
+            v-if="visibility && cloudinaryCanAutoFormat"
+            :srcset="optimizeSource({ url: imageUrl, format: 'auto' })"
+          />
+          <source
+            v-if="visibility && reformat"
+            :srcset="optimizeSource({ url: imageUrl, format: 'webp' })"
+            type="image/webp"
+          />
+          <source
+            v-if="visibility && reformat"
+            :srcset="optimizeSource({ url: imageUrl, format: 'jpg' })"
+            type="image/jpeg"
+          />
+          <img v-if="visibility" :src="imageUrl" :alt="alt" @error="fallback" />
+        </picture>
       </div>
       <div
         class="column is-half sbs-copy"
@@ -21,16 +37,13 @@
             <div class="content" v-html="copy" />
           </div>
         </slot>
-        <slot
-          name="cta"
-          :ctaUrl="ctaUrl"
-          :ctaText="ctaText"
-          :ctaHandler="ctaHandler"
-        >
+        <slot name="cta" :ctaUrl="ctaUrl" :ctaText="ctaText" :ctaHandler="ctaHandler">
           <p v-if="ctaText.length > 0" class="has-text-centered">
-            <cta-button :to="ctaUrl" @clicked="ctaHandler">{{
+            <cta-button :to="ctaUrl" @clicked="ctaHandler">
+              {{
               ctaText
-            }}</cta-button>
+              }}
+            </cta-button>
           </p>
         </slot>
       </div>
@@ -40,7 +53,8 @@
 
 <script>
 import CtaButton from './CtaButton'
-import optimizeImage from '../mixins/optimizeImage'
+import imageOptimize from '../mixins/imageOptimize'
+import imageVisibility from '../mixins/imageVisibility'
 
 export default {
   components: {
@@ -50,6 +64,9 @@ export default {
     backgroundColor: {
       type: String,
       default: ''
+    },
+    alt: {
+      type: String
     },
     imageUrl: {
       type: String,
@@ -62,6 +79,10 @@ export default {
     copy: {
       type: String,
       default: ''
+    },
+    containerRef: {
+      type: String,
+      default: 'img-card'
     },
     ctaText: {
       type: String,
@@ -94,9 +115,12 @@ export default {
       const mobileReverse = this.reverseMobile ? 'is-mobile-column-reverse' : ''
 
       return `${desktopReverse} ${mobileReverse}`
+    },
+    fallbackImage() {
+      return this.imageUrl
     }
   },
-  mixins: [optimizeImage]
+  mixins: [imageOptimize, imageVisibility]
 }
 </script>
 
