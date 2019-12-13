@@ -24,12 +24,12 @@ storiesOf('Components | Nacelle Data / Collection', module)
             </template>
           </nacelle-collection>
         </div>
-      `,
+      `
     }),
     {
       info: {
         // summary: "Hello"
-      },
+      }
     }
   )
 
@@ -44,14 +44,14 @@ storiesOf('Components | Nacelle Data / Collection', module)
       components: { NacelleCollection },
       props: {
         productsPerPage: {
-          default: number('Products per Page', 1),
+          default: number('Products per Page', 1)
         },
         buttonText: {
-          default: text('Button Text', 'Load More'),
+          default: text('Button Text', 'Load More')
         },
         buttonLoadMore: {
-          default: boolean('Use Button Load More', true),
-        },
+          default: boolean('Use Button Load More', true)
+        }
       },
       template: `
         <div>
@@ -69,11 +69,11 @@ storiesOf('Components | Nacelle Data / Collection', module)
             </template>
           </nacelle-collection>
         </div>
-      `,
+      `
     }),
     {
       info: {
         // summary: "Hello"
-      },
+      }
     }
   )

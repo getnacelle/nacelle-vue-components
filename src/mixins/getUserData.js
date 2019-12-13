@@ -5,9 +5,9 @@ export default {
   methods: {
     ...mapMutations('user', ['setUserData']),
     getUserData() {
-      let cookie = Cookies.get('user-data')
-      if (cookie != undefined) {
-        let data = JSON.parse(Cookies.get('user-data'))
+      const cookie = Cookies.get('user-data')
+      if (cookie !== undefined) {
+        const data = JSON.parse(Cookies.get('user-data'))
         this.store.commit('user/setUserData', data)
         // this.setUserData(data)
       }

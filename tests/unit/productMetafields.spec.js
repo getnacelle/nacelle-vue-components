@@ -5,23 +5,23 @@ import productMetafields from '../../src/mixins/productMetafields'
 
 describe('productMetafields.js', () => {
   const metafields = [{
-    'id': null,
-    'namespace': 'subscriptions',
-    'key': 'charge_interval_frequency',
-    'value': '30',
-    '__typename': 'ProductMetafield'
+    id: null,
+    namespace: 'subscriptions',
+    key: 'charge_interval_frequency',
+    value: '30',
+    __typename: 'ProductMetafield'
   }, {
-    'id': null,
-    'namespace': 'subscriptions',
-    'key': 'order_interval_frequency',
-    'value': '30',
-    '__typename': 'ProductMetafield'
+    id: null,
+    namespace: 'subscriptions',
+    key: 'order_interval_frequency',
+    value: '30',
+    __typename: 'ProductMetafield'
   }, {
-    'id': null,
-    'namespace': 'subscriptions',
-    'key': 'order_interval_unit',
-    'value': 'day',
-    '__typename': 'ProductMetafield'
+    id: null,
+    namespace: 'subscriptions',
+    key: 'order_interval_unit',
+    value: 'day',
+    __typename: 'ProductMetafield'
   }]
 
   it('creates metafieldObj computed property', () => {
@@ -36,9 +36,9 @@ describe('productMetafields.js', () => {
 
     expect(wrapper.vm.metafieldsObj).toEqual({
       subscriptions: {
-        'order_interval_unit': 'day',
-        'order_interval_frequency': '30',
-        'charge_interval_frequency': '30'
+        order_interval_unit: 'day',
+        order_interval_frequency: '30',
+        charge_interval_frequency: '30'
       }
     })
   })
@@ -53,9 +53,9 @@ describe('productMetafields.js', () => {
       }
     })
 
-    const order_interval_unit = wrapper.vm
+    const orderIntervalUnit = wrapper.vm
       .getMetafield('subscriptions', 'order_interval_unit')
 
-    expect(order_interval_unit).toEqual('day')
+    expect(orderIntervalUnit).toEqual('day')
   })
 })

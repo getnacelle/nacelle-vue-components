@@ -1,6 +1,5 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import InterfaceIcon from '@/components/InterfaceIcon'
-import StoryRouter from 'storybook-vue-router'
 
 describe('InterfaceIcon.vue', () => {
   it('renders an svg', async () => {

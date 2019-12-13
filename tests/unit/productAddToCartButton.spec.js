@@ -321,7 +321,7 @@ describe('Product Add to Cart Button', () => {
       }
     })
     wrapper.find('button').trigger('click')
-    
+
     expect(store.getters['cart/checkoutLineItems']).toEqual([
       {
         metafields: [{ key: 'customProp1', value: 'customValue1' }],

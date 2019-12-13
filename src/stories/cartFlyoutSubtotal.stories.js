@@ -1,7 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { storiesOf } from '@storybook/vue'
-import { action } from '@storybook/addon-actions'
-import { linkTo } from '@storybook/addon-links'
 import { withInfo } from 'storybook-addon-vue-info'
 import store from '../store/store'
 
@@ -14,7 +12,7 @@ storiesOf('Components | Cart', module)
     () => ({
       store,
       components: { CartFlyoutSubtotal },
-      template: `<cart-flyout-subtotal/>`,
+      template: '<cart-flyout-subtotal/>',
       mounted() {
         store.commit('cart/setLineItems', [])
         store.dispatch('cart/addLineItem', {

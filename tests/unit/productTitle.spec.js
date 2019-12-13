@@ -1,10 +1,10 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import ProductTitle from '@/components/ProductTitle'
-const localVue = createLocalVue()
 import Vuex from 'vuex'
-localVue.use(Vuex)
 
 import store from '../../src/store/store'
+const localVue = createLocalVue()
+localVue.use(Vuex)
 
 describe('ProductTitle.vue', () => {
   it('renders a title', async () => {

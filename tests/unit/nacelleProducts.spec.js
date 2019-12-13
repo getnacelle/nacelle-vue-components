@@ -25,7 +25,7 @@ describe('NacelleProducts.vue', () => {
     })
 
     await delay() // mock data-loader loading product data
-    
+
     expect(typeof wrapper.vm.product !== 'undefined').toBe(true)
   })
 
@@ -36,12 +36,12 @@ describe('NacelleProducts.vue', () => {
     const wrapper = shallowMount(NacelleProducts, {
       localVue,
       propsData: {
-        handles: ['gray-t-shirt','gray-t-shirt']
+        handles: ['gray-t-shirt', 'gray-t-shirt']
       }
     })
 
     await delay() // mock data-loader loading product data
-    
+
     expect(wrapper.vm.products.length).toBe(2)
   })
 })

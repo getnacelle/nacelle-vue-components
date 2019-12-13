@@ -7,9 +7,9 @@ export default {
   computed: {
     allOptions() {
       if (this.product.variants) {
-        let nestedOptions = this.product.variants.map(variant => {
+        const nestedOptions = this.product.variants.map(variant => {
           return variant.selectedOptions.map(option => {
-            if (option.name == 'Color') {
+            if (option.name === 'Color') {
               return {
                 name: option.name,
                 value: option.value,
@@ -20,18 +20,18 @@ export default {
             }
           })
         })
-        let flattenedOptions = flattenDeep(nestedOptions)
+        const flattenedOptions = flattenDeep(nestedOptions)
 
-        let optionNames = uniq(
+        const optionNames = uniq(
           flattenedOptions.map(option => {
             return option.name
           })
         )
-        let optionValuesByName = optionNames.map(name => {
-          let values = uniqWith(
+        const optionValuesByName = optionNames.map(name => {
+          const values = uniqWith(
             flattenedOptions
               .filter(option => {
-                if (option.name == name) {
+                if (option.name === name) {
                   return option
                 }
               })
@@ -55,8 +55,8 @@ export default {
       }
     },
     applicableOptions() {
-      let vm = this
-      let uniqueFlattenedOptions = uniq(
+      const vm = this
+      const uniqueFlattenedOptions = uniq(
         flattenDeep(
           vm.selectedOptions.map(option => {
             return vm.product.variants.map(variant => {
@@ -64,7 +64,7 @@ export default {
                 if (selectedOption.__typename) {
                   delete selectedOption.__typename
                 }
-                if (JSON.stringify(option) == JSON.stringify(selectedOption)) {
+                if (JSON.stringify(option) === JSON.stringify(selectedOption)) {
                   return variant.selectedOptions
                 }
               })
@@ -72,7 +72,7 @@ export default {
           })
         )
       ).filter(option => {
-        return option != undefined
+        return option !== undefined
       })
 
       return uniqueFlattenedOptions
@@ -98,21 +98,21 @@ export default {
     //   })
     // },
     selectedVariant() {
-      let vm = this
+      const vm = this
       if (vm.selectedOptions) {
         return this.product.variants.filter(variant => {
-          let results = []
+          const results = []
           vm.selectedOptions.forEach(option => {
             variant.selectedOptions.forEach(variantOption => {
               if (variantOption.__typename) {
                 delete variantOption.__typename
               }
-              if (JSON.stringify(option) == JSON.stringify(variantOption)) {
+              if (JSON.stringify(option) === JSON.stringify(variantOption)) {
                 results.push(true)
               }
             })
           })
-          if (results.length == vm.selectedOptions.length) {
+          if (results.length === vm.selectedOptions.length) {
             return variant
           }
         })[0]

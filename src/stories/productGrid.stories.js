@@ -1,5 +1,4 @@
 import { storiesOf } from '@storybook/vue'
-import { withKnobs, object } from '@storybook/addon-knobs'
 import { withInfo } from 'storybook-addon-vue-info'
 import StoryRouter from 'storybook-vue-router'
 
@@ -7,9 +6,7 @@ import ProductGrid from '../components/ProductGrid'
 import InterfaceModal from '../components/InterfaceModal'
 import store from '../store/store'
 
-import { defaultProduct, defaultProduct2 } from '../../config/defaultObjects.js'
-
-import { mockProductCollection } from '../../config/defaultObjects'
+import { defaultProduct } from '../../config/defaultObjects.js'
 
 const productArray = [defaultProduct, defaultProduct, defaultProduct]
 storiesOf('Components | Product / Composition', module)
