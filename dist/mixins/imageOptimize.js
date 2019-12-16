@@ -26,14 +26,22 @@ export default {
     byDominantColor: {
       type: Boolean,
       default: false
+    },
+    width: {
+      type: Number
+    },
+    height: {
+      type: Number
     }
   },
   data() {
     return {
+      blankImage: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 5'%3E%3C/svg%3E",
       blurred: null,
       containerWidth: null,
       containerHeight: null,
       containerPosition: null,
+      loaded: false,
       originCDN: null,
       validImage: true
     }
@@ -56,7 +64,13 @@ export default {
       return `https://res.cloudinary.com/${this.cloudinaryCloudName}/image/fetch/`
     },
     fallbackImage() {
-      return 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"/>'
+      return this.blankImage
+    },
+    loading() {
+      return !this.loaded
+    },
+    placeholderImg(w, h) {
+      return `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}"%3E%3C/svg%3E`
     },
     shopifyPathPrefix() {
       const path = this.getMetafield('cdn', 'shopify-path-prefix') || 'https://cdn.shopify.com/s/files/'
@@ -90,6 +104,9 @@ export default {
           this.$refs[this.containerRef]
         ).position
       }
+    },
+    onLoaded() {
+      this.loaded = true
     },
     fallback() {
       this.validImage = false
@@ -223,10 +240,4 @@ export default {
       return false
     }
   }
-  // mounted() {
-  //   this.calculateContainer()
-  // },
-  // updated() {
-  //   this.calculateContainer()
-  // }
 }
