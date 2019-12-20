@@ -13,7 +13,7 @@
         :imageSrc="shopImage.src"
         :products="shopImage.products"
         :buttonText="shopLookButtonText"
-        @ready="(node) => moveImage(shopImage.node, node)"
+        @ready="node => moveImage(shopImage.node, node)"
       >
         <template v-slot:product-card="{ product }">
           <slot name="product-card" :product="product" />
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { BLOCKS } from '@contentful/rich-text-types';
+import { BLOCKS } from '@contentful/rich-text-types'
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
 import ClientOnly from 'vue-client-only'
 import ProductShopLook from './ProductShopLook'
@@ -71,8 +71,8 @@ export default {
         return this.contentHtml(this.article.fields.content)
       }
 
-      if (this.article.fields && this.article.fields.contentHtml) {
-        return this.article.fields.contentHtml
+      if (this.article.content) {
+        return this.article.content
       }
 
       return ''
@@ -111,7 +111,7 @@ export default {
     defaultContentToHtml(content) {
       const options = {
         renderNode: {
-          [BLOCKS.EMBEDDED_ASSET]: (node) => {
+          [BLOCKS.EMBEDDED_ASSET]: node => {
             if (node.data.target.fields && node.data.target.fields.file) {
               return `
                 <img
@@ -121,7 +121,7 @@ export default {
                 />
               `
             }
-            
+
             return ''
           }
         }
@@ -156,6 +156,4 @@ export default {
 }
 </script>
 
-<style>
-
-</style>
+<style></style>
