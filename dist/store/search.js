@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { transformProduct } from '@nacelle/nacelle-tools'
 
 const search = {
   namespaced: true,
@@ -98,7 +97,6 @@ const search = {
 
               const products = res.data
                 .filter(product => product && product.title && product.variants)
-                .map(product => transformProduct(product))
 
               commit('setSearchData', { products })
             }
