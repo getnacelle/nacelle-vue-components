@@ -15,6 +15,10 @@ export default {
       type: String,
       default: ''
     },
+    locale: {
+      type: String,
+      default: ''
+    },
     paginate: {
       type: Boolean,
       default: false
@@ -50,6 +54,17 @@ export default {
         Array.isArray(this.collection.products) &&
         this.productIndex < this.collection.products.length
       )
+    },
+    useLocale() {
+      if (this.locale && this.locale !== '') {
+        return this.locale
+      }
+
+      if (this.$nacelle && this.$nacelle.locale) {
+        return this.$nacelle.locale
+      }
+
+      return 'en-us'
     }
   },
   created() {
@@ -60,7 +75,10 @@ export default {
         this.collection = storeCollection.collection
         this.products = storeCollection.products
       } else {
-        this.$nacelle.collection(this.handle).then(result => {
+        this.$nacelle.collection({
+          handle: this.handle,
+          locale: this.useLocale
+        }).then(result => {
           if (result) {
             this.collection = result
             this.products = []
@@ -129,7 +147,7 @@ export default {
           )
         }
 
-        this.$nacelle.products(handles).then(result => {
+        this.$nacelle.products({ handles }).then(result => {
           if (result && result.length > 0) {
             // filter out non-existant products
             const validProducts = result.filter(product => {

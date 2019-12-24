@@ -4,7 +4,8 @@ import staticCollection from '../config/defaults/static-collection'
 export default {
   install(Vue) {
     Vue.prototype.$nacelle = {
-      products(handles) {
+      locale: 'en-us',
+      products({ handles }) {
         const products = handles.map(handle => defaultProduct)
 
         return new Promise(resolve => {
@@ -13,7 +14,7 @@ export default {
           }, 100)
         })
       },
-      content(handle, type) {
+      content({ handle, type }) {
         return new Promise(resolve => {
           setTimeout(() => {
             resolve({
@@ -29,7 +30,7 @@ export default {
           }, 100)
         })
       },
-      collection(handle) {
+      collection({ handle }) {
         return new Promise(resolve => {
           setTimeout(() => {
             resolve(staticCollection)
