@@ -19,6 +19,7 @@ import ContentProductGrid from './components/ContentProductGrid.vue'
 import ContentSideBySide from './components/ContentSideBySide.vue'
 import ContentTestimonial from './components/ContentTestimonial.vue'
 import ContentTestimonials from './components/ContentTestimonials.vue'
+import CookieBanner from './components/CookieBanner.vue'
 import CtaButton from './components/CtaButton.vue'
 import ErrorModal from './components/ErrorModal.vue'
 import EventDispatcher from './components/EventDispatcher.vue'
@@ -36,6 +37,7 @@ import MixinTestBench from './components/MixinTestBench.vue'
 import NacelleCollection from './components/NacelleCollection.vue'
 import NacelleContent from './components/NacelleContent.vue'
 import NacelleProducts from './components/NacelleProducts.vue'
+import OptInOptOut from './components/OptInOptOut.vue'
 import PageContent from './components/PageContent.vue'
 import ProductAddToCartButton from './components/ProductAddToCartButton.vue'
 import ProductCard from './components/ProductCard.vue'
@@ -66,7 +68,7 @@ import SearchResults from './components/SearchResults.vue'
 import SiteHeader from './components/SiteHeader.vue'
 
 // Export components individually
-export { BlogArticleContent, BlogArticleHeader, BrandHeader, CartFlyout, CartFlyoutCheckoutButton, CartFlyoutHeader, CartFlyoutItem, CartFlyoutItemRemoveButton, CartFlyoutMessaging, CartFlyoutSubtotal, ContentHeroBanner, ContentProductGrid, ContentSideBySide, ContentTestimonial, ContentTestimonials, CtaButton, ErrorModal, EventDispatcher, InterfaceCloseButton, InterfaceFeaturedMedia, InterfaceIcon, InterfaceLogo, InterfaceModal, MainNav, MainNavBurger, MainNavCart, MainNavFlyout, MessagingFreeShippingCounter, MixinTestBench, NacelleCollection, NacelleContent, NacelleProducts, PageContent, ProductAddToCartButton, ProductCard, ProductCategory, ProductDescription, ProductGrid, ProductImage, ProductMediaSelectView, ProductOptionSwatch, ProductOptionSwatches, ProductOptions, ProductPrice, ProductQuantityUpdate, ProductShopLook, ProductTitle, ProductVariantDropdown, ProductVariantSelect, ProductVariantTitle, ProductVideo, ReadUserData, RefinementFilters, SearchAutocomplete, SearchAutocompleteItem, SearchBox, SearchInput, SearchNoResults, SearchResults, SiteHeader }
+export { BlogArticleContent, BlogArticleHeader, BrandHeader, CartFlyout, CartFlyoutCheckoutButton, CartFlyoutHeader, CartFlyoutItem, CartFlyoutItemRemoveButton, CartFlyoutMessaging, CartFlyoutSubtotal, ContentHeroBanner, ContentProductGrid, ContentSideBySide, ContentTestimonial, ContentTestimonials, CookieBanner, CtaButton, ErrorModal, EventDispatcher, InterfaceCloseButton, InterfaceFeaturedMedia, InterfaceIcon, InterfaceLogo, InterfaceModal, MainNav, MainNavBurger, MainNavCart, MainNavFlyout, MessagingFreeShippingCounter, MixinTestBench, NacelleCollection, NacelleContent, NacelleProducts, OptInOptOut, PageContent, ProductAddToCartButton, ProductCard, ProductCategory, ProductDescription, ProductGrid, ProductImage, ProductMediaSelectView, ProductOptionSwatch, ProductOptionSwatches, ProductOptions, ProductPrice, ProductQuantityUpdate, ProductShopLook, ProductTitle, ProductVariantDropdown, ProductVariantSelect, ProductVariantTitle, ProductVideo, ReadUserData, RefinementFilters, SearchAutocomplete, SearchAutocompleteItem, SearchBox, SearchInput, SearchNoResults, SearchResults, SiteHeader }
 
 // What should happen if the user installs the library as a plugin
 function install(Vue) {
@@ -85,6 +87,7 @@ function install(Vue) {
   Vue.component('ContentSideBySide', ContentSideBySide)
   Vue.component('ContentTestimonial', ContentTestimonial)
   Vue.component('ContentTestimonials', ContentTestimonials)
+  Vue.component('CookieBanner', CookieBanner)
   Vue.component('CtaButton', CtaButton)
   Vue.component('ErrorModal', ErrorModal)
   Vue.component('EventDispatcher', EventDispatcher)
@@ -102,6 +105,7 @@ function install(Vue) {
   Vue.component('NacelleCollection', NacelleCollection)
   Vue.component('NacelleContent', NacelleContent)
   Vue.component('NacelleProducts', NacelleProducts)
+  Vue.component('OptInOptOut', OptInOptOut)
   Vue.component('PageContent', PageContent)
   Vue.component('ProductAddToCartButton', ProductAddToCartButton)
   Vue.component('ProductCard', ProductCard)
