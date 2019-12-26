@@ -1,8 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { storiesOf } from '@storybook/vue'
 import { withInfo } from 'storybook-addon-vue-info'
-import ProductQuantityUpdate from '../components/ProductQuantityUpdate'
-import { defaultLineItem } from '../../config/defaultObjects.js'
+import QuantitySelector from '../components/QuantitySelector'
 import store from '../store/store'
 
 storiesOf('Components | Product', module)
@@ -11,44 +10,26 @@ storiesOf('Components | Product', module)
     'Quantity',
     () => ({
       store,
-      components: { ProductQuantityUpdate },
+      components: { QuantitySelector },
       data() {
         return {
-          lineItem: defaultLineItem
+          quantity: 0
         }
       },
       template: `
         <div class="section">
-          <product-quantity-update
-            :image="lineItem.image"
-            :title="lineItem.title"
-            :productId="lineItem.productId"
-            :handle="lineItem.handle"
-            :variant="lineItem.variant"
+          <quantity-selector
+            :quantity.sync="quantity"
           />
         </div>
       `,
       mounted() {
-        store.commit('cart/setLineItems', [])
-        // store.dispatch('cart/addLineItem', {
-        //   image: {
-        //     source:
-        //       'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
-        //   },
-        //   title: 'Gray T-Shirt',
-        //   productId: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM1OTkyMDE4NjE3Mzc=',
-        //   handle: 'gray-t-shirt',
-        //   price: '29.99',
-        //   quantity: 1,
-        //   variant: {
-        //     id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
-        //   }
-        // })
+
       }
     }),
     {
       info: {
-        // summary: "Hello"
+        summary: 'Increment or decrement quantity.'
       }
     }
   )

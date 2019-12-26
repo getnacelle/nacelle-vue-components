@@ -17,6 +17,7 @@ storiesOf('Components | Cart', module)
       data() {
         return {
           item: {
+            id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ==::106d9dd5-44ec-4b0b-b558-0c42657bf812',
             image: {
               thumbnailSrc:
                 'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'

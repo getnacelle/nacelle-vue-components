@@ -1,5 +1,24 @@
 import localforage from 'localforage'
 import axios from 'axios'
+import uuid from 'uuidv4'
+
+const compareMetafields = (array1, array2) => {
+  const props = ['key', 'value']
+  var result = array1.filter(function(o1) {
+    // filter out (!) items in result2
+    return !array2.some(function(o2) {
+      return o1.id === o2.id // assumes unique id
+    })
+  }).map(function(o) {
+    // use reduce to make objects with only the required properties
+    // and map to apply this to the filtered array as a whole
+    return props.reduce(function(newo, name) {
+      newo[name] = o[name]
+      return newo
+    }, {})
+  })
+  return result
+}
 
 const cart = (options = {}) => {
   const { endpoint = '', token = '' } = options
@@ -74,21 +93,31 @@ const cart = (options = {}) => {
         const index = state.lineItems.findIndex(
           lineItem => lineItem.variant.id === payload.variant.id
         )
+        // generate unique id for line
+        payload.id = `${payload.variant.id}::${uuid()}`
+        console.log('payload', payload)
+
         if (index === -1) {
           state.lineItems.push(payload)
         } else {
-          state.lineItems[index].quantity++
+          const matchingVariant = state.lineItems[index]
+          const mismatches = compareMetafields(payload.metafields, matchingVariant.metafields)
+          if (mismatches) {
+            state.lineItems.push(payload)
+          } else {
+            matchingVariant.quantity++
+          }
         }
       },
       removeLineItemMutation (state, payload) {
         const index = state.lineItems.findIndex(
-          lineItem => lineItem.variant.id === payload
+          lineItem => lineItem.id === payload
         )
         state.lineItems.splice(index, 1)
       },
       incrementLineItemMutation (state, payload) {
         const index = state.lineItems.findIndex(
-          lineItem => lineItem.variant.id === payload
+          lineItem => lineItem.id === payload
         )
         if (index !== -1) {
           state.lineItems[index].quantity++
@@ -96,7 +125,7 @@ const cart = (options = {}) => {
       },
       decrementLineItemMutation (state, payload) {
         const index = state.lineItems.findIndex(
-          lineItem => lineItem.variant.id === payload
+          lineItem => lineItem.id === payload
         )
         if (index !== -1 && state.lineItems[index].quantity >= 1) {
           state.lineItems[index].quantity--
