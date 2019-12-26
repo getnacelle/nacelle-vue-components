@@ -1,7 +1,7 @@
-import { mount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import CookieBanner from '@/components/CookieBanner'
 
-const wrapper = mount(CookieBanner)
+const wrapper = shallowMount(CookieBanner)
 const button = wrapper.find('button')
 
 describe('CookieBanner.vue', () => {
@@ -10,9 +10,7 @@ describe('CookieBanner.vue', () => {
       '<button id="accept" type="button" tabindex="0" role="button" aria-pressed="false">Accept</button>'
     )
   })
-})
 
-describe('CookieBanner.vue', () => {
   it('closes after the "Accept" button is clicked', async () => {
     button.trigger('click')
     expect(wrapper.html()).toBe(undefined)
