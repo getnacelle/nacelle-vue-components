@@ -9,7 +9,6 @@
     <div class="switches">
       <div
         class="increment switch"
-        @click="increment"
         @mousedown="start(increment)"
         @touchstart.native.prevent="start(increment)"
         @touchend.native.prevent="stop"
@@ -18,7 +17,6 @@
       </div>
       <div
         class="decrement switch"
-        @click="decrement"
         @mousedown="start(decrement)"
         @touchstart.native.prevent="start(decrement)"
         @touchend.native.prevent="stop"
@@ -109,9 +107,7 @@ export default {
      */
     stop (evt) {
       document.removeEventListener(evt.type, this.stop)
-      if (new Date() - this.startTime < timeInterval) {
-        this.handler()
-      }
+      this.handler()
       clearInterval(this.interval)
       this.interval = null
       this.handler = null

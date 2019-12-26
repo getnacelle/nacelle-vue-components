@@ -10,11 +10,8 @@
       <product-price :price="product.priceRange.max" />
     </div>
     <div v-if="product && product.id" class="product-card-actions">
-      <product-quantity-update
-        :product="product"
-        :variant="currentVariant"
-        v-if="showQuantityUpdate == true && onlyOneOption"
-        :allOptionsSelected="allOptionsSelected"
+      <quantity-selector
+        :quantity.sync="quantity"
       />
       <product-add-to-cart-button
         v-if="showAddToCart == true"
@@ -24,6 +21,7 @@
         :confirmedSelection="confirmedSelection"
         @click.native="handleAddToCartClick"
         :onlyOneOption="onlyOneOption"
+        :quantity="quantity"
       ></product-add-to-cart-button>
       <interface-modal
         :modalOpen="optionsModalVisible"
@@ -48,7 +46,7 @@ import { mapState, mapMutations, mapGetters } from 'vuex'
 import ProductImage from './ProductImage'
 import ProductTitle from './ProductTitle'
 import ProductPrice from './ProductPrice'
-import ProductQuantityUpdate from './ProductQuantityUpdate'
+import QuantitySelector from './QuantitySelector'
 import ProductAddToCartButton from './ProductAddToCartButton'
 import InterfaceModal from './InterfaceModal'
 import ProductOptions from './ProductOptions'
@@ -61,7 +59,7 @@ export default {
     ProductImage,
     ProductTitle,
     ProductPrice,
-    ProductQuantityUpdate,
+    QuantitySelector,
     ProductAddToCartButton,
     InterfaceModal,
     ProductOptions,
@@ -106,7 +104,8 @@ export default {
   data() {
     return {
       optionsModalVisible: false,
-      confirmedSelection: false
+      confirmedSelection: false,
+      quantity: 0
     }
   },
   watch: {
@@ -154,7 +153,7 @@ export default {
       }
     },
     productLineItems() {
-      let vm = this
+      const vm = this
       return this.lineItems.filter(item => {
         return item.productId == vm.product.id
       })
@@ -204,4 +203,3 @@ export default {
   bottom: 0;
 }
 </style>
-
