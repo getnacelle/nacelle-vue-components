@@ -72,9 +72,9 @@ const cart = (options = {}) => {
     mutations: {
       addLineItemMutation (state, payload) {
         const index = state.lineItems.findIndex(
-          lineItem => lineItem.variant.id == payload.variant.id
+          lineItem => lineItem.variant.id === payload.variant.id
         )
-        if (index == -1) {
+        if (index === -1) {
           state.lineItems.push(payload)
         } else {
           state.lineItems[index].quantity++
@@ -82,25 +82,25 @@ const cart = (options = {}) => {
       },
       removeLineItemMutation (state, payload) {
         const index = state.lineItems.findIndex(
-          lineItem => lineItem.variant.id == payload
+          lineItem => lineItem.variant.id === payload
         )
         state.lineItems.splice(index, 1)
       },
       incrementLineItemMutation (state, payload) {
         const index = state.lineItems.findIndex(
-          lineItem => lineItem.variant.id == payload
+          lineItem => lineItem.variant.id === payload
         )
-        if (index != -1) {
+        if (index !== -1) {
           state.lineItems[index].quantity++
         }
       },
       decrementLineItemMutation (state, payload) {
         const index = state.lineItems.findIndex(
-          lineItem => lineItem.variant.id == payload
+          lineItem => lineItem.variant.id === payload
         )
-        if (index != -1 && state.lineItems[index].quantity >= 1) {
+        if (index !== -1 && state.lineItems[index].quantity >= 1) {
           state.lineItems[index].quantity--
-          if (state.lineItems[index].quantity == 0) {
+          if (state.lineItems[index].quantity === 0) {
             state.lineItems.splice(index, 1)
           }
         }
@@ -208,7 +208,7 @@ const cart = (options = {}) => {
         }
       },
       async removeLineItemsIfCheckoutComplete (context) {
-        if (context.state.checkoutComplete == true) {
+        if (context.state.checkoutComplete === true) {
           await localforage.removeItem('line-items')
           await localforage.removeItem('checkout-id')
         }

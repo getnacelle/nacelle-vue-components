@@ -1,7 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { storiesOf } from '@storybook/vue'
-import { action } from '@storybook/addon-actions'
-import { withKnobs, text, boolean } from '@storybook/addon-knobs';
+import { withKnobs, text, boolean } from '@storybook/addon-knobs'
 import { withInfo } from 'storybook-addon-vue-info'
 
 import ContentSideBySide from '../components/ContentSideBySide'
@@ -55,7 +54,7 @@ storiesOf('Components | Content / Side by Side', module)
     }
   )
 
-  storiesOf('Components | Content / Side by Side', module)
+storiesOf('Components | Content / Side by Side', module)
   .addDecorator(withInfo)
   .addDecorator(withKnobs)
   .add(

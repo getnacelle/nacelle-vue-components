@@ -1,7 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { storiesOf } from '@storybook/vue'
-import { action } from '@storybook/addon-actions'
-import { linkTo } from '@storybook/addon-links'
 import { withInfo } from 'storybook-addon-vue-info'
 import StoryRouter from 'storybook-vue-router'
 import store from '../store/store'
@@ -22,7 +20,7 @@ storiesOf('Components | General / Icon', module)
           path: '/wishlist'
         }
       },
-      template: `<interface-icon :iconName="iconName" :path="path"/>`
+      template: '<interface-icon :iconName="iconName" :path="path"/>'
     }),
     {
       info: {
@@ -45,7 +43,7 @@ storiesOf('Components | General / Icon', module)
           path: '/account'
         }
       },
-      template: `<interface-icon :iconName="iconName" :path="path"/>`
+      template: '<interface-icon :iconName="iconName" :path="path"/>'
     }),
     {
       info: {
@@ -68,7 +66,7 @@ storiesOf('Components | General / Icon', module)
           iconAction: 'cart/showCart'
         }
       },
-      template: `<interface-icon :iconName="iconName" :iconAction="iconAction"/>`
+      template: '<interface-icon :iconName="iconName" :iconAction="iconAction"/>'
     }),
     {
       info: {

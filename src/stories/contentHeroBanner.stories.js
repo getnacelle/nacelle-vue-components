@@ -1,7 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { storiesOf } from '@storybook/vue'
 import { action } from '@storybook/addon-actions'
-import { linkTo } from '@storybook/addon-links'
 import { withInfo } from 'storybook-addon-vue-info'
 
 import ContentHeroBanner from '../components/ContentHeroBanner'
@@ -18,7 +17,7 @@ storiesOf('Components | Content / Hero Banner', module)
   .add(
     'Default',
     () => ({
-      components: { ContentHeroBanner},
+      components: { ContentHeroBanner },
       data() {
         return {
           ...defaults
@@ -45,7 +44,7 @@ storiesOf('Components | Content / Hero Banner', module)
   .add(
     'Full height',
     () => ({
-      components: { ContentHeroBanner},
+      components: { ContentHeroBanner },
       data() {
         return {
           ...defaults,
@@ -74,7 +73,7 @@ storiesOf('Components | Content / Hero Banner', module)
   .add(
     'Text Color',
     () => ({
-      components: { ContentHeroBanner},
+      components: { ContentHeroBanner },
       data() {
         return {
           ...defaults,
@@ -103,7 +102,7 @@ storiesOf('Components | Content / Hero Banner', module)
   .add(
     'Custom CTA event',
     () => ({
-      components: { ContentHeroBanner},
+      components: { ContentHeroBanner },
       data() {
         return {
           ...defaults,
@@ -132,12 +131,12 @@ storiesOf('Components | Content / Hero Banner', module)
   .add(
     'Mobile image',
     () => ({
-      components: { ContentHeroBanner},
+      components: { ContentHeroBanner },
       data() {
         return {
           ...defaults,
           mobileFullHeight: true,
-          mobileBackgroundImgUrl: 
+          mobileBackgroundImgUrl:
             'https://nacelle-assets.s3-us-west-2.amazonaws.com/default-mobile-banner.png'
         }
       },
@@ -159,17 +158,17 @@ storiesOf('Components | Content / Hero Banner', module)
     }
   )
 
-  storiesOf('Components | Content / Hero Banner', module)
+storiesOf('Components | Content / Hero Banner', module)
   .addDecorator(withInfo)
   .add(
     'Custom Slots',
     () => ({
-      components: { ContentHeroBanner},
+      components: { ContentHeroBanner },
       data() {
         return {
           ...defaults,
           mobileFullHeight: true,
-          mobileBackgroundImgUrl: 
+          mobileBackgroundImgUrl:
             'https://nacelle-assets.s3-us-west-2.amazonaws.com/default-mobile-banner.png'
         }
       },

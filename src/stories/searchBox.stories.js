@@ -2,9 +2,8 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import { storiesOf } from '@storybook/vue'
-import { withActions, action } from '@storybook/addon-actions'
-import { linkTo } from '@storybook/addon-links'
-import { withKnobs, button } from '@storybook/addon-knobs'
+import { withActions } from '@storybook/addon-actions'
+import { withKnobs } from '@storybook/addon-knobs'
 import { withInfo } from 'storybook-addon-vue-info'
 import StoryRouter from 'storybook-vue-router'
 import store from '../store/store'
@@ -19,7 +18,7 @@ storiesOf('Components | Search', module)
   .addDecorator(() => ({
     template: `
       <div style="max-width: 450px; margin: 3rem auto;"><story/></div>
-    `,
+    `
   }))
   .add(
     'Search Box - Global',
@@ -33,12 +32,12 @@ storiesOf('Components | Search', module)
         const mock = new MockAdapter(axios)
 
         mock.onGet('/data/search.json').reply(200, searchResults)
-      },
+      }
     }),
     {
       info: {
         // summary: "Hello"
-      },
+      }
     }
   )
 
@@ -50,7 +49,7 @@ storiesOf('Components | Search', module)
   .addDecorator(() => ({
     template: `
       <div style="max-width: 450px; margin: 3rem auto;"><story/></div>
-    `,
+    `
   }))
   .add(
     'Search Box - In Page',
@@ -64,11 +63,11 @@ storiesOf('Components | Search', module)
         const mock = new MockAdapter(axios)
 
         mock.onGet('/data/search.json').reply(200, searchResults)
-      },
+      }
     }),
     {
       info: {
         // summary: "Hello"
-      },
+      }
     }
   )

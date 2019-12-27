@@ -1,6 +1,6 @@
 {
   "name": "@nacelle/nacelle-vue-components",
-  "version": "0.0.227",
+  "version": "0.0.229",
   "main": "dist/cjs/index.common.js",
   "files": [
     "dist/*"
@@ -80,5 +80,10 @@
     "vue-cli-plugin-storybook": "^0.6.1",
     "vue-server-renderer": "^2.6.10",
     "vue-template-compiler": "^2.5.21"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@nacelle/nacelle"
+    ]
   }
 }

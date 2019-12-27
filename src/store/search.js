@@ -9,7 +9,7 @@ const search = {
     filtersCleared: false,
     searchData: {},
     loadedData: false,
-    searchLoading: false,
+    searchLoading: false
   },
   getters: {
     queryOrigin(state) {
@@ -36,7 +36,7 @@ const search = {
       }
 
       return []
-    },
+    }
   },
   mutations: {
     setQuery(state, query) {
@@ -62,7 +62,7 @@ const search = {
     setSearchData(state, data) {
       state.searchData = {
         ...state.searchData,
-        ...data,
+        ...data
       }
     },
 
@@ -80,7 +80,7 @@ const search = {
 
     isNotSearching(state) {
       state.searchLoading = false
-    },
+    }
   },
 
   actions: {
@@ -108,8 +108,8 @@ const search = {
             return err
           })
       }
-    },
-  },
+    }
+  }
 }
 
 export default search

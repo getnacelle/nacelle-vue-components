@@ -2,8 +2,7 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import { storiesOf } from '@storybook/vue'
-import { withActions, action } from '@storybook/addon-actions'
-import { linkTo } from '@storybook/addon-links'
+import { withActions } from '@storybook/addon-actions'
 import { withKnobs, object } from '@storybook/addon-knobs'
 import { withInfo } from 'storybook-addon-vue-info'
 import StoryRouter from 'storybook-vue-router'
@@ -18,8 +17,8 @@ import searchResults from '../../config/defaults/search-results'
 const defaultFilters = [
   {
     field: 'productType',
-    label: 'Product Type',
-  },
+    label: 'Product Type'
+  }
 ]
 
 storiesOf('Components | Search', module)
@@ -30,7 +29,7 @@ storiesOf('Components | Search', module)
   .addDecorator(() => ({
     template: `
       <div style="max-width: 1200px; margin: 3rem auto;"><story/></div>
-    `,
+    `
   }))
   .add(
     'Composition',
@@ -41,17 +40,17 @@ storiesOf('Components | Search', module)
         RefinementFilters,
         SearchResults,
         SearchNoResults,
-        ProductGrid,
+        ProductGrid
       },
       props: {
         filters: {
           type: Array,
-          default: object('Filters Object', defaultFilters),
-        },
+          default: object('Filters Object', defaultFilters)
+        }
       },
       data() {
         return {
-          filteredData: [],
+          filteredData: []
         }
       },
       computed: {
@@ -60,7 +59,7 @@ storiesOf('Components | Search', module)
         },
         query() {
           return this.$store.state.search.query
-        },
+        }
       },
       created() {
         const mock = new MockAdapter(axios)
@@ -72,7 +71,7 @@ storiesOf('Components | Search', module)
       methods: {
         onUpdate(outputData) {
           this.filteredData = outputData
-        },
+        }
       },
       template: `
         <div>
@@ -105,13 +104,13 @@ storiesOf('Components | Search', module)
             </div>
           </div>
         </div>
-      `,
+      `
     }),
     {
       info: {
         summary: `
         This is a complete example of all search components.
-        `,
-      },
+        `
+      }
     }
   )
