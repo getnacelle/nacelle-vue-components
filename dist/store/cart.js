@@ -1,5 +1,7 @@
 import localforage from 'localforage'
 import axios from 'axios'
+import uuid from 'uuidv4'
+import isEqual from 'lodash.isequal'
 
 const cart = (options = {}) => {
   const { endpoint = '', token = '' } = options
@@ -71,24 +73,32 @@ const cart = (options = {}) => {
     },
     mutations: {
       addLineItemMutation (state, payload) {
-        const index = state.lineItems.findIndex(
-          lineItem => lineItem.variant.id === payload.variant.id
-        )
+        console.log('payload!', payload)
+        const index = state.lineItems.findIndex((lineItem) => {
+          if (lineItem.variant.id === payload.variant.id) {
+            const areMetafieldsEqual = isEqual(payload.metafields, lineItem.metafields)
+            console.log('mismatches', areMetafieldsEqual)
+
+            return areMetafieldsEqual // match only if metafields are the same.
+          }
+        })
         if (index === -1) {
+          // generate unique id for line
+          payload.id = `${payload.variant.id}::${uuid()}`
           state.lineItems.push(payload)
         } else {
-          state.lineItems[index].quantity++
+          state.lineItems[index].quantity += payload.quantity
         }
       },
       removeLineItemMutation (state, payload) {
         const index = state.lineItems.findIndex(
-          lineItem => lineItem.variant.id === payload
+          lineItem => lineItem.id === payload
         )
         state.lineItems.splice(index, 1)
       },
       incrementLineItemMutation (state, payload) {
         const index = state.lineItems.findIndex(
-          lineItem => lineItem.variant.id === payload
+          lineItem => lineItem.id === payload
         )
         if (index !== -1) {
           state.lineItems[index].quantity++
@@ -96,7 +106,7 @@ const cart = (options = {}) => {
       },
       decrementLineItemMutation (state, payload) {
         const index = state.lineItems.findIndex(
-          lineItem => lineItem.variant.id === payload
+          lineItem => lineItem.id === payload
         )
         if (index !== -1 && state.lineItems[index].quantity >= 1) {
           state.lineItems[index].quantity--
@@ -135,6 +145,7 @@ const cart = (options = {}) => {
       async addLineItem (context, payload) {
         context.commit('addLineItemMutation', payload)
         context.dispatch('saveLineItems', context.state.lineItems)
+        console.log('context.state.lineItems', context.state.lineItems)
         // context.commit('showCart')
         if (context.rootState.events) {
           context.dispatch('events/addToCart', payload, { root: true })

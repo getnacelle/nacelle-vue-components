@@ -8,7 +8,7 @@
         <option :selected="typeof selectedVariant === undefined">
           Choose a {{attributeName}}
         </option>
-      
+
         <option
           v-for="variant in product.variants"
           :key="variant.id"
@@ -23,10 +23,8 @@
     </div>
     <div v-if="showAddToCart && selectedVariant" class="columns is-mobile">
       <div class="column is-half">
-        <product-quantity-update
-          :product="product"
-          :variant="selectedVariant"
-          :allOptionsSelected="true"
+        <quantity-selector
+          :quantity.sync="quantity"
         />
       </div>
       <div class="column is-half">
@@ -35,6 +33,7 @@
           :variant="selectedVariant"
           :allOptionsSelected="true"
           :onlyOneOption="true"
+          :quantity="quantity"
         >
           <slot name="add-to-cart-button" />
         </product-add-to-cart-button>
@@ -44,12 +43,12 @@
 </template>
 
 <script>
-import ProductQuantityUpdate from './ProductQuantityUpdate'
+import QuantitySelector from './QuantitySelector'
 import ProductAddToCartButton from './ProductAddToCartButton'
 
 export default {
   components: {
-    ProductQuantityUpdate,
+    QuantitySelector,
     ProductAddToCartButton
   },
   props: {
@@ -94,7 +93,8 @@ export default {
   },
   data () {
     return {
-      selectedVariant: undefined
+      selectedVariant: undefined,
+      quantity: 0
     }
   },
   computed: {

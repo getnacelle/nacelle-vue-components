@@ -1,24 +1,7 @@
 import localforage from 'localforage'
 import axios from 'axios'
 import uuid from 'uuidv4'
-
-const compareMetafields = (array1, array2) => {
-  const props = ['key', 'value']
-  var result = array1.filter(function(o1) {
-    // filter out (!) items in result2
-    return !array2.some(function(o2) {
-      return o1.id === o2.id // assumes unique id
-    })
-  }).map(function(o) {
-    // use reduce to make objects with only the required properties
-    // and map to apply this to the filtered array as a whole
-    return props.reduce(function(newo, name) {
-      newo[name] = o[name]
-      return newo
-    }, {})
-  })
-  return result
-}
+import isEqual from 'lodash.isequal'
 
 const cart = (options = {}) => {
   const { endpoint = '', token = '' } = options
@@ -90,23 +73,21 @@ const cart = (options = {}) => {
     },
     mutations: {
       addLineItemMutation (state, payload) {
-        const index = state.lineItems.findIndex(
-          lineItem => lineItem.variant.id === payload.variant.id
-        )
-        // generate unique id for line
-        payload.id = `${payload.variant.id}::${uuid()}`
-        console.log('payload', payload)
+        console.log('payload!', payload)
+        const index = state.lineItems.findIndex((lineItem) => {
+          if (lineItem.variant.id === payload.variant.id) {
+            const areMetafieldsEqual = isEqual(payload.metafields, lineItem.metafields)
+            console.log('mismatches', areMetafieldsEqual)
 
+            return areMetafieldsEqual // match only if metafields are the same.
+          }
+        })
         if (index === -1) {
+          // generate unique id for line
+          payload.id = `${payload.variant.id}::${uuid()}`
           state.lineItems.push(payload)
         } else {
-          const matchingVariant = state.lineItems[index]
-          const mismatches = compareMetafields(payload.metafields, matchingVariant.metafields)
-          if (mismatches) {
-            state.lineItems.push(payload)
-          } else {
-            matchingVariant.quantity++
-          }
+          state.lineItems[index].quantity += payload.quantity
         }
       },
       removeLineItemMutation (state, payload) {
@@ -164,6 +145,7 @@ const cart = (options = {}) => {
       async addLineItem (context, payload) {
         context.commit('addLineItemMutation', payload)
         context.dispatch('saveLineItems', context.state.lineItems)
+        console.log('context.state.lineItems', context.state.lineItems)
         // context.commit('showCart')
         if (context.rootState.events) {
           context.dispatch('events/addToCart', payload, { root: true })
