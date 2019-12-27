@@ -19,6 +19,12 @@ export default {
     },
     logEntry() {
       return JSON.parse(JSON.stringify(this.log)).pop()
+    },
+    fbq() {
+      return process.browser ? window.fbq : undefined
+    },
+    ga() {
+      return process.browser ? window.ga : undefined
     }
   },
   watch: {
@@ -61,21 +67,21 @@ export default {
     },
     /// / PAGE VIEW METHODS /////////////////////////////////
     facebookPageView() {
-      if (typeof fbq !== 'undefined') {
-        fbq('track', 'PageView')
+      if (typeof this.fbq !== 'undefined') {
+        this.fbq('track', 'PageView')
       }
     },
     googleAnalyticsPageView() {
-      if (typeof ga !== 'undefined') {
-        ga('send', 'pageview', this.logEntry.page.pageUrl)
+      if (typeof this.ga !== 'undefined') {
+        this.ga('send', 'pageview', this.logEntry.page.pageUrl)
       }
     },
 
     /// / PRODUCT VIEW METHODS //////////////////////////////
     facebookProductView() {
-      const vm = this
-      if (typeof fbq !== 'undefined') {
-        fbq('track', 'ViewContent', {
+      if (typeof this.fbq !== 'undefined') {
+        const vm = this
+        this.fbq('track', 'ViewContent', {
           content_ids: vm.decodeBase64VariantId(
             vm.logEntry.product.variants[0].id
           ),
@@ -87,22 +93,22 @@ export default {
     },
 
     googleAnalyticsProductView() {
-      const vm = this
-      if (typeof ga !== 'undefined') {
-        ga('ec:addProduct', {
+      if (typeof this.ga !== 'undefined') {
+        const vm = this
+        this.ga('ec:addProduct', {
           id: vm.decodeBase64ProductId(vm.logEntry.product.productId),
           name: vm.logEntry.product.title
         })
-        ga('ec:setAction', 'detail')
-        ga('send', 'pageview')
+        this.ga('ec:setAction', 'detail')
+        this.ga('send', 'pageview')
       }
     },
 
     /// / ADD TO CART METHODS ///////////////////////////////
     facebookAddToCart() {
-      const vm = this
-      if (typeof fbq !== 'undefined') {
-        fbq('track', 'AddToCart', {
+      if (typeof this.fbq !== 'undefined') {
+        const vm = this
+        this.fbq('track', 'AddToCart', {
           content_ids: vm.decodeBase64VariantId(vm.logEntry.product.variant.id),
           content_name: vm.logEntry.product.title,
           content_type: 'product',
@@ -114,35 +120,35 @@ export default {
     },
 
     googleAnalyticsAddToCart() {
-      const vm = this
-      if (typeof ga !== 'undefined') {
-        ga('ec:addProduct', {
+      if (typeof this.ga !== 'undefined') {
+        const vm = this
+        this.ga('ec:addProduct', {
           id: vm.decodeBase64ProductId(vm.logEntry.product.productId),
           name: vm.logEntry.product.title
         })
-        ga('ec:setAction', 'add')
-        ga('send', 'event', 'UX', 'click', 'add to cart')
+        this.ga('ec:setAction', 'add')
+        this.ga('send', 'event', 'UX', 'click', 'add to cart')
       }
     },
 
     /// / REMOVE FROM CART METHODS ///////////////////////////////
     googleAnalyticsRemoveFromCart() {
-      const vm = this
-      if (typeof ga !== 'undefined') {
-        ga('ec:addProduct', {
+      if (typeof this.ga !== 'undefined') {
+        const vm = this
+        this.ga('ec:addProduct', {
           id: vm.logEntry.lineItem.productId,
           name: vm.logEntry.lineItem.title
         })
-        ga('ec:setAction', 'remove')
-        ga('send', 'event', 'UX', 'click', 'remove from cart')
+        this.ga('ec:setAction', 'remove')
+        this.ga('send', 'event', 'UX', 'click', 'remove from cart')
       }
     },
 
     /// / CHECKOUT INITIATION METHODS ///////////////////////////////
     facebookCheckoutInitiate() {
-      const vm = this
-      if (typeof fbq !== 'undefined') {
-        fbq('track', 'InitiateCheckout', {
+      if (typeof this.fbq !== 'undefined') {
+        const vm = this
+        this.fbq('track', 'InitiateCheckout', {
           content_ids: vm.productIDs.map(id => {
             return vm.decodeBase64ProductId(id)
           }),
