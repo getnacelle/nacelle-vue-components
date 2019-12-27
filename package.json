@@ -6,7 +6,7 @@
     "dist/*"
   ],
   "scripts": {
-    "hot-build-library": "nodemon --watch src -e vue build/build-library.js",
+    "hot-build-library": "nodemon --watch src -e vue,js build/build-library.js",
     "build-library": "node build/build-library.js",
     "storybook:build": "vue-cli-service storybook:build -c config/storybook",
     "storybook:serve": "vue-cli-service storybook:serve -p 6006 -c config/storybook",
@@ -73,6 +73,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-vue": "^6.0.1",
     "node-sass": "^4.9.0",
+    "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
     "sass-loader": "^7.1.0",
     "storybook-addon-vue-info": "^1.2.1",
