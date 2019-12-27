@@ -156,7 +156,7 @@ export default {
         const newArgs = args
           ? args.split('&').filter(el => el.includes('width=') === false)
           : null
-        const newSrc = newBase.concat(`.${extension}?${newArgs}`)
+        const newSrc = newBase.concat(`.${extension}?${newArgs.join('&')}`)
         return newSrc
       }
       return null
@@ -176,7 +176,9 @@ export default {
       if (typeof src === 'string') {
         const extension = Array.from(src.split('?v=')[0].split('.')).pop()
         if (extension === 'png' || extension === 'jpg') {
-          return src.split('&format=')[0].concat(`&format=${format === 'auto' ? 'jpg' : format}`)
+          return src
+            .split('&format=')[0]
+            .concat(`&format=${format === 'auto' ? 'jpg' : format}`)
         } else {
           // return the original image if it is a gif / not a png or jpg
           return src
@@ -184,6 +186,39 @@ export default {
       } else {
         return null
       }
+    },
+    cloudinaryResize({ src = null, width = null, height = null, crop = false } = {}) {
+      // Request size which closely matches the width of the bounding element,
+      // unless the parent container uses absolute positioning.
+      // Round up size to the nearest 50px increment.
+      function getSizeString() {
+        if (width && height) {
+          return `w_${width},h_${height}`
+        } else if (width && !height) {
+          return `w_${width}`
+        } else if (!width && height) {
+          return `h_${height}`
+        } else {
+          return new Error('No image size specified')
+        }
+      }
+      function getCropString() {
+        if (crop) {
+          if (crop === 'center') {
+            return `,c_crop,g_${crop}`
+          }
+          return ''
+        }
+        return ''
+      }
+      if (typeof src === 'string') {
+        const sizeString = getSizeString()
+        const cropString = getCropString()
+        return src
+          .split('fetch/')
+          .reduce((acc, el, idx) => idx === 0 ? acc.concat(el, `fetch/${sizeString}${cropString}/`) : acc.concat(el), '')
+      }
+      return null
     },
     cloudinaryReformat({ src = null, format = 'auto', api = 'fetch' } = {}) {
       // Perform an on-the-fly image format transformation. Choose between
