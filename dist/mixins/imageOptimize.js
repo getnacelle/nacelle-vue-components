@@ -7,13 +7,17 @@ export default {
       type: String,
       default: ''
     },
+    reformat: {
+      type: Boolean,
+      default: true
+    },
     resize: {
       type: Boolean,
       default: false
     },
-    reformat: {
+    resizeToScreenWidth: {
       type: Boolean,
-      default: true
+      default: false
     },
     cropDirection: {
       type: String,
@@ -75,6 +79,9 @@ export default {
     shopifyPathPrefix() {
       const path = this.getMetafield('cdn', 'shopify-path-prefix') || 'https://cdn.shopify.com/s/files/'
       return path.split('').reverse()[0] !== '/' ? path.concat('/') : path
+    },
+    screenWidth() {
+      return process.browser && window.screen.width
     }
   },
   methods: {
@@ -84,10 +91,12 @@ export default {
         if (this.fromShopifyCDN({ url })) {
           this.originCDN = 'shopify'
           const source = (this.cdn.toLowerCase() === 'cloudinary') ? this.shopifyToCloudinary({ url }) : url
-          if (this.reformat && this.cdn.toLowerCase() === 'cloudinary') {
-            newSource = this.cloudinaryReformat({ src: source, format })
-          } else if (this.reformat && this.cdn.toLowerCase() === 'shopify') {
-            newSource = this.shopifyReformat({ src: source, format })
+          if (this.reformat && !this.resizeToScreenWidth) {
+            newSource = this.reformatImage({ src: source, format })
+          } else if (this.reformat && this.resizeToScreenWidth) {
+            newSource = this.resizeImage({ src: this.reformatImage({ src: source, format }), width: this.screenWidth })
+          } else if (!this.reformat && this.resizeToScreenWidth) {
+            newSource = this.resizeImage({ src: source, width: this.screenWidth })
           } else {
             newSource = source
           }
@@ -125,29 +134,50 @@ export default {
         height: ''
       })
     },
+    roundedUpToNearest50px(x) {
+      if (x >= 50) {
+        return +x + 49 - ((+x + 49) % 50)
+      }
+      // Return a blank string if less than 50px
+      return ''
+    },
+    resizeImage({ src = null, width = null, height = null, crop = false } = {}) {
+      if (this.cdn.toLowerCase() === 'cloudinary') {
+        return this.cloudinaryResize({ src, width, height, crop })
+      } else if (this.cdn.toLowerCase() === 'shopify') {
+        return this.shopifyResize({ src, width, height })
+      }
+    },
+    reformatImage({ src = null, format = 'auto' } = {}) {
+      if (this.cdn.toLowerCase() === 'shopify') {
+        return format === 'auto'
+          ? this.shopifyReformat({ src })
+          : this.shopifyReformat({ src, format })
+      } else if (this.cdn.toLowerCase() === 'cloudinary') {
+        return this.cloudinaryReformat({ src, format })
+      }
+      return null
+    },
     shopifyResize({ src = null, width = 'auto', height = 'auto' } = {}) {
       // Request size which closely matches the width of the bounding element,
       // unless the parent container uses absolute positioning.
       // Round up size to the nearest 50px increment.
-      function roundedUpToNearest50px(x) {
-        // Return a blank string if less than 50px
-        if (x >= 50) {
-          return +x + 49 - ((+x + 49) % 50)
+      function getSizeString() {
+        if (width && height) {
+          return `_${width}x${height}`
+        } else if (width && !height) {
+          return `_${width}x`
+        } else if (!width && height) {
+          return `_x${height}`
+        } else {
+          return new Error('No image size specified')
         }
-        return ''
       }
       if (typeof src === 'string') {
         const [baseWithExt, args] = src.split('?')
         const [extension] = Array.from(baseWithExt.split('.')).reverse()
         const [base] = baseWithExt.split(`.${extension}`)
-        const newWidth =
-          width === 'auto' ? roundedUpToNearest50px(this.containerWidth) : width
-        const newHeight =
-          height === 'auto'
-            ? roundedUpToNearest50px(this.containerHeight)
-            : height
-        const newSizeString =
-          newWidth !== '' || newHeight !== '' ? `_${newWidth}x${newHeight}` : ''
+        const newSizeString = getSizeString()
         const cropString =
           this.containerPosition === 'absolute'
             ? `_crop_${this.cropDirection}`
