@@ -92,11 +92,19 @@ export default {
           this.originCDN = 'shopify'
           const source = (this.cdn.toLowerCase() === 'cloudinary') ? this.shopifyToCloudinary({ url }) : url
           if (this.reformat && !this.resizeToScreenWidth) {
-            newSource = this.reformatImage({ src: source, format })
+            newSource = this.reformatImage({
+              src: source, format
+            })
           } else if (this.reformat && this.resizeToScreenWidth) {
-            newSource = this.resizeImage({ src: this.reformatImage({ src: source, format }), width: this.screenWidth })
+            newSource = this.resizeImage({
+              src: this.reformatImage({ src: source, format }),
+              width: this.roundedUpToNearest50px(this.screenWidth)
+            })
           } else if (!this.reformat && this.resizeToScreenWidth) {
-            newSource = this.resizeImage({ src: source, width: this.screenWidth })
+            newSource = this.resizeImage({
+              src: source,
+              width: this.roundedUpToNearest50px(this.screenWidth)
+            })
           } else {
             newSource = source
           }
