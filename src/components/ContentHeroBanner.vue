@@ -28,20 +28,26 @@
         <source
           v-if="mobileBackgroundImgUrl.length > 0 && cloudinaryCanAutoFormat"
           media="(max-width: 786px)"
-          :srcset="optimizeSource({ url: mobileBackgroundImgUrl, format: 'auto' })"
+          :srcset="
+            optimizeSource({ url: mobileBackgroundImgUrl, format: 'auto' })
+          "
           @error="fallback"
         />
         <source
-          v-if="mobileBackgroundImgUrl.length > 0  && reformat"
+          v-if="mobileBackgroundImgUrl.length > 0 && reformat"
           media="(max-width: 786px)"
-          :srcset="optimizeSource({ url: mobileBackgroundImgUrl, format: 'webp' })"
+          :srcset="
+            optimizeSource({ url: mobileBackgroundImgUrl, format: 'webp' })
+          "
           type="image/webp"
           @error="fallback"
         />
         <source
           v-if="mobileBackgroundImgUrl.length > 0 && reformat"
           media="(max-width: 786px)"
-          :srcset="optimizeSource({ url: mobileBackgroundImgUrl, format: 'jpg' })"
+          :srcset="
+            optimizeSource({ url: mobileBackgroundImgUrl, format: 'jpg' })
+          "
           type="image/jpeg"
           @error="fallback"
         />
@@ -51,15 +57,19 @@
           @error="fallback"
         />
         <source
-          v-if="mobileBackgroundImgUrl.length > 0  && reformat"
+          v-if="mobileBackgroundImgUrl.length > 0 && reformat"
           media="(max-width: 786px)"
-          :srcset="optimizeSource({ url: mobileBackgroundImgUrl, format: 'webp' })"
+          :srcset="
+            optimizeSource({ url: mobileBackgroundImgUrl, format: 'webp' })
+          "
           type="image/webp"
         />
         <source
           v-if="mobileBackgroundImgUrl.length > 0 && reformat"
           media="(max-width: 786px)"
-          :srcset="optimizeSource({ url: mobileBackgroundImgUrl, format: 'jpg' })"
+          :srcset="
+            optimizeSource({ url: mobileBackgroundImgUrl, format: 'jpg' })
+          "
           type="image/jpeg"
         />
         <source
@@ -76,34 +86,56 @@
           :srcset="optimizeSource({ url: backgroundImgUrl, format: 'jpg' })"
           type="image/jpeg"
         />
-        <source v-if="reformat" :srcset="optimizeSource({ url: backgroundImgUrl, format: 'webp' })" />
-        <source v-if="reformat" :srcset="optimizeSource({ url: backgroundImgUrl, format: 'jpg' })" />
-        <img :src="backgroundImgUrl" :alt="backgroundAltTag" @error="fallback" />
+        <source
+          v-if="reformat"
+          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'webp' })"
+        />
+        <source
+          v-if="reformat"
+          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'jpg' })"
+        />
+        <img
+          :src="backgroundImgUrl"
+          :alt="backgroundAltTag"
+          @error="fallback"
+        />
       </picture>
     </slot>
     <div class="hero-body">
       <div class="container">
         <div class="hero-body-inner">
-          <slot name="body" :textColor="textColor" :title="title" :subtitle="subtitle">
+          <slot
+            name="body"
+            :textColor="textColor"
+            :title="title"
+            :subtitle="subtitle"
+          >
             <h1
               class="title"
               :style="
                 textColor && textColor.length > 0 ? `color: ${textColor}` : ''
               "
-            >{{ title }}</h1>
+            >
+              {{ title }}
+            </h1>
             <h3
               class="subtitle"
               :style="
                 textColor && textColor.length > 0 ? `color: ${textColor}` : ''
               "
-            >{{ subtitle }}</h3>
+            >
+              {{ subtitle }}
+            </h3>
           </slot>
-          <slot name="cta" :ctaUrl="ctaUrl" :ctaText="ctaText" :ctaHandler="ctaHandler">
+          <slot
+            name="cta"
+            :ctaUrl="ctaUrl"
+            :ctaText="ctaText"
+            :ctaHandler="ctaHandler"
+          >
             <p v-if="ctaText.length > 0">
               <cta-button :to="ctaUrl" @clicked="ctaHandler">
-                {{
-                ctaText
-                }}
+                {{ ctaText }}
               </cta-button>
             </p>
           </slot>
@@ -129,6 +161,10 @@ export default {
     size: {
       type: String,
       default: 'medium'
+    },
+    resizeToScreenWidth: {
+      type: Boolean,
+      default: true
     },
     mobileFullHeight: {
       type: Boolean,
