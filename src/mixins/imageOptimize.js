@@ -11,10 +11,6 @@ export default {
       type: Boolean,
       default: true
     },
-    resize: {
-      type: Boolean,
-      default: false
-    },
     resizeToScreenWidth: {
       type: Boolean,
       default: false
