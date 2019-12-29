@@ -53,7 +53,9 @@ export default {
   computed: {
     ...mapGetters('space', ['getMetafield']),
     cdn() {
-      return this.getMetafield('cdn', 'provider') || 'shopify'
+      const supportedCDNs = ['shopify', 'cloudinary']
+      const metafieldCDN = this.getMetafield('cdn', 'provider').toLowerCase()
+      return supportedCDNs.includes(metafieldCDN) ? metafieldCDN : 'shopify'
     },
     cdnShopifyToCloudinary() {
       return this.originCDN === 'shopify' && this.cdn.toLowerCase() === 'cloudinary'
@@ -79,31 +81,30 @@ export default {
     shopifyPathPrefix() {
       const path = this.getMetafield('cdn', 'shopify-path-prefix') || 'https://cdn.shopify.com/s/files/'
       return path.split('').reverse()[0] !== '/' ? path.concat('/') : path
-    },
-    screenWidth() {
-      return process.browser && window.screen.width
     }
   },
   methods: {
-    optimizeSource({ url = null, format = 'auto' } = {}) {
+    optimizeSource({ url = null, format = 'auto', width = null, height = null } = {}) {
       let newSource
       if (typeof url === 'string') {
         if (this.fromShopifyCDN({ url })) {
           this.originCDN = 'shopify'
           const source = (this.cdn.toLowerCase() === 'cloudinary') ? this.shopifyToCloudinary({ url }) : url
-          if (this.reformat && !this.resizeToScreenWidth) {
+          if (this.reformat && (!width && !height)) {
             newSource = this.reformatImage({
               src: source, format
             })
-          } else if (this.reformat && this.resizeToScreenWidth) {
+          } else if (this.reformat && (width || height)) {
             newSource = this.resizeImage({
               src: this.reformatImage({ src: source, format }),
-              width: this.roundedUpToNearest50px(this.screenWidth)
+              width: this.roundedUpToNearest50px(width),
+              height: this.roundedUpToNearest50px(height)
             })
-          } else if (!this.reformat && this.resizeToScreenWidth) {
+          } else if (!this.reformat && (width || height)) {
             newSource = this.resizeImage({
               src: source,
-              width: this.roundedUpToNearest50px(this.screenWidth)
+              width: this.roundedUpToNearest50px(width),
+              height: this.roundedUpToNearest50px(height)
             })
           } else {
             newSource = source
@@ -166,7 +167,7 @@ export default {
       }
       return null
     },
-    shopifyResize({ src = null, width = 'auto', height = 'auto' } = {}) {
+    shopifyResize({ src = null, width = null, height = null } = {}) {
       // Request size which closely matches the width of the bounding element,
       // unless the parent container uses absolute positioning.
       // Round up size to the nearest 50px increment.
@@ -178,7 +179,7 @@ export default {
         } else if (!width && height) {
           return `_x${height}`
         } else {
-          return new Error('No image size specified')
+          return ''
         }
       }
       if (typeof src === 'string') {
@@ -237,7 +238,7 @@ export default {
         } else if (!width && height) {
           return `h_${height}`
         } else {
-          return new Error('No image size specified')
+          return ''
         }
       }
       function getCropString() {
