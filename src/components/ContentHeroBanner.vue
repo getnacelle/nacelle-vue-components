@@ -10,118 +10,234 @@
         <source
           v-if="cloudinaryCanAutoFormat"
           media="(max-width: 768px)"
-          :srcset="optimizeSource({ url: mobileSrc, format: 'auto', width: 768, crop: true })"
+          :srcset="
+            optimizeSource({
+              url: mobileSrc,
+              format: 'auto',
+              width: 768,
+              crop: mobileCrop
+            })
+          "
           @error="fallback"
         />
         <source
           v-if="reformat"
           media="(max-width: 768px)"
-          :srcset="optimizeSource({ url: mobileSrc, format: 'webp', width: 768, crop: true })"
+          :srcset="
+            optimizeSource({
+              url: mobileSrc,
+              format: 'webp',
+              width: 768,
+              crop: mobileCrop
+            })
+          "
           type="image/webp"
           @error="fallback"
         />
         <source
           v-if="reformat"
           media="(max-width: 768px)"
-          :srcset="optimizeSource({ url: mobileSrc, format: 'pjpg', width: 768, crop: true })"
+          :srcset="
+            optimizeSource({
+              url: mobileSrc,
+              format: 'pjpg',
+              width: 768,
+              crop: mobileCrop
+            })
+          "
           type="image/jpeg"
           @error="fallback"
         />
         <source
           v-if="cloudinaryCanAutoFormat"
           media="(min-width: 769px) and (max-width: 1023px)"
-          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'auto', width: 1023, crop: true })"
+          :srcset="
+            optimizeSource({
+              url: backgroundImgUrl,
+              format: 'auto',
+              width: 1023,
+              crop: mobileCrop
+            })
+          "
           @error="fallback"
         />
         <source
           v-if="reformat"
           media="(min-width: 769px) and (max-width: 1023px)"
-          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'webp', width: 1023, crop: true })"
+          :srcset="
+            optimizeSource({
+              url: backgroundImgUrl,
+              format: 'webp',
+              width: 1023,
+              crop: mobileCrop
+            })
+          "
           type="image/webp"
         />
         <source
           v-if="reformat"
           media="(min-width: 769px) and (max-width: 1023px)"
-          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'pjpg', width: 1023, crop: true  })"
+          :srcset="
+            optimizeSource({
+              url: backgroundImgUrl,
+              format: 'pjpg',
+              width: 1023,
+              crop: mobileCrop
+            })
+          "
           type="image/jpeg"
         />
         <source
           v-if="cloudinaryCanAutoFormat"
           media="(min-width: 1023px) and (max-width: 1215px)"
-          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'auto', width: 1215 })"
+          :srcset="
+            optimizeSource({
+              url: backgroundImgUrl,
+              format: 'auto',
+              width: 1215
+            })
+          "
           @error="fallback"
         />
         <source
           v-if="reformat"
           media="(min-width: 1023px) and (max-width: 1215px)"
-          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'webp', width: 1215 })"
+          :srcset="
+            optimizeSource({
+              url: backgroundImgUrl,
+              format: 'webp',
+              width: 1215
+            })
+          "
           type="image/webp"
         />
         <source
           v-if="reformat"
           media="(min-width: 1023px) and (max-width: 1215px)"
-          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'pjpg', width: 1215 })"
+          :srcset="
+            optimizeSource({
+              url: backgroundImgUrl,
+              format: 'pjpg',
+              width: 1215
+            })
+          "
           type="image/jpeg"
         />
         <source
           v-if="cloudinaryCanAutoFormat"
           media="(min-width: 1216px) and (max-width: 1407px)"
-          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'auto', width: 1407 })"
+          :srcset="
+            optimizeSource({
+              url: backgroundImgUrl,
+              format: 'auto',
+              width: 1407
+            })
+          "
           @error="fallback"
         />
         <source
           v-if="reformat"
           media="(min-width: 1216px) and (max-width: 1407px)"
-          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'webp', width: 1407 })"
+          :srcset="
+            optimizeSource({
+              url: backgroundImgUrl,
+              format: 'webp',
+              width: 1407
+            })
+          "
           type="image/webp"
         />
         <source
           v-if="reformat"
           media="(min-width: 1216px) and (max-width: 1407px)"
-          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'pjpg', width: 1407 })"
+          :srcset="
+            optimizeSource({
+              url: backgroundImgUrl,
+              format: 'pjpg',
+              width: 1407
+            })
+          "
           type="image/jpeg"
         />
         <source
           v-if="cloudinaryCanAutoFormat"
           media="(min-width: 1408px)"
-          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'auto', width: 1408 })"
+          :srcset="
+            optimizeSource({
+              url: backgroundImgUrl,
+              format: 'auto',
+              width: 1408
+            })
+          "
           @error="fallback"
         />
         <source
           v-if="reformat"
           media="(min-width: 1408px)"
-          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'webp', width: 1408 })"
+          :srcset="
+            optimizeSource({
+              url: backgroundImgUrl,
+              format: 'webp',
+              width: 1408
+            })
+          "
           type="image/webp"
         />
         <source
           v-if="reformat"
           media="(min-width: 1408px)"
-          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'pjpg', width: 1408 })"
+          :srcset="
+            optimizeSource({
+              url: backgroundImgUrl,
+              format: 'pjpg',
+              width: 1408
+            })
+          "
           type="image/jpeg"
         />
-        <img :src="backgroundImgUrl" :alt="backgroundAltTag" @error="fallback" />
+        <img
+          :src="backgroundImgUrl"
+          :alt="backgroundAltTag"
+          @error="fallback"
+        />
       </picture>
     </slot>
     <div class="hero-body">
       <div class="container">
         <div class="hero-body-inner">
-          <slot name="body" :textColor="textColor" :title="title" :subtitle="subtitle">
+          <slot
+            name="body"
+            :textColor="textColor"
+            :title="title"
+            :subtitle="subtitle"
+          >
             <h1
               class="title"
               :style="
                 textColor && textColor.length > 0 ? `color: ${textColor}` : ''
               "
-            >{{ title }}</h1>
+            >
+              {{ title }}
+            </h1>
             <h3
               class="subtitle"
               :style="
                 textColor && textColor.length > 0 ? `color: ${textColor}` : ''
               "
-            >{{ subtitle }}</h3>
+            >
+              {{ subtitle }}
+            </h3>
           </slot>
-          <slot name="cta" :ctaUrl="ctaUrl" :ctaText="ctaText" :ctaHandler="ctaHandler">
+          <slot
+            name="cta"
+            :ctaUrl="ctaUrl"
+            :ctaText="ctaText"
+            :ctaHandler="ctaHandler"
+          >
             <p v-if="ctaText.length > 0">
-              <cta-button :to="ctaUrl" @clicked="ctaHandler">{{ ctaText }}</cta-button>
+              <cta-button :to="ctaUrl" @clicked="ctaHandler">{{
+                ctaText
+              }}</cta-button>
             </p>
           </slot>
         </div>
@@ -146,6 +262,10 @@ export default {
     mobileFullHeight: {
       type: Boolean,
       default: false
+    },
+    mobileCrop: {
+      type: Boolean,
+      default: true
     },
     backgroundImgUrl: {
       type: String,
