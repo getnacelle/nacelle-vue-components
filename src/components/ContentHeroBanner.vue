@@ -10,39 +10,39 @@
         <source
           v-if="cloudinaryCanAutoFormat"
           media="(max-width: 768px)"
-          :srcset="optimizeSource({ url: mobileSrc, format: 'auto', width: 768 })"
+          :srcset="optimizeSource({ url: mobileSrc, format: 'auto', width: 768, crop: true })"
           @error="fallback"
         />
         <source
           v-if="reformat"
           media="(max-width: 768px)"
-          :srcset="optimizeSource({ url: mobileSrc, format: 'webp', width: 768 })"
+          :srcset="optimizeSource({ url: mobileSrc, format: 'webp', width: 768, crop: true })"
           type="image/webp"
           @error="fallback"
         />
         <source
           v-if="reformat"
           media="(max-width: 768px)"
-          :srcset="optimizeSource({ url: mobileSrc, format: 'pjpg', width: 768 })"
+          :srcset="optimizeSource({ url: mobileSrc, format: 'pjpg', width: 768, crop: true })"
           type="image/jpeg"
           @error="fallback"
         />
         <source
           v-if="cloudinaryCanAutoFormat"
           media="(min-width: 769px) and (max-width: 1023px)"
-          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'auto', width: 1023 })"
+          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'auto', width: 1023, crop: true })"
           @error="fallback"
         />
         <source
           v-if="reformat"
           media="(min-width: 769px) and (max-width: 1023px)"
-          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'webp', width: 1023 })"
+          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'webp', width: 1023, crop: true })"
           type="image/webp"
         />
         <source
           v-if="reformat"
           media="(min-width: 769px) and (max-width: 1023px)"
-          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'pjpg', width: 1023 })"
+          :srcset="optimizeSource({ url: backgroundImgUrl, format: 'pjpg', width: 1023, crop: true  })"
           type="image/jpeg"
         />
         <source
@@ -83,19 +83,19 @@
         />
         <source
           v-if="cloudinaryCanAutoFormat"
-          media="(min-width: 1408)"
+          media="(min-width: 1408px)"
           :srcset="optimizeSource({ url: backgroundImgUrl, format: 'auto', width: 1408 })"
           @error="fallback"
         />
         <source
           v-if="reformat"
-          media="(min-width: 1408)"
+          media="(min-width: 1408px)"
           :srcset="optimizeSource({ url: backgroundImgUrl, format: 'webp', width: 1408 })"
           type="image/webp"
         />
         <source
           v-if="reformat"
-          media="(min-width: 1408)"
+          media="(min-width: 1408px)"
           :srcset="optimizeSource({ url: backgroundImgUrl, format: 'pjpg', width: 1408 })"
           type="image/jpeg"
         />
