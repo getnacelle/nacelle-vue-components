@@ -50,7 +50,9 @@ export default {
     ...mapGetters('space', ['getMetafield']),
     cdn() {
       const supportedCDNs = ['shopify', 'cloudinary']
-      const metafieldCDN = this.getMetafield('cdn', 'provider').toLowerCase()
+      const metafieldCDN = this.getMetafield('cdn', 'provider')
+        ? this.getMetafield('cdn', 'provider').toLowerCase()
+        : ''
       return supportedCDNs.includes(metafieldCDN) ? metafieldCDN : 'shopify'
     },
     cdnShopifyToCloudinary() {
