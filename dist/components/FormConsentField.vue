@@ -12,7 +12,7 @@
         <code>{{ preDescription }}</code>
       </slot>
     </p>
-    <fieldset :name="name">
+    <fieldset :name="name" class="input-field">
       <radio-input
         v-model="value"
         value="optin"
@@ -89,7 +89,7 @@ export default {
 p {
   margin-top: 0.5em;
 }
-fieldset {
+fieldset.input-field {
   display: inline-block;
   margin-top: 1em;
   margin-right: 2em;
