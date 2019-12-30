@@ -3,13 +3,13 @@
     <h3 id="field-title">
       <slot name="title">
         Add a title with:
-        <code>{{preTitle}}</code>
+        <code>{{ preTitle }}</code>
       </slot>
     </h3>
     <p id="field-description">
       <slot name="description">
         Add a description with:
-        <code>{{preDescription}}</code>
+        <code>{{ preDescription }}</code>
       </slot>
     </p>
     <fieldset :name="name">
@@ -42,7 +42,8 @@ export default {
   },
   props: {
     name: {
-      type: String
+      type: String,
+      default: 'placeholder'
     },
     optInLabel: {
       type: String,
