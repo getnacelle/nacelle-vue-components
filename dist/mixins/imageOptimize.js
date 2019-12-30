@@ -80,7 +80,7 @@ export default {
     }
   },
   methods: {
-    optimizeSource({ url = null, format = 'auto', width = null, height = null } = {}) {
+    optimizeSource({ url = null, format = 'auto', width = null, height = null, crop = false } = {}) {
       let newSource
       if (typeof url === 'string') {
         if (this.fromShopifyCDN({ url })) {
@@ -94,13 +94,15 @@ export default {
             newSource = this.resizeImage({
               src: this.reformatImage({ src: source, format }),
               width: this.roundedUpToNearest50px(width),
-              height: this.roundedUpToNearest50px(height)
+              height: this.roundedUpToNearest50px(height),
+              crop
             })
           } else if (!this.reformat && (width || height)) {
             newSource = this.resizeImage({
               src: source,
               width: this.roundedUpToNearest50px(width),
-              height: this.roundedUpToNearest50px(height)
+              height: this.roundedUpToNearest50px(height),
+              crop
             })
           } else {
             newSource = source
@@ -150,7 +152,7 @@ export default {
       if (this.cdn.toLowerCase() === 'cloudinary') {
         return this.cloudinaryResize({ src, width, height, crop })
       } else if (this.cdn.toLowerCase() === 'shopify') {
-        return this.shopifyResize({ src, width, height })
+        return this.shopifyResize({ src, width, height, crop })
       }
     },
     reformatImage({ src = null, format = 'auto' } = {}) {
@@ -163,15 +165,15 @@ export default {
       }
       return null
     },
-    shopifyResize({ src = null, width = null, height = null } = {}) {
+    shopifyResize({ src = null, width = null, height = null, crop = false } = {}) {
       // Request size which closely matches the width of the bounding element,
       // unless the parent container uses absolute positioning.
       // Round up size to the nearest 50px increment.
-      function getSizeString() {
+      const getSizeString = () => {
         if (width && height) {
           return `_${width}x${height}`
         } else if (width && !height) {
-          return `_${width}x`
+          return crop ? `_${width}x${this.roundedUpToNearest50px((width / 3) * 4)}` : `_${width}x`
         } else if (!width && height) {
           return `_x${height}`
         } else {
@@ -183,10 +185,7 @@ export default {
         const [extension] = Array.from(baseWithExt.split('.')).reverse()
         const [base] = baseWithExt.split(`.${extension}`)
         const newSizeString = getSizeString()
-        const cropString =
-          this.containerPosition === 'absolute'
-            ? `_crop_${this.cropDirection}`
-            : ''
+        const cropString = crop ? `_crop_${this.cropDirection}` : ''
         const newBase = base.concat(newSizeString, cropString)
         const newArgs = args
           ? args.split('&').filter(el => el.includes('width=') === false)
@@ -226,21 +225,21 @@ export default {
       // Request size which closely matches the width of the bounding element,
       // unless the parent container uses absolute positioning.
       // Round up size to the nearest 50px increment.
-      function getSizeString() {
+      const getSizeString = () => {
         if (width && height) {
           return `w_${width},h_${height}`
         } else if (width && !height) {
-          return `w_${width}`
+          return crop ? `w_${width},h_${this.roundedUpToNearest50px((width / 3) * 4)}` : `w_${width}`
         } else if (!width && height) {
           return `h_${height}`
         } else {
           return ''
         }
       }
-      function getCropString() {
+      const getCropString = () => {
         if (crop) {
-          if (crop === 'center') {
-            return `,c_crop,g_${crop}`
+          if (this.cropDirection === 'center') {
+            return ',c_lfill,g_center'
           }
           return ''
         }
