@@ -28,8 +28,9 @@ const ComponentReformat = {
 }
 
 const ComponentResize = {
+  // Note that the image width (810px) will be rounded up to the nearest 50px (850px)
   template: `
-    <img :src="optimizeSource({ url: source })" />
+    <img :src="optimizeSource({ url: source, width: 810 })" />
   `,
   data() {
     return {
@@ -59,8 +60,6 @@ describe('ImageOptimize.vue', () => {
           reformat: false
         },
         computed: {
-          // Note that this will be rounded up to the nearest 50px
-          screenWidth: () => 810,
           cdn: () => 'shopify'
         }
       })
@@ -77,8 +76,6 @@ describe('ImageOptimize.vue', () => {
           reformat: false
         },
         computed: {
-          // Note that the screen width will be rounded up to the nearest 50px
-          screenWidth: () => 810,
           cdn: () => 'cloudinary',
           cloudinaryCloudName: () => 'nacelle'
         }
