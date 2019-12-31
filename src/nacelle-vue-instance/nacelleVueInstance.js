@@ -1,6 +1,6 @@
 import nmerge from 'nuxt-merge-asyncdata'
-import nacelleBlogArticle from '../mixins/nacelleBlogArticle'
-import nacelleDefaultLayout from '../mixins/nacelleDefaultLayout'
+import nacelleBlogArticle from './mixins/nacelleBlogArticle'
+import nacelleDefaultLayout from './mixins/nacelleDefaultLayout'
 
 export default ({ type, ...rest }) => {
   switch (type) {
