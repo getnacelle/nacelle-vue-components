@@ -1,25 +1,32 @@
 <template>
-  <section v-if="visible" class="cookie-bar" id="cookie-bar" :style="style">
-    <slot>
-      <span class="message-mobile">
-        This website uses cookies
-        <nuxt-link :to="privacyPolicyLink">(Learn More)</nuxt-link>
-      </span>
-      <span class="message-desktop">
-        By using this site, you agree to our use of cookies for personalized content,
-        <br class="break-comma" />according to our
-        <nuxt-link :to="privacyPolicyLink">Privacy Policy</nuxt-link>
-      </span>
-    </slot>
-    <button
-      id="accept"
-      type="button"
-      tabindex="0"
-      role="button"
-      aria-pressed="false"
-      @click="visible = false"
-    >Accept</button>
-  </section>
+  <div :style="style">
+    <transition name="slide" appear>
+      <section v-if="visible" class="cookie-bar" id="cookie-bar">
+        <slot>
+          <span class="message-mobile">
+            This website uses cookies
+            <nuxt-link :to="privacyPolicyLink">(Learn More)</nuxt-link>
+          </span>
+          <span class="message-desktop">
+            By using this site, you agree to our use of cookies for personalized
+            content,
+            <br class="break-comma" />according to our
+            <nuxt-link :to="privacyPolicyLink">Privacy Policy</nuxt-link>
+          </span>
+        </slot>
+        <button
+          id="accept"
+          type="button"
+          tabindex="0"
+          role="button"
+          aria-pressed="false"
+          @click="visible = false"
+        >
+          Accept
+        </button>
+      </section>
+    </transition>
+  </div>
 </template>
 
 <script>
@@ -32,16 +39,11 @@ export default {
     animationDuration: {
       type: Number,
       default: 0.5
-    },
-    animationDelay: {
-      type: Number,
-      default: 1
     }
   },
   computed: {
     style() {
       return {
-        '--cookie-animation-delay': `${this.animationDelay}s`,
         '--cookie-animation-duration': `${this.animationDuration}s`
       }
     }
@@ -55,14 +57,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.slide-enter-active {
+  animation-name: slideIn;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
+  animation-duration: var(--cookie-animation-duration);
+}
+.slide-leave-active {
+  animation-name: slideIn;
+  animation-direction: reverse;
+  animation-fill-mode: forwards;
+  animation-duration: var(--cookie-animation-duration);
+}
 @keyframes slideIn {
   0% {
-    transform: translateY(0);
+    transform: translateY(
+      calc((var(--cookie-bar-height) + var(--cookie-bar-v-pad)))
+    );
   }
   100% {
-    transform: translateY(
-      calc((var(--cookie-bar-height) + var(--cookie-bar-v-pad)) * -1)
-    );
+    transform: translateY(0);
   }
 }
 .cookie-bar {
@@ -71,7 +85,7 @@ export default {
   position: fixed;
   z-index: 100;
   height: var(--cookie-bar-height);
-  bottom: calc((var(--cookie-bar-height) + var(--cookie-bar-v-pad)) * -1);
+  bottom: 0;
   right: 0;
   left: 0;
   display: flex;
@@ -88,10 +102,6 @@ export default {
   font-family: 'brandon-grotesque', sans-serif;
   font-size: 14px;
   font-weight: 100;
-  animation-name: slideIn;
-  animation-fill-mode: forwards;
-  animation-duration: var(--cookie-animation-duration);
-  animation-delay: var(--cookie-animation-delay);
   .message-mobile {
     display: none;
     @media screen and (max-width: 767px) {
