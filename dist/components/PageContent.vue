@@ -174,7 +174,7 @@ export default {
 
         data = {
           title,
-          subtitle: contentHtml ? contentHtml : '',
+          subtitle: contentHtml || '',
           ctaText,
           ctaUrl,
           ctaHandler: clickHandler,

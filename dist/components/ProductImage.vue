@@ -1,45 +1,46 @@
 <template>
   <div
+    class="product-image nacelle"
+    ref="img-card"
     v-observe-visibility="{
       callback: visibilityChanged,
       once: true
     }"
-    class="product-image nacelle"
-    ref="img-card"
   >
     <picture>
       <source
         v-if="visibility && cloudinaryCanAutoFormat && validImage"
         :srcset="optimizeSource({ url: source, format: 'auto' })"
-        @error="fallback"
+        v-on:loadend="onLoaded"
       />
       <source
         v-if="visibility && reformat && validImage"
         :srcset="optimizeSource({ url: source, format: 'webp' })"
         type="image/webp"
-        @error="fallback"
       />
       <source
         v-if="visibility && reformat && validImage"
         :srcset="optimizeSource({ url: source, format: 'jpg' })"
         type="image/jpeg"
-        @error="fallback"
       />
       <img
         v-if="visibility"
+        v-on:loadend="onLoaded"
+        v-bind:class="{ loaded }"
         ref="product-image"
         :src="source"
         :alt="alt"
         :width="width"
+        :height="height"
         :style="cssVars"
         @error="fallback"
       />
+      <img v-else-if="!visibility" :src="blankImage" />
     </picture>
   </div>
 </template>
 
 <script>
-import Vue from 'vue'
 import imageOptimize from '../mixins/imageOptimize'
 import imageVisibility from '../mixins/imageVisibility'
 
@@ -53,9 +54,6 @@ export default {
     alt: {
       type: String,
       default: 'Featured Product Image'
-    },
-    width: {
-      type: Number
     },
     fadeIn: {
       type: Number,
@@ -84,10 +82,12 @@ export default {
 .product-image,
 img {
   width: 100%;
-  animation: fadein var(--fade-in-time);
-  -moz-animation: fadein var(--fade-in-time); /* Firefox */
-  -webkit-animation: fadein var(--fade-in-time); /* Safari and Chrome */
-  -o-animation: fadein var(--fade-in-time); /* Opera */
+  .loaded {
+    animation: fadein var(--fade-in-time);
+    -moz-animation: fadein var(--fade-in-time); /* Firefox */
+    -webkit-animation: fadein var(--fade-in-time); /* Safari and Chrome */
+    -o-animation: fadein var(--fade-in-time); /* Opera */
+  }
 }
 @keyframes fadein {
   from {
