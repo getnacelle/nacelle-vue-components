@@ -21,9 +21,7 @@
           role="button"
           aria-pressed="false"
           @click="visible = false"
-        >
-          Accept
-        </button>
+        >Accept</button>
       </section>
     </transition>
   </div>
