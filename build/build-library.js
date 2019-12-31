@@ -10,6 +10,7 @@ require('./copy-components')
 fs.copy('src/store', 'dist/store')
 fs.copy('src/base-styles.css', 'dist/base-styles.css')
 fs.copy('src/mixins', 'dist/mixins')
+fs.copy('src/nacelle-vue-instance/nacelleVueInstance.js', 'dist/nacelleVueInstance.js')
 
 // console.info('🏗 Building main library')
 // execSync(
