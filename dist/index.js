@@ -4,9 +4,11 @@
 //
 // YOU SHOULD NEVER UPDATE THIS FILE DIRECTLY
 
+import ArticlePreview from './components/ArticlePreview.vue'
 import BlogArticleContent from './components/BlogArticleContent.vue'
 import BlogArticleHeader from './components/BlogArticleHeader.vue'
 import BrandHeader from './components/BrandHeader.vue'
+import Cart from './components/Cart.vue'
 import CartFlyout from './components/CartFlyout.vue'
 import CartFlyoutCheckoutButton from './components/CartFlyoutCheckoutButton.vue'
 import CartFlyoutHeader from './components/CartFlyoutHeader.vue'
@@ -14,6 +16,7 @@ import CartFlyoutItem from './components/CartFlyoutItem.vue'
 import CartFlyoutItemRemoveButton from './components/CartFlyoutItemRemoveButton.vue'
 import CartFlyoutMessaging from './components/CartFlyoutMessaging.vue'
 import CartFlyoutSubtotal from './components/CartFlyoutSubtotal.vue'
+import CartItem from './components/CartItem.vue'
 import ContentHeroBanner from './components/ContentHeroBanner.vue'
 import ContentProductGrid from './components/ContentProductGrid.vue'
 import ContentSideBySide from './components/ContentSideBySide.vue'
@@ -42,6 +45,7 @@ import ProductAddToCartButton from './components/ProductAddToCartButton.vue'
 import ProductCard from './components/ProductCard.vue'
 import ProductCategory from './components/ProductCategory.vue'
 import ProductDescription from './components/ProductDescription.vue'
+import ProductDetails from './components/ProductDetails.vue'
 import ProductGrid from './components/ProductGrid.vue'
 import ProductImage from './components/ProductImage.vue'
 import ProductMediaSelectView from './components/ProductMediaSelectView.vue'
@@ -67,13 +71,15 @@ import SearchResults from './components/SearchResults.vue'
 import SiteHeader from './components/SiteHeader.vue'
 
 // Export components individually
-export { BlogArticleContent, BlogArticleHeader, BrandHeader, CartFlyout, CartFlyoutCheckoutButton, CartFlyoutHeader, CartFlyoutItem, CartFlyoutItemRemoveButton, CartFlyoutMessaging, CartFlyoutSubtotal, ContentHeroBanner, ContentProductGrid, ContentSideBySide, ContentTestimonial, ContentTestimonials, CtaButton, ErrorModal, EventDispatcher, GlobalHeader, InterfaceCloseButton, InterfaceFeaturedMedia, InterfaceIcon, InterfaceLogo, InterfaceModal, MainNav, MainNavBurger, MainNavCart, MainNavFlyout, MessagingFreeShippingCounter, MixinTestBench, NacelleCollection, NacelleContent, NacelleProducts, PageContent, ProductAddToCartButton, ProductCard, ProductCategory, ProductDescription, ProductGrid, ProductImage, ProductMediaSelectView, ProductOptionSwatch, ProductOptionSwatches, ProductOptions, ProductPrice, ProductQuantityUpdate, ProductShopLook, ProductTitle, ProductVariantDropdown, ProductVariantSelect, ProductVariantTitle, ProductVideo, ReadUserData, RefinementFilters, SearchAutocomplete, SearchAutocompleteItem, SearchBox, SearchInput, SearchNoResults, SearchResults, SiteHeader }
+export { ArticlePreview, BlogArticleContent, BlogArticleHeader, BrandHeader, Cart, CartFlyout, CartFlyoutCheckoutButton, CartFlyoutHeader, CartFlyoutItem, CartFlyoutItemRemoveButton, CartFlyoutMessaging, CartFlyoutSubtotal, CartItem, ContentHeroBanner, ContentProductGrid, ContentSideBySide, ContentTestimonial, ContentTestimonials, CtaButton, ErrorModal, EventDispatcher, GlobalHeader, InterfaceCloseButton, InterfaceFeaturedMedia, InterfaceIcon, InterfaceLogo, InterfaceModal, MainNav, MainNavBurger, MainNavCart, MainNavFlyout, MessagingFreeShippingCounter, MixinTestBench, NacelleCollection, NacelleContent, NacelleProducts, PageContent, ProductAddToCartButton, ProductCard, ProductCategory, ProductDescription, ProductDetails, ProductGrid, ProductImage, ProductMediaSelectView, ProductOptionSwatch, ProductOptionSwatches, ProductOptions, ProductPrice, ProductQuantityUpdate, ProductShopLook, ProductTitle, ProductVariantDropdown, ProductVariantSelect, ProductVariantTitle, ProductVideo, ReadUserData, RefinementFilters, SearchAutocomplete, SearchAutocompleteItem, SearchBox, SearchInput, SearchNoResults, SearchResults, SiteHeader }
 
 // What should happen if the user installs the library as a plugin
 function install(Vue) {
+  Vue.component('ArticlePreview', ArticlePreview)
   Vue.component('BlogArticleContent', BlogArticleContent)
   Vue.component('BlogArticleHeader', BlogArticleHeader)
   Vue.component('BrandHeader', BrandHeader)
+  Vue.component('Cart', Cart)
   Vue.component('CartFlyout', CartFlyout)
   Vue.component('CartFlyoutCheckoutButton', CartFlyoutCheckoutButton)
   Vue.component('CartFlyoutHeader', CartFlyoutHeader)
@@ -81,6 +87,7 @@ function install(Vue) {
   Vue.component('CartFlyoutItemRemoveButton', CartFlyoutItemRemoveButton)
   Vue.component('CartFlyoutMessaging', CartFlyoutMessaging)
   Vue.component('CartFlyoutSubtotal', CartFlyoutSubtotal)
+  Vue.component('CartItem', CartItem)
   Vue.component('ContentHeroBanner', ContentHeroBanner)
   Vue.component('ContentProductGrid', ContentProductGrid)
   Vue.component('ContentSideBySide', ContentSideBySide)
@@ -109,6 +116,7 @@ function install(Vue) {
   Vue.component('ProductCard', ProductCard)
   Vue.component('ProductCategory', ProductCategory)
   Vue.component('ProductDescription', ProductDescription)
+  Vue.component('ProductDetails', ProductDetails)
   Vue.component('ProductGrid', ProductGrid)
   Vue.component('ProductImage', ProductImage)
   Vue.component('ProductMediaSelectView', ProductMediaSelectView)
