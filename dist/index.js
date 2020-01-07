@@ -26,11 +26,8 @@ import CookieBanner from './components/CookieBanner.vue'
 import CtaButton from './components/CtaButton.vue'
 import ErrorModal from './components/ErrorModal.vue'
 import EventDispatcher from './components/EventDispatcher.vue'
-<<<<<<< HEAD
 import FormConsentField from './components/FormConsentField.vue'
-=======
 import GlobalHeader from './components/GlobalHeader.vue'
->>>>>>> feature-mixins
 import InterfaceCloseButton from './components/InterfaceCloseButton.vue'
 import InterfaceFeaturedMedia from './components/InterfaceFeaturedMedia.vue'
 import InterfaceIcon from './components/InterfaceIcon.vue'
@@ -78,11 +75,7 @@ import SearchResults from './components/SearchResults.vue'
 import SiteHeader from './components/SiteHeader.vue'
 
 // Export components individually
-<<<<<<< HEAD
-export { BlogArticleContent, BlogArticleHeader, BrandHeader, CartFlyout, CartFlyoutCheckoutButton, CartFlyoutHeader, CartFlyoutItem, CartFlyoutItemRemoveButton, CartFlyoutMessaging, CartFlyoutSubtotal, ContentHeroBanner, ContentProductGrid, ContentSideBySide, ContentTestimonial, ContentTestimonials, CookieBanner, CtaButton, ErrorModal, EventDispatcher, FormConsentField, InterfaceCloseButton, InterfaceFeaturedMedia, InterfaceIcon, InterfaceLogo, InterfaceModal, MainNav, MainNavBurger, MainNavCart, MainNavFlyout, MessagingFreeShippingCounter, MixinTestBench, NacelleCollection, NacelleContent, NacelleProducts, OptInOptOutForm, PageContent, ProductAddToCartButton, ProductCard, ProductCategory, ProductDescription, ProductGrid, ProductImage, ProductMediaSelectView, ProductOptionSwatch, ProductOptionSwatches, ProductOptions, ProductPrice, ProductQuantityUpdate, ProductShopLook, ProductTitle, ProductVariantDropdown, ProductVariantSelect, ProductVariantTitle, ProductVideo, RadioInput, ReadUserData, RefinementFilters, SearchAutocomplete, SearchAutocompleteItem, SearchBox, SearchInput, SearchNoResults, SearchResults, SiteHeader }
-=======
-export { ArticlePreview, BlogArticleContent, BlogArticleHeader, BrandHeader, Cart, CartFlyout, CartFlyoutCheckoutButton, CartFlyoutHeader, CartFlyoutItem, CartFlyoutItemRemoveButton, CartFlyoutMessaging, CartFlyoutSubtotal, CartItem, ContentHeroBanner, ContentProductGrid, ContentSideBySide, ContentTestimonial, ContentTestimonials, CtaButton, ErrorModal, EventDispatcher, GlobalHeader, InterfaceCloseButton, InterfaceFeaturedMedia, InterfaceIcon, InterfaceLogo, InterfaceModal, MainNav, MainNavBurger, MainNavCart, MainNavFlyout, MessagingFreeShippingCounter, MixinTestBench, NacelleCollection, NacelleContent, NacelleProducts, PageContent, ProductAddToCartButton, ProductCard, ProductCategory, ProductDescription, ProductDetails, ProductGrid, ProductImage, ProductMediaSelectView, ProductOptionSwatch, ProductOptionSwatches, ProductOptions, ProductPrice, ProductQuantityUpdate, ProductShopLook, ProductTitle, ProductVariantDropdown, ProductVariantSelect, ProductVariantTitle, ProductVideo, ReadUserData, RefinementFilters, SearchAutocomplete, SearchAutocompleteItem, SearchBox, SearchInput, SearchNoResults, SearchResults, SiteHeader }
->>>>>>> feature-mixins
+export { ArticlePreview, BlogArticleContent, BlogArticleHeader, BrandHeader, Cart, CartFlyout, CartFlyoutCheckoutButton, CartFlyoutHeader, CartFlyoutItem, CartFlyoutItemRemoveButton, CartFlyoutMessaging, CartFlyoutSubtotal, CartItem, ContentHeroBanner, ContentProductGrid, ContentSideBySide, ContentTestimonial, ContentTestimonials, CookieBanner, CtaButton, ErrorModal, EventDispatcher, FormConsentField, GlobalHeader, InterfaceCloseButton, InterfaceFeaturedMedia, InterfaceIcon, InterfaceLogo, InterfaceModal, MainNav, MainNavBurger, MainNavCart, MainNavFlyout, MessagingFreeShippingCounter, MixinTestBench, NacelleCollection, NacelleContent, NacelleProducts, OptInOptOutForm, PageContent, ProductAddToCartButton, ProductCard, ProductCategory, ProductDescription, ProductDetails, ProductGrid, ProductImage, ProductMediaSelectView, ProductOptionSwatch, ProductOptionSwatches, ProductOptions, ProductPrice, ProductQuantityUpdate, ProductShopLook, ProductTitle, ProductVariantDropdown, ProductVariantSelect, ProductVariantTitle, ProductVideo, RadioInput, ReadUserData, RefinementFilters, SearchAutocomplete, SearchAutocompleteItem, SearchBox, SearchInput, SearchNoResults, SearchResults, SiteHeader }
 
 // What should happen if the user installs the library as a plugin
 function install(Vue) {
@@ -108,11 +101,8 @@ function install(Vue) {
   Vue.component('CtaButton', CtaButton)
   Vue.component('ErrorModal', ErrorModal)
   Vue.component('EventDispatcher', EventDispatcher)
-<<<<<<< HEAD
   Vue.component('FormConsentField', FormConsentField)
-=======
   Vue.component('GlobalHeader', GlobalHeader)
->>>>>>> feature-mixins
   Vue.component('InterfaceCloseButton', InterfaceCloseButton)
   Vue.component('InterfaceFeaturedMedia', InterfaceFeaturedMedia)
   Vue.component('InterfaceIcon', InterfaceIcon)
