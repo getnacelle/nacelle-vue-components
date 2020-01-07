@@ -1,7 +1,12 @@
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount, RouterLinkStub } from '@vue/test-utils'
 import CookieBanner from '@/components/CookieBanner'
 
-const wrapper = shallowMount(CookieBanner)
+const wrapper = shallowMount(CookieBanner, {
+  stubs: {
+    NuxtLink: RouterLinkStub
+  }
+})
+
 const button = wrapper.find('button')
 
 describe('CookieBanner.vue', () => {
