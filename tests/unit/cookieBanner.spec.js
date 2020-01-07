@@ -13,6 +13,6 @@ describe('CookieBanner.vue', () => {
 
   it('closes after the "Accept" button is clicked', async () => {
     button.trigger('click')
-    expect(wrapper.html()).toBe(undefined)
+    expect(wrapper.html()).toBe('<div><!----></div>')
   })
 })
