@@ -1,5 +1,6 @@
 <template>
-  <div :style="style">
+<div></div>
+  <!-- <div :style="style">
     <transition name="slide" appear>
       <section v-if="visible" class="cookie-bar" id="cookie-bar">
         <slot>
@@ -24,7 +25,7 @@
         >Accept</button>
       </section>
     </transition>
-  </div>
+  </div> -->
 </template>
 
 <script>
