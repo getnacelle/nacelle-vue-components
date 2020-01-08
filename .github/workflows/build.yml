@@ -8,4 +8,4 @@ jobs:
       - name: "Setup Node.js"
         uses: "actions/setup-node@v1"
       - name: Run Tests
-        run: npm run test
+        run: npm run test:unit
