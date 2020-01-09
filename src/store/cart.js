@@ -73,11 +73,9 @@ const cart = (options = {}) => {
     },
     mutations: {
       addLineItemMutation (state, payload) {
-        console.log('payload!', payload)
         const index = state.lineItems.findIndex((lineItem) => {
           if (lineItem.variant.id === payload.variant.id) {
             const areMetafieldsEqual = isEqual(payload.metafields, lineItem.metafields)
-            console.log('mismatches', areMetafieldsEqual)
 
             return areMetafieldsEqual // match only if metafields are the same.
           }
@@ -145,7 +143,6 @@ const cart = (options = {}) => {
       async addLineItem (context, payload) {
         context.commit('addLineItemMutation', payload)
         context.dispatch('saveLineItems', context.state.lineItems)
-        console.log('context.state.lineItems', context.state.lineItems)
         // context.commit('showCart')
         if (context.rootState.events) {
           context.dispatch('events/addToCart', payload, { root: true })
