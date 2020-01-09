@@ -7,13 +7,13 @@ export default {
       type: String,
       default: ''
     },
-    resize: {
-      type: Boolean,
-      default: false
-    },
     reformat: {
       type: Boolean,
       default: true
+    },
+    resizeToScreenWidth: {
+      type: Boolean,
+      default: false
     },
     cropDirection: {
       type: String,
@@ -26,14 +26,22 @@ export default {
     byDominantColor: {
       type: Boolean,
       default: false
+    },
+    width: {
+      type: Number
+    },
+    height: {
+      type: Number
     }
   },
   data() {
     return {
+      blankImage: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 5'%3E%3C/svg%3E",
       blurred: null,
       containerWidth: null,
       containerHeight: null,
       containerPosition: null,
+      loaded: false,
       originCDN: null,
       validImage: true
     }
@@ -41,7 +49,11 @@ export default {
   computed: {
     ...mapGetters('space', ['getMetafield']),
     cdn() {
-      return this.getMetafield('cdn', 'provider') || 'shopify'
+      const supportedCDNs = ['shopify', 'cloudinary']
+      const metafieldCDN = this.getMetafield('cdn', 'provider')
+        ? this.getMetafield('cdn', 'provider').toLowerCase()
+        : ''
+      return supportedCDNs.includes(metafieldCDN) ? metafieldCDN : 'shopify'
     },
     cdnShopifyToCloudinary() {
       return this.originCDN === 'shopify' && this.cdn.toLowerCase() === 'cloudinary'
@@ -56,7 +68,13 @@ export default {
       return `https://res.cloudinary.com/${this.cloudinaryCloudName}/image/fetch/`
     },
     fallbackImage() {
-      return 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"/>'
+      return this.blankImage
+    },
+    loading() {
+      return !this.loaded
+    },
+    placeholderImg(w, h) {
+      return `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}"%3E%3C/svg%3E`
     },
     shopifyPathPrefix() {
       const path = this.getMetafield('cdn', 'shopify-path-prefix') || 'https://cdn.shopify.com/s/files/'
@@ -64,16 +82,30 @@ export default {
     }
   },
   methods: {
-    optimizeSource({ url = null, format = 'auto' } = {}) {
+    optimizeSource({ url = null, format = 'auto', width = null, height = null, crop = false } = {}) {
       let newSource
       if (typeof url === 'string') {
         if (this.fromShopifyCDN({ url })) {
           this.originCDN = 'shopify'
           const source = (this.cdn.toLowerCase() === 'cloudinary') ? this.shopifyToCloudinary({ url }) : url
-          if (this.reformat && this.cdn.toLowerCase() === 'cloudinary') {
-            newSource = this.cloudinaryReformat({ src: source, format })
-          } else if (this.reformat && this.cdn.toLowerCase() === 'shopify') {
-            newSource = this.shopifyReformat({ src: source, format })
+          if (this.reformat && (!width && !height)) {
+            newSource = this.reformatImage({
+              src: source, format
+            })
+          } else if (this.reformat && (width || height)) {
+            newSource = this.resizeImage({
+              src: this.reformatImage({ src: source, format }),
+              width: this.roundedUpToNearest50px(width),
+              height: this.roundedUpToNearest50px(height),
+              crop
+            })
+          } else if (!this.reformat && (width || height)) {
+            newSource = this.resizeImage({
+              src: source,
+              width: this.roundedUpToNearest50px(width),
+              height: this.roundedUpToNearest50px(height),
+              crop
+            })
           } else {
             newSource = source
           }
@@ -90,6 +122,9 @@ export default {
           this.$refs[this.containerRef]
         ).position
       }
+    },
+    onLoaded() {
+      this.loaded = true
     },
     fallback() {
       this.validImage = false
@@ -108,38 +143,56 @@ export default {
         height: ''
       })
     },
-    shopifyResize({ src = null, width = 'auto', height = 'auto' } = {}) {
+    roundedUpToNearest50px(x) {
+      if (x >= 50) {
+        return +x + 49 - ((+x + 49) % 50)
+      }
+      // Return a blank string if less than 50px
+      return ''
+    },
+    resizeImage({ src = null, width = null, height = null, crop = false } = {}) {
+      if (this.cdn.toLowerCase() === 'cloudinary') {
+        return this.cloudinaryResize({ src, width, height, crop })
+      } else if (this.cdn.toLowerCase() === 'shopify') {
+        return this.shopifyResize({ src, width, height, crop })
+      }
+    },
+    reformatImage({ src = null, format = 'auto' } = {}) {
+      if (this.cdn.toLowerCase() === 'shopify') {
+        return format === 'auto'
+          ? this.shopifyReformat({ src })
+          : this.shopifyReformat({ src, format })
+      } else if (this.cdn.toLowerCase() === 'cloudinary') {
+        return this.cloudinaryReformat({ src, format })
+      }
+      return null
+    },
+    shopifyResize({ src = null, width = null, height = null, crop = false } = {}) {
       // Request size which closely matches the width of the bounding element,
       // unless the parent container uses absolute positioning.
       // Round up size to the nearest 50px increment.
-      function roundedUpToNearest50px(x) {
-        // Return a blank string if less than 50px
-        if (x >= 50) {
-          return +x + 49 - ((+x + 49) % 50)
+      const getSizeString = () => {
+        if (width && height) {
+          return `_${width}x${height}`
+        } else if (width && !height) {
+          return crop ? `_${width}x${this.roundedUpToNearest50px((width / 3) * 4)}` : `_${width}x`
+        } else if (!width && height) {
+          return `_x${height}`
+        } else {
+          return ''
         }
-        return ''
       }
       if (typeof src === 'string') {
         const [baseWithExt, args] = src.split('?')
         const [extension] = Array.from(baseWithExt.split('.')).reverse()
         const [base] = baseWithExt.split(`.${extension}`)
-        const newWidth =
-          width === 'auto' ? roundedUpToNearest50px(this.containerWidth) : width
-        const newHeight =
-          height === 'auto'
-            ? roundedUpToNearest50px(this.containerHeight)
-            : height
-        const newSizeString =
-          newWidth !== '' || newHeight !== '' ? `_${newWidth}x${newHeight}` : ''
-        const cropString =
-          this.containerPosition === 'absolute'
-            ? `_crop_${this.cropDirection}`
-            : ''
+        const newSizeString = getSizeString()
+        const cropString = crop ? `_crop_${this.cropDirection}` : ''
         const newBase = base.concat(newSizeString, cropString)
         const newArgs = args
           ? args.split('&').filter(el => el.includes('width=') === false)
           : null
-        const newSrc = newBase.concat(`.${extension}?${newArgs}`)
+        const newSrc = newBase.concat(`.${extension}?${newArgs.join('&')}`)
         return newSrc
       }
       return null
@@ -159,7 +212,9 @@ export default {
       if (typeof src === 'string') {
         const extension = Array.from(src.split('?v=')[0].split('.')).pop()
         if (extension === 'png' || extension === 'jpg') {
-          return src.split('&format=')[0].concat(`&format=${format === 'auto' ? 'jpg' : format}`)
+          return src
+            .split('&format=')[0]
+            .concat(`&format=${format === 'auto' ? 'jpg' : format}`)
         } else {
           // return the original image if it is a gif / not a png or jpg
           return src
@@ -167,6 +222,39 @@ export default {
       } else {
         return null
       }
+    },
+    cloudinaryResize({ src = null, width = null, height = null, crop = false } = {}) {
+      // Request size which closely matches the width of the bounding element,
+      // unless the parent container uses absolute positioning.
+      // Round up size to the nearest 50px increment.
+      const getSizeString = () => {
+        if (width && height) {
+          return `w_${width},h_${height}`
+        } else if (width && !height) {
+          return crop ? `w_${width},h_${this.roundedUpToNearest50px((width / 3) * 4)}` : `w_${width}`
+        } else if (!width && height) {
+          return `h_${height}`
+        } else {
+          return ''
+        }
+      }
+      const getCropString = () => {
+        if (crop) {
+          if (this.cropDirection === 'center') {
+            return ',c_lfill,g_center'
+          }
+          return ''
+        }
+        return ''
+      }
+      if (typeof src === 'string') {
+        const sizeString = getSizeString()
+        const cropString = getCropString()
+        return src
+          .split('fetch/')
+          .reduce((acc, el, idx) => idx === 0 ? acc.concat(el, `fetch/${sizeString}${cropString}/`) : acc.concat(el), '')
+      }
+      return null
     },
     cloudinaryReformat({ src = null, format = 'auto', api = 'fetch' } = {}) {
       // Perform an on-the-fly image format transformation. Choose between
@@ -223,10 +311,4 @@ export default {
       return false
     }
   }
-  // mounted() {
-  //   this.calculateContainer()
-  // },
-  // updated() {
-  //   this.calculateContainer()
-  // }
 }
