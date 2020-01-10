@@ -6,6 +6,7 @@ describe('CartFlyoutItemRemoveButton.vue', () => {
   it('removes a line item from the cart', async () => {
     store.state.cart.lineItems = [
       {
+        id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ==::ae9703f4-9810-4ac8-bc2b-38f0e57d7028',
         image: {
           source: 'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
         },
@@ -21,8 +22,7 @@ describe('CartFlyoutItemRemoveButton.vue', () => {
     const wrapper = shallowMount(CartFlyoutItemRemoveButton, {
       store,
       propsData: {
-        variantId:
-          'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
+        lineId: store.state.cart.lineItems[0].id
       }
     })
     const input = wrapper.find('button')

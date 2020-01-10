@@ -11,8 +11,8 @@
       <product-variant-title class="flyout-item-variant-title" :title="item.variant.title" />
       <div class="flyout-item-details columns is-marginless is-paddingless">
         <product-price class="flyout-item-price" :price="item.variant.price" />
-        <product-quantity-update :product="item" :variant="item.variant" />
-        <cart-flyout-item-remove-button :variantId="item.variant.id" />
+        <quantity-selector :item="item" :quantity="item.quantity" />
+        <cart-flyout-item-remove-button :lineId="item.id" />
       </div>
     </div>
   </div>
@@ -23,7 +23,7 @@ import ProductImage from './ProductImage'
 import ProductTitle from './ProductTitle'
 import ProductPrice from './ProductPrice'
 import CartFlyoutItemRemoveButton from './CartFlyoutItemRemoveButton'
-import ProductQuantityUpdate from './ProductQuantityUpdate'
+import QuantitySelector from './QuantitySelector'
 import ProductVariantTitle from './ProductVariantTitle'
 import { mapMutations } from 'vuex'
 export default {
@@ -42,7 +42,7 @@ export default {
     ProductTitle,
     ProductPrice,
     CartFlyoutItemRemoveButton,
-    ProductQuantityUpdate,
+    QuantitySelector,
     ProductVariantTitle
   },
   methods: {

@@ -63,6 +63,8 @@ import ProductVariantDropdown from './components/ProductVariantDropdown.vue'
 import ProductVariantSelect from './components/ProductVariantSelect.vue'
 import ProductVariantTitle from './components/ProductVariantTitle.vue'
 import ProductVideo from './components/ProductVideo.vue'
+
+import QuantitySelector from './components/QuantitySelector.vue'
 import RadioInput from './components/RadioInput.vue'
 import ReadUserData from './components/ReadUserData.vue'
 import RefinementFilters from './components/RefinementFilters.vue'
@@ -138,6 +140,7 @@ function install(Vue) {
   Vue.component('ProductVariantSelect', ProductVariantSelect)
   Vue.component('ProductVariantTitle', ProductVariantTitle)
   Vue.component('ProductVideo', ProductVideo)
+  Vue.component('QuantitySelector', QuantitySelector)
   Vue.component('RadioInput', RadioInput)
   Vue.component('ReadUserData', ReadUserData)
   Vue.component('RefinementFilters', RefinementFilters)

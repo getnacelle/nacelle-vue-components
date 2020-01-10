@@ -1,5 +1,6 @@
 import store from '../../src/store/store'
 import localforage from 'localforage'
+import uuid from 'uuidv4'
 
 describe('Cart Store', () => {
   it('adds a line item to the line items array', async () => {
@@ -15,25 +16,15 @@ describe('Cart Store', () => {
         id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
       }
     })
-    expect(store.state.cart.lineItems).toEqual([
-      {
-        image: {
-          source: 'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
-        },
-        title: 'Gray T-Shirt',
-        productId: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM1OTkyMDE4NjE3Mzc=',
-        handle: 'gray-t-shirt',
-        quantity: 1,
-        variant: {
-          id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
-        }
-      }
-    ])
+    expect(store.state.cart.lineItems.length).toEqual(1)
+    expect(store.state.cart.lineItems[0].id).toContain('Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ==')
+    expect(uuid.is(store.state.cart.lineItems[0].id.split('::')[1])).toBeTruthy()
   })
 
   it('removes a line item from the line items array', async () => {
     store.state.cart.lineItems = [
       {
+        id: `Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ==::${uuid()}`,
         image: {
           source: 'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
         },
@@ -48,7 +39,7 @@ describe('Cart Store', () => {
     ]
     store.dispatch(
       'cart/removeLineItem',
-      'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
+      store.state.cart.lineItems[0].id
     )
     expect(store.state.cart.lineItems).toEqual([])
   })
@@ -56,6 +47,7 @@ describe('Cart Store', () => {
   it('increments a line item', async () => {
     store.state.cart.lineItems = [
       {
+        id: `Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ==::${uuid()}`,
         image: {
           source: 'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
         },
@@ -70,27 +62,15 @@ describe('Cart Store', () => {
     ]
     store.dispatch(
       'cart/incrementLineItem',
-      'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
+      store.state.cart.lineItems[0].id
     )
-    expect(store.state.cart.lineItems).toEqual([
-      {
-        image: {
-          source: 'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
-        },
-        title: 'Gray T-Shirt',
-        productId: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM1OTkyMDE4NjE3Mzc=',
-        handle: 'gray-t-shirt',
-        quantity: 2,
-        variant: {
-          id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
-        }
-      }
-    ])
+    expect(store.state.cart.lineItems[0].quantity).toEqual(2)
   })
 
   it('decrements a line item', async () => {
     store.state.cart.lineItems = [
       {
+        id: `Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ==::${uuid()}`,
         image: {
           source: 'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
         },
@@ -105,27 +85,16 @@ describe('Cart Store', () => {
     ]
     store.dispatch(
       'cart/decrementLineItem',
-      'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
+      store.state.cart.lineItems[0].id
     )
-    expect(store.state.cart.lineItems).toEqual([
-      {
-        image: {
-          source: 'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
-        },
-        title: 'Gray T-Shirt',
-        productId: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM1OTkyMDE4NjE3Mzc=',
-        handle: 'gray-t-shirt',
-        quantity: 1,
-        variant: {
-          id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ=='
-        }
-      }
-    ])
+    expect(store.state.cart.lineItems[0].quantity).toEqual(1)
   })
 
   it('sets the line items array', async () => {
+    const lineUuid = uuid()
     store.commit('cart/setLineItems', [
       {
+        id: `Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ==::${lineUuid}`,
         image: {
           source: 'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
         },
@@ -140,6 +109,7 @@ describe('Cart Store', () => {
     ])
     expect(store.state.cart.lineItems).toEqual([
       {
+        id: `Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ==::${lineUuid}`,
         image: {
           source: 'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
         },
@@ -157,6 +127,7 @@ describe('Cart Store', () => {
   it('calculates the cart value', async () => {
     store.commit('cart/setLineItems', [
       {
+        id: `Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ==::${uuid()}`,
         image: {
           source: 'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
         },
@@ -177,6 +148,7 @@ describe('Cart Store', () => {
     store.commit('cart/setFreeShippingThreshold', 100)
     store.commit('cart/setLineItems', [
       {
+        id: `Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ==::${uuid()}`,
         image: {
           source: 'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
         },
@@ -197,6 +169,7 @@ describe('Cart Store', () => {
     store.commit('cart/setFreeShippingThreshold', 100)
     store.commit('cart/setLineItems', [
       {
+        id: `Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ==::${uuid()}`,
         image: {
           source: 'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
         },
@@ -217,6 +190,7 @@ describe('Cart Store', () => {
   it('returns an array of line items with the properties needed for checkout', async () => {
     store.commit('cart/setLineItems', [
       {
+        id: `Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ==::${uuid()}`,
         image: {
           source: 'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
         },
@@ -252,8 +226,10 @@ describe('Cart Store', () => {
   })
 
   it('saves an array of line items', async () => {
+    const lineUuid = uuid()
     store.state.cart.lineItems = [
       {
+        id: `Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ==::${lineUuid}`,
         image: {
           source: 'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
         },
@@ -269,6 +245,7 @@ describe('Cart Store', () => {
     await store.dispatch('cart/saveLineItems')
     expect(await localforage.getItem('line-items')).toEqual([
       {
+        id: `Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ==::${lineUuid}`,
         image: {
           source: 'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
         },

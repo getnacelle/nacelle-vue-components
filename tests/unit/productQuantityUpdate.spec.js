@@ -1,9 +1,9 @@
 import store from '../../src/store/store'
-import { shallowMount } from '@vue/test-utils'
-import ProductQuantityUpdate from '@/components/ProductQuantityUpdate'
+import { mount, shallowMount } from '@vue/test-utils'
+import QuantitySelector from '@/components/QuantitySelector'
 import { defaultLineItem } from '../../config/defaultObjects.js'
 
-describe('ProductQuantityUpdate.vue', () => {
+describe('QuantitySelector.vue', () => {
   // it('if quantity is 0 it adds product to cart', async () => {
   //   const wrapper = shallowMount(ProductQuantityUpdate, {
   //     store,
@@ -51,48 +51,57 @@ describe('ProductQuantityUpdate.vue', () => {
   // })
 
   it('decrements the product quantity', async () => {
-    const wrapper = shallowMount(ProductQuantityUpdate, {
-      store,
-      propsData: {
-        product: defaultLineItem,
-        variant: defaultLineItem.variant
+    const WrapperComp = {
+      template: `
+      <quantity-selector
+        :quantity.sync="quantity"
+      />
+      `,
+      components: {
+        QuantitySelector
+      },
+      data() {
+        return {
+          quantity: 2
+        }
       }
-    })
-    const input = wrapper.find('.decrement')
+    }
+    const wrapper = mount(WrapperComp).find(QuantitySelector)
 
-    store.state.cart.lineItems = [
-      {
-        ...defaultLineItem,
-        quantity: 2
-      }
-    ]
-    input.trigger('click')
+    wrapper.vm.decrement()
 
-    expect(store.state.cart.lineItems).toEqual([
-      {
-        ...defaultLineItem,
-        quantity: 1
-      }
-    ])
+    const input = wrapper.find('.quantity-input')
+    expect(input.element.value).toEqual('1')
+    expect(wrapper.props('quantity')).toEqual(1)
   })
 
-  it('if quantity equals 1 decrement removes item', async () => {
-    const wrapper = shallowMount(ProductQuantityUpdate, {
-      store,
-      propsData: {
-        product: defaultLineItem,
-        variant: defaultLineItem.variant
-      }
+  it('if quantity equals 1 decrement removes item, if item specified in props', async () => {
+    store.dispatch('cart/addLineItem', {
+      ...defaultLineItem,
+      quantity: 1
     })
-    const input = wrapper.find('.decrement')
 
-    store.state.cart.lineItems = [
-      {
-        ...defaultLineItem,
-        quantity: 1
+    const WrapperComp = {
+      template: `
+      <quantity-selector
+        :quantity="item.quantity"
+        :item="item"
+      />
+      `,
+      components: {
+        QuantitySelector
+      },
+      data() {
+        return {
+          item: store.state.cart.lineItems[0]
+        }
       }
-    ]
-    input.trigger('click')
+    }
+    const wrapper = mount(WrapperComp, {
+      store
+    }).find(QuantitySelector)
+
+    wrapper.vm.decrement()
 
     expect(store.state.cart.lineItems.length).toEqual(0)
   })

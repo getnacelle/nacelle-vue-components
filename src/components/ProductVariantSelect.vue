@@ -14,14 +14,13 @@
         class="column auto"
         v-if="allOptionsSelected && selectedVariant && selectedVariant.availableForSale && showQuantitySelect"
       >
-        <product-quantity-update
-          :product="product"
-          :variant="selectedVariant"
-          :allOptionsSelected="allOptionsSelected"
+        <quantity-selector
+          :quantity.sync="quantity"
         />
       </div>
       <div class="column auto">
         <product-add-to-cart-button
+          :quantity="quantity"
           :product="product"
           :variant="selectedVariant"
           :allOptionsSelected="allOptionsSelected"
@@ -33,7 +32,7 @@
 
 <script>
 import ProductOptions from './ProductOptions'
-import ProductQuantityUpdate from './ProductQuantityUpdate'
+import QuantitySelector from './QuantitySelector'
 import ProductAddToCartButton from './ProductAddToCartButton'
 import { mapGetters } from 'vuex'
 import allOptionsSelected from '../mixins/allOptionsSelected'
@@ -51,10 +50,15 @@ export default {
       default: true
     }
   },
+  data () {
+    return {
+      quantity: 0
+    }
+  },
   mixins: [allOptionsSelected, availableOptions],
   components: {
     ProductOptions,
-    ProductQuantityUpdate,
+    QuantitySelector,
     ProductAddToCartButton
   }
 }

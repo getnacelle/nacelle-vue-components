@@ -113,7 +113,7 @@ export default {
   &:first-child {
     border-bottom: 1px solid #dbdbdb;
   }
-  
+
   &:hover {
     background: #f5f5f5;
   }

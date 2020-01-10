@@ -1,5 +1,5 @@
 <template>
-  <button class="button nacelle" @click="removeLineItem(variantId)">
+  <button class="button nacelle" @click="removeLineItem(lineId)">
     <slot>Remove</slot>
   </button>
 </template>
@@ -8,7 +8,7 @@
 import { mapActions } from 'vuex'
 export default {
   props: {
-    variantId: {
+    lineId: {
       type: String,
       required: true
     }
