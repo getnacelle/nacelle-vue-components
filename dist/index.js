@@ -63,7 +63,6 @@ import ProductVariantDropdown from './components/ProductVariantDropdown.vue'
 import ProductVariantSelect from './components/ProductVariantSelect.vue'
 import ProductVariantTitle from './components/ProductVariantTitle.vue'
 import ProductVideo from './components/ProductVideo.vue'
-
 import QuantitySelector from './components/QuantitySelector.vue'
 import RadioInput from './components/RadioInput.vue'
 import ReadUserData from './components/ReadUserData.vue'
@@ -77,7 +76,7 @@ import SearchResults from './components/SearchResults.vue'
 import SiteHeader from './components/SiteHeader.vue'
 
 // Export components individually
-export { ArticlePreview, BlogArticleContent, BlogArticleHeader, BrandHeader, Cart, CartFlyout, CartFlyoutCheckoutButton, CartFlyoutHeader, CartFlyoutItem, CartFlyoutItemRemoveButton, CartFlyoutMessaging, CartFlyoutSubtotal, CartItem, ContentHeroBanner, ContentProductGrid, ContentSideBySide, ContentTestimonial, ContentTestimonials, CookieBanner, CtaButton, ErrorModal, EventDispatcher, FormConsentField, GlobalHeader, InterfaceCloseButton, InterfaceFeaturedMedia, InterfaceIcon, InterfaceLogo, InterfaceModal, MainNav, MainNavBurger, MainNavCart, MainNavFlyout, MessagingFreeShippingCounter, MixinTestBench, NacelleCollection, NacelleContent, NacelleProducts, OptInOptOutForm, PageContent, ProductAddToCartButton, ProductCard, ProductCategory, ProductDescription, ProductDetails, ProductGrid, ProductImage, ProductMediaSelectView, ProductOptionSwatch, ProductOptionSwatches, ProductOptions, ProductPrice, ProductQuantityUpdate, ProductShopLook, ProductTitle, ProductVariantDropdown, ProductVariantSelect, ProductVariantTitle, ProductVideo, RadioInput, ReadUserData, RefinementFilters, SearchAutocomplete, SearchAutocompleteItem, SearchBox, SearchInput, SearchNoResults, SearchResults, SiteHeader }
+export { ArticlePreview, BlogArticleContent, BlogArticleHeader, BrandHeader, Cart, CartFlyout, CartFlyoutCheckoutButton, CartFlyoutHeader, CartFlyoutItem, CartFlyoutItemRemoveButton, CartFlyoutMessaging, CartFlyoutSubtotal, CartItem, ContentHeroBanner, ContentProductGrid, ContentSideBySide, ContentTestimonial, ContentTestimonials, CookieBanner, CtaButton, ErrorModal, EventDispatcher, FormConsentField, GlobalHeader, InterfaceCloseButton, InterfaceFeaturedMedia, InterfaceIcon, InterfaceLogo, InterfaceModal, MainNav, MainNavBurger, MainNavCart, MainNavFlyout, MessagingFreeShippingCounter, MixinTestBench, NacelleCollection, NacelleContent, NacelleProducts, OptInOptOutForm, PageContent, ProductAddToCartButton, ProductCard, ProductCategory, ProductDescription, ProductDetails, ProductGrid, ProductImage, ProductMediaSelectView, ProductOptionSwatch, ProductOptionSwatches, ProductOptions, ProductPrice, ProductQuantityUpdate, ProductShopLook, ProductTitle, ProductVariantDropdown, ProductVariantSelect, ProductVariantTitle, ProductVideo, QuantitySelector, RadioInput, ReadUserData, RefinementFilters, SearchAutocomplete, SearchAutocompleteItem, SearchBox, SearchInput, SearchNoResults, SearchResults, SiteHeader }
 
 // What should happen if the user installs the library as a plugin
 function install(Vue) {
