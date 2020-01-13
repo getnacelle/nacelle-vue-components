@@ -21,9 +21,9 @@
         class="flyout-item-variant-title"
       />
       <div class="flyout-item-details columns is-marginless is-paddingless">
-        <product-price class="flyout-item-price" :price="variant.price" />
-        <product-quantity-update :product="item" :variant="item.variant" />
-        <cart-flyout-item-remove-button :variantId="variant.id" />
+        <product-price class="flyout-item-price" :price="item.variant.price" />
+        <quantity-selector :item="item" :quantity="item.quantity" />
+        <cart-flyout-item-remove-button :lineId="item.id" />
       </div>
     </div>
   </div>

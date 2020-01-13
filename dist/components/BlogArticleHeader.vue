@@ -1,24 +1,16 @@
 <template>
   <header>
     <slot name="tags" :tags="tags">
-      <h5 v-if="hasTags" class="article-tags">
-        {{ tags.join(', ') }}
-      </h5>
+      <h5 v-if="hasTags" class="article-tags">{{ tags.join(', ') }}</h5>
     </slot>
     <slot name="title" :title="title">
-      <h1 class="article-title title is-3">
-        {{ title }}
-      </h1>
+      <h1 class="article-title title is-3">{{ title }}</h1>
     </slot>
     <slot name="author" :author="author">
-      <p v-if="author.length > 0" class="article-author">
-        {{ author }}
-      </p>
+      <p class="article-author">{{ author.firstName }} {{ author.lastName }}</p>
     </slot>
     <slot name="date" :date="absoluteDate">
-      <p class="article-published">
-        Published on {{absoluteDate}}
-      </p>
+      <p class="article-published">Published on {{absoluteDate}}</p>
     </slot>
     <slot></slot>
   </header>
@@ -31,15 +23,20 @@ export default {
   props: {
     title: {
       type: String,
-      default: '',
+      default: ''
     },
     author: {
-      type: String,
-      default: ''
+      type: Object,
+      default: () => {
+        return {
+          firstName: '',
+          lastName: ''
+        }
+      }
     },
     tags: {
       type: Array,
-      default: () => ([])
+      default: () => []
     },
     publishDate: {
       type: String,
@@ -52,7 +49,7 @@ export default {
   },
   computed: {
     hasTags() {
-      return (this.tags && this.tags.length > 0)
+      return this.tags && this.tags.length > 0
     },
     absoluteDate() {
       return dayjs(this.publishDate).format(this.dateFormatString)
@@ -62,5 +59,4 @@ export default {
 </script>
 
 <style>
-
 </style>

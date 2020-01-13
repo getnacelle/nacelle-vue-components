@@ -8,17 +8,21 @@ export default {
     allOptions() {
       if (this.product.variants) {
         const nestedOptions = this.product.variants.map(variant => {
-          return variant.selectedOptions.map(option => {
-            if (option.name === 'Color') {
-              return {
-                name: option.name,
-                value: option.value,
-                swatchSrc: variant.swatchSrc
+          if (variant.selectedOptions) {
+            return variant.selectedOptions.map(option => {
+              if (option.name === 'Color') {
+                return {
+                  name: option.name,
+                  value: option.value,
+                  swatchSrc: variant.swatchSrc
+                }
               }
-            } else {
+
               return option
-            }
-          })
+            })
+          }
+
+          return []
         })
         const flattenedOptions = flattenDeep(nestedOptions)
 
@@ -117,6 +121,12 @@ export default {
           }
         })[0]
       }
+    },
+    onlyOneOption() {
+      return (
+        this.allOptions.length === 1 &&
+        this.allOptions[0].values.length === 1
+      )
     }
   }
 }

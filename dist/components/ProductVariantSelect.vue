@@ -1,7 +1,7 @@
 <template>
   <div class="variant-select nacelle">
     <product-options
-      v-show="allOptions[0].values.length > 1 && product.availableForSale"
+      v-show="showProductOptions"
       :options="allOptions"
       :variant="selectedVariant"
       v-on:selectedOptionsSet="setSelected"
@@ -12,7 +12,12 @@
     <div class="columns is-mobile">
       <div
         class="column auto"
-        v-if="allOptionsSelected && selectedVariant && selectedVariant.availableForSale && showQuantitySelect"
+        v-if="
+          allOptionsSelected &&
+            selectedVariant &&
+            selectedVariant.availableForSale &&
+            showQuantitySelect
+        "
       >
         <quantity-selector
           :quantity.sync="quantity"
@@ -34,9 +39,9 @@
 import ProductOptions from './ProductOptions'
 import QuantitySelector from './QuantitySelector'
 import ProductAddToCartButton from './ProductAddToCartButton'
-import { mapGetters } from 'vuex'
 import allOptionsSelected from '../mixins/allOptionsSelected'
 import availableOptions from '../mixins/availableOptions'
+
 export default {
   props: {
     product: {
@@ -60,9 +65,18 @@ export default {
     ProductOptions,
     QuantitySelector,
     ProductAddToCartButton
+  },
+  computed: {
+    showProductOptions() {
+      return (
+        Array.isArray(this.allOptions) &&
+        this.allOptions.length > 1 &&
+        this.allOptions[0].values.length > 1 &&
+        this.product.availableForSale
+      )
+    }
   }
 }
 </script>
 
-<style>
-</style>
+<style></style>

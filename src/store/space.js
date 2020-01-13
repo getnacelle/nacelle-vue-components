@@ -39,40 +39,54 @@ const space = {
   },
   getters: {
     metafieldsObj(state) {
-      return state.metafields.reduce((obj, metafield) => {
-        const { namespace, key, value } = metafield
+      if (state.metafields) {
+        return state.metafields.reduce((obj, metafield) => {
+          const { namespace, key, value } = metafield
 
-        if (obj[namespace]) {
-          obj[namespace][key] = value
-        } else {
-          obj[namespace] = {}
-          obj[namespace][key] = value
-        }
+          if (obj[namespace]) {
+            obj[namespace][key] = value
+          } else {
+            obj[namespace] = {}
+            obj[namespace][key] = value
+          }
 
-        return obj
-      }, {})
+          return obj
+        }, {})
+      }
+
+      return {}
     },
     getMetatag: (state) => (tag) => {
-      return state.metafields.find(field => (
-        field.namespace === 'metatag' && field.key === tag
-      ))
+      if (state.metafields) {
+        return state.metafields.find(field => (
+          field.namespace === 'metatag' && field.key === tag
+        ))
+      }
+
+      return {}
     },
     getMetaNamespace: (state) => (namespace) => {
-      return state.metafields.reduce((obj, metafield) => {
-        if (metafield.namespace === namespace) {
-          obj[metafield.key] = metafield.value
-        }
+      if (state.metafields) {
+        return state.metafields.reduce((obj, metafield) => {
+          if (metafield.namespace === namespace) {
+            obj[metafield.key] = metafield.value
+          }
 
-        return obj
-      }, {})
+          return obj
+        }, {})
+      }
+
+      return {}
     },
     getMetafield: (state) => (namespace, key) => {
-      const metafield = state.metafields.find(field => (
-        field.namespace === namespace && field.key === key
-      ))
+      if (state.metafields) {
+        const metafield = state.metafields.find(field => (
+          field.namespace === namespace && field.key === key
+        ))
 
-      if (metafield) {
-        return metafield.value
+        if (metafield) {
+          return metafield.value
+        }
       }
 
       return undefined

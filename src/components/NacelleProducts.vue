@@ -21,6 +21,10 @@ export default {
         return []
       }
     },
+    locale: {
+      type: String,
+      default: ''
+    }
   },
   data () {
     return {
@@ -44,6 +48,17 @@ export default {
       }
 
       return false
+    },
+    useLocale() {
+      if (this.locale && this.locale !== '') {
+        return this.locale
+      }
+
+      if (this.$nacelle && this.$nacelle.locale) {
+        return this.$nacelle.locale
+      }
+
+      return 'en-us'
     }
   },
   created () {
@@ -57,7 +72,10 @@ export default {
       }
 
       this.$nacelle
-        .products(handlesArr)
+        .products({
+          handles: handlesArr,
+          locale: this.useLocale
+        })
         .then((result) => {
           if (result && result.length > 0) {
             // filter out non-existant products

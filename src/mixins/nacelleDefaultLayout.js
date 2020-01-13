@@ -16,7 +16,9 @@ export default params => {
     computed: {
       ...mapGetters('space', ['getMetatag'])
     },
-    created() {},
+    created() {
+      this.$nacelle.setSpace()
+    },
     mounted() {
       if (this.$refs.header) {
         this.headerHeight = this.$refs.header.$el.clientHeight
