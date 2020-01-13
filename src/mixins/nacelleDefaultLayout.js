@@ -29,7 +29,7 @@ export default params => {
 
       this.hideCart()
 
-      if (process.env.DEV_MODE == 'true') {
+      if (process.env.DEV_MODE === 'true') {
         console.log('dev mode active!')
         localforage.clear()
       }
