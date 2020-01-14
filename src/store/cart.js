@@ -199,7 +199,7 @@ const cart = (options = {}) => {
             url: endpoint,
             headers: {
               'Content-Type': 'application/json',
-              'x-nacelle-token': token
+              'x-nacelle-space-token': token
             },
             data: {
               query: `query {
