@@ -39,8 +39,8 @@ export default {
       default: () => []
     },
     publishDate: {
-      type: String,
-      default: ''
+      type: Number,
+      default: -1
     },
     dateFormatString: {
       type: String,
@@ -52,7 +52,11 @@ export default {
       return this.tags && this.tags.length > 0
     },
     absoluteDate() {
-      return dayjs(this.publishDate).format(this.dateFormatString)
+      if (this.publishDate > -1) {
+        return dayjs(this.publishDate).format(this.dateFormatString)
+      }
+
+      return ''
     }
   }
 }

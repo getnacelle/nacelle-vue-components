@@ -3,7 +3,7 @@ import { getCollection } from '@nacelle/nacelle-tools'
 
 export default params => {
   return {
-    name: 'home',
+    name: 'collection',
     mixins: [getCollection(params)],
     computed: {
       ...mapGetters('space', ['getMetatag']),
@@ -17,11 +17,6 @@ export default params => {
         }
 
         return null
-      }
-    },
-    methods: {
-      pageError () {
-        this.$nuxt.error({ statusCode: 404, message: 'Page does not exist' })
       }
     },
     head() {

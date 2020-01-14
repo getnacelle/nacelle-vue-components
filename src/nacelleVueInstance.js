@@ -11,6 +11,7 @@ import nacelleSearchPage from './mixins/nacelleSearchPage'
 import nacelleShopPage from './mixins/nacelleShopPage'
 
 export default ({ type, params, ...rest }) => {
+  console.log(type, params)
   switch (type) {
     case 'homepage':
       return nmerge({ mixins: [nacelleHomepage(params)], ...rest })
