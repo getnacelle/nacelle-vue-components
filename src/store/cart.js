@@ -11,6 +11,7 @@ const cart = (options = {}) => {
     state: {
       lineItems: [],
       checkoutId: null,
+      checkoutUrl: null,
       checkoutComplete: false,
       cartVisible: false,
       freeShippingThreshold: null,
@@ -53,6 +54,7 @@ const cart = (options = {}) => {
       checkoutLineItems (state) {
         if (state.lineItems.length > 0) {
           return state.lineItems.map(lineItem => ({
+            cartItemId: lineItem.id,
             variantId: lineItem.variant.id,
             quantity: lineItem.quantity,
             metafields: lineItem.metafields
@@ -120,6 +122,9 @@ const cart = (options = {}) => {
       setCheckoutId (state, payload) {
         state.checkoutId = payload
       },
+      setCheckoutUrl (state, payload) {
+        state.checkoutUrl = payload
+      },
       setCheckoutCompleteStatus (state, payload) {
         state.checkoutComplete = payload
       },
@@ -184,6 +189,9 @@ const cart = (options = {}) => {
       async saveCheckoutId (context, payload) {
         localforage.setItem('checkout-id', payload)
       },
+      async saveCheckoutUrl (context, payload) {
+        localforage.setItem('checkout-url', payload)
+      },
       async getCheckoutId (context) {
         const checkoutId = await localforage.getItem('checkout-id')
         if (checkoutId != null) {
@@ -191,19 +199,35 @@ const cart = (options = {}) => {
           return checkoutId
         }
       },
+      async getCheckoutUrl (context) {
+        const checkoutUrl = await localforage.getItem('checkout-url')
+        if (checkoutUrl != null) {
+          context.commit('setCheckoutUrl', checkoutUrl)
+          return checkoutUrl
+        }
+      },
       async verifyCheckoutStatus (context) {
         await context.dispatch('getCheckoutId')
-        if (context.state.checkoutId != null) {
+        await context.dispatch('getCheckoutUrl')
+
+        if (
+          context.state.checkoutId != null &&
+          context.state.checkoutUrl != null
+        ) {
           const checkoutStatus = await axios({
             method: 'post',
             url: endpoint,
             headers: {
               'Content-Type': 'application/json',
+              'x-nacelle-space-id': context.rootState.space.id,
               'x-nacelle-space-token': token
             },
             data: {
               query: `query {
-                getCheckout(id: "${context.state.checkoutId}") {
+                getCheckout(
+                  id: "${context.state.checkoutId}",
+                  url: "${context.state.checkoutUrl}"
+                ) {
                   id
                   url
                   completed
@@ -219,6 +243,7 @@ const cart = (options = {}) => {
         if (context.state.checkoutComplete === true) {
           await localforage.removeItem('line-items')
           await localforage.removeItem('checkout-id')
+          await localforage.removeItem('checkout-url')
         }
       },
 
@@ -251,20 +276,31 @@ const cart = (options = {}) => {
 
       async getLinkerParam () {
         return new Promise((resolve, reject) => {
-          ga((tracker) => resolve(tracker.get('linkerParam')))
+          const gaClient = process.browser ? window.ga : undefined
+
+          if (typeof gaClient !== 'undefined') {
+            gaClient((tracker) => resolve(tracker.get('linkerParam')))
+          }
+
+          // if no ga resolve with empty string
+          resolve('')
         })
       },
 
       async saveAndRedirect ({ dispatch, rootState }, payload) {
         if (payload && process.browser) {
           await dispatch('saveCheckoutId', payload.id)
+
           let url
           const linkerParam = await dispatch('getLinkerParam')
+
           if (payload.url.includes('?')) {
             url = `${payload.url}&c=${JSON.stringify(rootState.user.userData)}&${linkerParam}`
           } else {
             url = `${payload.url}?c=${JSON.stringify(rootState.user.userData)}&${linkerParam}`
           }
+
+          await dispatch('saveCheckoutUrl', url)
 
           window.location = url
         }
@@ -278,7 +314,7 @@ const cart = (options = {}) => {
         // let checkoutId = await dispatch('getCheckoutIdForBackend')
 
         if (rootState.events) {
-          dispatch('events/checkout', state.lineItems, { root: true })
+          dispatch('events/checkoutInit', state.lineItems, { root: true })
         }
 
         await dispatch('saveAndRedirect', payload)

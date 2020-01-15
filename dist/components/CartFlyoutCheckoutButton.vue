@@ -38,6 +38,7 @@ export default {
           checkoutId: vm.checkoutIdForBackend
         })
         .then(data => {
+          console.log(data)
           if (data && data.id && data.url) {
             return data
           }
