@@ -9,8 +9,7 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
-import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 export default {
   props: {
     checkoutText: {

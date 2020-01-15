@@ -188,9 +188,11 @@ describe('Cart Store', () => {
   })
 
   it('returns an array of line items with the properties needed for checkout', async () => {
+    const uId = uuid()
+
     store.commit('cart/setLineItems', [
       {
-        id: `Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ==::${uuid()}`,
+        id: `Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ==::${uId}`,
         image: {
           source: 'https://nacelle-assets.s3-us-west-2.amazonaws.com/shirt.jpg'
         },
@@ -206,6 +208,7 @@ describe('Cart Store', () => {
     ])
     expect(store.getters['cart/checkoutLineItems']).toEqual([
       {
+        cartItemId: `Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ==::${uId}`,
         variantId:
           'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDAyMzQwMQ==',
         quantity: 2

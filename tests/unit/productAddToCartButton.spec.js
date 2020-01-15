@@ -322,12 +322,12 @@ describe('Product Add to Cart Button', () => {
     })
     wrapper.find('button').trigger('click')
 
-    expect(store.getters['cart/checkoutLineItems']).toEqual([
+    const lineItems = store.getters['cart/checkoutLineItems']
+
+    expect(lineItems[0].metafields).toEqual([
       {
-        metafields: [{ key: 'customProp1', value: 'customValue1' }],
-        quantity: 1,
-        variantId:
-          'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFadC8yODU2ODgyMDAyMzQwMQ=='
+        key: 'customProp1',
+        value: 'customValue1'
       }
     ])
   })
