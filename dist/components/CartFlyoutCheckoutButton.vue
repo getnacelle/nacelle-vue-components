@@ -9,8 +9,7 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
-import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 export default {
   props: {
     checkoutText: {
@@ -38,7 +37,6 @@ export default {
           checkoutId: vm.checkoutIdForBackend
         })
         .then(data => {
-          console.log(data)
           if (data && data.id && data.url) {
             return data
           }
