@@ -1,9 +1,8 @@
-import nmerge from 'nuxt-merge-asyncdata'
 import { mapGetters } from 'vuex'
 import { getBlogArticle, getCollection } from '@nacelle/nacelle-tools'
 
 export default params => {
-  return nmerge({
+  return {
     mixins: [getCollection(params), getBlogArticle(params)],
     computed: {
       ...mapGetters('space', ['getMetatag'])
@@ -62,5 +61,5 @@ export default params => {
         }
       }
     }
-  })
+  }
 }
