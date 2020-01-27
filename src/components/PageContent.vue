@@ -87,15 +87,19 @@ export default {
       return []
     },
     body() {
-      if (this.page && this.page.content) {
+      if (this.page) {
         const { source } = this.page
 
-        if (source === 'shopify') {
+        if (source === 'shopify' && this.page.content) {
           return this.page.content
         }
 
-        if (source === 'contentful') {
-          return this.contentToHtml(this.page.content)
+        if (
+          source === 'contentful' &&
+          this.page.fields &&
+          this.page.fields.body
+        ) {
+          return this.contentToHtml(this.page.fields.body)
         }
       }
 
