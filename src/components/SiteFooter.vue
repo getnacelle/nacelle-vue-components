@@ -3,7 +3,9 @@
     <div class="container">
       <!-- TEMPORARY FOOTER START -->
       <div class="column is-6 is-offset-3 logo has-text-centered">
-        <img :src="logoSrc" :alt="name" />
+        <nuxt-link to="/">
+          <strong>{{ name }}</strong>
+        </nuxt-link>
       </div>
       <div class="column is-12 has-text-centered">© NACELLE 2019</div>
       <!-- TEMPORARY FOOTER END -->
@@ -53,13 +55,6 @@ export default {
   computed: {
     ...mapState('space', ['id', 'name', 'linklists']),
     ...mapGetters('space', ['getLinks']),
-    logoSrc() {
-      if (this.id) {
-        return `https://d3ej2r3y1rjyfi.cloudfront.net/space/${this.id}/logo.png`
-      }
-
-      return ''
-    },
     aboutMenu() {
       return this.getLinks('about')
     },
