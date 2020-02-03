@@ -6,7 +6,7 @@ const user = {
   namespaced: true,
   state: {
     anonymousID: null,
-    customerID: null,
+    userID: null,
     customerEmail: null,
     customerPhone: null,
     sessionID: null,
@@ -14,8 +14,8 @@ const user = {
   },
   mutations: {
     setUserData(state, payload) {
-      const { customerID, customerEmail, customerPhone } = payload
-      state.customerID = customerID
+      const { userID, customerEmail, customerPhone } = payload
+      state.userID = userID
       state.customerEmail = customerEmail
       state.customerPhone = customerPhone
     },

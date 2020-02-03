@@ -2,9 +2,8 @@ const eventProperties = rootState => {
   const { user, space, cart } = rootState || {}
   const timestamp = Date.now()
   const spaceID = space ? space.id : null
-  const customerID = user && user.customerID ? user.customerID : null
+  const userID = user && user.userID ? user.userID : null
   const anonymousID = user && user.anonymousID ? user.anonymousID : null
-  const customer = user || null
   const cartJsonString =
     cart && cart.lineItems
       ? JSON.stringify(cart.lineItems)
@@ -22,9 +21,9 @@ const eventProperties = rootState => {
   return {
     timestamp,
     spaceID,
-    customerID,
+    userID,
     anonymousID,
-    customer,
+    user,
     cart: cartJsonString,
     urlParams,
     url,
