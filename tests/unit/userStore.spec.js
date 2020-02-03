@@ -12,10 +12,10 @@ describe('User Store', () => {
     const store = new Vuex.Store(storeConfig)
 
     store.commit('user/setUserData', {
-      customerID: '123456',
+      userID: '123456',
       customerEmail: 'test@test.com'
     })
-    expect(store.state.user.customerID).toEqual('123456')
+    expect(store.state.user.userID).toEqual('123456')
     expect(store.state.user.customerEmail).toEqual('test@test.com')
   })
 
