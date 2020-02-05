@@ -19,9 +19,7 @@
             showQuantitySelect
         "
       >
-        <quantity-selector
-          :quantity.sync="quantity"
-        />
+        <quantity-selector :quantity.sync="quantity" />
       </div>
       <div class="column auto">
         <product-add-to-cart-button
@@ -55,7 +53,7 @@ export default {
       default: true
     }
   },
-  data () {
+  data() {
     return {
       quantity: 0
     }
@@ -70,7 +68,7 @@ export default {
     showProductOptions() {
       return (
         Array.isArray(this.allOptions) &&
-        this.allOptions.length > 1 &&
+        this.allOptions.length >= 1 &&
         this.allOptions[0].values.length > 1 &&
         this.product.availableForSale
       )
