@@ -10,9 +10,7 @@
       <product-price :price="product.priceRange.max" />
     </div>
     <div v-if="product && product.id" class="product-card-actions">
-      <quantity-selector
-        :quantity.sync="quantity"
-      />
+      <quantity-selector :quantity.sync="quantity" />
       <product-add-to-cart-button
         v-if="showAddToCart == true"
         :product="product"
@@ -160,9 +158,9 @@ export default {
     },
     onlyOneOption() {
       if (
-        this.product.options &&
-        this.product.options.length == 1 &&
-        this.product.options[0].values.length == 1
+        this.allOptions &&
+        this.allOptions.length == 1 &&
+        this.allOptions[0].values.length == 1
       ) {
         return true
       } else {
@@ -189,6 +187,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  min-width: 300px;
 }
 
 .product-card-details /deep/ a {
