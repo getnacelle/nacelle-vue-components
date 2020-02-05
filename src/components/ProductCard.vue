@@ -187,6 +187,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  min-width: 300px;
 }
 
 .product-card-details /deep/ a {
