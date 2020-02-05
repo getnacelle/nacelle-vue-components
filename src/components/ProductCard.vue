@@ -10,9 +10,7 @@
       <product-price :price="product.priceRange.max" />
     </div>
     <div v-if="product && product.id" class="product-card-actions">
-      <quantity-selector
-        :quantity.sync="quantity"
-      />
+      <quantity-selector :quantity.sync="quantity" />
       <product-add-to-cart-button
         v-if="showAddToCart == true"
         :product="product"
@@ -31,7 +29,9 @@
         <product-options
           :options="allOptions"
           v-on:selectedOptionsSet="setSelected"
-          v-on:confirmedSelection="confirmedSelection = true, optionsModalVisible = false"
+          v-on:confirmedSelection="
+            ;(confirmedSelection = true), (optionsModalVisible = false)
+          "
           :onlyOneOption="onlyOneOption"
           :variant="currentVariant"
           :variants="product.variants"
@@ -189,6 +189,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  min-width: 300px;
 }
 
 .product-card-details /deep/ a {
